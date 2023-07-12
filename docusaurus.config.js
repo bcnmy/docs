@@ -91,8 +91,20 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Quick Start',
+                to: '/docs/quickstart',
+              },
+              {
+                label: 'Smart Accounts',
+                to: '/docs/category/smart-accounts',
+              },
+              {
+                label: 'Paymaster',
+                to: '/docs/category/paymaster',
+              },
+              {
+                label: 'Bundler',
+                to: '/docs/category/bundler',
               },
             ],
           },
