@@ -4,7 +4,7 @@ sidebar_position: 3
 # Initialization
 
 :::info
-This guide assumes a similar set up to our quickstart guide. View those instructions [here](setupnodecli.md). This can be adopted to other JavaScript Frameworks.
+This guide assumes a similar set up to our quickstart guide. View those instructions [here](quickstart.md). This can be adopted to other JavaScript Frameworks.
 :::
 
 Let’s import our account package, bundler package, paymaster package, and providers from the ethers package
