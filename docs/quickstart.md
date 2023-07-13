@@ -64,7 +64,7 @@ config()
 ```
 Now our code is configured to access the environment variable as needed. 
 
-## Intilization
+## Initialization
 
 Let’s import our bundler package, paymaster package, and providers from the ethers package:
 
