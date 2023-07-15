@@ -72,7 +72,7 @@ Let’s import our bundler package, paymaster package, and providers from the et
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { providers } from 'ethers';
+import { providers } from 'ethers'
 ```
 
 IBundler and IPaymaster are typings for Bundler and BiconomyPaymaster classes that we will create new instances of. 
@@ -128,11 +128,11 @@ const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
 
 Here we’re using the `BiconomySmartAccountConfig` typing to help us structure the needed values in our configuration. 
 
-- Signer: we pass the instance of our wallet
-- chainId: we pass Polygon Mumbai or any supported chain you want to test with
-- rpcUrl: our rpc url from ankr
-- paymaster: the instance of our paymaster
-- bundler: the instance of our bundler
+- `signer`: we pass the instance of our wallet
+- `chainId`: we pass Polygon Mumbai or any supported chain you want to test with
+- `rpcUrl`: our rpc url from ankr
+- `paymaster`: the instance of our paymaster
+- `bundler`: the instance of our bundler
 
 ```typescript
 async function createAccount() {
@@ -185,9 +185,9 @@ Let’s move the call to create account into the create transaction function and
 
 Now we need to construct our transaction which will take the following values: 
 
-- to: the address this interaction is directed towards, (in this case here is an address I own, feel free to change this to your own or send me more test tokens)
-- data: we are defaulting to ‘0x’ as we do not need to send any specific data for this transaction to work since it is a native transfer
-- value: we indicate the amount we would like to transfer here and use the `parseEther` utility function to make sure our value is formatted the way we need it to be
+- `to`: the address this interaction is directed towards, (in this case here is an address I own, feel free to change this to your own or send me more test tokens)
+- `data`: we are defaulting to ‘0x’ as we do not need to send any specific data for this transaction to work since it is a native transfer
+- `value`: we indicate the amount we would like to transfer here and use the `parseEther` utility function to make sure our value is formatted the way we need it to be
 
 Next up is building the userOp, feel free to add an additional log here if you would like to see how the partial userOp looks in this case. We’re also going to add “0x” for the paymasterAndData value as we just want this to be a regular transaction where the gas is paid for by the end user. 
 
@@ -203,9 +203,9 @@ import { IBundler, Bundler } from '@biconomy/bundler'
 import { ChainId } from "@biconomy/core-types";
 import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
 import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { Wallet, providers, ethers } from 'ethers';
+import { Wallet, providers, ethers } from 'ethers'
 
-config();
+config()
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 const bundler: IBundler = new Bundler({
@@ -232,7 +232,7 @@ async function createAccount() {
   const biconomySmartAccount =  await biconomyAccount.init()
   console.log("owner: ", biconomySmartAccount.owner)
   console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
-  return biconomyAccount;
+  return biconomyAccount
 }
 
 async function createTransaction() {
