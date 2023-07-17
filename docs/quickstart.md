@@ -38,13 +38,12 @@ After running these two commands you should see the printed statement “Hello W
 Now let’s install all of the needed packages from the Biconomy SDK
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types ethers@5.7.2
 ```
 Let’s take a look at each of these packages
 
 - The account package will help you with create smart contract accounts and interface with them to create transactions.
 - The bundler package helps you with interacting with our bundler or alternatively another bundler of your choice.
-- The paymaster package works similarly to the bundler package in that you can use our paymaster or any other one of your choice.
 - The core types package will give us Enums for the proper ChainId we may want to use
 - The common package is needed by our accounts package as another dependency.
 - Finally the ethers package at version 5.7.2 will help us with giving our accounts an owner which will be our own EOA.
@@ -66,28 +65,24 @@ Now our code is configured to access the environment variable as needed.
 
 ## Initialization
 
-Let’s import our bundler package, paymaster package, and providers from the ethers package:
+Let’s import our bundler package, and providers from the ethers package:
 
 ```typescript
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { providers } from 'ethers'
+import { ChainId } from "@biconomy/core-types"
 ```
 
-IBundler and IPaymaster are typings for Bundler and BiconomyPaymaster classes that we will create new instances of. 
+IBundler is the typing for the Bundler class that we will create a new instance of. 
 
 Let’s start with the initial configuration here:
 
 ```typescript
 const bundler: IBundler = new Bundler({
-    bundlerUrl: '', // you can get this value from biconomy dashboard.     
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/abc',     
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
-
-  const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: '' // you can get this value from biconomy dashboard.
   })
 ```
 
@@ -95,9 +90,7 @@ const bundler: IBundler = new Bundler({
     - a bundler url which you can retrieve from the Biconomy Dashboard
     - chain ID, in this case we’re using Polygon Mumbai
     - and default entry point address imported from the account package
-- Then we create an instance of the paymaster using the paymasterUrl from the Biconomy Dashboard.
 
-Now with the paymaster and bundler instances configured let’s set up the rest of what we need for our Smart Account.
 
 ```typescript
 import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
@@ -120,8 +113,6 @@ Now we need an object that will hold the configuration values for our Smart Acco
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
-  rpcUrl: "https://rpc.ankr.com/polygon_mumbai",
-  paymaster: paymaster,
   bundler: bundler
 }
 ```
@@ -130,8 +121,6 @@ Here we’re using the `BiconomySmartAccountConfig` typing to help us structure 
 
 - `signer`: we pass the instance of our wallet
 - `chainId`: we pass Polygon Mumbai or any supported chain you want to test with
-- `rpcUrl`: our rpc url from ankr
-- `paymaster`: the instance of our paymaster
 - `bundler`: the instance of our bundler
 
 ```typescript
@@ -201,7 +190,6 @@ Here is an example of what the final code should look like:
 import { config } from "dotenv"
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { ChainId } from "@biconomy/core-types";
-import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
 import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { Wallet, providers, ethers } from 'ethers'
 
@@ -209,21 +197,15 @@ config()
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 const bundler: IBundler = new Bundler({
-    bundlerUrl: '', // you can get this value from biconomy dashboard.
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/abc',
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
-
-  const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: '' // you can get this value from biconomy dashboard.
   })
 
 
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
-  rpcUrl: "https://rpc.ankr.com/polygon_mumbai",
-  paymaster: paymaster,
   bundler: bundler
 }
 
