@@ -10,7 +10,7 @@ You should already have the node cli set up before following this guide. View th
 
 In the previous tutorials we set up our Smart Accounts and created Native Transfers using the Node JS CLI tool, in this tutorial we will use the tool to start exploring ERC20 token transfers. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20Transfer.ts`
 
-This tutorial uses USDC on Polygon Mumbai from this contract Address: 0xdA5289fCAAF71d52a80A254da614a192b693e977. You can swap matic test tokens for USDC via [uniswap](https://app.uniswap.org/#/swap) just connect with your EOA while on the mumbai testnet and swap with this address. At the time of writing this I was able to swap 1 test matic for 75 test USDC tokens. Make sure to fund your smart account with some test USDC. 
+This tutorial uses USDC on Polygon Mumbai from this contract Address: 0xdA5289fCAAF71d52a80A254da614a192b693e977. You can swap matic test tokens for USDC via [uniswap](https://app.uniswap.org/#/swap), just connect with your EOA while on the mumbai testnet and swap with this address. At the time of writing this I was able to swap 1 test matic for 75 test USDC tokens. Make sure to fund your smart account with some test USDC. 
 
 ## Initiating a transfer
 
@@ -22,7 +22,7 @@ yarn run smartAccount erc20Transfer --to=0x322Af0da66D00be980C7aa006377FCaaEee3B
 
 Please feel free of course to transfer to any wallet of your choice. The `--to` flag in the script will be the recipient of the transfer you decide to make. The `--token` flag will be the contract of the token you want to transfer. In this case we are using the USDC POS contract on Polygon Mumbai. 
 
-Upon succesful transfer you will see several details printed to your terminal which include: the useroperation information, userop hash, and transaction detail information once confirmed.
+Upon succesful transfer you will see several details printed to your terminal which include: the userOp information, userOp hash, and transaction detail information once confirmed.
 
 ## Token Paymaster transfers
 

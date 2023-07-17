@@ -15,7 +15,7 @@ Biconomy SDK brings blockchain-agnostic, web2-like experiences to your dApp in a
 - Easy User Onboarding: Social login, account creation & recovery to seamlessly onboard web2 users.
 - Fiat On Ramp: Let your users easily & reliably buy/sell crypto within your dApp.
 - Gasless Transactions: dApps can sponsor gas fees to make user interactions as simple as web2 transactions.
-- Paying Gas Fees In ERC20 Tokens: Users can utilize any ERC20 asset in their wallet to pay gas fees
+- Paying Gas Fees In ERC20 Tokens: Users can utilize any ERC20 asset in their wallet to pay gas fees.
 - Custom Transaction Bundling: Allow developers to build methods to do transaction batching which enables users to execute multiple actions, even across multiple chains, in a single transaction. Eg. Approve and Deposit can be done in the same transaction without changing anything in dApp smart contracts.
 
 ### How Does It Work: Smart Contract Wallets
@@ -24,11 +24,11 @@ The backbone of the Biconomy SDK is a Smart Contract Wallet (SCW) which is creat
 
 SCW address is counterfactual in nature. That means the user gets the address instantly after logging into the system, without even deploying anything on-chain. The actual smart contract is deployed along with the first transaction of the user.
 
-IMAGE GOES HERE
+![Smart Contract Wallet of a User](../docs/images/overview/overview.webp)
 
-A Smart Contract Wallet is a smart contract associated with each user's EOA (Externally Owned Account e.g. traditional MetaMask account or account generated via Social Login). We also call Smart Contract Wallets Smart Accounts.
+A Smart Contract Wallet is a smart contract associated with each user's EOA (Externally Owned Account e.g. traditional MetaMask account or account generated via Social Login). We also call Smart Contract Wallets, Smart Accounts.
 
-Smart Account is a non-custodial account. It provides added security compared to EOAs with a single private key. Users can deposit funds that no one else can control and withdraw at any point in time.'
+Smart Account is a non-custodial account. It provides added security compared to EOAs with a single private key. Users can deposit funds that no one else can control and withdraw at any point in time.
 
 The SCW address can remain consistent across chains making it easy to provide a chainless experience for the user from within the dApp itself. dApps can enable all sorts of seamless interactions by leveraging transaction bundling with Smart Contract Wallets using Biconomy SDK.
 
