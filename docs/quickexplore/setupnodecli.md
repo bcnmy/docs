@@ -30,7 +30,7 @@ npm install
 ```
 
 From this point we will continue using yarn but you can substitute any of the below commands with npm as well. 
-Open the code in your preferred code editor to reference any of the code powering the script and now let's create a configuration object for the CLI to use. From your comman line run the command below: 
+Open the code in your preferred code editor to reference any of the code powering the script and now let's create a configuration object for the CLI to use. From your command line run the command below: 
 
 ```bash
 yarn run smartAccount init --network=mumbai
