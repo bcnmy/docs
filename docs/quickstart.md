@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Quickstart: Smart Account Native Transfer
 
-In this guide, we will walk through creating a basic Node.js script using TypeScript with an implementation of the Smart Account Package from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action check out our [Quick Explore](/docs/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
+In this guide, we will walk through creating a basic Node.js script using TypeScript with an implementation of the Smart Account Package from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action, check out our [Quick Explore](/docs/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
 
 :::info
 Please note that this tutorial assumes you have Node JS installed on your computer and have some working knowledge of Node.
@@ -42,9 +42,11 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-typ
 ```
 Let’s take a look at each of these packages
 
-- The account package will help you with create smart contract accounts and interface with them to create transactions.
+- The account package will help you with creating smart contract accounts and an interface with them to create transactions.
 - The bundler package helps you with interacting with our bundler or alternatively another bundler of your choice.
 - The core types package will give us Enums for the proper ChainId we may want to use
+- The paymaster package works similarly to the bundler package in that you can use our paymaster or any other one of your choice.
+- The core types package will give us Enums for the proper ChainId we may want to use.
 - The common package is needed by our accounts package as another dependency.
 - Finally the ethers package at version 5.7.2 will help us with giving our accounts an owner which will be our own EOA.
 
@@ -76,7 +78,8 @@ import { ChainId } from "@biconomy/core-types"
 
 IBundler is the typing for the Bundler class that we will create a new instance of. 
 
-Let’s start with the initial configuration here:
+
+### **Initial Configuration**
 
 ```typescript
 const bundler: IBundler = new Bundler({
@@ -105,9 +108,9 @@ const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
 
 - We create a provider using a public RPC provider endpoint from ankr, feel free to use any service here such as Infura or Alchemy if you wish.  We encourage you to use a private RPC endpoint for better efficiency in userOp creation.
-- Next we create an instance of the wallet associated to our Private key
+- Next we create an instance of the wallet associated to our Private key.
 
-Now we need an object that will hold the configuration values for our Smart Account. 
+We now need an object that will hold the configuration values for our Smart Account. 
 
 ```typescript
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
@@ -135,7 +138,9 @@ async function createAccount() {
 createAccount()
 ```
 
-We create a new instance of the account using the BiconomySmartAccount class and passing it the configuration. We then await the initialization of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be the EOA that you got your private key from and the smart account address will be a new address referring to the address of this wallet. 
+We create a new instance of the account using the BiconomySmartAccount class and passing it the configuration. 
+
+We then await the initialization of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be the EOA that you got your private key from and the smart account address will be a new address referring to the address of this wallet. 
 :::info
 Smart accounts are counterfactual in nature. We know their address before they are even deployed. In this instance we won’t immediately deploy it, it will automatically be deployed on the first transaction it initiates and the gas needed for deployment will be added to that first transaction.
 :::

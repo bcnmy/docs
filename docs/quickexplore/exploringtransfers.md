@@ -5,7 +5,7 @@ sidebar_position: 2
 # Exploring Native Transfers
 
 :::info
-You should already have the node cli set up before following this guide. View those instructions [here](setupnodecli.md)
+You should already have the node CLI set up before following this guide. View those instructions [here](setupnodecli.md)
 :::
 
 In the previous tutorial we set up our Smart Accounts using the Node JS CLI tool, in this tutorial we will use the tool to start exploring how transfers will look. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/nativeTransfer.ts`
@@ -23,7 +23,7 @@ yarn run smartAccount transfer --to=0x322Af0da66D00be980C7aa006377FCaaEee3BDFD -
 ```
 Please feel free of course to transfer to any wallet of your choice. The `--to` flag in the script will be the recipient of the transfer you decide to make. 
 
-Upon succesful transfer you will see several details printed to your terminal which include: the useroperation information, userop hash, and transaction detail information once confirmed.
+Upon succesful transfer you will see several details printed to your terminal which include: the userOp information, userOp hash, and transaction detail information once confirmed.
 
 ## Token Paymaster transfers
 
