@@ -21,12 +21,16 @@ The Paymaster Service will introduce two new endpoints for both paymasters menti
 1. Get feeQuotes or Data Endpoint (applicable to Biconomy Hybrid Paymaster use case only)
 2. Sponsor UserOp Endpoint
 
+
 :::info
-To find base URL, use the following :
+To find ***Base URL*** , use the following :
 
-https://paymaster.biconomy.io/api/v1/chainId/apiKey
+https://paymaster.biconomy.io/api/v1/{chainId}/[YOUR_API_KEY_HERE]
 
- `ChainId` will be the chain your dApp is on and `apiKey` from [Biconomy Dashboard](https://dashboard-gasless.biconomy.io)
+ `chainId` is the variable on which your dApp is on (such as 5 for goerli,80001 for matic mumbai,etc.) 
+ You can get your `apiKey` from [Biconomy Dashboard](https://dashboard.biconomy.io)
+
+ The endpoint URL will same as Base URL for both `pm_getFeeQuotesOrData` and `pm_sponsorUserOperation`.
 
 :::
 
@@ -35,6 +39,18 @@ https://paymaster.biconomy.io/api/v1/chainId/apiKey
 ### 1. Get Fee Quotes or Data Endpoint
 
 **`pm_getFeeQuotesOrData`** This endpoint can be used to retrieve the **MODE**. The following cases are currently supported:
+
+:::note
+
+**"MODE"** is optional for `pm_getFeeQuotesOrData`
+
+- If **"MODE"** in request is not defined, we initially check for sponsorship and return `paymaster&Data` (Sponsorship paymaster data) but if request cannot be sponsored, we return `FeeQuotes` (i.e. token paymaster data)
+
+- If **"MODE"** is **SPONSORED** , we check for request sponsoreship. If request cannot be sponsored, we return the data as 0x. This would mean that user will have to pay for the gas fees. 
+
+- If **"MODE"** is ERC20, we return Feequote for TokenPaymaster.
+:::
+
 
 #### 1. Mode is **SPONSORED**: 
 
@@ -112,16 +128,44 @@ In this case, since the mode is sponsored, `sponsorshipInfo` is required to deco
 }
 ```
 
+<details>
+  <summary> Check for params here: </summary>
 
-:::info
-If the mode is **ERC20**, `TokenInfo` is recommended in order to avoid latency.
+`paymasterAddress` *
 
-If `preferredToken` is sent, fee Quote will be sent for the same only.
+Address of paymaster that is going to be used for given `UserOp`. In case of ERC20 mode, client should give approval to this address from user account.
 
-If `preferredToken` is blank, `tokenList` will be considered and feeQoute for all mentioned tokens in the array will be returned.
+`mode` *Optional*
 
-If Both `preferredToken` & `tokenList` are empty, `feeQuote` for all the supported token by Biconomy will be returned in the response.
-:::
+This is the mode which is going to be used for given `UserOp`. This is only applicable for Hybrid Paymaster.
+
+If value is **ERC20**, token paymaster flow will be used. In this case only `feeQuotes` are available in the response and `paymasterAndData` will not be present. Here, client can then show the list of tokens for user to choose the gas token or use the default token from response.
+
+If value is **SPONSORED** , sponsorship paymaster flow will be used. Here paymasterAndData will be returned in the response and not the feeQuotes.
+
+`paymasterAndData`  *Optional*
+
+This field contains the `paymasterAndData` to be used in `UserOp` before signing on client side. This field is only returned if SponsorshipPaymaster can be used in the flow and mode value is **SPONSORED**.
+
+`feeQuotes` *Optional*
+
+This will be present in the response if mode is **ERC20**, it contains array of token objects that are applicable for gas payments for the given `UserOp`. This array is sorted by markup percentage.
+
+**Fee Quotes Object Param explained**
+
+
+| Parameter | Description |
+| --- | --- |
+| symbol | Token symbol |
+| decimal | Token decimal |
+| address | Token address |
+| maxGasFee | Max amount of gas fee in token units that can be charged from the user account. This includes markup fee and additional cost of token approval. |
+| logoUrl | Token logo URL |
+| exchangePrice | Exchange price of token. No of tokens in 1 unit of native currency. |
+| markupPercentage | Markup percentage that’ll be charged for given token on top of gas fee. |
+
+
+</details>
 
 
 > ***Response***
@@ -155,45 +199,17 @@ If Both `preferredToken` & `tokenList` are empty, `feeQuote` for all the support
 }
 ```
 
+:::info
+If the paymaster mode is **ERC20** then it is recommended to include the `tokenInfo` field in order to avoid latency.
 
-<details>
-  <summary> params explained here : </summary>
+- If `preferredToken` is included, fee quotes will return a response only for this token.
 
-`paymasterAddress` *
+- If `preferredToken` is blank, `tokenList` will be considered and feeQoute for all mentioned tokens in the array will be returned.
 
-Address of paymaster that is going to be used for given `UserOp`. In case of ERC20 mode, client should give approval to this address from user account.
-
-`mode` *Optional*
-
-This is the mode which is going to be used for given `UserOp`. This is only applicable for Hybrid Paymaster.
-
-If value is **ERC20**, token paymaster flow will be used. In this case only `feeQuotes` are available in the response and `paymasterAndData` will not be present. Here, client can then show the list of tokens for user to choose the gas token or use the default token from response.
-
-If value is **SPONSOR** , verifying paymaster flow will be used. Here paymasterAndData will be returned in the response and not the feeQuotes.
-
-`paymasterAndData`  *Optional*
-
-This field contains the `paymasterAndData` to be used in `UserOp` before signing on client side. This field is only returned if VerifyingPaymaster can be used in the flow and mode value is **SPONSOR**.
-
-`feeQuotes` *Optional*
-
-This will be present in the response if mode is **ERC20**, it contains array of token objects that are applicable for gas payments for the given `UserOp`. This array is sorted by markup percentage.
-
-**Fee Quotes Object Param explained**
+- If Both `preferredToken` & `tokenList` are empty, `feeQuote` for all the supported token by Biconomy will be returned in the response.
+:::
 
 
-| Parameter | Description |
-| --- | --- |
-| symbol | Token symbol |
-| decimal | Token decimal |
-| address | Token address |
-| maxGasFee | Max amount of gas fee in token units that can be charged from the user account. This includes markup fee and additional cost of token approval. |
-| logoUrl | Token logo URL |
-| exchangePrice | Exchange price of token. No of tokens in 1 unit of native currency. |
-| markupPercentage | Markup percentage that’ll be charged for given token on top of gas fee. |
-
-
-</details>
 
 
 :::note
@@ -203,11 +219,11 @@ If both `preferredToken` & `tokenList` are present in the request body, but some
 
 #### 3. Mode is **EMPTY** :
 
-In this case, the API should check for both Verifying Paymaster and Token Paymaster conditions. If the `mode` parameter is not available in the request, it will start checking the Verifying Paymaster conditions. If these conditions are met, it will return the response with `paymasterAndData` but without the `feeQuotes`. The `mode` value here must be `SPONSORED`.
+In this case, the API should check for both SponsorshipPaymaster and Token Paymaster conditions. If the `mode` parameter is not available in the request, it will start checking the SponsorshipPaymaster conditions. If these conditions are met, it will return the response with `paymasterAndData` but without the `feeQuotes`. The `mode` value here must be `SPONSORED`.
 
-If the Verifying Paymaster conditions fail, then it will check for Token Paymaster conditions as described in the TokenPaymaster section, and return the response accordingly. In this case feeQuotes is returned but not the paymasterAndData.
+If the Sponsorship Paymaster conditions fail, then it will check for Token Paymaster conditions as described in the TokenPaymaster section, and return the response accordingly. In this case feeQuotes is returned but not the paymasterAndData.
 
-However, if the `mode` value is available in the request and is equal to `ERC20`, then checks for Verifying Paymaster should be skipped, and only the Token Paymaster flow should be followed.
+However, if the `mode` value is available in the request and is equal to `ERC20`, then checks for Sponsorship Paymaster should be skipped, and only the Token Paymaster flow should be followed.
 
 Based on the `mode` value in the response, the client will decide whether to show gas payment options to the user or not.
 
@@ -279,7 +295,15 @@ To determine whether a request can be sponsored by the Sponsorship Paymaster, on
 
 **Token Paymaster**
 
-Consider both the partial `UserOp` and tokenAddress parameters in this case. If the token address is absent, an error will be thrown. If both are present, check for the TokenPaymaster flow and send the `paymasterAndData` response accordingly. If the token address is not supported, an error will also be thrown. Please see the error response at the end of this document.
+Consider both the partial `UserOp` and `tokenAddress` parameters in this case. If the `tokenAddress` is absent, an error will be thrown. If both are present, check for the *TokenPaymaster* flow and send the `paymasterAndData` response accordingly. If the `tokenAddress` is not supported, an error will also be thrown. Please see the error response at the end of this document.
+
+
+:::note
+**"MODE"** is mandatory for `pm_sponsorUserOperation` API, 
+
+- If **"MODE"** is **SPONSORED**, we check for request sponsorship. If request cannot be sponsored, we return 0x. This would mean users will pay for their gas fees.
+- If **"MODE"** is ERC20, we return `paymasterAndData` for TokenPaymaster. This would mean that users will pay in there preferred ERC20 Tokens
+:::
 
 #### 1. Mode is **ERC20** :
 
@@ -314,7 +338,7 @@ Consider both the partial `UserOp` and tokenAddress parameters in this case. If 
 ```
 
 <details>
-  <summary> params explained here : </summary>
+  <summary> Check for params here: </summary>
 
 `params` is an array where 
 
@@ -411,8 +435,7 @@ In response, the result field will contain `paymasterAndData` to be used in User
 
 
 
-<details>
-  <summary> <h2><bold> Error Response (Applicable to both APIs)</bold></h2></summary>
+### Error Response (Applicable to both APIs)
 
 ```javascript
   {
@@ -436,5 +459,3 @@ This is a standard JSON RPC error response. The code field inside the error obje
 | -32602 | Invalid params | Invalid method parameter(s). |
 | -32603 | Internal error | Internal JSON-RPC error. |
 | -32000 to -32099 | Server error | Reserved for implementation-defined server errors. |
-
-  </details>
