@@ -65,7 +65,3 @@ export interface ISmartAccount {
 | sendSignedUserOp         | userOperation: UserOperation | Sends the pre-signed `UserOperation` to the Biconomy network for execution. Returns a Promise that resolves to a `UserOpResponse` containing the response from the network. |
 
 
-| Typing  | Description |
-| --------  | ------------------- |
-| InitilizationData | Optional data    |
-| data      | Some long data here |

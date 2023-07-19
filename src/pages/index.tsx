@@ -42,8 +42,8 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      title={`The Biconomy SDK`}
+      description="Documentation, tutorials, and guides for implmentation of the Biconomy SDK">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
