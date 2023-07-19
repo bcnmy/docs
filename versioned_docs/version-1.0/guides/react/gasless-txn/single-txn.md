@@ -52,7 +52,7 @@ console.log('Tx hash', txReciept.transactionHash);
 // DONE! You just sent a gasless transaction
 ```
 
-:::warning
+:::caution
 For common errors check [this](https://docs.biconomy.io/references/common-errors).
 :::
 

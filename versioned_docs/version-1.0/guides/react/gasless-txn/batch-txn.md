@@ -62,7 +62,7 @@ console.log('Tx Hash', txReciept.transactionHash);
 // DONE! You just sent a batched gasless transaction
 ```
 
-:::warning
+:::caution
 For common errors check [this](https://docs.biconomy.io/references/common-errors).
 :::
 
