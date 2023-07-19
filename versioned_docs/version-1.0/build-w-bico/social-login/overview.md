@@ -18,7 +18,9 @@ In the context of Web3 applications, social logins can be used to generate a uni
 
 Users can log in to your dApp either via social login or by connecting their external wallet. In social login, they may sign in via Google, Facebook, or email. A unique private key is generated for each user via the Web3 authentication provider. Using this key, users can sign transactions without wallet pop-ups or context switching. As long as the email is the same, the same account will be generated for all social accounts.
 
-Please Note: We do not store any private keys.
+:::note
+**Please Note**: We do not store any private keys.
+:::
 
 ## Modular SDK
 
