@@ -37,7 +37,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }} 
           role-session-name: production-deploy
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       # publish to prod environment
       - name: Deploy to S3
