@@ -3,7 +3,7 @@ sidebar_position: 4
 ---
 # Paymaster Methods
 
-WIPFollowing are the methods that can be called on paymaster instance 
+Following are the methods that can be called on paymaster instance 
 
 ```typescript
 export interface IHybridPaymaster<T> extends IPaymaster {
@@ -22,6 +22,14 @@ export interface IHybridPaymaster<T> extends IPaymaster {
 }
 
 ```
+| Method |Parameter    | Description                                                                                                                                                                                                                     |
+|-----------------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| getPaymasterAndData         | userOp: Partial UserOperation                    | Accepts a Partial UserOperation object (without signature and paymasterAndData fields) and returns paymasterAndData from PaymasterAndDataResponse.   |
+| buildTokenApprovalTransaction | tokenPaymasterRequest: BiconomyTokenPaymasterRequest, provider: Provider | Specifically used for token paymaster sponsorship. It creates an approve transaction for the paymaster that gets batched with other transactions. Note: Automatically called as part of the buildTokenPaymasterUserOp function. |
+| getPaymasterFeeQuotesOrData | userOp: Partial UserOperation, paymasterServiceData: FeeQuotesOrDataDto | Fetches quote information or paymaster data based on provided userOperation and paymasterServiceData. Tries sponsorship first and then falls back to serving fee quotes for supported/requested tokens. Can return paymasterAndData. |
+
+
+#### Below API methods can be used for Biconomy Hybrid paymaster
 One can also build their own Paymaster API class and submit a PR or just provide instance of it in the account package / use standalone to generate paymasterAndData
 
 It should follow below Interface. 
@@ -34,23 +42,7 @@ export interface IPaymaster {
   getDummyPaymasterAndData(userOp: Partial<UserOperation>): Promise<string>
 }
 ```
+| Method |Parameter    | Description                                                                                                                                                                                                                     |
+|-----------------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| getDummyPaymasterAndData | userOp: Partial UserOperation | This function is not part of the IHybridPaymaster interface but is specified in the IPaymaster interface. It is optional and can be implemented in the class. It is used to provide a dummy paymaster and data and returns a string as a Promise.|
 
-
-
-### Below API methods can be used for Biconomy Hybrid paymaster
-
-**getPaymasterAndData**
-
-This function accepts a **`Partial<UserOperation>`** object that includes all properties of **`userOp`** except for the **`signature`** and  **`paymasterAndData`** field. It returns **`paymasterAndData`** as part of the **`PaymasterAndDataResponse`**
-
-**buildTokenApprovalTransaction**
-
-This function is specifically used for token paymaster sponsorship. The primary purpose of this function is to create an approve transaction for paymaster that gets batched with the rest of your transactions. 
-
-Note: You don't need to call this function. It will automatically get called as part of the **`buildTokenPaymasterUserOp`** function call.
-
-**getPaymasterFeeQuotesOrData**
-
-This function is used to fetch quote information or paymaster data based on provided userOperation and paymasterServiceData. If explicit mode is not provided it tries for sponsorship first and then falls back to serving fee quotes for supported/requested token/s
-
-Note: This function can return **paymasterAndData** as well in case all of the policies checks get passed.

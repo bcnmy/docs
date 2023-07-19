@@ -3,9 +3,7 @@ sidebar_position: 4
 ---
 # Bundler Methods
 
-WIP Converting to tables and explanations for more readibility
-
-Following are the methods that can be call on bundler instance
+Following are the methods that can be called on bundler instance
 
 ```typescript
 export interface IBundler {
@@ -18,11 +16,10 @@ export interface IBundler {
 }
 ```
 
-**estimateUserOpGas**
-Estimate the gas values for a UserOperation. Given UserOperation optionally without gas limits and gas prices, return the needed gas limits. The signature field is ignored by the wallet, so that the operation will not require user's approval. Still, it might require putting a "semi-valid" signature (e.g. a signature in the right length)
+| Method | Parameter | Description |
+| -------- | -------- | -------- |
+| estimateUserOpGas | userOp: Partial UserOperation | Estimates the gas values for a UserOperation. The UserOperation may be provided without gas limits and gas prices. The method returns the needed gas limits for the operation. The signature field is ignored by the wallet to avoid user approval. However, a "semi-valid" signature is required. |
+| sendUserOp | userOp: UserOperation | Sends a UserOperation to be executed. The method returns a Promise that resolves to a UserOpResponse, representing the response from the execution of the UserOperation. |
+| getUserOpReceipt | userOpHash: string | Retrieves the receipt for a previously executed UserOperation, identified by its hash. The method returns a Promise that resolves to a UserOpReceipt containing the execution details. |
+| getUserOpByHash | userOpHash: string | Retrieves the details of a previously executed UserOperation, identified by its hash. The method returns a Promise that resolves to a UserOpByHashResponse containing the UserOperation details. |
 
-**Return Values**
-
-**preVerificationGas** gas overhead of this UserOperation
-**verificationGasLimit** actual gas used by the validation of this UserOperation
-**callGasLimit** limit used to execute userop.callData called from EntryPoint to the Smart Account
