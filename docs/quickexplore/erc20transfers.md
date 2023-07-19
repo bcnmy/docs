@@ -8,7 +8,7 @@ sidebar_position: 3
 You should already have the node cli set up before following this guide. View those instructions [here](setupnodecli.md)
 :::
 
-In the previous tutorials we set up our Smart Accounts and created Native Transfers using the Node JS CLI tool, in this tutorial we will use the tool to start exploring ERC20 token transfers. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20Transfer.ts`
+In the previous tutorials we set up our Smart Accounts and created Native Transfers using the Node JS CLI tool, in this tutorial we will use the tool to start exploring ERC20 token transfers. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/erc20Transfer.ts` and `scripts/gasless/erc20Transfer.ts`
 
 This tutorial uses USDC on Polygon Mumbai from this contract Address: 0xdA5289fCAAF71d52a80A254da614a192b693e977. You can swap matic test tokens for USDC via [uniswap](https://app.uniswap.org/#/swap), just connect with your EOA while on the mumbai testnet and swap with this address. At the time of writing this I was able to swap 1 test matic for 75 test USDC tokens. Make sure to fund your smart account with some test USDC. 
 

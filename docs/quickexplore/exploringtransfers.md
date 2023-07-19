@@ -8,7 +8,7 @@ sidebar_position: 2
 You should already have the node CLI set up before following this guide. View those instructions [here](setupnodecli.md)
 :::
 
-In the previous tutorial we set up our Smart Accounts using the Node JS CLI tool, in this tutorial we will use the tool to start exploring how transfers will look. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/nativeTransfer.ts`
+In the previous tutorial we set up our Smart Accounts using the Node JS CLI tool, in this tutorial we will use the tool to start exploring how transfers will look. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/nativeTransfer.ts` and `scripts/gasless/nativeTransfer.ts`
 
 ## Native Transfers
 

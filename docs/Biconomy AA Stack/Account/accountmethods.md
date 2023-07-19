@@ -27,7 +27,7 @@ export interface IBiconomySmartAccount extends ISmartAccount {
 
 The `IBiconomySmartAccount` interface extends the `ISmartAccount` interface and provides additional methods for interacting with a Biconomy Smart Account.
 
-| Method                          | Parameters                                                             | Description                                                                                                                                                                                                                                                            |
+| Type                          | Description                                                             | 
 |---------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | init                            | initilizationData?: InitilizationData                                  | Initializes the smart account with the provided `initilizationData`, if provided. Returns a Promise that resolves to the initialized `IBiconomySmartAccount`.                                                                                                           |
 | initializeAccountAtIndex        | accountIndex: number                                                   | Initializes the smart account at the specified `accountIndex`.                                                                                                                                                                                                         |
@@ -63,3 +63,4 @@ export interface ISmartAccount {
 | signUserOp               | userOperation: UserOperation | Signs the given `UserOperation` with the necessary cryptographic signature. Returns a Promise that resolves to the signed `UserOperation`.                                 |
 | sendUserOp               | userOperation: UserOperation | Sends the provided `UserOperation` to the Biconomy network for execution. Returns a Promise that resolves to a `UserOpResponse` containing the response from the network. |
 | sendSignedUserOp         | userOperation: UserOperation | Sends the pre-signed `UserOperation` to the Biconomy network for execution. Returns a Promise that resolves to a `UserOpResponse` containing the response from the network. |
+
