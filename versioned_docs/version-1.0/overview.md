@@ -24,7 +24,7 @@ The backbone of the Biconomy SDK is a Smart Contract Wallet (SCW) which is creat
 
 SCW address is counterfactual in nature. That means the user gets the address instantly after logging into the system, without even deploying anything on-chain. The actual smart contract is deployed along with the first transaction of the user.
 
-IMAGE GOES HERE
+![Overview](img/overview.png)
 
 A Smart Contract Wallet is a smart contract associated with each user's EOA (Externally Owned Account e.g. traditional MetaMask account or account generated via Social Login). We also call Smart Contract Wallets Smart Accounts.
 
