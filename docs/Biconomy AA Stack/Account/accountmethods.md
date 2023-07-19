@@ -27,7 +27,7 @@ export interface IBiconomySmartAccount extends ISmartAccount {
 
 The `IBiconomySmartAccount` interface extends the `ISmartAccount` interface and provides additional methods for interacting with a Biconomy Smart Account.
 
-| Type                          | Description                                                             | 
+| Method                          | Parameters                                                             | 
 |---------------------------------|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | init                            | initilizationData?: InitilizationData                                  | Initializes the smart account with the provided `initilizationData`, if provided. Returns a Promise that resolves to the initialized `IBiconomySmartAccount`.                                                                                                           |
 | initializeAccountAtIndex        | accountIndex: number                                                   | Initializes the smart account at the specified `accountIndex`.                                                                                                                                                                                                         |
