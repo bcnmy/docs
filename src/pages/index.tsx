@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import { useColorMode } from '@docusaurus/theme-common';
+import Head from '@docusaurus/Head';
 
 import styles from './index.module.css';
 
@@ -44,6 +45,9 @@ export default function Home(): JSX.Element {
     <Layout
       title={`The Biconomy SDK`}
       description="Documentation, tutorials, and guides for implmentation of the Biconomy SDK">
+      <Head>
+        <meta prefix="og: http://ogp.me/ns#" /> 
+      </Head>
       <HomepageHeader />
       <main>
         <HomepageFeatures />
