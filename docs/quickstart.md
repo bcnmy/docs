@@ -83,7 +83,7 @@ IBundler is the typing for the Bundler class that we will create a new instance 
 
 ```typescript
 const bundler: IBundler = new Bundler({
-    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/abc',     
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44',     
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
@@ -202,7 +202,7 @@ config()
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 const bundler: IBundler = new Bundler({
-    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/abc',
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44,
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
