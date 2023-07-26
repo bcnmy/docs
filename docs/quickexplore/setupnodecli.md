@@ -43,7 +43,7 @@ You will have a `config.json` file created in the root of this directory which s
   "accountIndex": 0,
   "chainId": 80001,
   "rpcUrl": "https://rpc.ankr.com/polygon_mumbai",
-  "bundlerUrl": "https://bundler.biconomy.io/api/v2/80001/abc",
+  "bundlerUrl": "https://bundler.biconomy.io/api/v2/<CHAINID>/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   "biconomyPaymasterUrl": "https://paymaster.biconomy.io/api/v1/<CHAINID>/<APIKEY>",
   "preferredToken": "",
   "tokenList": []

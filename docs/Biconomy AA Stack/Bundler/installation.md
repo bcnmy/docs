@@ -6,14 +6,14 @@ sidebar_position: 2
 Using `npm` package manager
 
 ```bash
-npm i @biconomy/account 
+npm i @biconomy/bundler 
 ```
 OR
 
 Using `yarn` package manager
 
 ```bash
-yarn add @biconomy/account 
+yarn add @biconomy/bundler 
 ```
 
 We will also be making use of the core types package to help us with the Bundler 
