@@ -13,7 +13,7 @@ yarn add @biconomy/paymaster
 // or
 npm install @biconomy/account
 npm install @biconomy/bundler
-npm install @biconom/paymaster
+npm install @biconomy/paymaster
 ```
 
 :::info
