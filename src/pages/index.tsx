@@ -44,7 +44,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`The Biconomy SDK`}
-      description="Documentation, tutorials, and guides for implmentation of the Biconomy SDK">
+      description="Documentation, tutorials, and guides for implementation of the Biconomy SDK">
       <Head>
         <meta prefix="og: http://ogp.me/ns#" /> 
       </Head>

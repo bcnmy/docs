@@ -1,12 +1,10 @@
 ---
-sidebar_label: 'API References'
-sidebar_position: 6
+sidebar_label: 'Paymaster API'
+sidebar_position: 1
 
 ---
 
-# API References
-
-## Biconomy Paymaster Service
+# Biconomy Paymaster Service
 
 
 1. The Biconomy paymaster will enable a single paymaster URL generation on our dashboard, which can be used for gas sponsorship as well as enabling users to pay gas in ERC20 tokens.

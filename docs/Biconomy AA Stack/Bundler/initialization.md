@@ -18,8 +18,10 @@ import { IBundler, Bundler } from '@biconomy/bundler'
 import { ChainId } from "@biconomy/core-types";
 
 const bundler: IBundler = new Bundler({
-    bundlerUrl: '',      
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/{CHAINID}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44',      
     chainId: ChainId.POLYGON_MAINNET,
     entryPointAddress: '',
   })
 ```
+
+If You would like to use the Bundler on Mainnet, please contact us!
