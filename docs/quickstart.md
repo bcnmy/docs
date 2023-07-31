@@ -185,7 +185,7 @@ Now we need to construct our transaction which will take the following values:
 
 Next up is building the userOp, feel free to add an additional log here if you would like to see how the partial userOp looks in this case. We’re also going to add “0x” for the paymasterAndData value as we just want this to be a regular transaction where the gas is paid for by the end user. 
 
-Finally we send the userOp and save the value to a variable named userOpResponse and get the transactionDetail after calling userOpResponse.wait(). This function can optionally take a number to specify the amount of network confirmations you would like befure returning a value. For example if you passed `userOpResponse.wait(5)` this would wait for 5 confirmations on the network before giving you the neccasary value. 
+Finally we send the userOp and save the value to a variable named userOpResponse and get the transactionDetail after calling userOpResponse.wait(). This function can optionally take a number to specify the amount of network confirmations you would like before returning a value. For example, if you passed `userOpResponse.wait(5)` this would wait for 5 confirmations on the network before giving you the necessary value. 
 
 Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK! 
 
