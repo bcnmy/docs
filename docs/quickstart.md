@@ -17,13 +17,17 @@ We will clone a preconfigured Node.js project with TypeScript support to get sta
 
 1. Open your command line interface, Terminal, Command Prompt, or PowerShell.
 2. Navigate to the desired directory where you would like to clone the repository.
-3. Execute the following command to clone the repository from the provided [GitHub link](https://github.com/Rahat-ch/node_typescript_starter)
+3. Execute the following command to clone the repository from the provided [GitHub link](https://github.com/bcnmy/quickstart)
 
 ```bash
-git clone git@github.com:Rahat-ch/node_typescript_starter.git
+git clone git@github.com:bcnmy/quickstart.git
 ```
 
 Note that this is the ssh example, use http or GithubCli options if you prefer. 
+
+```bash
+git clone https://github.com/bcnmy/quickstart.git
+```
 
 Once you have the repository on your local machine - start by installing all dependencies using your preferred package manager. In this tutorial we will use yarn.
 
