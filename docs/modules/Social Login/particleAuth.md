@@ -8,7 +8,7 @@ Particle Auth provides MPC (Multi-Party Computation)-based threshold signatures.
 
 ## Code Examples
 
-- [Implement Particle Auth With React](https://github.com/bcnmy/sdk-examples/tree/master/react-vite-particle-auth)
+- [Implement Particle Auth With Biconomy SDK and React](https://github.com/bcnmy/sdk-examples/tree/master/react-vite-particle-auth)
 - [Documentation for Particle Auth AA SDK](https://docs.particle.network/developers/account-abstraction/web-sdk)
 - [Particle Auth Web Demo](https://github.com/Particle-Network/particle-web-demo)
 
@@ -85,7 +85,7 @@ const connect = async () => {
 Now you can create a smart account with Biconomy and begin making transactions 
 
 :::info
-Make sure to authorze the NFT contract in your Biconomy Dashboard and retrieve the neccasary dapp API key. The NFT contract in this guide is deployed [here](https://goerli.etherscan.io/address/0xdd526eba63ef200ed95f0f0fb8993fe3e20a23d0)
+Make sure to authorize the NFT contract in your Biconomy Dashboard and retrieve the neccasary dapp API key. The NFT contract in this guide is deployed [here](https://goerli.etherscan.io/address/0xdd526eba63ef200ed95f0f0fb8993fe3e20a23d0)
 :::
 
 ```javascript

@@ -50,16 +50,16 @@ The common package is needed by our accounts package as another dependency.
 | bundler       | You can pass same bundler instance that you have build in previous step. Alternatively, you can skip this if you are only interested in building userOP|
 
 
+:::info
+We are utilizing Ethers to pass the signer during initialization. However, it's worth mentioning that you have the flexibility to obtain the signer from various other SDKs. Some popular options include Web3.js, Wagmi React hooks, as well as authentication providers like Particle, Web3Auth, Magic, and many others.
+:::
+
 ## Example Usage
 
 ```typescript
 // This is how you create BiconomySmartAccount instance in your dapp's
 
 import { BiconomySmartAccount, BiconomySmartAccountConfig } from "@biconomy/account"
-
-:::info
-Note that we are using Etheres to pass the signer to the initialization here. However you can get the signer from many different SDKs available such as Web3.js, Wagmi React hooks, And auth providers like Particle, Web3Auth, Magic, and more.
-:::
 
 // Note that paymaster and bundler are optional. You can choose to create new instances of this later and make account API use 
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {

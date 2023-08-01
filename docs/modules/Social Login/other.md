@@ -13,4 +13,4 @@ const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
 }
 ```
 
-As long as you are able to pass the configuration object a signer from a Javascript Ethereum Provider, you will be able to use other SDK's and auth providers with our smart accounts as well. For ease of use we recommend checkking our already integrated partners!
+As long as you can provide a signer from a JavaScript Ethereum Provider in the configuration object, you can utilize various other SDKs and authentication providers seamlessly with our smart accounts. We recommend exploring our pre-integrated partners for a smoother and more user-friendly experience.
