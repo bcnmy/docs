@@ -57,6 +57,10 @@ The common package is needed by our accounts package as another dependency.
 
 import { BiconomySmartAccount, BiconomySmartAccountConfig } from "@biconomy/account"
 
+:::info
+Note that we are using Etheres to pass the signer to the initialization here. However you can get the signer from many different SDKs available such as Web3.js, Wagmi React hooks, And auth providers like Particle, Web3Auth, Magic, and more.
+:::
+
 // Note that paymaster and bundler are optional. You can choose to create new instances of this later and make account API use 
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
     signer: wallet.getSigner(),
