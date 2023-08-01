@@ -50,6 +50,10 @@ The common package is needed by our accounts package as another dependency.
 | bundler       | You can pass same bundler instance that you have build in previous step. Alternatively, you can skip this if you are only interested in building userOP|
 
 
+:::info
+We are utilizing Ethers to pass the signer during initialization. However, it's worth mentioning that you have the flexibility to obtain the signer from various other SDKs. Some popular options include Web3.js, Wagmi React hooks, as well as authentication providers like Particle, Web3Auth, Magic, and many others.
+:::
+
 ## Example Usage
 
 ```typescript
