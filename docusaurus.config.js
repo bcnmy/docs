@@ -152,8 +152,6 @@ const config = {
       [
         '@docusaurus/plugin-client-redirects',
         {
-          fromExtensions: ['html', 'htm'], // /myPage.html -> /myPage
-          toExtensions: ['exe', 'zip'], // /myAsset -> /myAsset.zip (if latter exists)
           redirects: [
             // /docs/oldDoc -> /docs/newDoc
             {
@@ -172,5 +170,3 @@ const config = {
 };
 
 module.exports = config;
-//https://docs.biconomy.io/docs/category/smart-accounts
-//https://docs.biconomy.io/sdk-reference/smart-account-methods
