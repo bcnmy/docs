@@ -166,16 +166,6 @@ const config = {
             //   from: ['/docs/oldDocFrom2019', '/docs/legacyDocFrom2016'],
             // },
           ],
-          // createRedirects(existingPath) {
-          //   if (existingPath.includes('/community')) {
-          //     // Redirect from /docs/team/X to /community/X and /docs/support/X to /community/X
-          //     return [
-          //       existingPath.replace('/community', '/docs/team'),
-          //       existingPath.replace('/community', '/docs/support'),
-          //     ];
-          //   }
-          //   return undefined; // Return a falsy value: no redirect created
-          // },
         },
       ],
     ],
@@ -183,4 +173,4 @@ const config = {
 
 module.exports = config;
 //https://docs.biconomy.io/docs/category/smart-accounts
-//https://docs.biconomy.io/sdk-reference/smart-account-methods .
+//https://docs.biconomy.io/sdk-reference/smart-account-methods
