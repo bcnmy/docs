@@ -1,4 +1,4 @@
-const redirectsList = [
+const redirectLinks= [
     {
     to: '/docs/category/smart-accounts',
     from: '/sdk-reference/smart-account-methods',
@@ -42,4 +42,6 @@ const redirectsList = [
     to: '/products/enable-gasless-transactions/networks-supported',
     from: '/docs/1.0/sdk-reference/network-supported',
   },
-]
+];
+
+module.exports = {  redirectLinks };
