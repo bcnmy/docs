@@ -15,7 +15,8 @@ sidebar_position: 9
 6. Arbitrum Nove Mainnet
 7. Optimism Mainnet
 8. Avalanche Mainnet
-9. Moonbeam Mainnet
+9. Base Mainnet
+
 
 
 ## Testnet Chains
@@ -26,6 +27,6 @@ sidebar_position: 9
 4. Polygon zkEVM Testnet
 5. Arbitrum Goerli Testnet
 6. Optimisim Goerli Testnet
-7. Avalanche Testnet
+7. Avalanche Fuji Testnet
 8. Base Goerli Testnet
 9. Linea Testnet
