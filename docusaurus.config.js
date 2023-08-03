@@ -147,6 +147,26 @@ const config = {
         darkTheme: darkCodeTheme,
       },
     }),
+
+    plugins:[
+      [
+        '@docusaurus/plugin-client-redirects',
+        {
+          redirects: [
+            // /docs/oldDoc -> /docs/newDoc
+            {
+              to: '/docs/category/smart-accounts',
+              from: '/sdk-reference/smart-account-methods',
+            },
+            // Redirect from multiple old paths to the new path
+            // {
+            //   to: '/docs/newDoc2',
+            //   from: ['/docs/oldDocFrom2019', '/docs/legacyDocFrom2016'],
+            // },
+          ],
+        },
+      ],
+    ],
 };
 
 module.exports = config;
