@@ -1,4 +1,4 @@
-export const redirectsList = [
+const redirectsList = [
     {
     to: '/docs/category/smart-accounts',
     from: '/sdk-reference/smart-account-methods',
