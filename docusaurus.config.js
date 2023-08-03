@@ -4,7 +4,7 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-import { redirectsList } from './redirects';
+const redirectsList = require ( './redirects.js');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
