@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Common Errors'
-sidebar_position: 9
+sidebar_position: 8
 ---
 
 # Common Errors
