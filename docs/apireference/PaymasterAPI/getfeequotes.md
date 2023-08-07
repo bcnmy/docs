@@ -1,8 +1,8 @@
 ---
-sidebar_label: ' Get Fee Quotes or Data Endpoint'
+sidebar_label: ' Get Fee Quotes'
 sidebar_position: 1
 ---
-
+# Get Fee Quotes or Data Endpoint
 
 The Paymaster Service will introduce two new endpoints for Token and Sponsorship paymasters. Both endpoints must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
 

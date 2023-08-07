@@ -3,7 +3,7 @@ sidebar_label: 'Sponsor UserOp End Point'
 sidebar_position: 2
 ---
 
-
+# Sponsor UserOp End Point
 
 The Paymaster Service will introduce two new endpoints for Token and Sponsorship paymasters. Both endpoints must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
 
