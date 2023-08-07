@@ -4,6 +4,8 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const redirectsList = require ( './redirects.js').redirectLinks;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Biconomy',
@@ -147,6 +149,15 @@ const config = {
         darkTheme: darkCodeTheme,
       },
     }),
+
+    plugins:[
+      [
+        '@docusaurus/plugin-client-redirects',
+        {
+          redirects: redirectsList
+        },
+      ],
+    ],
 };
 
 module.exports = config;
