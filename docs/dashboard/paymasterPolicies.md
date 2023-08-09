@@ -13,7 +13,7 @@ Navigate to the Paymaster you have created, then click policies and contract. If
 
 ![new contract](../images/contracts/new_contract.png)
 
-Click on Add your First Contract and a side menu will show up asking you for detials. Name your contract and provide an address. If your contract is verified the dashboard will automatically fetch the ABI for it, otherwise you can manually paste in the ABI yourself. You will then be able to choose any write methods to whitelist for sponsorship. In the example below I added the USDC contract on the Goerli testnet and chose to authorize the approve method for sponsorship. 
+Click on Add your First Contract and a side menu will show up asking you for details. Name your contract and provide an address. If your contract is verified the dashboard will automatically fetch the ABI for it, otherwise you can manually paste in the ABI yourself. You will then be able to choose any write methods to whitelist for sponsorship. In the example below I added the USDC contract on the Goerli testnet and chose to authorize the approve method for sponsorship. 
 
 ![add contract](../images/contracts/add_contract.png)
 
