@@ -18,7 +18,6 @@ We are sorry to cause any inconvenience while interacting with biconomy SDK. We 
 | AA93 invalid paymasterAndData | Throws if `paymasterAndData` created by signing service is not valid.  |
 | AA95 out of gas | Throws if `callGasLimit` is not enough for executing callData sent in userOp. Try increasing `callGasLimit` to be able to resolve this issue.|
 | AA90 invalid beneficiary | Throws if the beneficiary address sent in userOp that is going to get sponsored transaction fee back is not valid. |
-| AA41 too little verificationGas | Throws if verificationGasLimit sent in userOp is not enough to be able to verify transaction signing and prefund gas amount of the transaction. |
 | AA31 paymaster deposit too low | Throws if the dApp you have created using dashboard does not have enough funds in its gas tank to sponsor transaction. |
 | AA41 too little verificationGas | Throws if the userOp does not have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to resolve this error. |
 | AA33 reverted (or OOG) | Throws if the transaction you are sending is not valid or userOp does not have enough `verificationGasLimit` to be able to validate transaction. Try increasing `verificationGasLimit` or verify either the transaction you are making is valid to be able to resolve this error. |
