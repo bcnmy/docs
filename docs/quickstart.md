@@ -191,7 +191,60 @@ Finally we send the userOp and save the value to a variable named userOpResponse
 
 Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK! 
 
-If you would like to see a full implementation of what the code should look like [check out this gist](https://gist.github.com/Rahat-ch/ebf7b152fd1a1a8ee6e097adcee50d06)
+<details>
+  <summary> Click to view final code </summary>
+
+```typescript
+import { config } from "dotenv"
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { ChainId } from "@biconomy/core-types";
+import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { Wallet, providers, ethers } from 'ethers'
+
+config()
+const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
+const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
+const bundler: IBundler = new Bundler({
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44,
+    chainId: ChainId.POLYGON_MUMBAI,
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+  })
+const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+  signer: wallet,
+  chainId: ChainId.POLYGON_MUMBAI,
+  bundler: bundler
+}
+async function createAccount() {
+  const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+  const biconomySmartAccount =  await biconomyAccount.init()
+  console.log("owner: ", biconomySmartAccount.owner)
+  console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
+  return biconomyAccount
+}
+async function createTransaction() {
+  console.log("creating account")
+  const smartAccount = await createAccount();
+  const transaction = {
+    to: '0x322Af0da66D00be980C7aa006377FCaaEee3BDFD',
+    data: '0x',
+    value: ethers.utils.parseEther('0.1'),
+  }
+
+  const userOp = await smartAccount.buildUserOp([transaction])
+  userOp.paymasterAndData = "0x"
+
+  const userOpResponse = await smartAccount.sendUserOp(userOp)
+
+  const transactionDetail = await userOpResponse.wait()
+
+  console.log("transaction detail below")
+  console.log(transactionDetail)
+}
+
+createTransaction()
+```
+
+</details>
 
 Now that you have completed our quickstart take a look at exploring further usecases in our Quick Explore guide or our Node JS guides!
 

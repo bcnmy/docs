@@ -60,4 +60,4 @@ import { config } from "dotenv"
 
 config()
 ```
-Now our code is configured to access the environment variable as needed. 
+Now our code is configured to access the environment variable as needed. Let's continue in the next section with setting up our smart account

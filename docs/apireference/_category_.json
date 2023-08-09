@@ -1,9 +1,9 @@
 {
-  "label": "Api References",
+  "label": "API References",
   "position": 8,
   "link": {
     "type": "generated-index",
-    "description": "Working with the AA stack through our available APIs"
+    "description": "Working with the AA stack through our Dashboard and Paymaster APIs"
   }
 }
 

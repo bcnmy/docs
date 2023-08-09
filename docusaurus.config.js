@@ -59,9 +59,36 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  
     ({
       // Replace with your project's social card
+    
+          // ...
+          algolia: {
+            // The application ID provided by Algolia
+            appId: 'HQDCKSUST1',
+      
+            // Public API key: it is safe to commit it
+            apiKey: '962102bce87a77db829c0ec6d14c30da',
+      
+            indexName: 'biconomy',
+      
+            // Optional: see doc section below
+            contextualSearch: true,
+      
+            // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+            externalUrlRegex: 'external\\.com|domain\\.com',
+      
+            // Optional: Algolia search parameters
+            searchParameters: {},
+      
+            // Optional: path for search page that enabled by default (`false` to disable it)
+            searchPagePath: 'search',
+      
+            //... other Algolia params 
+      },
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
         title: 'Biconomy',
