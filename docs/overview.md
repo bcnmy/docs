@@ -11,7 +11,7 @@ The Biconomy Modular SDK is a comprehensive software development kit designed sp
 
 Biconomy SDK brings blockchain-agnostic, web2-like experiences to your dApp in a non-custodial manner. Here's what you can enable today:
 
-- Easy User Onboarding: Simplifies the onboarding process for new users throufh social login, account creation, and recovery options, seamlessly integrating web2 users into your dApp.
+- Easy User Onboarding: Simplifies the onboarding process for new users through social login, account creation, and recovery options, seamlessly integrating web2 users into your dApp.
 - Fiat On Ramp: Allows your users to easily and reliably buy or sell cryptocurrencies within your dApp, facilitating the transition between traditional and blockchain-based assets
 - Gasless Transactions: Sponsors gas fees for user interactions, making them as simple as web2 transactions, and improving the overall user experience.
 - Paying Gas Fees In ERC20 Tokens: Enable users to utilize any ERC20 asset in their wallet to pay for gas fees, offering flexibility and convenience. 
