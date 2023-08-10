@@ -37,14 +37,10 @@ yarn dev
 ```
 After running these two commands you should see the printed statement “Hello World!” in your terminal. Any changes made to the `index.ts` file in the src directory should now automatically run in your terminal upon save. 
 
-# Package installation
+All packages you need for this guide are all configured and installed for you, check out the `package.json` file if you want to explore the dependencies.
 
-Now let’s install all of the needed packages from the Biconomy SDK
-
-```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types ethers@5.7.2
-```
-Let’s take a look at each of these packages
+<details>
+  <summary> Click to learn more about the packages </summary>
 
 - The account package will help you with creating smart contract accounts and an interface with them to create transactions.
 - The bundler package helps you with interacting with our bundler or alternatively another bundler of your choice.
@@ -53,6 +49,8 @@ Let’s take a look at each of these packages
 - The core types package will give us Enums for the proper ChainId we may want to use.
 - The common package is needed by our accounts package as another dependency.
 - Finally the ethers package at version 5.7.2 will help us with giving our accounts an owner which will be our own EOA.
+
+</details>
 
 Let’s first set up a .env file in the root of our project, this will need a Private Key of any Externally Owned Account (EOA) you would like to serve as the owner of the smart account we create. This is a private key you can get from wallets like MetaMask, TrustWallet, Coinbase Wallet etc. All of these wallets will have tutorials on how to export the Private key. 
 
@@ -193,9 +191,10 @@ Finally we send the userOp and save the value to a variable named userOpResponse
 
 Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK! 
 
-Here is an example of what the final code should look like:
+<details>
+  <summary> Click to view final code </summary>
 
-```tsx
+```typescript
 import { config } from "dotenv"
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { ChainId } from "@biconomy/core-types";
@@ -210,14 +209,11 @@ const bundler: IBundler = new Bundler({
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
-
-
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
   bundler: bundler
 }
-
 async function createAccount() {
   const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
   const biconomySmartAccount =  await biconomyAccount.init()
@@ -225,12 +221,9 @@ async function createAccount() {
   console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
   return biconomyAccount
 }
-
 async function createTransaction() {
   console.log("creating account")
-
   const smartAccount = await createAccount();
-
   const transaction = {
     to: '0x322Af0da66D00be980C7aa006377FCaaEee3BDFD',
     data: '0x',
@@ -250,3 +243,8 @@ async function createTransaction() {
 
 createTransaction()
 ```
+
+</details>
+
+Now that you have completed our quickstart take a look at exploring further usecases in our Quick Explore guide or our Node JS guides!
+
