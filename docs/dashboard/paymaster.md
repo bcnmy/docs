@@ -39,6 +39,6 @@ If you need to withdraw funds from your gas tank at any time, go to the gas tank
 ![Withdraw Funds](../images/paymaster/withdraw_funds.png)
 
 :::info
-Reminder that only the wallet you initially set up the gas tank witih can actually perform a withdrawal. Any wallet is allowed to deposit as needed. 
+Reminder that only the wallet you initially set up the gas tank with can actually perform a withdrawal. Any wallet is allowed to deposit as needed. 
 :::
 

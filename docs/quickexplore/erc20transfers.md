@@ -22,7 +22,7 @@ yarn run smartAccount erc20Transfer --to=0x322Af0da66D00be980C7aa006377FCaaEee3B
 
 Please feel free of course to transfer to any wallet of your choice. The `--to` flag in the script will be the recipient of the transfer you decide to make. The `--token` flag will be the contract of the token you want to transfer. In this case we are using the USDC POS contract on Polygon Mumbai. 
 
-Upon succesful transfer you will see several details printed to your terminal which include: the userOp information, userOp hash, and transaction detail information once confirmed.
+Upon successful transfer you will see several details printed to your terminal which include: the userOp information, userOp hash, and transaction detail information once confirmed.
 
 ## Token Paymaster transfers
 

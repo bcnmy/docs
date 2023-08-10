@@ -4,6 +4,8 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const redirectsList = require ( './redirects.js').redirectLinks;
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Biconomy',
@@ -57,9 +59,36 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  
     ({
       // Replace with your project's social card
+    
+          // ...
+          algolia: {
+            // The application ID provided by Algolia
+            appId: 'HQDCKSUST1',
+      
+            // Public API key: it is safe to commit it
+            apiKey: '962102bce87a77db829c0ec6d14c30da',
+      
+            indexName: 'biconomy',
+      
+            // Optional: see doc section below
+            contextualSearch: true,
+      
+            // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+            externalUrlRegex: 'external\\.com|domain\\.com',
+      
+            // Optional: Algolia search parameters
+            searchParameters: {},
+      
+            // Optional: path for search page that enabled by default (`false` to disable it)
+            searchPagePath: 'search',
+      
+            //... other Algolia params 
+      },
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
         title: 'Biconomy',
@@ -152,18 +181,7 @@ const config = {
       [
         '@docusaurus/plugin-client-redirects',
         {
-          redirects: [
-            // /docs/oldDoc -> /docs/newDoc
-            {
-              to: '/docs/category/smart-accounts',
-              from: '/sdk-reference/smart-account-methods',
-            },
-            // Redirect from multiple old paths to the new path
-            // {
-            //   to: '/docs/newDoc2',
-            //   from: ['/docs/oldDocFrom2019', '/docs/legacyDocFrom2016'],
-            // },
-          ],
+          redirects: redirectsList
         },
       ],
     ],

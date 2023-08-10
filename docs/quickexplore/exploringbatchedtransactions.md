@@ -8,7 +8,7 @@ sidebar_position: 5
 You should already have the node cli set up before following this guide. View those instructions [here](setupnodecli.md)
 :::
 
-In the previous tutorials we set up our Smart Accounts, created Native Transfers, transfered ER20 tokens, and mintend NFTS using the Node JS CLI tool, in this tutorial we will use the tool to start exploring batching transactions with batch minting . If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/batchMintNft.ts` and `scripts/gasless/batchMintNft.ts`.
+In the previous tutorials we set up our Smart Accounts, created Native Transfers, transferred ER20 tokens, and minted NFTS using the Node JS CLI tool, in this tutorial we will use the tool to start exploring batching transactions with batch minting. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/batchMintNft.ts` and `scripts/gasless/batchMintNft.ts`.
 
 Before executing our first batch NFT Mint, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! 
 
@@ -17,7 +17,7 @@ Let's run the following command:
 ```bash
 yarn run smartAccount batchMint
 ```
-Upon succesful mint you will see several details printed to your terminal which include: the useroperation information, userop hash, and transaction detail information once confirmed.This mints two NFTs for you in one transaction. You can mix and match different types of transactions for seamless 1 click experiences with this feature. 
+Upon successful mint you will see several details printed to your terminal which include: the useroperation information, userop hash, and transaction detail information once confirmed. This mints two NFTs for you in one transaction. You can mix and match different types of transactions for seamless 1 click experiences with this feature. 
 
 ## Token Paymaster Mint
 

@@ -11,7 +11,7 @@ We are sorry to cause any inconvenience while interacting with biconomy SDK. We 
 
 | Error | Description |
 | --------------- | --------------- |
-| AA21 didn’t pay prefund | Throws if your smart wallet does not have funds to send transaction. Send some native tokens in you smart wallet to be able to resolve the error. |
+| AA21 didn’t pay prefund | Throws if your smart wallet does not have funds to send transaction. Send some native tokens in your smart wallet to be able to resolve the error. |
 | AA10 sender already constructed | Throws if your smart wallet is already created but you are still sending `initcode` in userOp. |
 | AA13 initCode failed or OOG | Throws if userOp doesn’t have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to send transaction. |
 | AA14 initCode must return sender | Throws if the factory contract that you are using to deploy smart account does not return smart account address. Or `sender` field in userOp does not have same address as factory contract is creating for you. |
@@ -19,14 +19,14 @@ We are sorry to cause any inconvenience while interacting with biconomy SDK. We 
 | AA95 out of gas | Throws if `callGasLimit` is not enough for executing callData sent in userOp. Try increasing `callGasLimit` to be able to resolve this issue.|
 | AA90 invalid beneficiary | Throws if the beneficiary address sent in userOp that is going to get sponsored transaction fee back is not valid. |
 | AA31 paymaster deposit too low | Throws if the dApp you have created using dashboard does not have enough funds in its gas tank to sponsor transaction. |
-| AA41 too little verificationGas | Throws if the userOp does not have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to resolve this error. |
+| AA41 to little verificationGas | Throws if the userOp does not have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to resolve this error. |
 | AA33 reverted (or OOG) | Throws if the transaction you are sending is not valid or userOp does not have enough `verificationGasLimit` to be able to validate transaction. Try increasing `verificationGasLimit` or verify either the transaction you are making is valid to be able to resolve this error. |
 | AA40 over verificationGasLimit | Throws if you are sending over `verificationGasLimit` in userOp. Try reducing the value to be able to resolve this error. |
 | AA51 prefund below actualGasCost | Throws because of 2 possible reasons: either your smart wallet does not have funds to send transaction or the dApp you have created using dashboard does not have enough funds in its gas tank to sponsor transaction. |
-| No policies where set on the dashboard. Please set policies to allow gas sponsorship via paymasters | Throws if the contracts are not whitelisted using the dashboard to be able to sponsor transactions.  |
+| No policies were set on the dashboard. Please set policies to allow gas sponsorship via paymasters | Throws if the contracts are not whitelisted using the dashboard to be able to sponsor transactions.  |
 | error in txn | Throws when there is internal server error from relayer side which can be due to multiple reasons. In this we would require the transacitonId from the user. |
 | only allowed via delegateCall | Throws when trying to send native tokens directly to the Smart Account implementation. |
-| Smart Account:: new Signatory address cannot be self | Throws when trying to set the Smart Account address as it’s own owner. |
+| Smart Account:: new Signatory address cannot be self | Throws when trying to set the Smart Account address as its own owner. |
 | new Signatory address cannot be same as old one | Throws when trying to set owner with an address that is already an owner. |
 | Address cannot be zero | Throws when trying to update to a zero address as implementation. |
 | invalid tokenGasPriceFactor | Throws when token Gas Price factor provided is 0. |

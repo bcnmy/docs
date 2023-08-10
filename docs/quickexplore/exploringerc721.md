@@ -8,7 +8,7 @@ sidebar_position: 4
 You should already have the node cli set up before following this guide. View those instructions [here](setupnodecli.md)
 :::
 
-In the previous tutorials we set up our Smart Accounts, created Native Transfers, and transfered ER20 tokens using the Node JS CLI tool, in this tutorial we will use the tool to start exploring minting NFTs. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/mintNft.ts` and `scripts/gasless/mintNft.ts`.
+In the previous tutorials we set up our Smart Accounts, created Native Transfers, and transferred ER20 tokens using the Node JS CLI tool, in this tutorial we will use the tool to start exploring minting NFTs. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/mintNft.ts` and `scripts/gasless/mintNft.ts`.
 
 ## Mint an NFT
 
@@ -19,7 +19,7 @@ Let's run the following command:
 ```bash
 yarn run smartAccount mint
 ```
-Upon succesful mint you will see several details printed to your terminal which include: the useroperation information, userop hash, and transaction detail information once confirmed.
+Upon successful mint you will see several details printed to your terminal which include: the useroperation information, userop hash, and transaction detail information once confirmed.
 
 You can view your minted NFTs from your smart contract wallet by heading to this link `https://testnets.opensea.io/"your address here"`
 
