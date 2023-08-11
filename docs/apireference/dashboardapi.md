@@ -10,15 +10,15 @@ Using these APIs allow you to perform various actions without the need to access
 
 ### Auth Token
 
-To obtain an authToken required in the header, please reach out to our support team.
+To obtain an authToken required in the header, you can generate one in your account settings page on the [biconomy dashboard](https://dashboard.biconomy.io/account).
 
 
 
-#### 1. Get list of dApps: 
+#### 1. Get list of Paymasters: 
 
 > ***GET Request***
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v1/public/sdk/dapp
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
 
 Parameters
 
@@ -63,11 +63,11 @@ Responses
 }
 ```
 
-#### 2. Create a new dApp: 
+#### 2. Create a new Paymaster: 
 
 > ***POST Request***
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v1/public/sdk/dapp
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
 
 Parameters
 
@@ -82,7 +82,9 @@ Body
 | Param | Type | Description | Required |
 | --------------- | --------------- | --------------- | --------------- |
 | name | string | Unique name of the DApp for a chain id | Required |
+| type | string | Type of paymaster to be set up, in this case will be "HYBRID"  | Required |
 | chainId | number | Network on which the DApp exists | Required |
+| version | string | String that represents the version of Paymaster to be used for the dApp | Required |
 
 > ***200 OK***
 
@@ -101,12 +103,12 @@ Body
 
 > ***400 Bad Request***
 
-Dapp Name Already Exists
+Paymaster Name Already Exists
 
 ```javascript
 {
     "statusCode": 400,
-    "message": "Dapp name already exists"
+    "message": "paymaster_name_exists"
 }
 ```
 
@@ -144,7 +146,7 @@ Alternatively, if you already have a DApp registered, you can find the "apiKey" 
 
 > ***POST Request***
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v1/public/sdk/smart-contract
+URL: "https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract"
 
 Parameters
 
@@ -202,7 +204,7 @@ Smart Contract Already Exists
 
 > ***GET Request***
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v1/public/sdk/smart-contract
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
 
 Parameters
 
@@ -250,6 +252,8 @@ Header
 #### 5. Update Smart Contract Whitelisted Methods:
 
 > ***PATCH Request***
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
 
 Parameters
 
@@ -326,6 +330,8 @@ Usually, this occurs when incorrect apiKey is used or the address is not added
 #### 6. Delete Smart Contract
 
 > ***DELETE Request***
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
 
 Parameters
 
