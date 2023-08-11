@@ -1,10 +1,11 @@
 ---
-sidebar_label: Supported Chains
-sidebar_position: 10
+sidebar_label: Gas Sponsorship
+sidebar_position: 1
 ---
 
-# Supported Chains for Biconomy SDK
+# Gas Sponsorship
 
+List of chains supported by our Paymaster for gas sponsorship.
 
 ## Mainnet Chains
 1. Ethereum
@@ -16,7 +17,6 @@ sidebar_position: 10
 7. Optimism Mainnet
 8. Avalanche Mainnet
 9. Base Mainnet
-
 
 
 ## Testnet Chains
