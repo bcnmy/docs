@@ -29,6 +29,13 @@ Header
 | authToken | string | Token unique to every user account | Required |
 | apiKey | string | API Key Associated with dApp | Required |
 
+Body
+
+| Param | Type | Description | Required |
+| --------------- | --------------- | --------------- | --------------- |
+| webhookUrl | string | URL where webhook is available | Required |
+| requestType | string | Must be "GET" or "POST" | Required |
+
 
 Responses
 
@@ -57,7 +64,7 @@ Responses
 }
 ```
 
-#### 2. Get Registered Webhooks: 
+#### 2. Get a Registered Webhook: 
 
 > ***GET Request***
 
@@ -72,6 +79,17 @@ Header
 | authToken | string | Token unique to every user account | Required |
 | apiKey | string | API Key Associated with dApp | Required |
 
+Body
+
+| Param | Type | Description | Required |
+| --------------- | --------------- | --------------- | --------------- |
+| webhookUrl | string | empty string should be suppliled | Required |
+
+Query Params
+
+| Param | Type | Description | Required |
+| --------------- | --------------- | --------------- | --------------- |
+| webhookId | string | Webhook ID which was returned on creation | Required |
 
 > ***200 OK***
 
