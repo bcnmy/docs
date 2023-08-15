@@ -1,9 +1,9 @@
 ---
-sidebar_label: 'Build your first AA powered dApp'
+sidebar_label: 'Introduction'
 sidebar_position: 1
 ---
 
-# Build your first AA powered dApp
+# Introduction
 
 This tutorial will cover the basics of creating a dApp powered by the Biconomy SDK. Here's an overview of what you'll learn:
 
