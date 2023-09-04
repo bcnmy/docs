@@ -15,7 +15,7 @@ Using `yarn` package manager
 yarn add @biconomy/account
 ```
 
-In the following sections you will learn more about the Bundler and Paymaster packages individually. In order to take full advantage of the account we need to install these two packages as well:
+In the following sections, you will learn more about the Bundler and Paymaster packages individually. In order to take full advantage of the account we need to install these two packages as well:
 
 Using `npm` package manager
 
@@ -32,22 +32,22 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-typ
 ```
 
 Let’s take a look at each of these packages.
-The account package will help you create smart contract accounts and interface with them to create transactions.
-The bundler package helps you interact with our bundler or another bundler of your choice.
-The paymaster package works similarly to the bundler package in that you can use our paymaster or any other one you choose.
-The core types package will give us Enums for the proper ChainId we may want to use
-The common package is needed by our accounts package as another dependency.
+The account package will help you create Smart Contract Accounts - (SCAs) and interface with them to create transactions.
+The ```bundler``` package helps you interact with our bundler or another bundler of your choice.
+The ```paymaster``` package works similarly to the bundler package in that you can use our paymaster or any other one you choose.
+The ```core-types``` package will give us Enums for the proper ChainId we may want to use
+The ```common``` package is needed by our accounts package as another dependency.
 
 ## Smart Account instance configuration
 
 | Key           | Description |
 | ------------- | ------------- |
-| signer        | This signer will be used for signing userOps for any transactions you build. You can supply your your EOA wallet signer|
-| chainId       | This represents the network your smart wallet transactions will be conducted on. Take a look following Link for supported chain id's |
-| rpcUrl        | This represents the EVM node RPC URL you'll interact with, adjustable according to your needs. We recommend to use some private node url for efficient userOp building|
-| paymaster     | you can pass same paymaster instance that you have build in previous step. Alternatively, you can skip this if you are not interested in sponsoring transaction using paymaster|
-|               | Note: if you don't pass the paymaster instance, your smart account will need funds to pay for transaction fees.|
-| bundler       | You can pass same bundler instance that you have build in previous step. Alternatively, you can skip this if you are only interested in building userOP|
+| signer        | This signer will be used for signing userOps for any transactions you build. You can supply your EOA wallet as a signer|
+| chainId       | This represents the network your smart wallet transactions will be conducted on. Take a look at the [following](../../supportedchains/supportedchains.md) for supported chains |
+| rpcUrl        | This represents the EVM node RPC URL you'll interact with, adjustable according to your needs. We recommend using some private node url for efficient ```userOp``` building|
+| paymaster     | You can pass the same paymaster instance that you have built in the previous step. Alternatively, you can skip this if you are not interested in sponsoring transactions using Paymaster |
+|               | Note: if you don't pass the Paymaster instance, your Smart Contract Account will need funds to pay for transaction fees.|
+| bundler       | You can pass the same bundler instance that you have built in the previous step. Alternatively, you can skip this if you are only interested in building ```userOp```|
 
 
 :::info
@@ -95,7 +95,7 @@ const transactionDetails = await userOpResponse.wait()
 console.log("transaction details below")
 console.log(transactionDetails)
 ```
-Finally we send the userOp and save the value to a variable named userOpResponse and get the transactionDetails after calling ```typescript userOpResponse.wait()```
+Finally, we send the ```userOp``` and save the value to a variable named ```userOpResponse``` and get the ```transactionDetails``` after calling ```userOpResponse.wait()```
 
 ```typescript
 const transactionDetails = await userOpResponse.wait()
