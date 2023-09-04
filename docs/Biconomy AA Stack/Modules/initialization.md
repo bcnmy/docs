@@ -7,7 +7,7 @@ sidebar_position: 3
 
 ```typescript
 // This is how you create ECDSA module instance in your dapp's
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy-devx/modules";
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 
    const module = new ECDSAOwnershipValidationModule({
     signer: signer, // you will need to supply a signer from an EOA in this step
@@ -19,7 +19,7 @@ import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "
 
 ```typescript
 // This is how you create ECDSA module instance in your dapp's
-import { MultiChainValidationModule, DEFAULT_MULTICHAIN_MODULE } from "@biconomy-devx/modules";
+import { MultiChainValidationModule, DEFAULT_MULTICHAIN_MODULE } from "@biconomy/modules";
 
     const multiChainModule = new MultiChainValidationModule({
     signer: signer,
