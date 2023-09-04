@@ -20,7 +20,8 @@ Make sure to swap for Polygon Mumbai USDC test tokens at this address: 0xda5289f
 
 import { config } from "dotenv"
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 import { Wallet, providers, ethers  } from 'ethers'
 import { ChainId } from "@biconomy/core-types"
 import { 
@@ -50,19 +51,27 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+const module = new ECDSAOwnershipValidationModule({
   signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
-  bundler: bundler,
-  paymaster: paymaster
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+})
+
+const biconomySmartAccountConfig = {
+    signer: wallet,
+    chainId: ChainId.POLYGON_MUMBAI,
+    bundler: bundler,
+    paymaster: paymaster, 
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: module,
+    activeValidationModule: module
 }
 
-let smartAccount: BiconomySmartAccount
+let smartAccount: BiconomySmartAccountV2
 let address: string
 
 async function createAccount() {
   console.log("creating address")
-  let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+  let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
   biconomySmartAccount =  await biconomySmartAccount.init()
   address = await biconomySmartAccount.getSmartAccountAddress()
   smartAccount = biconomySmartAccount;
@@ -249,7 +258,8 @@ And finally we execute our userop!
 
 import { config } from "dotenv"
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 import { Wallet, providers, ethers  } from 'ethers'
 import { ChainId } from "@biconomy/core-types"
 import { 
@@ -280,18 +290,26 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+const module = new ECDSAOwnershipValidationModule({
   signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
-  bundler: bundler,
-  paymaster: paymaster
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+})
+
+const biconomySmartAccountConfig = {
+    signer: wallet,
+    chainId: ChainId.POLYGON_MUMBAI,
+    bundler: bundler,
+    paymaster: paymaster, 
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: module,
+    activeValidationModule: module
 }
 
-let smartAccount: BiconomySmartAccount
+let smartAccount: BiconomySmartAccountV2
 let address: string
 
 async function createAccount() {
-  let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+  let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
   biconomySmartAccount =  await biconomySmartAccount.init()
   address = await biconomySmartAccount.getSmartAccountAddress()
   console.log(address)

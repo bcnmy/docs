@@ -16,7 +16,7 @@ import SocialLogin from "@biconomy/web3-auth"
 import { ChainId } from "@biconomy/core-types";
 import { ethers } from 'ethers'
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount,BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { IPaymaster, BiconomyPaymaster,} from '@biconomy/paymaster'
 import Counter from './Components/Counter';
 ```
@@ -135,13 +135,15 @@ Now lets actually set up the smart account:
     setProvider(web3Provider)
     
     try {
-      const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+      const biconomySmartAccountConfig = {
         signer: web3Provider.getSigner(),
         chainId: ChainId.POLYGON_MUMBAI,
-        bundler: bundler,
-        paymaster: paymaster
+        bundler: bundler, 
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+        defaultValidationModule: module,
+        activeValidationModule: module
       }
-      let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
       biconomySmartAccount =  await biconomySmartAccount.init()
       console.log("owner: ", biconomySmartAccount.owner)
       console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())

@@ -97,13 +97,14 @@ Add the following imports to your `index.tsx`:
 
 import { useState } from 'react';
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { ethers  } from 'ethers'
 import { ChainId } from "@biconomy/core-types"
 import { 
   IPaymaster, 
   BiconomyPaymaster,  
 } from '@biconomy/paymaster'
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 
 ```
 Now in the React component we're going to define the instance of our Bundler and Paymaster: 
@@ -121,6 +122,7 @@ const bundler: IBundler = new Bundler({
   })
 
 ```
+We will come back to the ECDSA Validation Module in a moment. 
 
 We're also going to add some state variables to the component along with their typings:
 
@@ -146,13 +148,22 @@ const connect = async () => {
         "any"
       );
       setProvider(web3Provider)
-      const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+
+      const module = new ECDSAOwnershipValidationModule({
+      signer: web3Provider.getSigner(),
+      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+      })
+
+      const biconomySmartAccountConfig = {
         signer: web3Provider.getSigner(),
-        chainId: ChainId.BASE_GOERLI_TESTNET,
-        bundler: bundler,
-        paymaster: paymaster
+        chainId: ChainId.POLYGON_MUMBAI,
+        bundler: bundler, 
+        paymaster: paymaster,
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+        defaultValidationModule: module,
+        activeValidationModule: module
       }
-      let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
       biconomySmartAccount =  await biconomySmartAccount.init()
       setAddress( await biconomySmartAccount.getSmartAccountAddress())
       setSmartAccount(biconomySmartAccount)

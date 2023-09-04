@@ -301,7 +301,8 @@ import {
 import styles from '@/styles/Home.module.css'
 import { useState } from 'react';
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 import { ethers  } from 'ethers'
 import { ChainId } from "@biconomy/core-types"
 import { 
@@ -340,25 +341,33 @@ export default function Home() {
     paymasterUrl: 'https://paymaster.biconomy.io/api/v1/84531/m814QNmpW.fce62d8f-41a1-42d8-9f0d-2c65c10abe9a' 
   })
 
-  const connect = async () => {
+const connect = async () => {
     try {
       setLoading(true)
       const userInfo = await particle.auth.login();
       console.log("Logged in user:", userInfo);
       const particleProvider = new ParticleProvider(particle.auth);
-      console.log({particleProvider})
       const web3Provider = new ethers.providers.Web3Provider(
         particleProvider,
         "any"
       );
       setProvider(web3Provider)
-      const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+
+      const module = new ECDSAOwnershipValidationModule({
+      signer: web3Provider.getSigner(),
+      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+      })
+
+      const biconomySmartAccountConfig = {
         signer: web3Provider.getSigner(),
-        chainId: ChainId.BASE_GOERLI_TESTNET,
-        bundler: bundler,
-        paymaster: paymaster
+        chainId: ChainId.POLYGON_MUMBAI,
+        bundler: bundler, 
+        paymaster: paymaster,
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+        defaultValidationModule: module,
+        activeValidationModule: module
       }
-      let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
       biconomySmartAccount =  await biconomySmartAccount.init()
       setAddress( await biconomySmartAccount.getSmartAccountAddress())
       setSmartAccount(biconomySmartAccount)
