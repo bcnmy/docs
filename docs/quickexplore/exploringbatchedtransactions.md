@@ -10,7 +10,7 @@ You should already have the node cli set up before following this guide. View th
 
 In the previous tutorials we set up our Smart Accounts, created Native Transfers, transferred ER20 tokens, and minted NFTS using the Node JS CLI tool, in this tutorial we will use the tool to start exploring batching transactions with batch minting. If you would like to view the code that powers this script, you can do so in the source code of the CLI tool in `scripts/erc20/batchMintNft.ts` and `scripts/gasless/batchMintNft.ts`.
 
-Before executing our first batch NFT Mint, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! 
+Before executing our first batch NFT Mint, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your **smart account address** and get some test tokens! 
 
 Let's run the following command: 
 
