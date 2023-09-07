@@ -5,7 +5,8 @@ sidebar_position: 3
 # Exploring ERC20 Transfers
 
 :::info You should already have the node cli set up before following this guide.
-View those instructions [here](setupnodecli.md) :::
+View those instructions [here](setupnodecli.md) 
+:::
 
 In the previous tutorials we set up our Smart Accounts and created Native
 Transfers using the Node JS CLI tool, in this tutorial we will use the tool to
