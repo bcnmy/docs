@@ -25,7 +25,7 @@ Please feel free of course to transfer to any wallet of your choice. The `--to` 
 
 Upon successful transfer you will see several details printed to your terminal which include: the userOp information, userOp hash, and transaction detail information once confirmed.
 
-## Token Paymaster transfers
+## Token transfer with Paymaster
 
 Biconomy Paymasters support gas payments in ERC20 tokens. Let's do the same transfer but this time we can pay for gas using an ERC20 token. 
 
