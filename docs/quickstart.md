@@ -136,7 +136,6 @@ async function createAccount() {
   return biconomySmartAccount;
 }
 
-createAccount()
 ```
 
 We create a new instance of the account using the BiconomySmartAccount class and passing it the configuration. 
