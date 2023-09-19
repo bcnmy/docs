@@ -98,7 +98,7 @@ const biconomySmartAccountConfig = {
         activeValidationModule: ownerShipModule // either ECDSA or Multi chain to start
       }
 
-const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+const biconomyAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
 const biconomySmartAccount =  await biconomyAccount.init()
 const address = await biconomySmartAccount.getSmartAccountAddress()
 
