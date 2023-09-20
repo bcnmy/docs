@@ -130,25 +130,18 @@ const module = await ECDSAOwnershipValidationModule.create({
 
 ```
 
-We now need an object that will hold the configuration values for our Smart Account. 
+Now with the config setup let's create a smart account:
 
 ```typescript
-const biconomySmartAccountConfig = {
+async function createAccount() {
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
   bundler: bundler, 
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   defaultValidationModule: module,
   activeValidationModule: module
-}
-```
-
-Now with the config setup let's create a smart account:
-
-```typescript
-async function createAccount() {
-  let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
-  biconomySmartAccount =  await biconomySmartAccount.init()
+})
   console.log("owner: ", biconomySmartAccount.owner)
   console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
   return biconomySmartAccount;
@@ -245,7 +238,6 @@ const module = await ECDSAOwnershipValidationModule.create({
       defaultValidationModule: module,
       activeValidationModule: module
     })
-    biconomyAccount =  await biconomyAccount.init()
     console.log("address", biconomyAccount.accountAddress)
     return biconomyAccount
   }

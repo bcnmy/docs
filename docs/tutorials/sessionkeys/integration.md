@@ -117,7 +117,6 @@ Create a connect function:
         defaultValidationModule: ownerShipModule,
         activeValidationModule: ownerShipModule
       })
-      biconomySmartAccount =  await biconomySmartAccount.init()
       setAddress( await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
@@ -215,7 +214,6 @@ export default function Home() {
         defaultValidationModule: ownerShipModule,
         activeValidationModule: ownerShipModule
       })
-      biconomySmartAccount =  await biconomySmartAccount.init()
       setAddress( await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)

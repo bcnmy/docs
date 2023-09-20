@@ -163,7 +163,6 @@ const connect = async () => {
         defaultValidationModule: module,
         activeValidationModule: module
       })
-      biconomySmartAccount =  await biconomySmartAccount.init()
       setAddress( await biconomySmartAccount.getSmartAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)

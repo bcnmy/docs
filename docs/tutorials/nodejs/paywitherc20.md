@@ -80,7 +80,6 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module
 })
-  biconomySmartAccount =  await biconomySmartAccount.init()
   address = await biconomySmartAccount.getSmartAccountAddress()
   smartAccount = biconomySmartAccount;
   return biconomySmartAccount;
@@ -328,7 +327,6 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module
 })
-  biconomySmartAccount =  await biconomySmartAccount.init()
   address = await biconomySmartAccount.getSmartAccountAddress()
   console.log(address)
   smartAccount = biconomySmartAccount;

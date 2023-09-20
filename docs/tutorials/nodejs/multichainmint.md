@@ -64,7 +64,6 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module
 })
-  biconomySmartAccount =  await biconomySmartAccount.init()
   address = await biconomySmartAccount.getSmartAccountAddress()
   smartAccount = biconomySmartAccount;
   return biconomySmartAccount;
@@ -195,7 +194,6 @@ Now add the following in your connect function in order to initialize an instanc
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
   });
-  baseAccount = await baseAccount.init();
 
 ```
 
