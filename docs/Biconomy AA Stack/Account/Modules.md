@@ -1,4 +1,7 @@
-**Smart Account Modules**
+---
+sidebar_position: 5
+---
+# Smart Account Modules
 
 The new Smart Account package provides a basic smart account contract whose functionalities & capabilities can be easily & securely extended as per their desired user journey. This is enabled by our modular architecture. Devs can plug-in programmable modules to enable specific use cases.
 
