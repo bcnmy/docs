@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Quickstart'
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 # Quickstart: Smart Account Native Transfer
@@ -47,7 +47,6 @@ All packages you need for this guide are all configured and installed for you, c
 - The core types package will give us Enums for the proper ChainId we may want to use
 - The paymaster package works similarly to the bundler package in that you can use our paymaster or any other one of your choice.
 - The core types package will give us Enums for the proper ChainId we may want to use.
-- The modules package gives us access to the different modules we publish for the biconomy sdk.
 - The common package is needed by our accounts package as another dependency.
 - Finally the ethers package at version 5.7.2 will help us with giving our accounts an owner which will be our own EOA.
 
@@ -75,7 +74,7 @@ Let’s import our bundler package, and providers from the ethers package:
 ```typescript
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { ethers } from 'ethers'
+import { providers } from 'ethers'
 import { ChainId } from "@biconomy/core-types"
 ```
 
@@ -99,51 +98,35 @@ const bundler: IBundler = new Bundler({
 
 
 ```typescript
-import {  BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { Wallet, providers, ethers } from 'ethers';
 ```
 
-Update your import from the account package to also include BiconomySmartAccountV2 which is the class we will be using to create an instance of our smart account.
+Update your import from the account package to also include BiconomySmartAccount and BiconomySmartAccountConfig and also import Wallet, providers, and ethers from the ethers package. 
 
 ```typescript
-const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
+const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
+const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
 
 - We create a provider using a public RPC provider endpoint from ankr, feel free to use any service here such as Infura or Alchemy if you wish.
 - Next we create an instance of the wallet associated to our Private key.
 
-One more thing we need to include before we move on is the module for our Smart account. You can learn more about modules here. In this instance we will create this smart account using the ECDSA module. 
-
-First we import our Module: 
-
-```typescript
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
-```
-Now initialize it: 
-
-```typescript
-
-const module = new ECDSAOwnershipValidationModule({
-    signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-  })
-
-```
-
 We now need an object that will hold the configuration values for our Smart Account. 
 
 ```typescript
-const biconomySmartAccountConfig = {
+const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
-  bundler: bundler, 
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  defaultValidationModule: module,
-  activeValidationModule: module
+  bundler: bundler
 }
 ```
 
-Now with the config setup let's create a smart account:
+Here we’re using the `BiconomySmartAccountConfig` typing to help us structure the needed values in our configuration. 
+
+- `signer`: we pass the instance of our wallet
+- `chainId`: we pass Polygon Mumbai or any supported chain you want to test with
+- `bundler`: the instance of our bundler
 
 ```typescript
 async function createAccount() {
@@ -164,9 +147,8 @@ We then await the initialization of the account and log out two values to out te
 Smart accounts are counterfactual in nature. We know their address before they are even deployed. In this instance we won’t immediately deploy it, it will automatically be deployed on the first transaction it initiates and the gas needed for deployment will be added to that first transaction.
 :::
 
-:::caution
-Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step you might run into the [AA21 didn't pay prefund error](/docs/troubleshooting/commonerrors.md)!
-:::
+Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Fuacet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! 
+
 Once you have tokens available it is time to start constructing our first userOps for a native transfer.
 
 ## Execute your first userOp
@@ -215,67 +197,51 @@ Check out the long transaction details available now in your console! You just c
 ```typescript
 import { config } from "dotenv"
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { ChainId } from "@biconomy/core-types"
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
-import { ethers } from 'ethers';
+import { ChainId } from "@biconomy/core-types";
+import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { Wallet, providers, ethers } from 'ethers'
 
 config()
-
-const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
-
+const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
+const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 const bundler: IBundler = new Bundler({
-  bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44',     
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-})
-
-const module = new ECDSAOwnershipValidationModule({
-  signer: wallet,
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-})
-
-const biconomySmartAccountConfig = {
-    signer: wallet,
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44,
     chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler, 
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module
-  };
-
-  async function createAccount() {
-    let biconomyAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-    biconomyAccount =  await biconomyAccount.init()
-    console.log("address", biconomyAccount.accountAddress)
-    return biconomyAccount
+  })
+const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
+  signer: wallet,
+  chainId: ChainId.POLYGON_MUMBAI,
+  bundler: bundler
+}
+async function createAccount() {
+  const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+  const biconomySmartAccount =  await biconomyAccount.init()
+  console.log("owner: ", biconomySmartAccount.owner)
+  console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
+  return biconomyAccount
+}
+async function createTransaction() {
+  console.log("creating account")
+  const smartAccount = await createAccount();
+  const transaction = {
+    to: '0x322Af0da66D00be980C7aa006377FCaaEee3BDFD',
+    data: '0x',
+    value: ethers.utils.parseEther('0.1'),
   }
 
-  async function createTransaction() {
-    const smartAccount = await createAccount();
-    try {
-      const transaction = {
-        to: '0x322Af0da66D00be980C7aa006377FCaaEee3BDFD',
-        data: '0x',
-        value: ethers.utils.parseEther('0.1'),
-      }
-    
-      const userOp = await smartAccount.buildUserOp([transaction])
-      userOp.paymasterAndData = "0x"
-    
-      const userOpResponse = await smartAccount.sendUserOp(userOp)
-    
-      const transactionDetail = await userOpResponse.wait()
-    
-      console.log("transaction detail below")
-      console.log(`https://mumbai.polygonscan.com/tx/${transactionDetail.receipt.transactionHash}`)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  const userOp = await smartAccount.buildUserOp([transaction])
+  userOp.paymasterAndData = "0x"
 
-  createTransaction()
+  const userOpResponse = await smartAccount.sendUserOp(userOp)
+
+  const transactionDetail = await userOpResponse.wait()
+
+  console.log("transaction detail below")
+  console.log(transactionDetail)
+}
+
+createTransaction()
 ```
 
 </details>
