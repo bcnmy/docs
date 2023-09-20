@@ -48,7 +48,9 @@ The ```common``` package is needed by our accounts package as another dependency
 | paymaster     | You can pass the same paymaster instance that you have built in the previous step. Alternatively, you can skip this if you are not interested in sponsoring transactions using Paymaster |
 |               | Note: if you don't pass the Paymaster instance, your Smart Contract Account will need funds to pay for transaction fees.|
 | bundler       | You can pass the same bundler instance that you have built in the previous step. Alternatively, you can skip this if you are only interested in building ```userOp```|
-
+| entryPointAddress    | Entry point address for chain, you can use the DEFAULT_ENTRYPOINT_ADDRESS here |
+| defaultValidationModule    | Validation module to initialize with this should be either ECDSA or Multi chain |
+| activeValidationModule   | Validation module to initialize with this should be either ECDSA or Multi chain and this can be changed later once you activate further modules |
 
 :::info
 We are utilizing Ethers to pass the signer during initialization. However, it's worth mentioning that you have the flexibility to obtain the signer from various other SDKs. Some popular options include Web3.js, Wagmi React hooks, as well as authentication providers like Particle, Web3Auth, Magic, and many others.
@@ -59,46 +61,46 @@ We are utilizing Ethers to pass the signer during initialization. However, it's 
 ```typescript
 // This is how you create BiconomySmartAccount instance in your dapp's
 
-import { BiconomySmartAccount, BiconomySmartAccountConfig } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+import { ChainId } from "@biconomy/core-types"
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
 
-// Note that paymaster and bundler are optional. You can choose to create new instances of this later and make account API use 
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-    signer: wallet.getSigner(),
-    chainId: ChainId.POLYGON_MAINNET, 
-    rpcUrl: '',
-    // paymaster: paymaster, // check the README.md section of Paymaster package
-    // bundler: bundler, // check the README.md section of Bundler package
-}
+// create instance of bundler
+ const bundler: IBundler = new Bundler({
+    //https://dashboard.biconomy.io/ get bundler urls from your dashboard
+    bundlerUrl: "",    
+    chainId: ChainId.POLYGON_MUMBAI,
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+  })
 
-const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
+
+  // create instance of paymaster
+  const paymaster: IPaymaster = new BiconomyPaymaster({
+    //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
+    paymasterUrl: ""
+  })
+
+  // instance of ownership module - this can alternatively be the multi chain module
+  const ownerShipModule = new ECDSAOwnershipValidationModule({
+        signer: {}, // ethers signer object
+        moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+      })
+
+const biconomySmartAccountConfig = {
+        signer: {}, //ethers signer object
+        chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
+        bundler: bundler, // instance of bundler
+        paymaster: paymaster, // instance of paymaster
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, //entry point address for chain
+        defaultValidationModule: ownerShipModule, // either ECDSA or Multi chain to start
+        activeValidationModule: ownerShipModule // either ECDSA or Multi chain to start
+      }
+
+const biconomyAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
 const biconomySmartAccount =  await biconomyAccount.init()
-
-// native token transfer
-// you can create any sort of transaction following same structure 
-const transaction = {
-  to: '0x85B51B068bF0fefFEFD817882a14f6F5BDF7fF2E',
-  data: '0x',
-  value: ethers.utils.parseEther('0.1'),
-}
-
-// building partialUserOp
-const partialUserOp = await biconomySmartAccount.buildUserOp([transaction])
-
-// using the paymaster package one can populate paymasterAndData to partial userOp. by default it is '0x'
-
+const address = await biconomySmartAccount.getSmartAccountAddress()
 
 ```
 
-```typescript
-const userOpResponse = await smartAccount.sendUserOp(partialUserOp)
-const transactionDetails = await userOpResponse.wait()
-console.log("transaction details below")
-console.log(transactionDetails)
-```
-Finally, we send the ```userOp``` and save the value to a variable named ```userOpResponse``` and get the ```transactionDetails``` after calling ```userOpResponse.wait()```
-
-```typescript
-const transactionDetails = await userOpResponse.wait()
-console.log("transaction details below")
-console.log(transactionDetails)
-```
