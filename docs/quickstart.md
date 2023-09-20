@@ -123,32 +123,25 @@ Now initialize it:
 
 ```typescript
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
   })
 
 ```
 
-We now need an object that will hold the configuration values for our Smart Account. 
+Now with the config setup let's create a smart account:
 
 ```typescript
-const biconomySmartAccountConfig = {
+async function createAccount() {
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
   bundler: bundler, 
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   defaultValidationModule: module,
   activeValidationModule: module
-}
-```
-
-Now with the config setup let's create a smart account:
-
-```typescript
-async function createAccount() {
-  let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
-  biconomySmartAccount =  await biconomySmartAccount.init()
+})
   console.log("owner: ", biconomySmartAccount.owner)
   console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
   return biconomySmartAccount;
@@ -231,23 +224,20 @@ const bundler: IBundler = new Bundler({
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 })
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
 })
 
-const biconomySmartAccountConfig = {
-    signer: wallet,
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler, 
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module
-  };
-
   async function createAccount() {
-    let biconomyAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-    biconomyAccount =  await biconomyAccount.init()
+    let biconomyAccount = await BiconomySmartAccountV2.create({
+      signer: wallet,
+      chainId: ChainId.POLYGON_MUMBAI,
+      bundler: bundler, 
+      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+      defaultValidationModule: module,
+      activeValidationModule: module
+    })
     console.log("address", biconomyAccount.accountAddress)
     return biconomyAccount
   }

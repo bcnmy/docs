@@ -174,16 +174,14 @@ async function setupSmartAccount() {
     setProvider(web3Provider);
 
     try {
-      const biconomySmartAccountConfig = {
+      let biconomySmartAccount = await BiconomySmartAccountV2.create({
         signer: web3Provider.getSigner(),
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler, 
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
         defaultValidationModule: module,
         activeValidationModule: module
-      }
-      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-      biconomySmartAccount =  await biconomySmartAccount.init()
+      })
       console.log("owner: ", biconomySmartAccount.owner)
       console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
       console.log("deployed: ", await biconomySmartAccount.isAccountDeployed( await biconomySmartAccount.getSmartAccountAddress()))
@@ -226,9 +224,8 @@ step-by-step explanation of what it does:
 
 **Setting up BiconomySmartAccount:**
 
-6. **`const biconomySmartAccountConfig`: BiconomySmartAccountConfig = { ... }:**
-   Creates a configuration object for setting up the BiconomySmartAccount. The
-   configuration includes the following properties:
+6. **`BiconomySmartAccountV2.create()`**
+   Creates an instance of the BiconomySmartAccount. The configuration includes the following properties:
 
 -   `signer:` The signer (wallet) associated with the web3Provider.
 -   `chainId:` The chain ID, which is set to ChainId.POLYGON_MUMBAI. This
@@ -239,15 +236,7 @@ step-by-step explanation of what it does:
 -   `paymaster:` The paymaster used for handling payment processing. It is
     expected that the paymaster variable is defined elsewhere in the code.
 
-7. **`let biconomySmartAccount` = new
-   BiconomySmartAccount(biconomySmartAccountConfig):** Creates a new instance of
-   BiconomySmartAccount using the provided configuration.
-
-8. **`biconomySmartAccount` = await biconomySmartAccount.init():** Initializes
-   the BiconomySmartAccount instance by calling the init() method. It likely
-   performs some internal setup and prepares the account for use.
-
-9. Logging `BiconomySmartAccount` information:
+7. Logging `BiconomySmartAccount` information:
 
 -   **console.log("owner: ", biconomySmartAccount.owner):** Logs the owner of
     the BiconomySmartAccount. The owner property might represent the Ethereum

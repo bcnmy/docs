@@ -44,7 +44,6 @@ yarn add
     @biconomy/core-types
     @biconomy/paymaster
     @biconomy/web3-auth
-    @biconomy/node-client -S
 ```
 
 We will use these tools to build out our front end. In addition, lets also

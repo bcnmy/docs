@@ -46,10 +46,10 @@ import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/a
 
 Update your import from the account package to also include `BiconomySmartAccountV2` and also import Wallet, providers, and ethers from the ethers package.
 
-Now we need an object that will hold the configuration values for our Smart Account.
+Lets create a new instance of the account using the create method on the BiconomySmartAccount class. See a detailed explanation of each argument supplied below. We then await the initialisation of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be your signer and the smart account address will be a new address referring to the address of this wallet.
 
 ```typescript
-const biconomySmartAccountConfig = {
+let biconomySmartAccount = await BiconomySmartAccountV2.create({
         signer: {}, //ethers signer object
         chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
         bundler: bundler, // instance of bundler
@@ -57,8 +57,12 @@ const biconomySmartAccountConfig = {
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, //entry point address for chain
         defaultValidationModule: ownerShipModule, // either ECDSA or Multi chain to start
         activeValidationModule: ownerShipModule // either ECDSA or Multi chain to start
-      }
+})
+const address = await biconomySmartAccount.getSmartAccountAddress()
+console.log("address", address)
 ```
+
+Account Create method takes the following: 
 
 | Key           | Description |
 | ------------- | ------------- |
@@ -72,11 +76,3 @@ const biconomySmartAccountConfig = {
 | defaultValidationModule    | Validation module to initialize with this should be either ECDSA or Multi chain |
 | activeValidationModule   | Validation module to initialize with this should be either ECDSA or Multi chain and this can be changed later once you activate further modules |
 
-Lets create a new instance of the account using the BiconomySmartAccount class and passing it the biconomySmartAccountConfig configuration, we created above. We then await the initialisation of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be your signer and the smart account address will be a new address referring to the address of this wallet.
-
-```typescript
-let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-biconomySmartAccount =  await biconomySmartAccount.init()
-const address = await biconomySmartAccount.getSmartAccountAddress()
-console.log("address", address)
-``

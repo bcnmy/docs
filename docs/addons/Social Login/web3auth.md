@@ -88,10 +88,12 @@ Next, you will need to connect the provider to the Biconomy Smart Account packag
 yarn add @biconomy/account
 yarn add @biconomy/bundler
 yarn add @biconomy/paymaster
+yarn add @biconomy/modules
 // or
 npm install @biconomy/account
 npm install @biconomy/bundler
 npm install @biconomy/paymaster
+npm install @biconomy/modules
 ```
 
 :::info
@@ -106,11 +108,12 @@ If you have problems with using the Dashboard and configuring your dApp and Gas 
 
 ```js
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { 
   IPaymaster, 
   BiconomyPaymaster,  
 } from '@biconomy/paymaster'
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 
 const bundler: IBundler = new Bundler({
   bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44', // you can get this value from biconomy dashboard.     
@@ -122,18 +125,22 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl: 'https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a' 
 })
 
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-        signer: web3Provider.getSigner(),
-        chainId: ChainId.POLYGON_MUMBAI,
-        bundler: bundler,
-        paymaster: paymaster
-      }
-      let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
-      biconomySmartAccount =  await biconomySmartAccount.init()
+const module = await ECDSAOwnershipValidationModule.create({
+    signer: wallet,
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+  })
 
-// this provider is from the social login which we created in previous setup
-let smartAccount = new SmartAccount(provider, options);
-smartAccount = await smartAccount.init();
+
+let biconomySmartAccount = await BiconomySmartAccountV2.create({
+    signer: wallet,
+    chainId: ChainId.POLYGON_MUMBAI,
+    bundler: bundler, 
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: module,
+    activeValidationModule: module
+})
+
+
 ```
 
 :::info

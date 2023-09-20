@@ -61,28 +61,25 @@ const provider = new providers.JsonRpcProvider(
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
 })
-
-const biconomySmartAccountConfig = {
-    signer: wallet,
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster, 
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module
-}
 
 let smartAccount: BiconomySmartAccountV2
 let address: string
 
 async function createAccount() {
   console.log("creating address")
-  let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-  biconomySmartAccount =  await biconomySmartAccount.init()
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
+    signer: wallet,
+    chainId: ChainId.POLYGON_MUMBAI,
+    bundler: bundler, 
+    paymaster: paymaster, 
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: module,
+    activeValidationModule: module
+})
   address = await biconomySmartAccount.getSmartAccountAddress()
   smartAccount = biconomySmartAccount;
   return biconomySmartAccount;
@@ -312,12 +309,16 @@ const provider = new providers.JsonRpcProvider(
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
 })
 
-const biconomySmartAccountConfig = {
+let smartAccount: BiconomySmartAccountV2
+let address: string
+
+async function createAccount() {
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
     signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler,
@@ -325,14 +326,7 @@ const biconomySmartAccountConfig = {
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: module,
     activeValidationModule: module
-}
-
-let smartAccount: BiconomySmartAccountV2
-let address: string
-
-async function createAccount() {
-  let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-  biconomySmartAccount =  await biconomySmartAccount.init()
+})
   address = await biconomySmartAccount.getSmartAccountAddress()
   console.log(address)
   smartAccount = biconomySmartAccount;

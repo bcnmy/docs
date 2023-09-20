@@ -103,12 +103,12 @@ Create a connect function:
       const provider = new ethers.providers.Web3Provider(ethereum)
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
-      const ownerShipModule = new ECDSAOwnershipValidationModule({
+      const ownerShipModule = ECDSAOwnershipValidationModule.create({
         signer: signer,
         moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
       setProvider(provider)
-      const biconomySmartAccountConfig = {
+      let biconomySmartAccount = await BiconomySmartAccountV2.create({
         signer: signer,
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler,
@@ -116,9 +116,7 @@ Create a connect function:
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
         defaultValidationModule: ownerShipModule,
         activeValidationModule: ownerShipModule
-      }
-      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-      biconomySmartAccount =  await biconomySmartAccount.init()
+      })
       setAddress( await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
@@ -135,7 +133,7 @@ This function takes care of the following:
 - Create a provider and signer using ethers after getting permission from user
 - Create an ownership module in this case as we are using our EOA we will be utilizing the ECDSA ownership module 
 - We set provider in state 
-- Initialize the BiconomySmartAccountV2 by creating a config object with: signer, chain id, bundler instance, paymaster instance, entry point address, and setting ownerShipModule as default and active validation modules. We will add the session validation module later. 
+- Initialize the BiconomySmartAccountV2 by usint the static create method available on the class. 
 - Initialize the smart account and save the address and instance of smart account to state and finally set loading state back to false. 
 
 Let's add some items to our component within the main tags:
@@ -202,12 +200,12 @@ export default function Home() {
       const provider = new ethers.providers.Web3Provider(ethereum)
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
-      const ownerShipModule = new ECDSAOwnershipValidationModule({
+      const ownerShipModule = ECDSAOwnershipValidationModule.create({
         signer: signer,
         moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
       setProvider(provider)
-      const biconomySmartAccountConfig = {
+      let biconomySmartAccount = await BiconomySmartAccountV2.create({
         signer: signer,
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler,
@@ -215,9 +213,7 @@ export default function Home() {
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
         defaultValidationModule: ownerShipModule,
         activeValidationModule: ownerShipModule
-      }
-      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
-      biconomySmartAccount =  await biconomySmartAccount.init()
+      })
       setAddress( await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
