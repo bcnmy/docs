@@ -1,8 +1,8 @@
 {
-  "label": "Smart Accounts",
+  "label": "Smart Accounts Platform",
   "position": 1,
   "link": {
     "type": "generated-index",
-    "description": "Learn more about using the Biconomy Smart Account Package"
+    "description": "Learn more about using the Biconomy Smart Account Package. Explore how to plug in programmable modules. And how to build & send UserOps"
   }
 }
