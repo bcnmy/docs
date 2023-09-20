@@ -149,12 +149,12 @@ const connect = async () => {
       );
       setProvider(web3Provider)
 
-      const module = new ECDSAOwnershipValidationModule({
+      const module = await ECDSAOwnershipValidationModule.create({
       signer: web3Provider.getSigner(),
       moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
 
-      const biconomySmartAccountConfig = {
+      let biconomySmartAccount = await BiconomySmartAccountV2.create({
         signer: web3Provider.getSigner(),
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler, 
@@ -162,8 +162,7 @@ const connect = async () => {
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
         defaultValidationModule: module,
         activeValidationModule: module
-      }
-      let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
+      })
       biconomySmartAccount =  await biconomySmartAccount.init()
       setAddress( await biconomySmartAccount.getSmartAccountAddress())
       setSmartAccount(biconomySmartAccount)

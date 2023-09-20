@@ -226,7 +226,7 @@ We specify the erc20 module address and get the private key we stored in local s
 
 ```
 
-Now we'll generate a session module using the Session Key Manager Module and then set the active validation module to be the session module. This updates the original config we passed to the smart account when creating it. 
+Now we'll generate a session module using the Session Key Manager Module and then set the active validation module to be the session module. This updates the original configureation on the smart account.
 
 ```javascript
 

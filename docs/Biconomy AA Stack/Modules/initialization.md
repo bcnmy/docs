@@ -9,7 +9,7 @@ sidebar_position: 3
 // This is how you create ECDSA module instance in your dapp's
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 
-   const module = new ECDSAOwnershipValidationModule({
+   const module = await ECDSAOwnershipValidationModule.create({
     signer: signer, // you will need to supply a signer from an EOA in this step
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
   })
@@ -21,7 +21,7 @@ import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "
 // This is how you create ECDSA module instance in your dapp's
 import { MultiChainValidationModule, DEFAULT_MULTICHAIN_MODULE } from "@biconomy/modules";
 
-    const multiChainModule = new MultiChainValidationModule({
+    const multiChainModule = await MultiChainValidationModule.create({
     signer: signer,
     moduleAddress: DEFAULT_MULTICHAIN_MODULE
   })

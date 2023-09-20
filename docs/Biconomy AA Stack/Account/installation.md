@@ -83,12 +83,12 @@ import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
   })
 
   // instance of ownership module - this can alternatively be the multi chain module
-  const ownerShipModule = new ECDSAOwnershipValidationModule({
+  const ownerShipModule = await ECDSAOwnershipValidationModule.create({
         signer: {}, // ethers signer object
         moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
 
-const biconomySmartAccountConfig = {
+const biconomyAccount = await BiconomySmartAccountV2.create({
         signer: {}, //ethers signer object
         chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
         bundler: bundler, // instance of bundler
@@ -96,9 +96,7 @@ const biconomySmartAccountConfig = {
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, //entry point address for chain
         defaultValidationModule: ownerShipModule, // either ECDSA or Multi chain to start
         activeValidationModule: ownerShipModule // either ECDSA or Multi chain to start
-      }
-
-const biconomyAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
+      })
 const biconomySmartAccount =  await biconomyAccount.init()
 const address = await biconomySmartAccount.getSmartAccountAddress()
 

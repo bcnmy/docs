@@ -123,7 +123,7 @@ Now initialize it:
 
 ```typescript
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
   })
@@ -231,22 +231,20 @@ const bundler: IBundler = new Bundler({
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 })
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
 })
 
-const biconomySmartAccountConfig = {
-    signer: wallet,
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler, 
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module
-  };
-
   async function createAccount() {
-    let biconomyAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
+    let biconomyAccount = await BiconomySmartAccountV2.create({
+      signer: wallet,
+      chainId: ChainId.POLYGON_MUMBAI,
+      bundler: bundler, 
+      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+      defaultValidationModule: module,
+      activeValidationModule: module
+    })
     biconomyAccount =  await biconomyAccount.init()
     console.log("address", biconomyAccount.accountAddress)
     return biconomyAccount

@@ -45,12 +45,17 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
-const module = new ECDSAOwnershipValidationModule({
+const module = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
 })
 
-const biconomySmartAccountConfig = {
+let smartAccount: BiconomySmartAccountV2
+let address: string
+
+async function createAccount() {
+  console.log("creating address")
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
     signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler,
@@ -58,14 +63,7 @@ const biconomySmartAccountConfig = {
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: module,
     activeValidationModule: module
-}
-
-let smartAccount: BiconomySmartAccountV2
-let address: string
-
-async function createAccount() {
-  console.log("creating address")
-  let biconomySmartAccount = new BiconomySmartAccountV2(biconomySmartAccountConfig)
+})
   biconomySmartAccount =  await biconomySmartAccount.init()
   address = await biconomySmartAccount.getSmartAccountAddress()
   smartAccount = biconomySmartAccount;
@@ -144,7 +142,7 @@ Now change out the bundle:
 
 ```typescript
 
-const multiChainModule = new MultiChainValidationModule({
+const multiChainModule = await MultiChainValidationModule.create({
     signer: signer,
     moduleAddress: DEFAULT_MULTICHAIN_MODULE
   })
@@ -182,7 +180,13 @@ So far we only made changes on the MultiChain Module to work with Polygon. Now l
   paymasterUrl: 'https://paymaster.biconomy.io/api/v1/84531/m814QNmpW.fce62d8f-41a1-42d8-9f0d-2c65c10abe9a' 
 })
 
-const baseBiconomySmartAccountConfig = {
+```
+Now add the following in your connect function in order to initialize an instance of your Smart Account on Base:
+
+```typescript
+
+  // create biconomy smart account instance
+  let baseAccount = await BiconomySmartAccountV2.create({
     signer: signer,
     chainId: ChainId.BASE_GOERLI_TESTNET,
     paymaster: basePaymaster, 
@@ -190,14 +194,7 @@ const baseBiconomySmartAccountConfig = {
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
-  };
-```
-Now add the following in your connect function in order to initialize an instance of your Smart Account on Base:
-
-```typescript
-
-  // create biconomy smart account instance
-  let baseAccount = new BiconomySmartAccountV2(baseBiconomySmartAccountConfig);
+  });
   baseAccount = await baseAccount.init();
 
 ```
