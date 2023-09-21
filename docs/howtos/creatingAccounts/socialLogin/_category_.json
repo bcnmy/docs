@@ -1,0 +1,8 @@
+{
+  "label": "Social Login Providers",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Different ways of implementing Social Login providers to create Biconomy Smart Accounts. Create a PR on github if you would like your solution added."
+  }
+}
