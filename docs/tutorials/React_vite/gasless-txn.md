@@ -521,6 +521,10 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
 
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
         // optional params...
       };
 

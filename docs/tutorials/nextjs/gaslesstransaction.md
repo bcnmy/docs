@@ -87,6 +87,10 @@ We're going to need to pass three items to this component: the instance of the s
         smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
       };
       const paymasterAndDataResponse =
         await biconomyPaymaster.getPaymasterAndData(
@@ -132,6 +136,10 @@ The next few lines are important in making sure this becomes a gasless transacit
 
 let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
       };
       const paymasterAndDataResponse =
         await biconomyPaymaster.getPaymasterAndData(
@@ -223,6 +231,10 @@ And make another update to the `handleMint` function:
         smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
       };
       const paymasterAndDataResponse =
         await biconomyPaymaster.getPaymasterAndData(
@@ -455,6 +467,10 @@ const Minter: React.FC<Props> = ({ smartAccount, address, provider }) => {
         smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
       };
       const paymasterAndDataResponse =
         await biconomyPaymaster.getPaymasterAndData(

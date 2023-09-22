@@ -105,6 +105,10 @@ async function mintNFT() {
 
     let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
     };
     console.log("getting paymaster and data");
     try {
