@@ -1,14 +1,15 @@
 ---
-sidebar_position: 4
+sidebar_label: 'Enable Fiat On Ramp'
+sidebar_position: 3
 ---
 
-# Enable Fiat On-Ramp & Off-Ramp
+# Enable Fiat On-Ramp
 
-BiconomySDK's Transak library is made for developers who just want on-ramp and off-ramp solutions and don't want to go through with all steps to integrate the SDK.
+BiconomySDK's Transak library is made for developers who just want on-ramp solutions and don't want to go through with all steps to integrate the SDK.
 
 It is a typescript wrapper on `transak.js` SDK which abstracts a few steps for the developers and users.
 
-## Steps to Enable Fiat On-Ramp & Off-Ramp
+## Steps to Enable Fiat On-Ramp
 
 - Import the `@biconomy-sdk/transak` package into your project.
 
@@ -41,7 +42,7 @@ transak.init();
 ```
 
 - On `transak.init()` Transak widget opens and users can buy on-ramp.
-![Fiat-1](img/fiat-1.png)
+
 
 ## Code Examples
 

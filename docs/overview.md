@@ -4,38 +4,43 @@ sidebar_position: 1
 
 # Overview
 
-The Biconomy Modular SDK is a comprehensive software development kit designed specifically for decentralized applications (dApps). Built on top of the ERC4337 solution, it offers a wide range of solutions, from user onboarding to sustained engagement, enhancing the overall user experience within your dApp. By leveraging modularity, the SDK offers enhanced customization, security, and functionality. This SDK operates in a non-custodial manner, providing a unified solution that combines simplicity and functionality in the realm of decentralized applications.
+The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp or wallet. Built on top of the ERC 4337 solution for Account Abstraction, we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers. 
+
+![FullStakAA](./images/overview/fulstackaa.png)
 
 
-## What’s Possible?
+## Smart Accounts Platform
 
-Biconomy SDK brings blockchain-agnostic, web2-like experiences to your dApp in a non-custodial manner. Here's what you can enable today:
+The Biconomy Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Smart Accounts are governed by code instead of ECDSA, which allows for other types of signature algorithms to be used with the Smart Account. Additionally, the smart accounts package allows you to quickly and easily build and execute User Operations or userOps. These are pseudo-transaction objects that eventually execute as a transaction on the EVM.  
 
-- Easy User Onboarding: Simplifies the onboarding process for new users through social login, account creation, and recovery options, seamlessly integrating web2 users into your dApp.
-- Fiat On Ramp: Allows your users to easily and reliably buy or sell cryptocurrencies within your dApp, facilitating the transition between traditional and blockchain-based assets
-- Gasless Transactions: Sponsors gas fees for user interactions, making them as simple as web2 transactions, and improving the overall user experience.
-- Paying Gas Fees In ERC20 Tokens: Enable users to utilize any ERC20 asset in their wallet to pay for gas fees, offering flexibility and convenience. 
-- Custom Transaction Bundling: Empower developers to build methods for transaction batching, allowing users to execute multiple actions in a single transaction, even across multiple chains. For example, users can approve and deposit in the same transaction without altering anything in the dApp smart contracts.
+The Biconomy Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account. Check out different ways you can create a Biconomy Smart Account [here](/docs/category/creating-accounts).
 
-## How Does It Work?
 
-In the Biconomy SDK, the Smart Contract Wallet (SCW) is the foundation of the system and is created for every new user who joins a dApp. The SCW address is generated instantly when the user logs in, without needing any on-chain deployment. The actual smart contract is deployed along with the user's first transaction.
+Smart Accounts are further enhanced by validation modules that allow you to execute arbitrary logic before validating a userOp. This allows you, as a developer, to build modules that allow for session keys, multi-chain validation modules, pass keys, and more. 
 
-The Smart Contract Wallet, also known as Smart Account, is associated with the user's Externally Owned Account (EOA), like a traditional MetaMask account or an account generated via Social Login. It provides enhanced security compared to EOAs by allowing users to deposit and withdraw funds securely at any time.
+![ModularSA](./images/overview/modularsa.png)
 
-One notable feature is that the SCW address remains consistent across different blockchain chains, enabling a chainless experience for users within the dApp. By leveraging transaction bundling with Smart Contract Wallets using the Biconomy SDK, dApps can offer seamless and efficient interactions for their users.
+If you want to start diving into Smart Accounts you can do so [here](/docs/category/smart-accounts). If you know all about Smart Accounts and prefer to start working with modules, start learning about them [here](/docs/category/modules) or follow this step-by-step [tutorial](/docs/category/session-keys-tutorial) on how to build a dApp that utilizes session key modules. 
 
-## How Smart Contract Wallets Work
+## Paymaster
 
-- The Biconomy Modular SDK introduces Smart Contract Wallets (SCW) that serve as a fundamental component of the system. Each SC Wallet is associated with an Externally Owned Account (EOA), acting as its owner.
+Biconomy offers a Paymaster service designed with one of the best developer experiences in mind. Simply use one URL and switch modes between our sponsorship paymaster and our Token Paymaster. 
 
-- The SC Wallet offers extensibility through support for various modules, such as MultiSig, Social Recovery Module, Recurring Transaction Module, Transaction Automation, Session Key Module, among others. These modules enhance wallet functionality without necessitating upgrades, enabling developers to tailor the user experience based on specific requirements.
+### Sponsorship Paymaster
 
-- Transactions executed through the SC Wallet are initiated by the EOA using a cryptographic signature. The transaction data, along with the signature, is then relayed by a Relayer, ensuring secure and efficient transaction processing.
+![Sponsored](./images/overview/sponsored.png)
 
-- Notably, the user's SC Wallet address is counterfactual, meaning it can be generated without deploying smart contract code on-chain, thanks to the CREATE2 opcode. This characteristic allows the SC Wallet address to remain consistent across different EVM chains, providing a seamless and chain-agnostic user experience within the dApp. 
+If the mode you choose in the request to the Paymaster URL is the sponsored mode, your users will benefit from gasless transactions, and you remove the friction point of needed native tokens to pay for gas on transactions. Learn how to set up your paymaster [here](/docs/dashboard/paymaster).
 
-- All interactions within a dApp, both on a single chain and across multiple chains, occur through the SC Wallet. This unified approach streamlines user interactions and fosters efficient cross-chain functionality.
+### Token Paymaster
 
-- the SC Wallet doubles as a Gas Tank for users, allowing them to use any token held in the wallet (accepted by the Paymaster) to pay gas fees during the same transaction. This capability enables dApps to implement transaction batching, empowering users to execute multiple actions in a single transaction, simplifying processes like approving and depositing.
+![Erc20](./images/overview/erc20gas.png)
+
+Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/docs/supportedchains/supportedTokens).
+
+Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/docs/category/executing-transactions)
+
+## Bundler
+
+The Bundler is a service that tracks userOps that exist in an alternative mem pool and as the name suggests, bundles them together to send to an Entry Point Contract for eventual execution onchain. This is the final piece of the flow where after constructing your userOp and then potentially signing it with data from a paymaster, you send the userOp on chain to be handled and executed as a transaction on the EVM. You can start using our Bundlers right now in your dApps; each of our [tutorials](/docs/category/tutorials) will walk you through how to use them in different scenarios.
 
