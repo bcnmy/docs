@@ -71,6 +71,10 @@ We now need to construct the `paymasterAndData` field of our userOp. This is don
   const biconomyPaymaster = smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
       };
       const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(
           userOp,
@@ -116,6 +120,10 @@ const userOpResponse = await smartAccount.sendUserOp(userOp);
         smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
       let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
       };
       const paymasterAndDataResponse =
         await biconomyPaymaster.getPaymasterAndData(

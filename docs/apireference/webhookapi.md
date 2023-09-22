@@ -252,6 +252,10 @@ When building out the `paymasterServiceData` object you can optionally pass your
 ```typescript
 let paymasterServiceData: SponsorUserOperationDto = {
     mode: PaymasterMode.SPONSORED,
+    smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
     calculateGasLimits: true,
     webhookData: {
       num: 2
