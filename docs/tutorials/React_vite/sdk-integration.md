@@ -174,8 +174,7 @@ async function setupSmartAccount() {
     setProvider(web3Provider);
 
     try {
-      let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: web3Provider.getSigner(),
+      let biconomySmartAccount = await BiconomySmartAccountV2.create(
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler, 
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

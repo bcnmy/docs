@@ -155,7 +155,6 @@ const connect = async () => {
       })
 
       let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: web3Provider.getSigner(),
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler, 
         paymaster: paymaster,

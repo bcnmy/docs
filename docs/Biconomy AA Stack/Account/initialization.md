@@ -50,7 +50,6 @@ Lets create a new instance of the account using the create method on the Biconom
 
 ```typescript
 let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: {}, //ethers signer object
         chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
         bundler: bundler, // instance of bundler
         paymaster: paymaster, // instance of paymaster

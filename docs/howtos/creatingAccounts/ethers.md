@@ -65,7 +65,6 @@ const module = await ECDSAOwnershipValidationModule.create({
 ```typescript
 async function createAccount() {
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,// or any supported chain of your choice
     bundler: bundler,
     paymaster: paymaster, 
@@ -136,7 +135,6 @@ const connect = async () => {
         moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
       let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: signer,
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler,
         paymaster: paymaster,

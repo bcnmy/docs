@@ -100,7 +100,6 @@ Now lets use the create method on the `BiconomySmartAccountV2` class to create a
 ```typescript
 async function createAccount() {
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler,
     paymaster: paymaster, 

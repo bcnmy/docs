@@ -56,7 +56,6 @@ let address: string
 async function createAccount() {
   console.log("creating address")
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler,
     paymaster: paymaster, 
@@ -190,7 +189,6 @@ Now add the following in your connect function in order to initialize an instanc
 
   // create biconomy smart account instance
   let baseAccount = await BiconomySmartAccountV2.create({
-    signer: signer,
     chainId: ChainId.BASE_GOERLI_TESTNET,
     paymaster: basePaymaster, 
     bundler: baseBundler, 
