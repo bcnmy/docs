@@ -10,7 +10,6 @@ When looking through the ways you create a Biconomy Account, one thing remains t
 ```typescript
 
 let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: web3Provider.getSigner(),
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler, 
         paymaster: paymaster,

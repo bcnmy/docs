@@ -54,7 +54,6 @@ let address: string
 async function createAccount() {
   console.log("creating address")
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler,
     paymaster: paymaster, 

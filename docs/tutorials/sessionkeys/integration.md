@@ -109,7 +109,6 @@ Create a connect function:
       })
       setProvider(provider)
       let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: signer,
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler,
         paymaster: paymaster,
@@ -206,7 +205,6 @@ export default function Home() {
       })
       setProvider(provider)
       let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        signer: signer,
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler,
         paymaster: paymaster,

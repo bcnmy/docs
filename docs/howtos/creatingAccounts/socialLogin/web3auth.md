@@ -121,7 +121,6 @@ const module = await ECDSAOwnershipValidationModule.create({
 
 
 let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    signer: wallet,
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler, 
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
