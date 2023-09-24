@@ -19,14 +19,16 @@ IBundler and IPaymaster are typings for Bundler and BiconomyPaymaster classes th
 Let’s start with the initial configuration here
 
 ```typescript
-const bundler: IBundler = new Bundler({
-    bundlerUrl: '', // you can get this value from biconomy dashboard.     
+ const bundler: IBundler = new Bundler({
+    //https://dashboard.biconomy.io/ get bundler urls from your dashboard
+    bundlerUrl: "",    
     chainId: ChainId.POLYGON_MUMBAI,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: '' // you can get this value from biconomy dashboard.
+    //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
+    paymasterUrl: ""
   })
 ```
 
@@ -39,37 +41,37 @@ const bundler: IBundler = new Bundler({
 Now with the paymaster and bundler instances configured let’s set up the rest of what we need for our Smart Account
 
 ```typescript
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/account"
 ```
 
-Update your import from the account package to also include `BiconomySmartAccount` and `BiconomySmartAccountConfig` and also import Wallet, providers, and ethers from the ethers package.
+Update your import from the account package to also include `BiconomySmartAccountV2` and also import Wallet, providers, and ethers from the ethers package.
 
-Now we need an object that will hold the configuration values for our Smart Account.
+Lets create a new instance of the account using the create method on the BiconomySmartAccount class. See a detailed explanation of each argument supplied below. We then await the initialisation of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be your signer and the smart account address will be a new address referring to the address of this wallet.
 
 ```typescript
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-    signer: wallet.getSigner(),
-    chainId: ChainId.POLYGON_MUMBAI, 
-    rpcUrl: '',
-    paymaster: paymaster, //you can skip paymaster instance if you are not interested in transaction sponsorship
-    bundler: bundler,
-}
+let biconomySmartAccount = await BiconomySmartAccountV2.create({
+        chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
+        bundler: bundler, // instance of bundler
+        paymaster: paymaster, // instance of paymaster
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, //entry point address for chain
+        defaultValidationModule: ownerShipModule, // either ECDSA or Multi chain to start
+        activeValidationModule: ownerShipModule // either ECDSA or Multi chain to start
+})
+const address = await biconomySmartAccount.getAccountAddress()
+console.log("address", address)
 ```
+
+Account Create method takes the following: 
 
 | Key           | Description |
 | ------------- | ------------- |
-| signer        | This signer will be used for signing userOps for any transactions you build. You can supply your your EOA wallet signer|
-| chainId       | This represents the network your smart wallet transactions will be conducted on. Take a look following [Link](https://shorturl.at/arETU) for supported chain id's |
-| rpcUrl        | This represents the EVM node RPC URL you'll interact with, adjustable according to your needs. We recommend to use some private node url for efficient userOp building|
-| paymaster     | you can pass same paymaster instance that you have build in previous step. Alternatively, you can skip this if you are not interested in sponsoring transaction using paymaster|
-|               | Note: if you don't pass the paymaster instance, your smart account will need funds to pay for transaction fees.|
-| bundler       | You can pass same bundler instance that you have build in previous step. Alternatively, you can skip this if you are only interested in building userOP|
+| signer        | This signer will be used for signing userOps for any transactions you build. You can supply your EOA wallet as a signer|
+| chainId       | This represents the network your smart wallet transactions will be conducted on. Take a look at the [following](../../supportedchains/supportedchains.md) for supported chains |
+| rpcUrl        | This represents the EVM node RPC URL you'll interact with, adjustable according to your needs. We recommend using some private node url for efficient ```userOp``` building|
+| paymaster     | You can pass the same paymaster instance that you have built in the previous step. Alternatively, you can skip this if you are not interested in sponsoring transactions using Paymaster |
+|               | Note: if you don't pass the Paymaster instance, your Smart Contract Account will need funds to pay for transaction fees.|
+| bundler       | You can pass the same bundler instance that you have built in the previous step. Alternatively, you can skip this if you are only interested in building ```userOp```|
+| entryPointAddress    | Entry point address for chain, you can use the DEFAULT_ENTRYPOINT_ADDRESS here |
+| defaultValidationModule    | Validation module to initialize with this should be either ECDSA or Multi chain |
+| activeValidationModule   | Validation module to initialize with this should be either ECDSA or Multi chain and this can be changed later once you activate further modules |
 
-Lets create a new instance of the account using the BiconomySmartAccount class and passing it the biconomySmartAccountConfig configuration, we created above. We then await the initialisation of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be your signer and the smart account address will be a new address referring to the address of this wallet.
-
-```typescript
-const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
-const biconomySmartAccount =  await biconomyAccount.init()
-console.log("owner: ", biconomySmartAccount.owner)
-console.log("address: ", biconomySmartAccount.address)
-``

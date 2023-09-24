@@ -15,15 +15,11 @@ import "@Biconomy/web3-auth/dist/src/style.css";
 import { useState, useEffect, useRef } from "react";
 import SocialLogin from "@biconomy/web3-auth";
 import { ChainId } from "@biconomy/core-types";
-import { ethers } from "ethers";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-    BiconomySmartAccount,
-    BiconomySmartAccountConfig,
-    DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import Counter from "./Components/Counter";
+import { ethers } from 'ethers'
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { IPaymaster, BiconomyPaymaster,} from '@biconomy/paymaster'
+import Counter from './Components/Counter';
 ```
 
 We are importing some css styles here but you can build your own login UI as
@@ -178,30 +174,19 @@ async function setupSmartAccount() {
     setProvider(web3Provider);
 
     try {
-        const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-            signer: web3Provider.getSigner(),
-            chainId: ChainId.POLYGON_MUMBAI,
-            bundler: bundler,
-            paymaster: paymaster,
-        };
-        let biconomySmartAccount = new BiconomySmartAccount(
-            biconomySmartAccountConfig
-        );
-        biconomySmartAccount = await biconomySmartAccount.init();
-        console.log("owner: ", biconomySmartAccount.owner);
-        console.log(
-            "address: ",
-            await biconomySmartAccount.getSmartAccountAddress()
-        );
-        console.log(
-            "deployed: ",
-            await biconomySmartAccount.isAccountDeployed(
-                await biconomySmartAccount.getSmartAccountAddress()
-            )
-        );
+      let biconomySmartAccount = await BiconomySmartAccountV2.create(
+        chainId: ChainId.POLYGON_MUMBAI,
+        bundler: bundler, 
+        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+        defaultValidationModule: module,
+        activeValidationModule: module
+      })
+      console.log("owner: ", biconomySmartAccount.owner)
+      console.log("address: ", await biconomySmartAccount.getAccountAddress())
+      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed( await biconomySmartAccount.getAccountAddress()))
 
-        setSmartAccount(biconomySmartAccount);
-        setLoading(false);
+      setSmartAccount(biconomySmartAccount)
+      setLoading(false)
     } catch (err) {
         console.log("error setting up smart account... ", err);
     }
@@ -238,9 +223,8 @@ step-by-step explanation of what it does:
 
 **Setting up BiconomySmartAccount:**
 
-6. **`const biconomySmartAccountConfig`: BiconomySmartAccountConfig = { ... }:**
-   Creates a configuration object for setting up the BiconomySmartAccount. The
-   configuration includes the following properties:
+6. **`BiconomySmartAccountV2.create()`**
+   Creates an instance of the BiconomySmartAccount. The configuration includes the following properties:
 
 -   `signer:` The signer (wallet) associated with the web3Provider.
 -   `chainId:` The chain ID, which is set to ChainId.POLYGON_MUMBAI. This
@@ -251,27 +235,19 @@ step-by-step explanation of what it does:
 -   `paymaster:` The paymaster used for handling payment processing. It is
     expected that the paymaster variable is defined elsewhere in the code.
 
-7. **`let biconomySmartAccount` = new
-   BiconomySmartAccount(biconomySmartAccountConfig):** Creates a new instance of
-   BiconomySmartAccount using the provided configuration.
-
-8. **`biconomySmartAccount` = await biconomySmartAccount.init():** Initializes
-   the BiconomySmartAccount instance by calling the init() method. It likely
-   performs some internal setup and prepares the account for use.
-
-9. Logging `BiconomySmartAccount` information:
+7. Logging `BiconomySmartAccount` information:
 
 -   **console.log("owner: ", biconomySmartAccount.owner):** Logs the owner of
     the BiconomySmartAccount. The owner property might represent the Ethereum
     address of the smart account owner.
 
 -   **console.log("address: ", await
-    biconomySmartAccount.getSmartAccountAddress()):** Logs the Ethereum address
-    of the BiconomySmartAccount using the getSmartAccountAddress() method. This
+    biconomySmartAccount.getAccountAddress()):** Logs the Ethereum address
+    of the BiconomySmartAccount using the getAccountAddress() method. This
     address is the entrypoint address mentioned earlier, and it serves as the
     point of entry for interacting with the smart account through Biconomy.
 
--   **`console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(await biconomySmartAccount.getSmartAccountAddress()))`:**
+-   **`console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(await biconomySmartAccount.getAccountAddress()))`:**
     Logs whether the smart account has been deployed or not. It calls the
     isAccountDeployed() method on the BiconomySmartAccount instance, passing the
     entrypoint address as an argument.

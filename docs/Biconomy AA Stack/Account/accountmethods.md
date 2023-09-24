@@ -4,23 +4,18 @@ sidebar_position: 4
 # Smart Account Methods
 ``` typescript
 export interface IBiconomySmartAccount extends ISmartAccount {
-  init(initilizationData?: InitilizationData): Promise<this>
-  initializeAccountAtIndex(accountIndex: number): void
-  getExecuteCallData(to: string, value: BigNumberish, data: BytesLike): string
-  getExecuteBatchCallData(
-    to: Array<string>,
-    value: Array<BigNumberish>,
-    data: Array<BytesLike>
-  ): string
-  buildUserOp(transactions: Transaction[], overrides?: Overrides): Promise<Partial<UserOperation>>
-  getAllTokenBalances(balancesDto: BalancesDto): Promise<BalancesResponse>
-  getTotalBalanceInUsd(balancesDto: BalancesDto): Promise<UsdBalanceResponse>
-  getSmartAccountsByOwner(
-    smartAccountByOwnerDto: SmartAccountByOwnerDto
-  ): Promise<SmartAccountsResponse>
-  getTransactionsByAddress(chainId: number, address: string): Promise<SCWTransactionResponse[]>
-  getTransactionByHash(txHash: string): Promise<SCWTransactionResponse>
-  getAllSupportedChains(): Promise<SupportedChainsResponse>
+  init(_initilizationData?: InitilizationData): Promise<this>;
+  initializeAccountAtIndex(_accountIndex: number): void;
+  getExecuteCallData(_to: string, _value: BigNumberish, _data: BytesLike): string;
+  getExecuteBatchCallData(_to: Array<string>, _value: Array<BigNumberish>, _data: Array<BytesLike>): string;
+  buildUserOp(_transactions: Transaction[], _overrides?: Overrides): Promise<Partial<UserOperation>>;
+  getAllTokenBalances(_balancesDto: BalancesDto): Promise<BalancesResponse>;
+  getTotalBalanceInUsd(_balancesDto: BalancesDto): Promise<UsdBalanceResponse>;
+  getSmartAccountsByOwner(_smartAccountByOwnerDto: SmartAccountByOwnerDto): Promise<SmartAccountsResponse>;
+  getTransactionsByAddress(_chainId: number, _address: string): Promise<SCWTransactionResponse[]>;
+  getTransactionByHash(_txHash: string): Promise<SCWTransactionResponse>;
+  getAllSupportedChains(): Promise<SupportedChainsResponse>;
+  attachSigner(_signer: Signer): Promise<void>;
 }
 ```
 # IBiconomySmartAccount Interface
@@ -40,6 +35,7 @@ The `IBiconomySmartAccount` interface extends the `ISmartAccount` interface and 
 | getTransactionsByAddress        | chainId: number, address: string                                       | Retrieves the transactions associated with the specified `address` on the given `chainId`. Returns a Promise that resolves to an array of `SCWTransactionResponse` objects containing information about the transactions.                                              |
 | getTransactionByHash            | txHash: string                                                         | Retrieves the transaction details for the specified transaction hash (`txHash`). Returns a Promise that resolves to a `SCWTransactionResponse` object containing information about the transaction.                                                                    |
 | getAllSupportedChains           | N/A                                                                    | Retrieves information about all supported chains. Returns a Promise that resolves to the `SupportedChainsResponse` containing the list of supported chains.                                                                                                           |
+| attachSigner           | Ethers Signer                                                                    | Attaach ethers signer object                                                                                                         |
 
 
 
@@ -65,3 +61,32 @@ export interface ISmartAccount {
 | sendSignedUserOp         | userOperation: UserOperation | Sends the pre-signed `UserOperation` to the Biconomy network for execution. Returns a Promise that resolves to a `UserOpResponse` containing the response from the network. |
 
 
+# IBaseSmartAccount
+
+```typescript
+
+export interface INon4337Account {
+  estimateCreationGas(_initCode: string): Promise<BigNumberish>;
+  getNonce(): Promise<BigNumber>;
+  signMessage(_message: Bytes | string): Promise<string>;
+  getAccountAddress(_accountIndex?: number): Promise<string>;
+}
+
+export interface IBaseSmartAccount extends INon4337Account {
+  getVerificationGasLimit(_initCode: BytesLike): Promise<BigNumberish>;
+  getPreVerificationGas(_userOp: Partial<UserOperation>): Promise<BigNumberish>;
+  signUserOp(_userOp: UserOperation): Promise<UserOperation>;
+  signUserOpHash(_userOpHash: string): Promise<string>;
+  getUserOpHash(_userOp: Partial<UserOperation>): Promise<string>;
+  getAccountInitCode(): Promise<string>;
+  getDummySignature(): Promise<string>;
+}
+
+```
+
+| Method                   | Parameters                   | Description                                                                                                                                                                 |
+|--------------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| estimateCreationGas   | _initCode: string | Estimate gas for account creation                       |
+| getNonce               | n/a | Returns promise that resolves into big number for nonce                                |
+| signMessage               | _message: Bytes or String | Returns signature as promise that resolves to a string |
+| getAccountAddress         | accountIndex?: number | Returns address, optionally takes an index if not default address |

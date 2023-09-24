@@ -120,24 +120,24 @@ link to quickly view NFT's minted by our smart account.
   <summary> Click to view final code </summary>
 
 ```typescript
-import { config } from "dotenv";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-    BiconomySmartAccount,
-    BiconomySmartAccountConfig,
-    DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import {
-    IPaymaster,
-    BiconomyPaymaster,
-    IHybridPaymaster,
-    PaymasterMode,
-    SponsorUserOperationDto,
-} from "@biconomy/paymaster";
 
-config();
+import { config } from "dotenv"
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+import { Wallet, providers, ethers  } from 'ethers'
+import { ChainId } from "@biconomy/core-types"
+import { 
+  IPaymaster, 
+  BiconomyPaymaster,  
+  IHybridPaymaster,
+  PaymasterMode,
+  SponsorUserOperationDto, 
+} from '@biconomy/paymaster'
+
+config()
+
+
 
 const bundler: IBundler = new Bundler({
     bundlerUrl:
@@ -156,25 +156,27 @@ const provider = new providers.JsonRpcProvider(
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-    signer: wallet,
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster,
-};
+const module = await ECDSAOwnershipValidationModule.create({
+  signer: wallet,
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+})
 
-let smartAccount: BiconomySmartAccount;
-let address: string;
+let smartAccount: BiconomySmartAccountV2
+let address: string
 
 async function createAccount() {
-    console.log("creating address");
-    let biconomySmartAccount = new BiconomySmartAccount(
-        biconomySmartAccountConfig
-    );
-    biconomySmartAccount = await biconomySmartAccount.init();
-    address = await biconomySmartAccount.getSmartAccountAddress();
-    smartAccount = biconomySmartAccount;
-    return biconomySmartAccount;
+  console.log("creating address")
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
+    chainId: ChainId.POLYGON_MUMBAI,
+    bundler: bundler,
+    paymaster: paymaster, 
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: module,
+    activeValidationModule: module
+})
+  address = await biconomySmartAccount.getAccountAddress()
+  smartAccount = biconomySmartAccount;
+  return biconomySmartAccount;
 }
 
 async function mintNFT() {
@@ -200,6 +202,10 @@ async function mintNFT() {
 
     let paymasterServiceData: SponsorUserOperationDto = {
         mode: PaymasterMode.SPONSORED,
+        smartAccountInfo: {
+          name: 'BICONOMY',
+          version: '2.0.0'
+        },
     };
     console.log("getting paymaster and data");
     try {

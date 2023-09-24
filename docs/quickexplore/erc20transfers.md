@@ -4,7 +4,8 @@ sidebar_position: 3
 
 # Exploring ERC20 Transfers
 
-:::info You should already have the node cli set up before following this guide.
+:::info 
+You should already have the node cli set up before following this guide.
 View those instructions [here](setupnodecli.md) 
 :::
 

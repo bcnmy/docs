@@ -41,11 +41,11 @@ const bundler: IBundler = new Bundler({
 
 
 ```typescript
-import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { Wallet, providers, ethers } from 'ethers';
 ```
 
-Update your import from the account package to also include BiconomySmartAccount and BiconomySmartAccountConfig and also import Wallet, providers, and ethers from the ethers package. 
+Update your import from the account package to also include BiconomySmartAccountV2 and also import Wallet, providers, and ethers from the ethers package. 
 
 ```typescript
 const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
@@ -79,25 +79,36 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 Note that using the above paymaster URL will only work on Polygon Mumbai network and will only allow sponsored transactions from the contract address mentioned at the start of this tutorial. If you would like to learn how to use our dashboard to get your own paymaster url on any of our supported chains make sure to check out our [Dashboard Documentation](/docs/category/biconomy-dashboard/)
 :::
 
-We now need an object that will hold the configuration values for our Smart Account. 
+Next step is to specify that we want the ECDSA module for our smart account. Update the imports to include the following: 
 
 ```typescript
-const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-  signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
-  bundler: bundler,
-  paymaster: paymaster
-}
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 ```
 
-Now we can use this configuration to get the users Smart Account or create one if they don't already have it:
+Now lets initialize the module:
+
+```typescript
+const module = await ECDSAOwnershipValidationModule.create({
+  signer: wallet,
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+})
+```
+
+
+Now lets use the create method on the `BiconomySmartAccountV2` class to create a new instance of our smart account:
 
 ```typescript
 async function createAccount() {
-  let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
-  biconomySmartAccount =  await biconomySmartAccount.init()
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
+    chainId: ChainId.POLYGON_MUMBAI,
+    bundler: bundler,
+    paymaster: paymaster, 
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: module,
+    activeValidationModule: module
+})
   console.log("owner: ", biconomySmartAccount.owner)
-  console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
+  console.log("address: ", await biconomySmartAccount.getAccountAddress())
   return biconomySmartAccount;
 }
 
