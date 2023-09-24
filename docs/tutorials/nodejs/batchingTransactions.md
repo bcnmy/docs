@@ -61,7 +61,7 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module
 })
-  address = await biconomySmartAccount.getSmartAccountAddress()
+  address = await biconomySmartAccount.getAccountAddress()
   smartAccount = biconomySmartAccount;
   return biconomySmartAccount;
 }

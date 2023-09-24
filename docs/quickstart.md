@@ -143,7 +143,7 @@ async function createAccount() {
   activeValidationModule: module
 })
   console.log("owner: ", biconomySmartAccount.owner)
-  console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
+  console.log("address: ", await biconomySmartAccount.getAccountAddress())
   return biconomySmartAccount;
 }
 
