@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Quickstart: Smart Account Native Transfer
 
-In this guide, we will walk through creating a basic Node.js script using TypeScript with an implementation of the Smart Account Package from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action, check out our [Quick Explore](/docs/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
+In this guide, we will walk through creating a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action, check out our [Quick Explore](/docs/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
 
 :::info
 Please note that this tutorial assumes you have Node JS installed on your computer and have some working knowledge of Node.
@@ -44,7 +44,6 @@ All packages you need for this guide are all configured and installed for you, c
 
 - The account package will help you with creating smart contract accounts and an interface with them to create transactions.
 - The bundler package helps you with interacting with our bundler or alternatively another bundler of your choice.
-- The core types package will give us Enums for the proper ChainId we may want to use
 - The paymaster package works similarly to the bundler package in that you can use our paymaster or any other one of your choice.
 - The core types package will give us Enums for the proper ChainId we may want to use.
 - The modules package gives us access to the different modules we publish for the biconomy sdk.
@@ -147,7 +146,6 @@ async function createAccount() {
   return biconomySmartAccount;
 }
 
-createAccount()
 ```
 
 We create a new instance of the account using the BiconomySmartAccount class and passing it the configuration. 
@@ -161,6 +159,7 @@ Smart accounts are counterfactual in nature. We know their address before they a
 Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step you might run into the [AA21 didn't pay prefund error](/docs/troubleshooting/commonerrors.md)!
 :::
 Once you have tokens available it is time to start constructing our first userOps for a native transfer.
+
 
 ## Execute your first userOp
 
@@ -186,6 +185,8 @@ async function createTransaction() {
   console.log("transaction detail below")
   console.log(transactionDetail)
 }
+
+createTransaction()
 ```
 
 Let’s move the call to create account into the create transaction function and have it assigned to the value smartAccount. 
@@ -198,7 +199,7 @@ Now we need to construct our transaction which will take the following values:
 
 Next up is building the userOp, feel free to add an additional log here if you would like to see how the partial userOp looks in this case. We’re also going to add “0x” for the paymasterAndData value as we just want this to be a regular transaction where the gas is paid for by the end user. 
 
-Finally we send the userOp and save the value to a variable named userOpResponse and get the transactionDetail after calling userOpResponse.wait(). This function can optionally take a number to specify the amount of network confirmations you would like before returning a value. For example, if you passed `userOpResponse.wait(5)` this would wait for 5 confirmations on the network before giving you the necessary value. 
+Finally we send the userOp and save the value to a variable named userOpResponse and get the transactionDetail after calling `userOpResponse.wait()`. This function can optionally take a number to specify the amount of network confirmations you would like before returning a value. For example, if you passed `userOpResponse.wait(5)` this would wait for 5 confirmations on the network before giving you the necessary value. 
 
 Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK! 
 

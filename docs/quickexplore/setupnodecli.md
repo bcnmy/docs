@@ -80,7 +80,8 @@ key for testing purpose.
 
 cJPK7B3ru.dd7f7861-190d-45ic-af80-6877f74b8f44
 
-For Mainnet API Keys [Contact Us](https://t.me/rhicsanchez) :::
+For Mainnet API Keys [Contact Us](https://t.me/rhicsanchez) 
+:::
 
 ## Retrieve Smart Account Address
 
