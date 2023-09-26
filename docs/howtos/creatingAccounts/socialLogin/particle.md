@@ -94,7 +94,7 @@ const connect = async () => {
         activeValidationModule: module
       })
 
-      const address = await biconomySmartAccount.getSmartAccountAddress()
+      const address = await biconomySmartAccount.getAccountAddress()
     } catch (error) {
       console.error(error);
     }
