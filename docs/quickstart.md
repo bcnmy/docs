@@ -118,21 +118,16 @@ First we import our Module:
 ```typescript
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 ```
-Now initialize it: 
+Now let's initialize the module and pass it to our account creation config:
 
 ```typescript
+async function createAccount() {
 
-const module = await ECDSAOwnershipValidationModule.create({
+  const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
   })
 
-```
-
-Now with the config setup let's create a smart account:
-
-```typescript
-async function createAccount() {
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
   signer: wallet,
   chainId: ChainId.POLYGON_MUMBAI,
@@ -141,7 +136,6 @@ async function createAccount() {
   defaultValidationModule: module,
   activeValidationModule: module
 })
-  console.log("owner: ", biconomySmartAccount.owner)
   console.log("address: ", await biconomySmartAccount.getAccountAddress())
   return biconomySmartAccount;
 }

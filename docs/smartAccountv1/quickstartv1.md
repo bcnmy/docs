@@ -218,7 +218,7 @@ async function createAccount() {
   const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
   const biconomySmartAccount =  await biconomyAccount.init()
   console.log("owner: ", biconomySmartAccount.owner)
-  console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
+  console.log("address: ", await biconomySmartAccount.getAccountAddress())
   return biconomyAccount
 }
 async function createTransaction() {

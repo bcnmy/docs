@@ -87,18 +87,17 @@ import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "
 
 Now lets initialize the module:
 
-```typescript
-const module = await ECDSAOwnershipValidationModule.create({
-  signer: wallet,
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-})
-```
 
-
-Now lets use the create method on the `BiconomySmartAccountV2` class to create a new instance of our smart account:
+Now lets initialize the module and use the create method on the `BiconomySmartAccountV2` class to create a new instance of our smart account:
 
 ```typescript
 async function createAccount() {
+
+  const module = await ECDSAOwnershipValidationModule.create({
+  signer: wallet,
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+  })
+
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,
     bundler: bundler,
@@ -107,7 +106,6 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module
 })
-  console.log("owner: ", biconomySmartAccount.owner)
   console.log("address: ", await biconomySmartAccount.getAccountAddress())
   return biconomySmartAccount;
 }
