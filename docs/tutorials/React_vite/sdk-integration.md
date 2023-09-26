@@ -181,8 +181,8 @@ async function setupSmartAccount() {
         defaultValidationModule: module,
         activeValidationModule: module
       })
-      console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
-      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed( await biconomySmartAccount.getSmartAccountAddress()))
+      console.log("address: ", await biconomySmartAccount.getAccountAddress())
+      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed())
 
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
@@ -241,12 +241,12 @@ step-by-step explanation of what it does:
     address of the smart account owner.
 
 -   **console.log("address: ", await
-    biconomySmartAccount.getSmartAccountAddress()):** Logs the Ethereum address
-    of the BiconomySmartAccount using the getSmartAccountAddress() method. This
+    biconomySmartAccount.getAccountAddress()):** Logs the Ethereum address
+    of the BiconomySmartAccount using the getAccountAddress() method. This
     address is the entrypoint address mentioned earlier, and it serves as the
     point of entry for interacting with the smart account through Biconomy.
 
--   **`console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(await biconomySmartAccount.getSmartAccountAddress()))`:**
+-   **`console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(await biconomySmartAccount.getAccountAddress()))`:**
     Logs whether the smart account has been deployed or not. It calls the
     isAccountDeployed() method on the BiconomySmartAccount instance, passing the
     entrypoint address as an argument.

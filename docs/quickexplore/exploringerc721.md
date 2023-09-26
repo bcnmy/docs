@@ -12,7 +12,7 @@ In the previous tutorials we set up our Smart Accounts, created Native Transfers
 
 ## Mint an NFT
 
-Before executing our first NFT Mint, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! 
+Before executing our first NFT Mint, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your **smart account address** and get some test tokens! 
 
 Let's run the following command: 
 

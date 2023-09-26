@@ -14,7 +14,7 @@ In the previous tutorial we set up our Smart Accounts using the Node JS CLI tool
 
 If you would like to learn how to build out a script for a Native transfer yourself our [quickstart guide](quickstart.md) has you covered.
 
-Before executing our first Native transfer, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! 
+Before executing our first Native transfer, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your **smart account address** and get some test tokens! 
 
 With the smart account funded let's run the script below:
 
@@ -25,7 +25,7 @@ Please feel free of course to transfer to any wallet of your choice. The `--to` 
 
 Upon successful transfer you will see several details printed to your terminal which include: the userOp information, userOp hash, and transaction detail information once confirmed.
 
-## Token Paymaster transfers
+## Token transfer with Paymaster
 
 Biconomy Paymasters support gas payments in ERC20 tokens. Let's do the same transfer but this time we can pay for gas using an ERC20 token. 
 

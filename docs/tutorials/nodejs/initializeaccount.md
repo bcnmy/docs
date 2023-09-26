@@ -92,7 +92,7 @@ Now lets initialize the module and use the create method on the `BiconomySmartAc
 
 ```typescript
 async function createAccount() {
-  
+
   const module = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
@@ -106,7 +106,7 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module
 })
-  console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
+  console.log("address: ", await biconomySmartAccount.getAccountAddress())
   return biconomySmartAccount;
 }
 

@@ -129,7 +129,7 @@ We're also going to add some state variables to the component along with their t
 ```typescript
   const [address, setAddress] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false);
-  const [smartAccount, setSmartAccount] = useState<BiconomySmartAccount | null>(null);
+  const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2 | null>(null);
   const [provider, setProvider] = useState<ethers.providers.Provider | null>(null)
 ```
 
@@ -162,7 +162,7 @@ const connect = async () => {
         defaultValidationModule: module,
         activeValidationModule: module
       })
-      setAddress( await biconomySmartAccount.getSmartAccountAddress())
+      setAddress( await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
     } catch (error) {
