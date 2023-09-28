@@ -17,7 +17,8 @@ the [polygon faucet](https://faucet.polygon.technology/).
 
 :::info Make sure to swap for Polygon Mumbai USDC test tokens at this address:
 0xda5289fcaaf71d52a80a254da614a192b693e977 on
-[Uniswap](https://app.uniswap.org/#/swap).
+[Uniswap](https://app.uniswap.org/#/swap)
+:::
 
 <details>
   <summary> Click to view code from previous section </summary>
@@ -229,7 +230,37 @@ finalUserOp = await smartAccount.buildTokenPaymasterUserOp(partialUserOp, {
 let paymasterServiceData = {
     mode: PaymasterMode.ERC20,
     feeTokenAddress: usdcFeeQuotes.tokenAddress,
+    calculateGasLimits: true, // Always recommended and especially when using token paymaster
 };
+
+try{
+    const paymasterAndDataWithLimits =
+      await biconomyPaymaster.getPaymasterAndData(
+        finalUserOp,
+        paymasterServiceData
+      );
+    finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
+
+    // below code is only needed if you sent the flag calculateGasLimits = true
+    if (
+      paymasterAndDataWithLimits.callGasLimit &&
+      paymasterAndDataWithLimits.verificationGasLimit &&
+      paymasterAndDataWithLimits.preVerificationGas
+    ) {
+
+      // Returned gas limits must be replaced in your op as you update paymasterAndData.
+      // Because these are the limits paymaster service signed on to generate paymasterAndData
+      // If you receive AA34 error check here..   
+
+      finalUserOp.callGasLimit = paymasterAndDataWithLimits.callGasLimit;
+      finalUserOp.verificationGasLimit =
+        paymasterAndDataWithLimits.verificationGasLimit;
+      finalUserOp.preVerificationGas =
+        paymasterAndDataWithLimits.preVerificationGas;
+    }
+  } catch (e) {
+    console.log("error received ", e);
+  }
 ```
 
 ## Paymaster Service Data response
@@ -375,21 +406,39 @@ async function mintNFT() {
     });
 
     let paymasterServiceData = {
-        mode: PaymasterMode.ERC20,
-        feeTokenAddress: usdcFeeQuotes.tokenAddress,
-    };
+    mode: PaymasterMode.ERC20,
+    feeTokenAddress: usdcFeeQuotes.tokenAddress,
+    calculateGasLimits: true, // Always recommended and especially when using token paymaster
+};
 
-    try {
-        const paymasterAndDataWithLimits =
-            await biconomyPaymaster.getPaymasterAndData(
-                finalUserOp,
-                paymasterServiceData
-            );
-        finalUserOp.paymasterAndData =
-            paymasterAndDataWithLimits.paymasterAndData;
-    } catch (e) {
-        console.log("error received ", e);
+try{
+    const paymasterAndDataWithLimits =
+      await biconomyPaymaster.getPaymasterAndData(
+        finalUserOp,
+        paymasterServiceData
+      );
+    finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
+
+    // below code is only needed if you sent the flag calculateGasLimits = true
+    if (
+      paymasterAndDataWithLimits.callGasLimit &&
+      paymasterAndDataWithLimits.verificationGasLimit &&
+      paymasterAndDataWithLimits.preVerificationGas
+    ) {
+
+      // Returned gas limits must be replaced in your op as you update paymasterAndData.
+      // Because these are the limits paymaster service signed on to generate paymasterAndData
+      // If you receive AA34 error check here..   
+
+      finalUserOp.callGasLimit = paymasterAndDataWithLimits.callGasLimit;
+      finalUserOp.verificationGasLimit =
+        paymasterAndDataWithLimits.verificationGasLimit;
+      finalUserOp.preVerificationGas =
+        paymasterAndDataWithLimits.preVerificationGas;
     }
+  } catch (e) {
+    console.log("error received ", e);
+  }
 
     try {
         const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
