@@ -13,7 +13,7 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://docs.biconomy.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -89,7 +89,8 @@ const config = {
       
             //... other Algolia params 
       },
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/thumbnail.png',
+      metadata: [{name: 'twitter:card', content: 'summary_large_image'}],
       navbar: {
         title: 'Biconomy',
         logo: {
