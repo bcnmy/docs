@@ -31,7 +31,7 @@ Notice I changed my title and description, feel free to do that. On the main tag
 
 ## Set up Particle Auth
 
-Now we're going to leverage Particle Auth through the SDK to set up social logins. Remember we're focusing here on users who have never onboarded onto web3 via a wallet and just want o experience minting their first NFT. 
+Now we're going to leverage Particle Auth through the SDK to set up social logins. Remember we're focusing here on users who have never onboarded onto web3 via a wallet and just want to experience minting their first NFT. 
 
 Let's import the Particle Auth Package
 
