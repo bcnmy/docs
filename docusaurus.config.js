@@ -89,7 +89,8 @@ const config = {
       
             //... other Algolia params 
       },
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/thumbnail.png',
+      metadata: [{name: 'twitter:card', content: 'summary_large_image'}],
       navbar: {
         title: 'Biconomy',
         logo: {
