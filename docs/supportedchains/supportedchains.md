@@ -1,11 +1,11 @@
 ---
-sidebar_label: Gas Sponsorship
+sidebar_label: Paymaster and Bundler Chains
 sidebar_position: 1
 ---
 
-# Gas Sponsorship
+# Paymaster and Bundler Chains
 
-List of chains supported by our Paymaster for gas sponsorship.
+List of chains supported by our Paymasters and Bundlers.
 
 ## Mainnet Chains
 1. Ethereum
@@ -13,7 +13,7 @@ List of chains supported by our Paymaster for gas sponsorship.
 3. BSC Mainnet
 4. Polygon zkEVM Mainnet
 5. Arbitrum One Mainnet
-6. Arbitrum Nove Mainnet
+6. Arbitrum Nova Mainnet
 7. Optimism Mainnet
 8. Avalanche Mainnet
 9. Base Mainnet

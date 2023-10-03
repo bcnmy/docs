@@ -7,7 +7,7 @@ sidebar_position: 3
 | Key                | Description |
 | -------------------| ------------- |
 | bundlerUrl         | Represent ERC4337 spec implemented bundler url. you can get one from biconomy dashboard. Alternatively you can supply any of your preferred|
-| chainId            | This represents the network your smart wallet transactions will be conducted on. Take a look following Link for supported chain id's |
+| chainId            | This represents the network your smart wallet transactions will be conducted on. [Click here for supported Chains ](/docs/supportedchains/)|
 | entryPointAddress  | Since entrypoint can have different addresses you can call getSupportedEntryPoints() on bundler instance for supported addresses list|
 
 ```typescript

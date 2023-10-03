@@ -25,6 +25,7 @@ import { IBundler, Bundler } from '@biconomy/bundler'
 import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { Wallet, providers, ethers } from 'ethers';
 import { ChainId } from "@biconomy/core-types"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from '@biconomy/modules'
 ```
 
 ### Create a Signer using a Private Key:
@@ -54,16 +55,18 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl: '' 
 })
 
-const module = await ECDSAOwnershipValidationModule.create({
-  signer: wallet,
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-})
 ```
 
 ### Create the Biconomy Smart Account
 
 ```typescript
 async function createAccount() {
+  
+  const module = await ECDSAOwnershipValidationModule.create({
+  signer: wallet,
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+  })
+
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,// or any supported chain of your choice
     bundler: bundler,
@@ -130,7 +133,7 @@ const connect = async () => {
       const provider = new ethers.providers.Web3Provider(ethereum)
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
-      const ownerShipModule = ECDSAOwnershipValidationModule.create({
+      const ownerShipModule = await ECDSAOwnershipValidationModule.create({
         signer: signer,
         moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
