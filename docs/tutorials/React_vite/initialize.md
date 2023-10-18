@@ -44,16 +44,18 @@ yarn add
     @biconomy/core-types
     @biconomy/paymaster
     @biconomy/web3-auth
+    @biconomy/modules
+    ethers@5.7.2
 ```
 
-We will use these tools to build out our front end. In addition, lets also
+We will use these tools to build out our front end. In addition, let's also
 install the following devDependencies:
 
 ```bash
 yarn add @esbuild-plugins/node-globals-polyfill rollup-plugin-polyfill-node stream-browserify -D
 ```
 
-After installing the above dependencies update you vite.config.ts to the
+After installing the above dependencies update your `vite.config.ts` to the
 following:
 
 ```js
@@ -77,7 +79,6 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            process: "process/browser",
             stream: "stream-browserify",
             util: "util",
         },

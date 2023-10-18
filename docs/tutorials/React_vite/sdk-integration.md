@@ -19,6 +19,7 @@ import { ethers } from 'ethers'
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { IPaymaster, BiconomyPaymaster,} from '@biconomy/paymaster'
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE, } from "@biconomy/modules";
 import Counter from './Components/Counter';
 ```
 
@@ -42,6 +43,8 @@ Here is information about the rest of the imports:
     configuration and methods of smart accounts
 -   `IPaymaster` and `Paymaster` will be used to sponsor gas fees for an
     account, provided specific predefined conditions are satisfied.
+-   `ECDSAOwnershipValidationModule`, and `DEFAULT_ECDSA_OWNERSHIP_MODULE,` to handle
+    the ECDSA Validation Signature for generating the smart accounts.  
 
 Now, let's setup our paymaster and bundler :
 
@@ -173,8 +176,13 @@ async function setupSmartAccount() {
     );
     setProvider(web3Provider);
 
+     const module = await ECDSAOwnershipValidationModule.create({
+        signer: web3Provider.getSigner(),
+        moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+    });
+
     try {
-      let biconomySmartAccount = await BiconomySmartAccountV2.create(
+      let biconomySmartAccount = await BiconomySmartAccountV2.create({
         chainId: ChainId.POLYGON_MUMBAI,
         bundler: bundler, 
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
