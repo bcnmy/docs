@@ -57,8 +57,8 @@ With our interface created lets start scaffolding out our component:
 
 const Minter: React.FC<Props> = ({ smartAccount, address, provider }) => {
   return(
-    <
-    {address && <button onClick={handleMint} className={styles.connect}>Mint NFT</button>}>
+    <>
+    {address && <button onClick={handleMint} className={styles.connect}>Mint NFT</button>}
     </>
   )
 }
@@ -365,7 +365,7 @@ const connect = async () => {
       );
       setProvider(web3Provider)
 
-      const module = await ECDSAOwnershipValidationModule.create({
+      const _module = await ECDSAOwnershipValidationModule.create({
       signer: web3Provider.getSigner(),
       moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
@@ -375,8 +375,8 @@ const connect = async () => {
         bundler: bundler, 
         paymaster: paymaster,
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-        defaultValidationModule: module,
-        activeValidationModule: module
+        defaultValidationModule: _module,
+        activeValidationModule: _module
       })
       setAddress( await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
