@@ -1,9 +1,9 @@
 ---
-sidebar_label: 'Get Supported Entry Points'
-sidebar_position: 6
+sidebar_label: 'Get gass fee values'
+sidebar_position: 7
 ---
 
-# 6. eth_supportedEntryPoints
+# 7. biconomy_getGasFeeValues
 
 :::info
 You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
