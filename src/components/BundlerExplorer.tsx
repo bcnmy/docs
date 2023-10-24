@@ -57,6 +57,15 @@ export default function Explorer() {
     // If no match was found, return false
     return "Bundler URL incorrect";
   }
+
+  const validateJson = (value) => {
+    try {
+      JSON.parse(value)
+      return true
+    } catch (error) {
+      return "Invalid JSON object please check the entered UserOp"
+    }
+  }
   
   const test = "https://bundler.biconomy.io/api/v2/84531/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
   const onSubmit: SubmitHandler<FormValues> = (data) => {
@@ -226,7 +235,10 @@ useEffect(() => {
                 <label className="inputLabel">UserOp</label>
                 
                 <textarea
-                    {...register('userOp', { required: 'UserOp object is required' })}
+                    {...register('userOp', { 
+                      required: 'UserOp object is required',
+                      validate: (value) => validateJson(value)
+                    })}
                     placeholder="UserOp Object"
                     className="inputField"
                     rows={5}

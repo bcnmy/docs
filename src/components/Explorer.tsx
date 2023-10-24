@@ -40,6 +40,15 @@ export default function Explorer() {
     return true
   }
 
+  const validateJson = (value) => {
+    try {
+      JSON.parse(value)
+      return true
+    } catch (error) {
+      return "Invalid JSON object please check the entered UserOp"
+    }
+  }
+
   const validatePaymasterURL = (value) => {
   const chainIdPattern = /https:\/\/paymaster\.biconomy\.io\/api\/v[12]\/(\d+)/;
   const result = value.match(chainIdPattern);
@@ -214,7 +223,10 @@ useEffect(() => {
                 <label className="inputLabel">UserOp</label>
                 
                 <textarea
-                    {...register('userOp', { required: 'UserOp object is required' })}
+                    {...register('userOp', { 
+                      required: 'UserOp object is required', 
+                      validate: (value) => validateJson(value)
+                    })}
                     placeholder="UserOp Object"
                     className="inputField"
                     rows={5}
