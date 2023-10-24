@@ -3,19 +3,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import CodeBlock from '@theme/CodeBlock'
 import "../css/explorer.css"
 
-const initialState = {
-  "sender": "0x4f7cb0db90926d15b0666ecf52f9b80b09585981",
-  "nonce": "0x0b",
-  "initCode": "0x",
-  "callData": "0x9e5d4c490000000000000000000000000a7755bdfb86109d9d403005741b415765eaf1bc00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000002440d097c30000000000000000000000004f7cb0db90926d15b0666ecf52f9b80b0958598100000000000000000000000000000000000000000000000000000000",
-  "signature": "0x73c3ac716c487ca34bb858247b5ccf1dc354fbaabdd089af3b2ac8e78ba85a4959a2d76250325bd67c11771c31fccda87c33ceec17cc0de912690521bb95ffcb1b",
-  "maxFeePerGas": "0x05f5e132",
-  "maxPriorityFeePerGas": "0x05f5e132",
-  "verificationGasLimit": "77162",
-  "callGasLimit": "78403",
-  "preVerificationGas": "67656",
-  "paymasterAndData": "0x"
-}
 
 type FormValues = {
   paymasterUrl: string;
@@ -29,26 +16,6 @@ type FormValues = {
 };
 
 export default function Explorer() {
-  const initialState = {
-    userOp : {
-      sender: "0x0000000000000000000000000000000000000000",
-      nonce: "0x",
-      initCode: "0x",
-      callData: "0x",
-      signature: "0x",
-      maxFeePerGas: "0x",
-      maxPriorityFeePerGas: "0x",
-      verificationGasLimit: "0x",
-      callGasLimit: "0x",
-      preVerificationGas: "0x",
-      paymasterAndData: "0x"
-    },
-    mode: "SPONSORED",
-    smartAccountName: "BICONOMY",
-    smartAccountVersion: "1.0.0",
-    method: "pm_getFeeQuoteOrData",
-    paymasterURL: "https://paymaster.biconomy.io/api/v1/84531/m814QNmpW.fce62d8f-41a1-42d8-9f0d-2c65c10abe9a"
-  }
 
   const [ data, setData ] = useState(null)
   const [ sample, setSample ] = useState(null)
@@ -143,7 +110,6 @@ export default function Explorer() {
         headers: myHeaders,
         body: formattedRequest,
       };
-        const testurl = "https://paymaster.biconomy.io/api/v1/84531/m814QNmpW.fce62d8f-41a1-42d8-9f0d-2c65c10abe9a"
         fetch(data.paymasterUrl, requestOptions)
         .then(response => response.json())
         .then(json => setData(json))
@@ -188,15 +154,6 @@ export default function Explorer() {
     }
 };
 
-
-// "tokenInfo": {
-//   "preferredToken": "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d4",
-//   "tokenList": [
-//       "0xdA5289FCAAF71d52A80A254dA614A192B693e975",
-//       "0xda5289fcaaf71d52a80a254da614a192b693e977",
-//       "0xeabc4b91d9375796aa4f69cc764a4ab509080a58"
-//   ]
-// }
 
 useEffect(() => {
   const raw = JSON.stringify({
