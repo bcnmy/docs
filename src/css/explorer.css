@@ -1,0 +1,70 @@
+.testing {
+  display: flex;
+}
+
+.requestContainer {
+  display: flex;
+}
+
+.requestBlock {
+  height: 625px;
+  width: 550px;
+  overflow: auto;
+}
+
+.bundlerRequestBlock {
+  height: 365px;
+  width: 550px;
+  overflow: auto;
+}
+
+.formContainer {
+  border-radius: 8px;
+  width: 400px;
+  margin-right: 10px;
+}
+
+.formTitle {
+  color: #ffffff;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #454342;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.inputField::placeholder {
+  color: #a9a9a9;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #FF4500;
+  color: #ffffff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submitButton:hover,
+.submitButton:active {
+  background-color: #cc3700;
+}
+
+.errorMsg {
+  color: #D32F2F; /* Red color to signify error */
+  font-size: 12px;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #FFEBEE; /* Light red background to make the error pop out */
+}
