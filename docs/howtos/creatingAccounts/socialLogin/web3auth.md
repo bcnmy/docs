@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Web3Auth'
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 
