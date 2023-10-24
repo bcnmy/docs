@@ -190,7 +190,7 @@ async function setupSmartAccount() {
         activeValidationModule: module
       })
       console.log("address: ", await biconomySmartAccount.getAccountAddress())
-      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed())
+      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(smartAccount.accountAddress))
 
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
