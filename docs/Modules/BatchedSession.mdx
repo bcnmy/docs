@@ -1,0 +1,62 @@
+---
+sidebar_position: 5
+---
+# Batched Session Validation Module
+
+This module works hand in hand with the Session Key Manager Module. It allows for multiple session validation modules to be activated for a user. 
+
+
+## Installation
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/modules 
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/modules 
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/modules 
+
+```
+
+</TabItem>
+</Tabs>
+
+## Integration 
+
+Integration is the same as using the Session Key Manager Module with the additional step of starting a session router module. 
+
+```typescript
+
+ const sessionModule = await SessionKeyManagerModule.create({
+        moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
+        smartAccountAddress: address,
+      });
+
+const sessionRouterModule = await BatchedSessionRouterModule.create({
+        moduleAddress: routerModuleAddr,
+        sessionKeyManagerModule: sessionModule,
+        smartAccountAddress: scwAddress,
+      });
+
+```
+Implementation of this is similar to the Session Key Manager module guide - a full timplementation example is shown [here](https://github.com/bcnmy/sdk-demo/blob/dev-v2/src/components/Modules/CreateBatchRouter.tsx)

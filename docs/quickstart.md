@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Quickstart: Smart Account Native Transfer
 
-In this guide, we will walk through creating a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action, check out our [Quick Explore](/docs/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
+In this guide, we will walk through creating a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action, check out our [Quick Explore](/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
 
 :::info
 Please note that this tutorial assumes you have Node JS installed on your computer and have some working knowledge of Node.
@@ -150,7 +150,7 @@ Smart accounts are counterfactual in nature. We know their address before they a
 :::
 
 :::caution
-Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step you might run into the [AA21 didn't pay prefund error](/docs/troubleshooting/commonerrors.md)!
+Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)!
 :::
 Once you have tokens available it is time to start constructing our first userOps for a native transfer.
 

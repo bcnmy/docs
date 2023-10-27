@@ -1,0 +1,69 @@
+---
+sidebar_position: 2
+---
+# Integration
+
+This guide soley focuses on the code to integrate the Bundler package. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration). 
+
+## Installation
+
+First, install the required packages for initializing the Bundler and Smart Account. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/bundler @biconomy/account
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/bundler @biconomy/account
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/bundler @biconomy/account
+
+```
+
+</TabItem>
+</Tabs>
+
+## Integration Example
+
+```typescript
+
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+
+  // create instance of bundler
+  const bundler: IBundler = new Bundler({
+    //https://dashboard.biconomy.io/ get bundler urls from your dashboard
+    bundlerUrl: "",    
+    chainId: ChainId.POLYGON_MUMBAI,
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+  })
+
+
+```
+
+:::info
+
+[Click here](/dashboard/keys) to learn more about our dashboard and how to get your own Paymaster URL 
+
+:::
+
+Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/category/tutorials) for in depth integrations of the Smart Account and Bundler. 

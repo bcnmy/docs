@@ -123,19 +123,19 @@ const config = {
             items: [
               {
                 label: 'Quick Start',
-                to: '/docs/quickstart',
+                to: '/quickstart',
               },
               {
                 label: 'Smart Accounts',
-                to: '/docs/category/smart-accounts',
+                to: '/category/smart-accounts',
               },
               {
                 label: 'Paymaster',
-                to: '/docs/category/paymaster',
+                to: '/category/paymaster',
               },
               {
                 label: 'Bundler',
-                to: '/docs/category/bundler',
+                to: '/category/bundler',
               },
             ],
           },

@@ -1,0 +1,66 @@
+---
+sidebar_position: 2
+---
+# Integration
+
+This guide soley focuses on the code to integrate the Paymaster package. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration). 
+
+## Installation
+
+First, install the required packages for initializing the Paymaster. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/paymaster
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/paymaster
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/paymaster
+
+```
+
+</TabItem>
+</Tabs>
+
+## Integration Example
+
+```typescript
+
+import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
+
+  // create instance of paymaster
+  const paymaster: IPaymaster = new BiconomyPaymaster({
+    //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
+    paymasterUrl: ""
+  })
+
+
+```
+
+:::info
+
+[Click here](/dashboard/paymaster) to learn more about our dashboard and how to get your own Paymaster URL 
+
+:::
+
+Once initialized you will be able to pass this paymaster instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/category/tutorials) for in depth integrations of the Smart Account and Paymaster. 
