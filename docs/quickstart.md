@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Quickstart: Smart Account Native Transfer
 
-In this guide, we will walk through creating a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. If you would like to skip the tutorial and just see this in action, check out our [Quick Explore](/category/quick-explore) page which will walk you through running a Node JS CLI tool for running this and other scripts to showcase a few use cases of our Smart Accounts.
+In this guide, we will walk through creating a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a smart account and perform user operations by sending a native transfer of tokens. 
 
 :::info
 Please note that this tutorial assumes you have Node JS installed on your computer and have some working knowledge of Node.

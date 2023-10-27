@@ -14,7 +14,7 @@ This documentation is for using our Bundler API directly. If you are building wi
 :::info
 You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
 
-You can test this endpoint on our [Bundler Explorer](/apireference/BundlerAPI/explorer)
+You can test this endpoint on our [Bundler Explorer](/Bundler/explorer)
 :::
 
 This endpoint returns a UserOperation receipt based on a hash (userOpHash) returned by `eth_sendUserOperation`

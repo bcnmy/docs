@@ -14,7 +14,7 @@ This documentation is for using our Paymaster API's directly. If you are buildin
 :::info
 You can get your Paymaster URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
 
-You can test this endpoint on our [Paymaster Explorer](/apireference/PaymasterAPI/explorer)
+You can test this endpoint on our [Paymaster Explorer](/Paymaster/explorer)
 :::
 
 All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below. 
