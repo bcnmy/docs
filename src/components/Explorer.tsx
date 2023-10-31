@@ -155,7 +155,6 @@ export default function Explorer() {
         headers: myHeaders,
         body: formattedRequest,
       };
-        const testurl = "https://paymaster.biconomy.io/api/v1/84531/m814QNmpW.fce62d8f-41a1-42d8-9f0d-2c65c10abe9a"
         fetch(data.paymasterUrl, requestOptions)
         .then(response => response.json())
         .then(json => setData(json))

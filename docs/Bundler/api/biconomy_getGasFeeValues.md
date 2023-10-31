@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Get gass fee values'
+sidebar_label: 'Get gas fee values'
 sidebar_position: 7
 ---
 
@@ -44,11 +44,11 @@ Body
 
 ```json
 {
-  jsonrpc: '2.0',
-  id: 1697033314,
-  result: { 
-		maxPriorityFeePerGas: '100000000', 
-		maxFeePerGas: '100000000' 
+  "jsonrpc": '2.0',
+  "id": 1697033314,
+  "result": { 
+		"maxPriorityFeePerGas": "100000000", 
+		"maxFeePerGas": "100000000" 
 	}
 }
 
