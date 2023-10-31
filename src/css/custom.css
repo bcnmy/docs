@@ -32,4 +32,5 @@
 img {
   max-width: 75%;
   margin: 0 auto;
+  height: fit-content;
 }

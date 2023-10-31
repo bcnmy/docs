@@ -10,7 +10,8 @@ TypeScript that allows user to mint an NFT without paying for any Gas.
 
 :::info This tutorial has a two other steps in the previous sections:
 [Environment Setup](environmentsetup) and
-[Initializing Account](initializeaccount) :::
+[Initializing Account](initializeaccount)
+ :::
 
 This tutorial will be done on the Polygon Mumbai Network and the smart contract
 for the NFT mint is available
