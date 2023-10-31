@@ -1,0 +1,10 @@
+{
+  "label": "Paymaster",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn more about using the Biconomy Paymaster Package"
+  }
+}

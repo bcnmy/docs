@@ -1,8 +1,0 @@
-{
-  "label": "Quick Explore",
-  "position": 3,
-  "link": {
-    "type": "generated-index",
-    "description": "Explore more use cases by using our Node JS CLI Tool"
-  }
-}

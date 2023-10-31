@@ -1,0 +1,94 @@
+---
+sidebar_position: 2
+---
+# Integration
+
+To use the full potential of the `Biconomy Smart Account` you will need an instance of a [Bundler](/category/bundler) and [Paymaster](/category/paymaster). The Biconomy SDK provides you with access to all of this. Below is a basic installation and integration for smart accounts in your code.
+
+## Installation
+
+First, install the required packages for initializing the Smart Account. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/common @biconomy/core-types @biconomy/modules
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/common @biconomy/core-types @biconomy/modules
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/common @biconomy/core-types @biconomy/modules
+
+```
+
+</TabItem>
+</Tabs>
+
+## Integration Example
+
+```typescript
+
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+import { ChainId } from "@biconomy/core-types"
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
+
+  // create instance of bundler
+  const bundler: IBundler = new Bundler({
+    //https://dashboard.biconomy.io/ get bundler urls from your dashboard
+    bundlerUrl: "",    
+    chainId: ChainId.POLYGON_MUMBAI,
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+  })
+
+
+  // create instance of paymaster
+  const paymaster: IPaymaster = new BiconomyPaymaster({
+    //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
+    paymasterUrl: ""
+  })
+
+  // instance of ownership module 
+  const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+    signer: {}, // ethers signer object
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+  })
+
+  const biconomyAccount = await BiconomySmartAccountV2.create({
+    chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
+    bundler: bundler, // instance of bundler
+    paymaster: paymaster, // instance of paymaster
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, //entry point address for chain
+    defaultValidationModule: ownerShipModule, // either ECDSA or Multi chain to start
+    activeValidationModule: ownerShipModule // either ECDSA or Multi chain to start
+  })
+  const address = await biconomySmartAccount.getAccountAddress()
+
+```
+
+:::info
+
+Make sure to call both create methods from an async function!
+
+:::
+
+Regardless of what frontend framework you may use these steps for creating a smart account will remain the same. See our [tutorials](/category/tutorials) for in depth integrations of the smart account. 
