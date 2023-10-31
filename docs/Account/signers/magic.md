@@ -23,6 +23,7 @@ import { IBundler, Bundler } from '@biconomy/bundler'
 import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { Wallet, providers, ethers } from 'ethers';
 import { ChainId } from "@biconomy/core-types"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 import { Magic } from 'magic-sdk';
 ```
 ## Magic Link Configuration 
