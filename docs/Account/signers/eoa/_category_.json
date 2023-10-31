@@ -1,8 +1,0 @@
-{
-  "label": "Sign With EOA",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "Tools to help you sign with existing EOAs"
-  }
-}
