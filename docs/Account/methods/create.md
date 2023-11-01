@@ -33,6 +33,10 @@ const smartAccount = await BiconomySmartAccountV2.create({
 
 ```
 
+:::info
+Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on this is different as it was deployed by us on the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
+:::
+
 
 In the coming sections we will refer to all methods by using `smartAcount.method`
 
