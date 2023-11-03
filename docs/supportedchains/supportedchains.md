@@ -40,5 +40,5 @@ List of chains supported by our Paymasters and Bundlers.
 12. opBNB Testnet
 
 :::info
-Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on this is different as it was deployed by us on the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
+Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on Chiliz is different. The entry point contract for this chain was deployed by the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
 :::
