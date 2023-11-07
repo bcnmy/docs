@@ -1,0 +1,8 @@
+{
+  "label": "Sign With EOA",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Creating Accounts with EOAs"
+  }
+}
