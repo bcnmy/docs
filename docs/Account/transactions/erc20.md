@@ -133,11 +133,12 @@ try {
 
 ## Send UserOperation
 
-Send your userOp to our Bundler which will send the userOp to the entry point contract to handle executing it as a transaction on chain. 
+Send your `finalUserOp` to our Bundler which will send the userOp to the entry point contract to handle executing it as a transaction on chain. 
 
 ```javascript
 
-const userOpResponse = await smartAccount.sendUserOp(userOp);
+// ensure you send the finalUserOp here and not the userOp or you will run into AA21 errors
+const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
   console.log("userOpHash", userOpResponse);
   const { receipt } = await userOpResponse.wait(1);
   console.log("txHash", receipt.transactionHash);
@@ -214,7 +215,7 @@ try {
         console.log("error received ", e);
     }
 
-    const userOpResponse = await smartAccount.sendUserOp(userOp);
+    const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
     console.log("userOpHash", userOpResponse);
     const { receipt } = await userOpResponse.wait(1);
     console.log("txHash", receipt.transactionHash);
