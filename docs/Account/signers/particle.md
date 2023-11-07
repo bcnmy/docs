@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Particle Network'
-sidebar_position: 5
+sidebar_position: 3
 ---
 
 # Particle Network
