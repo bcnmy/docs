@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Particle Network'
-sidebar_position: 5
+sidebar_position: 3
 ---
 
 # Particle Network
@@ -14,7 +14,7 @@ One way to utilize Social Logins is via Particle Network. This section will give
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-type @biconomy/modules @biconomy/paymaster @biconomy/particle-auth ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @biconomy/particle-auth ethers@5.7.2
 ```
 
 ## Imports
