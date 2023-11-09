@@ -177,7 +177,7 @@ async function createTransaction() {
   const transactionDetail = await userOpResponse.wait()
 
   console.log("transaction detail below")
-  console.log(transactionDetail)
+      console.log(`https://mumbai.polygonscan.com/tx/${transactionDetail.receipt.transactionHash}`)
 }
 
 createTransaction()
@@ -219,14 +219,13 @@ const bundler: IBundler = new Bundler({
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 })
 
-const module = await ECDSAOwnershipValidationModule.create({
-  signer: wallet,
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-})
-
   async function createAccount() {
+    const module = await ECDSAOwnershipValidationModule.create({
+    signer: wallet,
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+    })
+
     let biconomyAccount = await BiconomySmartAccountV2.create({
-      signer: wallet,
       chainId: ChainId.POLYGON_MUMBAI,
       bundler: bundler, 
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
