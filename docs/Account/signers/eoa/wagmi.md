@@ -12,7 +12,7 @@ This section shows how to use Wagmi React Hooks to create a Smart Account with B
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add wagmi viem @alchemy/aa-core @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-type @biconomy/modules @biconomy/paymaster
+yarn add wagmi viem @alchemy/aa-core @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster
 ```
 
 ## Set up Wagmi Config

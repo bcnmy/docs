@@ -19,7 +19,7 @@ One way to utilize Social Logins is via Web3Auth. This section will give you cod
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-type @biconomy/modules @biconomy/paymaster @biconomy/web3-auth ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @biconomy/web3-auth ethers@5.7.2
 ```
 
 ## Imports
