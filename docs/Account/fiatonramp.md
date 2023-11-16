@@ -11,7 +11,7 @@ It is a typescript wrapper on `transak.js` SDK which abstracts a few steps for t
 
 ## Steps to Enable Fiat On-Ramp
 
-- Import the `@biconomy-sdk/transak` package into your project.
+- Import the `@biconomy/transak` package into your project.
 
 ```js
 import Transak from "@biconomy/transak";
