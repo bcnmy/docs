@@ -113,4 +113,4 @@ async function createAccount() {
 createAccount()
 ```
 
-After running this script your command prompt should then display The owner of the smart account which is the address associated to your private key, as well as the address of your smart account. In the next section we'll execute our first gasless transaction by minting an NFT.
+After running this script your command prompt should then display the address of your smart account. In the next section we'll execute our first gasless transaction by minting an NFT.
