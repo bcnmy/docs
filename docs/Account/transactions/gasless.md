@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'Gasless Transactions'
 sidebar_position: 2
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transactions/gasless.md
 ---
 
 # Gasless Transactions

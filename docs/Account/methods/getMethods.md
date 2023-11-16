@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'Get Methods'
 sidebar_position: 2
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/methods/getMethods.md
 ---
 # Get Methods
 

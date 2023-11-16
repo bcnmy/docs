@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/description.md
 ---
 # Description
 

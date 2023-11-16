@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'UserOp Methods'
 sidebar_position: 3
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/methods/userOpMethods.md
 ---
 # UserOp Methods
 
