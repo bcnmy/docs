@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'Enable Fiat On Ramp'
 sidebar_position: 7
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/fiatonramp.md
 ---
 
 # Enable Fiat On-Ramp

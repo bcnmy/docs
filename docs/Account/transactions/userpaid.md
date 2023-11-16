@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'User Paid Transactions'
 sidebar_position: 4
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transactions/userpaid.md
 ---
 
 # User Paid Transactions

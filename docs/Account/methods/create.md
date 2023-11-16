@@ -1,6 +1,7 @@
 ---
 sidebar_label: 'Create Accounts'
 sidebar_position: 1
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/methods/create.md
 ---
 # Create
 
