@@ -85,10 +85,9 @@ Next step is to specify that we want the ECDSA module for our smart account. Upd
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 ```
 
-Now lets initialize the module:
 
 
-Now lets initialize the module and use the create method on the `BiconomySmartAccountV2` class to create a new instance of our smart account:
+Now lets initialize the module and use the `create` method on the `BiconomySmartAccountV2` class to generate a new instance of our smart account. Additional information about this method can be found [here](https://docs.biconomy.io/Account/methods/create).
 
 ```typescript
 async function createAccount() {

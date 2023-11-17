@@ -7,7 +7,8 @@ sidebar_position: 5
 
 In this guide, we will edit the functionality in the gasless transaction section
 to switch from minting an NFT with no gas costs for the user, to instead minting
-the NFT and using USDC to pay for the gas costs.
+the NFT and using USDC to pay for the gas costs. User can pay in any ERC20 token
+of their choice. Please find the supported list of ERC20 tokens [here](https://docs.biconomy.io/supportedchains/supportedTokens).
 
 For this tutorial you will need some test USDC tokens. You can use
 [Uniswap](https://app.uniswap.org/#/swap) while connected to the Polygon Mumbai

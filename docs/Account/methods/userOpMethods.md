@@ -126,7 +126,7 @@ let i = 0;
 const userOp = await smartAccount.buildUserOp([tx1], { nonceOptions: { nonceKey: i++ }})
 
 ```
-
+Please refer to the following [script](https://github.com/bcnmy/sdk-examples/blob/master/backend-node/scripts/gasless/parallelUserOpsMintNFT.ts#L95) for detailed implementation.
 
 ### Module params
 
