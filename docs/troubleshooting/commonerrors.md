@@ -20,10 +20,10 @@ Ensure that you are using the bundler, paymaster, and RPC URL of the same blockc
 | AA13 initCode failed or OOG | Throws if userOp doesn’t have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to send transaction. |
 | AA14 initCode must return sender | Throws if the factory contract that you are using to deploy smart account does not return smart account address. Or `sender` field in userOp does not have same address as factory contract is creating for you. |
 | AA93 invalid paymasterAndData | Throws if `paymasterAndData` created by signing service is not valid.  |
-| AA95 out of gas | Throws if `callGasLimit` is not enough for executing callData sent in userOp. Try increasing `callGasLimit` to be able to resolve this issue.|
+| AA95 out of gas | Throws if `callGasLimit` or `verificationGasLimit` is not enough for executing callData sent in userOp. Try increasing `callGasLimit` or `verificationGasLimit` to be able to resolve this issue.|
 | AA90 invalid beneficiary | Throws if the beneficiary address sent in userOp that is going to get sponsored transaction fee back is not valid. |
 | AA31 paymaster deposit too low | Throws if the dApp you have created using dashboard does not have enough funds in its gas tank to sponsor transaction. |
-| AA41 to little verificationGas | Throws if the userOp does not have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to resolve this error. |
+| AA41 too little verificationGas | Throws if the userOp does not have enough `verificationGasLimit` to create smart account. you need to increase `verificationGasLimit` to be able to resolve this error. |
 | AA33 reverted (or OOG) | Throws if the transaction you are sending is not valid or userOp does not have enough `verificationGasLimit` to be able to validate transaction. Try increasing `verificationGasLimit` or verify either the transaction you are making is valid to be able to resolve this error. In case of SPONSORED paymaster you might get this error due to insufficient token balance. |
 | AA40 over verificationGasLimit | Throws if you are sending over `verificationGasLimit` in userOp. Try reducing the value to be able to resolve this error. |
 | AA51 prefund below actualGasCost | Throws because of 2 possible reasons: either your smart wallet does not have funds to send transaction or the dApp you have created using dashboard does not have enough funds in its gas tank to sponsor transaction. |
