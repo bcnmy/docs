@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/methods/
 ---
 # Create
 
-The create method on the BiconomySmartAccountV2 class takes a configuration object when creating a new smart account. See chart and example code below for implementation details. 
+The create method on the BiconomySmartAccountV2 class takes a configuration object when creating a new smart account. See chart and example code below for implementation details. The addresses of ERC-4337 smart accounts follow a deterministic pattern. This enables you to identify the address off-chain before the account is actually deployed.
 
 ## BiconomySmartAccountV2Config
 

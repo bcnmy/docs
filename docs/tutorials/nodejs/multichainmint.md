@@ -5,7 +5,7 @@ sidebar_position: 6
 
 # Mint your NFT on Multiple chains with one signature
 
-In this guide, we will edit the functionality in the gasless transaction section to switch from minting an NFT on one chain to two chains with one signature. 
+In this guide, we will edit the functionality in the gasless transaction section to switch from minting an NFT on one chain to two chains with one signature. Please find the list of all supported chains [here](https://docs.biconomy.io/supportedchains/).
 
 We will mint the NFT on both Polygon and Base testnetworks. If you are using the bundler and Paymaster URLs in this tutorial you will not need to do anything on the Dashboard. If you are following along with your own contract make sure to register your new contracts on Base as well as Polygon. In our case our contract is the same address on both networks (0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e). 
 

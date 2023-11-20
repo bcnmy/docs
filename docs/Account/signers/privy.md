@@ -4,7 +4,7 @@ sidebar_position: 4
 ---
 # Privy
 
-[Privy](https://docs.privy.io/) is a simple toolkit for progressive authentication in web3. With Privy you can add features that allow you to nnboard users across traditional and web3 authentication methods. Users can sign in to your app with a crypto wallet, an email address, their phone number, or even a social profile (e.g., Twitter or Discord). Users don’t need to have a wallet to explore your product.
+[Privy](https://docs.privy.io/) is a simple toolkit for progressive authentication in web3. With Privy you can add features that allow you to onboard users across traditional and web3 authentication methods. Users can sign in to your app with a crypto wallet, an email address, their phone number, or even a social profile (e.g., Twitter or Discord). Users don’t need to have a wallet to explore your product.
 
 :::tip
 
