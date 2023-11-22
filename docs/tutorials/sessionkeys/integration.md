@@ -7,7 +7,7 @@ sidebar_position: 4
 
 In this section we'll integrate the Biconomy SDK and create a Smart Account that will be used for all of our dApp interactions. 
 
-## Remove unnecasary code 
+## Remove unnecessary code 
 
 Let's get started with working on the `index.tsx` file. 
 
@@ -30,7 +30,7 @@ export default function Home() {
 
 ```
 
-Notice I changed my title and description, feel free to do that. On the main tags I added a className for `styles.main` to get all my contect the centered look. 
+Notice I changed my title and description, feel free to do that. On the main tags I added a className for `styles.main` to get all my content the centered look. 
 
 ## Imports and Smart Account Config
 
