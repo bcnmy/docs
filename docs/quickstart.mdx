@@ -121,7 +121,7 @@ import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "
 Now let's initialize the module and pass it to our account creation config:
 
 ```typescript
-async function createAccount() {
+async function createAccountConfig() {
 
   const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
@@ -141,9 +141,13 @@ async function createAccount() {
 
 ```
 
-We create a new instance of the account using the BiconomySmartAccount class and passing it the configuration. 
+:::info
+**Smart Account Creation**: The Smart Account is not created immediately. It will be automatically created when you do the first transaction.
+:::
 
-We then await the initialization of the account and log out two values to out terminal: the owner of the account and the smart account address. The owner should be the EOA that you got your private key from and the smart account address will be a new address referring to the address of this wallet. 
+We create a new instance of the account using the BiconomySmartAccount class and pass it configuration. 
+
+We then await the initialization of the account and log out two values to our terminal: the owner of the account and the smart account address. The owner should be the EOA that you got your private key from and the smart account address will be a new address referring to the address of this wallet. 
 :::info
 Smart accounts are counterfactual in nature. We know their address before they are even deployed. In this instance we won’t immediately deploy it, it will automatically be deployed on the first transaction it initiates and the gas needed for deployment will be added to that first transaction.
 :::
@@ -160,7 +164,7 @@ Once you have tokens available it is time to start constructing our first userOp
 async function createTransaction() {
   console.log("creating account")
 
-  const smartAccount = await createAccount();
+  const smartAccount = await createAccountConfig();
 
   const transaction = {
     to: '0x322Af0da66D00be980C7aa006377FCaaEee3BDFD',
@@ -218,7 +222,7 @@ const bundler: IBundler = new Bundler({
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 })
 
-  async function createAccount() {
+  async function createAccountConfig() {
     const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
@@ -236,7 +240,7 @@ const bundler: IBundler = new Bundler({
   }
 
   async function createTransaction() {
-    const smartAccount = await createAccount();
+    const smartAccount = await createAccountConfig();
     try {
       const transaction = {
         to: '0x322Af0da66D00be980C7aa006377FCaaEee3BDFD',
