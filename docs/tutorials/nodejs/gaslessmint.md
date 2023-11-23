@@ -27,8 +27,14 @@ async function mintNFT() {}
 ```
 
 All of the code from this point forward will be code we add to the mintNFT
-function defined above. Let's start with creating an interface for our NFT
-contract.
+function defined above. Let's start with instantiate the Smart Account and retrieve its address.
+
+```typescript
+  const smartAccount = await createAccount();
+  const address = await smartAccount.getAccountAddress(); // 
+```
+
+Then we need to create an interface for our NFT contract.
 
 ```typescript
 const nftInterface = new ethers.utils.Interface([
