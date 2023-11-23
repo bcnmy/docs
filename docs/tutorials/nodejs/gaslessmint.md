@@ -11,7 +11,7 @@ TypeScript that allows user to mint an NFT without paying for any Gas.
 :::info This tutorial has a two other steps in the previous sections:
 [Environment Setup](environmentsetup) and
 [Initializing Account](initializeaccount)
- :::
+:::
 
 This tutorial will be done on the Polygon Mumbai Network and the smart contract
 for the NFT mint is available
@@ -30,15 +30,15 @@ All of the code from this point forward will be code we add to the mintNFT
 function defined above. Let's start with instantiate the Smart Account and retrieve its address.
 
 ```typescript
-  const smartAccount = await createAccount();
-  const address = await smartAccount.getAccountAddress(); // 
+const smartAccount = await createAccount();
+const address = await smartAccount.getAccountAddress();
 ```
 
 Then we need to create an interface for our NFT contract.
 
 ```typescript
 const nftInterface = new ethers.utils.Interface([
-    "function safeMint(address _to)",
+  "function safeMint(address _to)",
 ]);
 ```
 
@@ -58,8 +58,8 @@ first part of our transaction:
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 
 const transaction = {
-    to: nftAddress,
-    data: data,
+  to: nftAddress,
+  data: data,
 };
 ```
 
@@ -67,12 +67,13 @@ We will now start building out the partial userOp for this transaction:
 
 ```typescript
 let partialUserOp = await smartAccount.buildUserOp([transaction], {
-    paymasterServiceData: {
-      mode: PaymasterMode.SPONSORED,
-    },
-  });
+  paymasterServiceData: {
+    mode: PaymasterMode.SPONSORED,
+  },
+});
 ```
-Since we want to have this become a sponsored transaction we will need to ensure that we pass the `paymasterServiceData` object with a `SPONSORED` paymaster mode. 
+
+Since we want to have this become a sponsored transaction we will need to ensure that we pass the `paymasterServiceData` object with a `SPONSORED` paymaster mode.
 
 ## Paymaster Service Data response
 
@@ -82,7 +83,7 @@ the following variable
 
 ```typescript
 const biconomyPaymaster =
-    smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
+  smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 ```
 
 With this done let's get the paymaster and Data response from our paymaster and
@@ -90,14 +91,13 @@ add it to our userOp.
 
 ```typescript
 try {
-    const paymasterAndDataResponse =
-        await biconomyPaymaster.getPaymasterAndData(
-            partialUserOp,
-            paymasterServiceData
-        );
-    partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
+  const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(
+    partialUserOp,
+    paymasterServiceData,
+  );
+  partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
 } catch (e) {
-    console.log("error received ", e);
+  console.log("error received ", e);
 }
 ```
 
@@ -107,16 +107,16 @@ Finally let's go ahead and mint this NFT!
 
 ```typescript
 try {
-    const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
-    const transactionDetails = await userOpResponse.wait();
-    console.log(
-        `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
-    );
-    console.log(
-        `view minted nfts for smart account: https://testnets.opensea.io/${address}`
-    );
+  const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+  const transactionDetails = await userOpResponse.wait();
+  console.log(
+    `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+  );
+  console.log(
+    `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
+  );
 } catch (e) {
-    console.log("error received ", e);
+  console.log("error received ", e);
 }
 ```
 
@@ -128,7 +128,6 @@ link to quickly view NFT's minted by our smart account.
   <summary> Click to view final code </summary>
 
 ```typescript
-
 import { config } from "dotenv";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { ChainId } from "@biconomy/core-types";
@@ -152,18 +151,20 @@ import {
 config();
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai"
+  "https://rpc.ankr.com/polygon_mumbai",
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
 const bundler: IBundler = new Bundler({
-  bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   chainId: ChainId.POLYGON_MUMBAI,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+  paymasterUrl:
+    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 async function createAccount() {
@@ -221,10 +222,10 @@ async function mintNFT() {
     const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
     const transactionDetails = await userOpResponse.wait();
     console.log(
-      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
+      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
     );
     console.log(
-      `view minted nfts for smart account: https://testnets.opensea.io/${address}`
+      `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
     );
   } catch (e) {
     console.log("error received ", e);
@@ -232,7 +233,6 @@ async function mintNFT() {
 }
 
 mintNFT();
-
 ```
 
 </details>
