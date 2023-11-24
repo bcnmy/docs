@@ -150,7 +150,7 @@ Our Focus for this edit will be on the following section of the mintNFT function
 
 ```
 
-We start constructing our transaction here and pass the transaction to an array within the Smart Accounts `buildUserOp` method. The quickest edit we can do here is simply pass the transaction multiple times:
+We begin by constructing a transaction and then pass it multiple times to the `buildUserOp` method of Smart Accounts. For simplicity, we'll just copy the same `transaction` object multiple times in the array.
 
 ```typescript
 
@@ -162,8 +162,8 @@ let partialUserOp = await smartAccount.buildUserOp([transaction, transaction], {
 
 ```
 
-Passing the transaction twice in the Array will allow you to mint multiple NFTs in one transaction. This is useful for use cases such as using NFTs as a ticketing system and needing to mint multiple tickets or creating one-click experiences in defi by passing multiple types of transactions into the array.
+By duplicating the `transaction` in the array, we enable the minting of several NFTs in a single operation. This approach is ideal for scenarios like **issuing multiple tickets via NFTs** or **streamlining DeFi interactions with one-click multi-transactions**.
 
-Try running the script yourself with this edit and you will notice multiple mints in the transaction details, allowing you to save gas in cases where users need to conduct multiple transactions.
+By making this change to your script, you can mint multiple NFTs in a single transaction, which saves on gas fees for multiple actions.
 
-In the next section, we'll learn how to change our transaction method to pay for gas using an **ERC20 token** instead of using **gasless transactions**.
+Next, we'll transition our script from **gasless transactions** to **utilizing ERC20 tokens for gas payments**.
