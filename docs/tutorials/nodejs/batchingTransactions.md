@@ -5,7 +5,7 @@ sidebar_position: 4
 
 # Batching Multiple Transactions
 
-In this guide, we will edit the functionality in the previous section to not only mint a gassless transaction but to showcase batching transactions by minting multiple transactions together. 
+In this guide, we will edit the functionality in the previous section to not only mint a gasless transaction but to showcase batching transactions by minting multiple transactions together. 
 
 <details>
   <summary> Click to view code from previous section </summary>
@@ -126,8 +126,10 @@ mintNFT();
 Our Focus for this edit will be on the following section of the mintNFT function: 
 
 ```typescript
+  const smartAccount = await createAccount();
+  const address = await smartAccount.getAccountAddress();
 
-const nftInterface = new ethers.utils.Interface([
+  const nftInterface = new ethers.utils.Interface([
     "function safeMint(address _to)",
   ]);
 
@@ -160,9 +162,8 @@ let partialUserOp = await smartAccount.buildUserOp([transaction, transaction], {
 
 ```
 
-Passing the transaction twice in the Array will allow you to mint multiple NFTs in one transaction. This is useful for use cases such as using NFT's as a ticketing system and needing to mint multiple tickets, or creating one click experiences in defi by passing multiple types of transactions into the array.
+Passing the transaction twice in the Array will allow you to mint multiple NFTs in one transaction. This is useful for use cases such as using NFTs as a ticketing system and needing to mint multiple tickets or creating one-click experiences in defi by passing multiple types of transactions into the array.
 
 Try running the script yourself with this edit and you will notice multiple mints in the transaction details, allowing you to save gas in cases where users need to conduct multiple transactions.
 
-In the next section we'll take a look at converting our script from being a gasless transaction to now instead paying for gas using an ERC20 token.
-
+In the next section, we'll learn how to change our transaction method to pay for gas using an **ERC20 token** instead of using **gasless transactions**.
