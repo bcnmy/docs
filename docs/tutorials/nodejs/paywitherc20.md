@@ -143,7 +143,9 @@ transaction. Here is a good starting point for the edit on this function:
 
 ```typescript
 async function mintNFT() {
-    await createAccount();
+  const smartAccount = await createAccount();
+  const address = await smartAccount.getAccountAddress();
+
     const nftInterface = new ethers.utils.Interface([
         "function safeMint(address _to)",
     ]);
