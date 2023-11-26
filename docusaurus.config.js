@@ -169,8 +169,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Biconomy Built with Docusaurus.`,
       },
       colorMode: {
-        defaultMode: 'dark',
-        disableSwitch: true,
+        defaultMode: 'light',
+        disableSwitch: false,
         respectPrefersColorScheme: false,
       },
       prism: {
