@@ -285,7 +285,7 @@ Our backend expects a response in this format:
 
 const webhookResponseData = response.data;
 this.logger.log(`webhookResponseData: ${JSON.stringify(webhookResponseData)} for dappId: ${dappId}`);
-const { arePoliciesVerifed } = webhookResponseData;
+const { arePoliciesVerified } = webhookResponseData;
 
 ```
 `arePoliciesVerified` should either be true or false based on which it gets determined if the webhook conditions are passed or not. 
@@ -307,11 +307,11 @@ app.post('/', (req, res) => {
 
   if(num%2 === 0) {
     res.json({
-      arePoliciesVerifed: true
+      arePoliciesVerified: true
     })
   } else {
     res.json({
-      arePoliciesVerifed: false
+      arePoliciesVerified: false
     })
   }
 });

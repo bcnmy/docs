@@ -327,7 +327,117 @@ Usually, this occurs when incorrect apiKey is used or the address is not added
 }
 ```
 
-#### 6. Delete Smart Contract
+#### 6. Update Sponsorship Paymaster Funding Wallet:
+
+##### It is a 3-step process. 
+##### *1. Generate a message from biconomy servers, for the sponsorship paymaster.*
+> ***GET Request***
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/funding-message/{{paymasterId}}
+
+Headers
+
+| Param | Type | Description | Required |
+| --------------- | --------------- | --------------- | --------------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey | string | API Key Associated with dApp | Required |
+
+Responses
+
+> ***200 OK***
+
+
+```javascript
+{
+    "statusCode": 200,
+        "message": "Funding message sent",
+        "data": {
+        "fundingMessage": "Timestamp: November 27, 2023, 5:05 PM\nWelcome to Biconomy! This request will connect your gas tank to our app. It will not trigger a blockchain transaction or incur any fees."
+    }
+}
+```
+
+> ***401 Unauthorized***
+
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+##### *2. Sign the generated message using the private key of the EOA (Funding Wallet).*
+##### *3. Send the request to biconomy to update the funding wallet address.*
+
+> ***PATCH Request***
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io//api/v2/public/sdk/paymaster
+
+Parameters
+
+Header
+
+| Param | Type | Description | Required |
+| --------------- | --------------- | --------------- | --------------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey | string | API Key Associated with dApp | Required |
+
+Body
+
+| Param       | Type   | Description                                                 | Required |
+|-------------|--------|-------------------------------------------------------------| --------------- |
+| paymasterId | string | Sponsorship Paymaster Id                                    | Required |
+| type        | string | Method Name.  <br/>Use "paymasterFundingId" here                                              | Required |
+| signature   | string | Signature generated using private key of EOA                | Required |
+| address     | string | Address of the EOA which is to be updated as funding wallet | Required |
+
+Responses
+
+> ***200 OK***
+
+
+```javascript
+{
+    "statusCode": 200,
+        "message": "Paymaster updated successfully",
+        "data": {
+        "name": "testXXX",
+        "chainId": 80001,
+        "apiKey": "GwfDKydYq.2967f140-XXXX-4042-XXXX-76684f9XXXX",
+        "paymasterId": "e998530d-XXXX-451e-XXXX-cb6fXXXXef54"
+    }
+}
+```
+> ***400 Bad Request***
+
+This happens, when there is a signature mismatch, either because an older message is used to generate the signature, or EOA address mentioned in the request body, is not the address which signed the message.   
+```javascript
+{
+    "statusCode": 400,
+    "message": "Invalid signature"
+}
+```
+> ***401 Unauthorized***
+
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+> ***404 Not Found***
+
+Usually, this occurs when incorrect apiKey or authToken is used
+```javascript
+{
+    "statusCode": 404,
+    "message": "User not found"
+}
+```
+
+
+#### 7. Delete Smart Contract
 
 > ***DELETE Request***
 
