@@ -171,13 +171,14 @@ const userOpResponse = await smartAccount.sendUserOp(userOp);
 
 ```
 
-The userOpresPonce object looks like this: 
+The userOpResponse object looks like this: 
 
 ```ts
 
 type UserOpResponse = {
     userOpHash: string;
     wait(_confirmations?: number): Promise<UserOpReceipt>;
+    waitForTxHash(): Promise<UserOpStatus>;
 }
 
 ```
@@ -208,7 +209,16 @@ type UserOpReceipt = {
 }
 
 ```
+You can use `waitForTxHash` to get the userOpHash or transactionHash, without waiting for the transaction to be mined.
 
+
+```ts
+
+const transactionDetails: UserOpStatus = await userOpResponse.waitForTxHash();
+console.log('transaction hash', transactionDetails.transactionHash)
+
+
+```
 
 The userOpResponse has one method that you will use 
 
