@@ -87,8 +87,8 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
         },
         {
             "mode": "SPONSORED",
-						"calculateGasLimits": true,
-						"expiryDuration": 300 //5mins
+            "calculateGasLimits": true,
+            "expiryDuration": 300 //5mins
             "sponsorshipInfo": {
                 "webhookData": {},
                 "smartAccountInfo": {
@@ -116,9 +116,9 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
     "result": {
         "MODE": "SPONSORED",
         "paymasterAndData": "0xdc91ffb7c4b800d70410a79a5b503ae4391f67e40000000000000000000000007306ac7a32eb690232de81a9ffb44bb346026fab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000041e1f74852c31150f18ef4e472b748148f8ae031849032218b26170414a18c9f99516eb13a4a9bd35d1334194348cccee3d270b6e7bb400b39f0c8d645266ead601c00000000000000000000000000000000000000000000000000000000000000",
-				"preVerificationGas": "75388",
-				"verificationGasLimit": 57121,
-				"callGasLimit": 108848
+        "preVerificationGas": "75388",
+        "verificationGasLimit": 57121,
+        "callGasLimit": 108848
     }
 }
 ```
@@ -130,31 +130,30 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
 
 ```javascript
 {
-	"jsonrpc": "2.0",
-	"id": 14,
-	"method": "pm_sponsorUserOperation",
-	"params": [
-		{
-			sender, // address
-			nonce, // uint256
-			initCode, // string
-			callData, // string
-			maxFeePerGas, // string
-			maxPriorityFeePerGas, // string
-
-			//optional fields
-			callGasLimit, // string 
-			verificationGasLimit, // string
-			preVerificationGas, // string
-		},
-		{
-			"calculateGasLimits": true,
-			"mode": "ERC20",
-			"tokenInfo": {
-				"feeTokenAddress": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
-			}
-		}
-	]
+    "jsonrpc": "2.0",
+    "id": 14,
+    "method": "pm_sponsorUserOperation",
+    "params": [
+        {
+            sender, // address
+            nonce, // uint256
+            initCode, // string
+            callData, // string
+            maxFeePerGas, // string
+            maxPriorityFeePerGas, // string
+            //optional fields
+            callGasLimit, // string 
+            verificationGasLimit, // string
+            preVerificationGas, // string
+        },
+        {
+            "calculateGasLimits": true,
+            "mode": "ERC20",
+            "tokenInfo": {
+                "feeTokenAddress": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9"
+            }
+        }
+    ]
 }
 ```
 
@@ -167,9 +166,9 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
     "result": {
         "MODE": "SPONSORED",
         "paymasterAndData": "0xdc91ffb7c4b800d70410a79a5b503ae4391f67e40000000000000000000000007306ac7a32eb690232de81a9ffb44bb346026fab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000041e1f74852c31150f18ef4e472b748148f8ae031849032218b26170414a18c9f99516eb13a4a9bd35d1334194348cccee3d270b6e7bb400b39f0c8d645266ead601c00000000000000000000000000000000000000000000000000000000000000",
-				"preVerificationGas": "75388",
-				"verificationGasLimit": 57121,
-				"callGasLimit": 108848
+        "preVerificationGas": "75388",
+        "verificationGasLimit": 57121,
+        "callGasLimit": 108848
     }
 }
 ```
