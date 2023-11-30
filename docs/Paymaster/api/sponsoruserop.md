@@ -21,12 +21,12 @@ All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To s
 
 This endpoint is responsible for calculating the `paymasterAndData` field, if applicable, for the given request.
 The API accepts a partial UserOp and an optional token address. By examining the mode parameter in the request, it identifies the type of paymaster associated with the request and handles the processing accordingly, as described in the following.
-<br/>
-**Sponsorship Paymaster**
+
+### Sponsorship Paymaster
 
 To determine whether a request can be sponsored by the Sponsorship Paymaster, only consider the partial UserOp object and the sponsorshipInfo. If the request cannot be sponsored, the `paymasterAndData` would return "0x".
-<br/>
-**Token Paymaster**
+
+### Token Paymaster
 
 Consider both the partial `UserOp` and `tokenAddress` parameters in this case. If the `tokenAddress` is absent, an error will be thrown. If both are present, check for the *TokenPaymaster* flow and send the `paymasterAndData` response accordingly. If the `tokenAddress` is not supported, an error will also be thrown. Please see the error response at the end of this document.
 
