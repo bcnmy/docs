@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Session Module'
-sidebar_position: 4
+sidebar_position: 5
 ---
 # Session Module
 
@@ -14,92 +14,88 @@ TypeScript that allows user to create a session.
 
 This tutorial will be done on the Polygon Mumbai Network. We will be using session Module for this.
 
-First we will import sessionKeyManagerModule and DEFAULT_SESSION_KEY_MANAGER_MODULE from Biconomy Modules package.
+We will import sessionKeyManagerModule and DEFAULT_SESSION_KEY_MANAGER_MODULE from Biconomy Modules package.
 
 First of all we will initialise the sessionFileStorage using our custom File storage
 
 ```typescript
-    const sessionFileStorage: SessionFileStorage = new SessionFileStorage(address)
+const sessionFileStorage: SessionFileStorage = new SessionFileStorage(address)
 ```
 
+We store the private key in the file using following method. This saves the signer in the file.
 
-We will now use the Session Key Manager Module to create a session module using the module address and smart account address and the custom session storage. This is an important relationship to establish - the module provided by the SDK gives you an easy way to interact with modules you write on a smart contract with whatever arbitrary validation logic you need.
+```typescript
+const sessionSigner = ethers.Wallet.createRandom();
+const sessionKeyEOA = await sessionSigner.getAddress();
+await sessionFileStorage.addSigner(sessionSigner)
+```
+
+We use the Session Key Manager Module to create a session module using the module address and smart account address and the custom session storage. This is an important relationship to establish - the module provided by the SDK gives you an easy way to interact with modules you write on a smart contract with whatever arbitrary validation logic you need.
 
 
 ```typescript
-    const sessionModule = await SessionKeyManagerModule.create({
-        moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
-        smartAccountAddress: address,
-        sessionStorageClient: sessionFileStorage
-    });
+const sessionModule = await SessionKeyManagerModule.create({
+	moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
+	smartAccountAddress: address,
+	sessionStorageClient: sessionFileStorage
+});
 
 ```
 
-In this section we will cover a deployed contract that validates specific permissions to execute ERC20 token transfers. Using this ERC20 Validation module you will be able to create a dApp that allows user to send a limited amount of funds to a specific address without needing to sign a transaction every single time. In the following example user can only transfer 50 tokens at once.
+now, we will cover a deployed contract that validates specific permissions to execute ERC20 token transfers. Using this ERC20 Validation module you will be able to create a dApp that allows user to send a limited amount of funds to a specific address without needing to sign a transaction every single time. In the following example user can only transfer 50 tokens at once.
 
 ```typescript
-    const sessionKeyData = defaultAbiCoder.encode(
-        ["address", "address", "address", "uint256"],
-        [
-          sessionKeyEOA,
-          "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
-          "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
-          ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
-        ]
-    );
+const sessionKeyData = defaultAbiCoder.encode(
+	["address", "address", "address", "uint256"],
+	[sessionKeyEOA,
+	"0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
+	"0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
+	ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
+	]
+);
 
 ```
 
-Now we create the session data itself. We specify how long this should be valid until or how long it is valid after. This should be a unix timestamp to represent the time. Passing 0 on both makes this session never expire, do not do this in production. Next we pass the module address, session key address, and pass the session key data we just created.
+next we create the session data. We specify how long this should be valid until or how long it is valid after. This should be a unix timestamp to represent the time. Passing 0 on both makes this session never expire, do not do this in production. Next we pass the module address, session key address, and pass the session key data we just created.
 
 
 ```typescript
-
-    const sessionTxData = await sessionModule.createSessionData([
-        {
-          validUntil: 0,
-          validAfter: 0,
-          sessionValidationModule: erc20ModuleAddr,
-          sessionPublicKey: sessionKeyEOA,
-          sessionKeyData: sessionKeyData,
-        },
-    ]);
+const sessionTxData = await sessionModule.createSessionData([{
+	validUntil: 0,
+	validAfter: 0,
+	sessionValidationModule: erc20ModuleAddr,
+	sessionPublicKey: sessionKeyEOA,
+	sessionKeyData: sessionKeyData,
+}]);
 ```
-We're going to be tracking if the session key module is already enabled.
-This will check if a session module is enabled - it will return if we do not have an address, smart Account, or provider and will then enable the module for our smartAccount if needed.
+We're going to be tracking if the session key module is already enabled. If we need to enable session key module, we create a transaction using the getEnableModuleData and pass the session key manager module address and push this to the array.
+
 
 ```typescript
-    const isEnabled = await smartAccount.isModuleEnabled(DEFAULT_SESSION_KEY_MANAGER_MODULE)
-    if (!isEnabled)
-    {
-        const enableModuleTrx = await smartAccount.getEnableModuleData(
-            DEFAULT_SESSION_KEY_MANAGER_MODULE
-        );
-        transactionArray.push( enableModuleTrx );
-    }
+const isEnabled = await smartAccount.isModuleEnabled(DEFAULT_SESSION_KEY_MANAGER_MODULE)
+if (!isEnabled) {
+	const enableModuleTrx = await smartAccount.getEnableModuleData(DEFAULT_SESSION_KEY_MANAGER_MODULE);
+	transactionArray.push(enableModuleTrx);
+}
 		
 ```
-
-Finally if we need to enable session key module we create a transactione here as well using the getEnableModuleData and pass the session key manager module address and push this to the array. Additionally we push the session transaction to the array as well, we will be batching these transactions together.
 
 Next we will build a userOp and use the smart account to send it to Bundler.
 
 ```typescript
+let partialUserOp = await smartAccount.buildUserOp(transactionArray, {
+	paymasterServiceData: {
+		mode: PaymasterMode.SPONSORED,
+	}
+});
 
-    let partialUserOp = await smartAccount.buildUserOp( transactionArray, {
-        paymasterServiceData: {
-            mode: PaymasterMode.SPONSORED,
-        }
-    } );
-    console.log( partialUserOp )
-    const userOpResponse = await smartAccount.sendUserOp(
-        partialUserOp
-    );
-    console.log( `userOp Hash: ${ userOpResponse.userOpHash }` );
-    const transactionDetails = await userOpResponse.wait();
-    console.log( "txHash", transactionDetails.receipt.transactionHash );
+const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+console.log(`userOp Hash: ${ userOpResponse.userOpHash }`);
+
+const transactionDetails = await userOpResponse.wait();
+console.log("txHash", transactionDetails.receipt.transactionHash);
 ```
-Now with this implemented let's take a look at executing the ERC20 token transfer with a session in the next section.
+Now with this implemented, let's take a look at executing the ERC20 token transfer with this session in the next section.
 
 
 Checkout below for entire code snippet

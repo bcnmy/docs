@@ -1,6 +1,6 @@
 ---
 sidebar_label: 'Create Custom session'
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Create custom session
@@ -30,7 +30,7 @@ export class SessionFileStorage implements ISessionStorage
 	{
 		this.smartAccountAddress = smartAccountAddress.toLowerCase();
 	}
-
+	// This method reads data from the file and returns it in the JSON format
 	private async readDataFromFile ( type: "sessions" | "signers" ): Promise<any>
 	{
 		return new Promise( ( resolve ) =>
@@ -94,7 +94,7 @@ export class SessionFileStorage implements ISessionStorage
 			throw new Error( "Either pass sessionId or a combination of sessionPublicKey and sessionValidationModule address." );
 		}
 	}
-
+	// Session store is in the form of mekrleRoot and leafnodes, each object will have a root and an array of leafNodes.
 	private async getSessionStore (): Promise<any>
 	{
 		try
@@ -158,6 +158,7 @@ export class SessionFileStorage implements ISessionStorage
 		}
 		return session;
 	}
+	
 	async addSessionData ( leaf: SessionLeafNode ): Promise<void>
 	{
 		console.log( "Add session Data", leaf )
