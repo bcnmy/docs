@@ -204,14 +204,6 @@ async function mintNFT() {
     smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 
   try {
-    const paymasterAndDataResponse =
-      await biconomyPaymaster.getPaymasterAndData(partialUserOp);
-    partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
-  } catch (e) {
-    console.log("error received ", e);
-  }
-
-  try {
     const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
     const transactionDetails = await userOpResponse.wait();
     console.log(
