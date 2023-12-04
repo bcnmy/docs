@@ -178,14 +178,12 @@ const erc20Transfer = async ( sessionFileStorage: SessionFileStorage, amount: st
 		//@ts-ignore
 		const sessionSigner = new ethers.Wallet( sessionKeyPrivKey );
 		console.log( "sessionSigner", sessionSigner );
-		console.log( "created -1" )
 		// generate sessionModule
 		const sessionModule = await SessionKeyManagerModule.create( {
 			moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
 			smartAccountAddress: address,
 			sessionStorageClient: sessionFileStorage
 		} );
-		console.log( "created 0" )
 		// set active module to sessionModule
 		smartAccount = smartAccount.setActiveValidationModule( sessionModule );
 
@@ -204,13 +202,11 @@ const erc20Transfer = async ( sessionFileStorage: SessionFileStorage, amount: st
 		{
 			throw new Error( "invalid token address supplied" );
 		}
-		console.log( "created 1 decimals", decimals )
 		const { data } = await tokenContract.populateTransaction.transfer(
 			"0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
 			ethers.utils.parseUnits( amount, decimals )
 		);
 
-		console.log( "created 2" )
 		// generate tx data to erc20 transfer
 		const tx1 = {
 			to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
@@ -232,13 +228,11 @@ const erc20Transfer = async ( sessionFileStorage: SessionFileStorage, amount: st
 				sessionValidationModule: erc20ModuleAddr,
 			},
 		} );
-		console.log( "created 3" )
 		// send user op
 		const userOpResponse = await smartAccount.sendUserOp( userOp, {
 			sessionSigner: sessionSigner,
 			sessionValidationModule: erc20ModuleAddr,
 		} );
-		console.log( "created 4" )
 		console.log( "userOpHash", userOpResponse );
 		const { receipt } = await userOpResponse.wait( 1 );
 		console.log( "txHash", receipt.transactionHash );

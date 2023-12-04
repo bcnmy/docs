@@ -15,7 +15,7 @@ import { ISessionStorage, SessionLeafNode, SessionSearchParam, SessionStatus } f
 
 We will need to implement all the interface methods.
 
-Here is an example of File storage implementation. It saves the session keys and signers in files. Users will need to create two file in the root folder with $smartAccountAddress_sessions.json and $smartAccountAddress_signers.json names. For instance, if the account address is 0x123 then create 0x123_sessions.json and 0x123_signers.json.
+Here is an example of File storage implementation. It saves the session leafs data and signers in files. For testing purpose developer will need to create two files in the root folder for each user with $smartAccountAddress_sessions.json and $smartAccountAddress_signers.json names. These files can be created automatically, based on where and how it gets stored. For instance, if the account address is 0x123 then create 0x123_sessions.json and 0x123_signers.json to run this tutorial.
 
 ```typescript
 import * as fs from "fs";
@@ -133,24 +133,10 @@ export class SessionFileStorage implements ISessionStorage
 
 	async getSessionData ( param: SessionSearchParam ): Promise<SessionLeafNode>
 	{
-		// this.validateSearchParam(param);
 
 		const sessions = ( await this.getSessionStore() ).leafNodes;
 		console.log( "Got sessions", sessions )
 		const session = sessions[ 0 ];
-		// const session = sessions.find((s: SessionLeafNode) => {
-		//   if (param.sessionID) {
-		//     return s.sessionID === param.sessionID && (!param.status || s.status === param.status);
-		//   } else if (param.sessionPublicKey && param.sessionValidationModule) {
-		//     return (
-		//       s.sessionPublicKey === this.toLowercaseAddress(param.sessionPublicKey) &&
-		//       s.sessionValidationModule === this.toLowercaseAddress(param.sessionValidationModule) &&
-		//       (!param.status || s.status === param.status)
-		//     );
-		//   } else {
-		//     return undefined;
-		//   }
-		// });
 
 		if ( !session )
 		{

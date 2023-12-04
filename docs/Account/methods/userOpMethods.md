@@ -209,7 +209,7 @@ type UserOpReceipt = {
 }
 
 ```
-You can use `waitForTxHash` to get the userOpHash or transactionHash, without waiting for the transaction to be mined.
+You can use `waitForTxHash` to get the transactionHash and status, without waiting for the transaction to be mined.
 
 
 ```ts
@@ -224,7 +224,7 @@ The userOpResponse has one method that you will use
 
 ### Using modules with sendUserOp()
 
-Similar to building a `userOp` we need to ensure that any modules used for additional validation or execution logic are specified in the `sendUserOp` method. 
+Similar to building a `userOp` we need to ensure that any modules used for additional validation or execution logic are specified in the `sendUserOp` method. Currently, this only applies for session key module requirements.
 
 These params will be the same ModuleInfo params as outlined in the `buildUserOp` flow. 
 
