@@ -113,6 +113,14 @@ const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(us
 - In token list we can specify a list of addresses for the choices in tokens we want to have our users pay in
 - We can also decide to choose a preferred token for the response to include
 
+:::warning
+
+**_Important:_** When using **Token Paymaster** with ERC20 tokens like USDC, always ensure to calculate the **feeQuote** correctly. This is crucial to avoid transaction reverts due to insufficient token balance after execution. The `feeQuote` should account for both the transaction cost and any other **token** movements within the same operation.
+
+_Example:_ If a user is transacting with **USDC**, and the feeQuote is **2 USDC**, the DApp must ensure that the user's balance post-callData execution is sufficient to cover this fee. Incorrect fee calculations can lead to transaction failures and a degraded user experience.
+
+:::
+
 Here is the typing for the full data object you can pass here: 
 
 ```ts
