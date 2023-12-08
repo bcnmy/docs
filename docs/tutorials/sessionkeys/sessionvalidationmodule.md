@@ -28,7 +28,7 @@ The smart contract we focus on is structured to validate user operations (userOp
 **Technical Deep Dive**: The following contract breakdown is technical in nature, aimed at developers with a solid understanding of smart contract functionalities.
 :::
 
-```solidity
+```javascript
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
 import "./ISessionValidationModule.sol";
@@ -116,8 +116,8 @@ Here's the Solidity contract in question:
 This function is essential for **validating user operations** against **session key permissions** and ensuring they are correctly signed.
 :::
 
-```solidity
-/**
+```javascript
+    /**
      * @dev validates if the _op (UserOperation) matches the SessionKey permissions
      * and that _op has been signed by this SessionKey
      * Please mind the decimals of your exact token when setting maxAmount
@@ -197,8 +197,8 @@ This function is essential for **validating user operations** against **session 
 This function plays a vital role in **batch session validation**, ensuring each operation aligns with the set session key permissions. It's key for processing multiple operations efficiently.
 :::
 
-```solidity
-/**
+```javascript
+    /**
      * @dev validates that the call (destinationContract, callValue, funcCallData)
      * complies with the Session Key permissions represented by sessionKeyData
      * @param destinationContract address of the contract to be called
