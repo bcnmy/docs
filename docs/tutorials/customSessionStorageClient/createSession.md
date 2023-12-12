@@ -72,6 +72,16 @@ const sessionTxData = await sessionModule.createSessionData([{
 
 ```
 
+We're going to be tracking if the session key module is already enabled. If we need to enable session key module, we create a transaction using the getEnableModuleData and pass the session key manager module address and push this to the array.
+
+```typescript
+const isEnabled = await smartAccount.isModuleEnabled(DEFAULT_SESSION_KEY_MANAGER_MODULE)
+if (!isEnabled) {
+	const enableModuleTrx = await smartAccount.getEnableModuleData(DEFAULT_SESSION_KEY_MANAGER_MODULE);
+	transactionArray.push(enableModuleTrx);
+}	
+```
+
 We initialise a transaction array and push the create session Transaction. These give (to, value, data) as traditional transaction. Subsequently, we invoke the buildUserOp function to create a user operation for either an array of transactions or a single transaction.
 
 ```typescript
@@ -83,16 +93,6 @@ const setSessiontrx = {
 };
 transactionArray.push( setSessiontrx )
 
-```
-
-We're going to be tracking if the session key module is already enabled. If we need to enable session key module, we create a transaction using the getEnableModuleData and pass the session key manager module address and push this to the array.
-
-```typescript
-const isEnabled = await smartAccount.isModuleEnabled(DEFAULT_SESSION_KEY_MANAGER_MODULE)
-if (!isEnabled) {
-	const enableModuleTrx = await smartAccount.getEnableModuleData(DEFAULT_SESSION_KEY_MANAGER_MODULE);
-	transactionArray.push(enableModuleTrx);
-}	
 ```
 
 Next we will build a userOp and use the smart account to send it to Bundler. Ensure that a paymaster is setup and the corresponding gas tank has sufficient funds to sponsor the transactions. Also enable the session validation module address in the policy section for the paymaster.
