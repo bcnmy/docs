@@ -22,6 +22,8 @@ List of chains supported by our Paymasters and Bundlers.
 11. Chiliz Mainnet
 12. Astar Mainnet
 13. opBNB Mainnet
+14. Manta Mainnet
+15. Core Mainnet
 
 
 ## Testnet Chains
@@ -36,8 +38,10 @@ List of chains supported by our Paymasters and Bundlers.
 8. Base Goerli Testnet
 9. Linea Testnet
 10. Chiliz Spicy Testnet
-11. Astar Shibuya testnet
+11. Astar Shibuya Testnet
 12. opBNB Testnet
+13. Manta Pacific Testnet
+14. Core Chain Testnet
 
 :::info
 Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on Chiliz is different. The entry point contract for this chain was deployed by the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
