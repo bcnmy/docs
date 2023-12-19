@@ -3,9 +3,12 @@ sidebar_position: 3
 ---
 # Multichain Validation Module
 
-This module acts as an extention of the [ECDSA Module](/Modules/ecdsa). The added benefit of this module is you now have the ability to use a single signer accross multiple blockchain networks. This allows you now to completely abstract away the chain that the user is interacting with. 
+This module serves as an extention of the [ECDSA Module](/Modules/ecdsa), allowing users to dispatch multiple userOps on different chains using a single signature.
+[MultiChainValidationModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/MultichainECDSAValidator.sol) abstracts away the details of the chain with which the user is interacting.
+For more information on how this module works and its contributions to improving dApp user experience, please refer to [this link](https://www.biconomy.io/post/multchain-validation-smart-account-module)
 
-
+## Methods
+- [validateUserOp](https://github.com/bcnmy/scw-contracts/blob/b5be5399ef0e411b62b4342e12a15e34c35bb83c/contracts/smart-account/modules/MultichainECDSAValidator.sol#L35C14-L35C28): This method validates the userOp.
 ## Installation
 
 import Tabs from '@theme/Tabs';
@@ -15,44 +18,43 @@ import TabItem from '@theme/TabItem';
 <TabItem value="js" label="npm">
 
 ```bash
-
 npm install @biconomy/modules 
-
 ```
 
 </TabItem>
 <TabItem value="py" label="yarn">
 
 ```bash
-
 yarn add @biconomy/modules 
-
 ```
 
 </TabItem>
 <TabItem value="java" label="pnpm">
 
 ```bash
-
 pnpm add @biconomy/modules 
-
 ```
 
 </TabItem>
 </Tabs>
 
 ## Integration 
+In this, we describe the flow for integrating Multichain validation module. Let's start by looking at the code:
 
 ```typescript
-
 import { MultiChainValidationModule, DEFAULT_MULTICHAIN_MODULE } from "@biconomy/modules";
 
-    const multiChainModule = await MultiChainValidationModule.create({
-    signer: signer,
-    moduleAddress: DEFAULT_MULTICHAIN_MODULE
-  })
+const multiChainModule = await MultiChainValidationModule.create({
+  signer: signer,
+  moduleAddress: DEFAULT_MULTICHAIN_MODULE
+})
 ```
-Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account. 
+As per the code, 
+- First we import the module and its associated address.
+- Utilize the create method to initialize the module. This method requires a signer, and the module address as required arguments.
+Biconomy supports various [third party signer](/Account/signer) integrations so you can use any signer of your choice like viem, privy etc.
+- Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account. 
+This module can be used both as default and active validation module.
 
 Here is how you can set up Smart Account instances accross multiple chains: 
 
