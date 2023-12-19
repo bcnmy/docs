@@ -3,10 +3,13 @@ sidebar_position: 2
 ---
 # ECDSA Ownership Module
 
-This is a basic module that determines "ownership" of the smart account. Smart Accounts are not able to initiate their own transactions on chain and so an Externally Owned Account is needed to sign transactions before they can be sent on chain. The ECDSA ownership module allows us to use a traditional EOA to achieve this. 
+The ECDSA Validation Module is a key component in the Biconomy Modular Smart Account system. It validates user operations signed by an Externally Owned Account (EOA)'s private key. This module enables the EOA to be the owner of the Smart Account (SA) and can be used with other providers like Web3Authn to provide a Web2-like experience for onboarding new users to decentralized applications (dApps).
+[ECDSA ownership module](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol) is the most commonly used validator.
 
+## Methods
+- [validateUserOp](https://github.com/bcnmy/scw-contracts/blob/b5be5399ef0e411b62b4342e12a15e34c35bb83c/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol#L90C14-L90C28): This method is essential to validate the user operation. This method requires userOp object and the user Op Hash to be passed as required arguments. It gets called by the smart account to validate the userOp.
+- [transferOwnership](https://github.com/bcnmy/scw-contracts/blob/b5be5399ef0e411b62b4342e12a15e34c35bb83c/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol#L142C14-L142C14): This method is used to transfer ownership of the smart account to a new EOA address. An event is emitted every time this method is executed. This method requires smart account address and the new owner address as the required parameters.
 ## Installation
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -14,36 +17,30 @@ import TabItem from '@theme/TabItem';
 <TabItem value="js" label="npm">
 
 ```bash
-
 npm install @biconomy/modules 
-
 ```
 
 </TabItem>
 <TabItem value="py" label="yarn">
 
 ```bash
-
 yarn add @biconomy/modules 
-
 ```
 
 </TabItem>
 <TabItem value="java" label="pnpm">
 
 ```bash
-
 pnpm add @biconomy/modules 
-
 ```
 
 </TabItem>
 </Tabs>
 
 ## Integration 
+In this, we describe the flow for integrating ECDSA module. Let's start by looking at the code:
 
 ```typescript
-
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 
 const module = await ECDSAOwnershipValidationModule.create({
@@ -52,4 +49,9 @@ const module = await ECDSAOwnershipValidationModule.create({
 })
 
 ```
-Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account. 
+As per the code, 
+- First we import the module and its associated address.
+- Utilize the create method to initialize the module. This method requires a signer, and the module address as mandatory arguments.
+Biconomy supports various [third party signer](/Account/signer) integrations so you can use any signer of your choice like viem, privy etc.
+- Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account. 
+This module can be used both as default and active validation module.
