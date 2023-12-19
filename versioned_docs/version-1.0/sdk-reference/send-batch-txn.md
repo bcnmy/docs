@@ -10,7 +10,7 @@ With batching functionality, you can send multiple user actions in a single nati
 
 In this example, the user approves `amount` of USDC to the Hyphen Liquidity Pool. Then user adds liquidity to the pool by calling the `addTokenLiquidity` function that transfers part of the approved USDC from the user's Smart Account to itself.
 
-`USDCAddress.approve` and `hyphenLiquidityPoolAddress.addTokenLiquidity` methods calls are batched together and executed as a single on-chain transaction.  
+`USDCAddress.approve` and `hyphenLiquidityPoolAddress.addTokenLiquidity` methods calls are batched together and executed as a single on-chain transaction.
 
 In order to create a batch of transactions, just create a Transaction Request array and push individual transaction requests (destination contract and encoded data for method to be called) to it.
 
@@ -20,7 +20,7 @@ In order to create a batch of transactions, just create a Transaction Request ar
 const usdcAddress = <USDC TOKEN>
 const hyphenLiquidityPoolAddress = <LP_ADDRESS> // spender
 
-// create an array of txs 
+// create an array of txs
 const txs = []
 
 const erc20Interface = new ethers.utils.Interface([
@@ -33,7 +33,7 @@ const data = erc20Interface.encodeFunctionData(
 )
 
 const tx1 = {
-  to: usdcAddress 
+  to: usdcAddress
   data: data
 }
 
@@ -54,7 +54,7 @@ txs.push(tx2);
 
 // Fee Abstraction and Dispatching
 
-// 1. Gasless 
+// 1. Gasless
 const txResponse = await smartAccount.sendTransactionBatch({ transactions: txs });
 console.log('userOp Hash', txResponse);
 const txReciept = await txResponse.wait();

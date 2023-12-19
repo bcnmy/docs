@@ -48,7 +48,7 @@
   width: 100%;
   padding: 10px;
   border: none;
-  background-color: #FF4500;
+  background-color: #ff4500;
   color: #ffffff;
   border-radius: 4px;
   cursor: pointer;
@@ -61,10 +61,10 @@
 }
 
 .errorMsg {
-  color: #D32F2F; /* Red color to signify error */
+  color: #d32f2f; /* Red color to signify error */
   font-size: 12px;
   margin-top: 5px;
   padding: 5px;
   border-radius: 4px;
-  background-color: #FFEBEE; /* Light red background to make the error pop out */
+  background-color: #ffebee; /* Light red background to make the error pop out */
 }

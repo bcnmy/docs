@@ -81,7 +81,7 @@ const connect = async () => {
     await magic.wallet.connectWithUI();
     const web3Provider = new ethers.providers.Web3Provider(
       magic.rpcProvider,
-      "any"
+      "any",
     );
 
     const module = await ECDSAOwnershipValidationModule.create({

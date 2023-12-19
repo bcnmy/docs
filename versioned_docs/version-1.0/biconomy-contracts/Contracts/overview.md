@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 ---
+
 # Overview
 
 Welcome to the Contracts section, where you'll find explanations and deep dives into the core contracts that power Biconomy's Smart Accounts. These contracts are at the heart of the magic that happens under the hood!

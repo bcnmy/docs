@@ -25,7 +25,6 @@ the [polygon faucet](https://faucet.polygon.technology/).
   <summary> Click to view code from previous section </summary>
 
 ```typescript
-
 import { config } from "dotenv";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { ChainId } from "@biconomy/core-types";
@@ -49,18 +48,20 @@ import {
 config();
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai"
+  "https://rpc.ankr.com/polygon_mumbai",
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
 const bundler: IBundler = new Bundler({
-  bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   chainId: ChainId.POLYGON_MUMBAI,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+  paymasterUrl:
+    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 async function createAccount() {
@@ -80,7 +81,6 @@ async function createAccount() {
   console.log("address", await biconomyAccount.getAccountAddress());
   return biconomyAccount;
 }
-
 
 async function mintNFT() {
   const smartAccount = await createAccount();
@@ -119,10 +119,10 @@ async function mintNFT() {
     const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
     const transactionDetails = await userOpResponse.wait();
     console.log(
-      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
+      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
     );
     console.log(
-      `view minted nfts for smart account: https://testnets.opensea.io/${address}`
+      `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
     );
   } catch (e) {
     console.log("error received ", e);
@@ -130,7 +130,6 @@ async function mintNFT() {
 }
 
 mintNFT();
-
 ```
 
 </details>
@@ -143,23 +142,23 @@ transaction. Here is a good starting point for the edit on this function:
 
 ```typescript
 async function mintNFT() {
-    await createAccount();
-    const nftInterface = new ethers.utils.Interface([
-        "function safeMint(address _to)",
-    ]);
+  await createAccount();
+  const nftInterface = new ethers.utils.Interface([
+    "function safeMint(address _to)",
+  ]);
 
-    const data = nftInterface.encodeFunctionData("safeMint", [address]);
+  const data = nftInterface.encodeFunctionData("safeMint", [address]);
 
-    const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-    0xda5289fcaaf71d52a80a254da614a192b693e977;
+  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+  0xda5289fcaaf71d52a80a254da614a192b693e977;
 
-    const transaction = {
-        to: nftAddress,
-        data: data,
-    };
+  const transaction = {
+    to: nftAddress,
+    data: data,
+  };
 
-    console.log("creating nft mint userop");
-    let partialUserOp = await smartAccount.buildUserOp([transaction]);
+  console.log("creating nft mint userop");
+  let partialUserOp = await smartAccount.buildUserOp([transaction]);
 }
 ```
 
@@ -174,7 +173,7 @@ ourselves set up to have users pay for gas in USDC. Add the following lines:
 let finalUserOp = partialUserOp;
 
 const biconomyPaymaster =
-    smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
+  smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 ```
 
 We will be manipulating our partialUserOp into finalUserOp before executing it.
@@ -185,11 +184,11 @@ Now lets get fee quotes for our USDC token:
 
 ```typescript
 const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
-    partialUserOp,
-    {
-        mode: PaymasterMode.ERC20,
-        tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
-    }
+  partialUserOp,
+  {
+    mode: PaymasterMode.ERC20,
+    tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+  },
 );
 ```
 
@@ -213,45 +212,44 @@ Now let's update the userOp with our gathered information:
 
 ```typescript
 finalUserOp = await smartAccount.buildTokenPaymasterUserOp(partialUserOp, {
-    feeQuote: usdcFeeQuotes,
-    spender: spender,
-    maxApproval: false,
+  feeQuote: usdcFeeQuotes,
+  spender: spender,
+  maxApproval: false,
 });
 
 let paymasterServiceData = {
-    mode: PaymasterMode.ERC20,
-    feeTokenAddress: usdcFeeQuotes.tokenAddress,
-    calculateGasLimits: true, // Always recommended and especially when using token paymaster
+  mode: PaymasterMode.ERC20,
+  feeTokenAddress: usdcFeeQuotes.tokenAddress,
+  calculateGasLimits: true, // Always recommended and especially when using token paymaster
 };
 
-try{
-    const paymasterAndDataWithLimits =
-      await biconomyPaymaster.getPaymasterAndData(
-        finalUserOp,
-        paymasterServiceData
-      );
-    finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
+try {
+  const paymasterAndDataWithLimits =
+    await biconomyPaymaster.getPaymasterAndData(
+      finalUserOp,
+      paymasterServiceData,
+    );
+  finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
 
-    // below code is only needed if you sent the flag calculateGasLimits = true
-    if (
-      paymasterAndDataWithLimits.callGasLimit &&
-      paymasterAndDataWithLimits.verificationGasLimit &&
-      paymasterAndDataWithLimits.preVerificationGas
-    ) {
+  // below code is only needed if you sent the flag calculateGasLimits = true
+  if (
+    paymasterAndDataWithLimits.callGasLimit &&
+    paymasterAndDataWithLimits.verificationGasLimit &&
+    paymasterAndDataWithLimits.preVerificationGas
+  ) {
+    // Returned gas limits must be replaced in your op as you update paymasterAndData.
+    // Because these are the limits paymaster service signed on to generate paymasterAndData
+    // If you receive AA34 error check here..
 
-      // Returned gas limits must be replaced in your op as you update paymasterAndData.
-      // Because these are the limits paymaster service signed on to generate paymasterAndData
-      // If you receive AA34 error check here..   
-
-      finalUserOp.callGasLimit = paymasterAndDataWithLimits.callGasLimit;
-      finalUserOp.verificationGasLimit =
-        paymasterAndDataWithLimits.verificationGasLimit;
-      finalUserOp.preVerificationGas =
-        paymasterAndDataWithLimits.preVerificationGas;
-    }
-  } catch (e) {
-    console.log("error received ", e);
+    finalUserOp.callGasLimit = paymasterAndDataWithLimits.callGasLimit;
+    finalUserOp.verificationGasLimit =
+      paymasterAndDataWithLimits.verificationGasLimit;
+    finalUserOp.preVerificationGas =
+      paymasterAndDataWithLimits.preVerificationGas;
   }
+} catch (e) {
+  console.log("error received ", e);
+}
 ```
 
 ## Paymaster Service Data response
@@ -261,14 +259,14 @@ the userOp:
 
 ```typescript
 try {
-    const paymasterAndDataWithLimits =
-        await biconomyPaymaster.getPaymasterAndData(
-            finalUserOp,
-            paymasterServiceData
-        );
-    finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
+  const paymasterAndDataWithLimits =
+    await biconomyPaymaster.getPaymasterAndData(
+      finalUserOp,
+      paymasterServiceData,
+    );
+  finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
 } catch (e) {
-    console.log("error received ", e);
+  console.log("error received ", e);
 }
 ```
 
@@ -278,16 +276,16 @@ And finally we execute our userop!
 
 ```typescript
 try {
-    const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
-    const transactionDetails = await userOpResponse.wait();
-    console.log(
-        `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.logs[0].transactionHash}`
-    );
-    console.log(
-        `view minted nfts for smart account: https://testnets.opensea.io/${address}`
-    );
+  const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
+  const transactionDetails = await userOpResponse.wait();
+  console.log(
+    `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.logs[0].transactionHash}`,
+  );
+  console.log(
+    `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
+  );
 } catch (e) {
-    console.log("error received ", e);
+  console.log("error received ", e);
 }
 ```
 
@@ -295,7 +293,6 @@ try {
   <summary> Click to view final code </summary>
 
 ```typescript
-
 import { config } from "dotenv";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { ChainId } from "@biconomy/core-types";
@@ -314,24 +311,26 @@ import {
   IHybridPaymaster,
   PaymasterMode,
   SponsorUserOperationDto,
-  PaymasterFeeQuote
+  PaymasterFeeQuote,
 } from "@biconomy/paymaster";
 
 config();
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai"
+  "https://rpc.ankr.com/polygon_mumbai",
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
 const bundler: IBundler = new Bundler({
-  bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   chainId: ChainId.POLYGON_MUMBAI,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+  paymasterUrl:
+    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 async function createAccount() {
@@ -352,12 +351,11 @@ async function createAccount() {
   return biconomyAccount;
 }
 
-
 async function mintNFT() {
   const smartAccount = await createAccount();
-  const address = await smartAccount.getAccountAddress()
+  const address = await smartAccount.getAccountAddress();
   const nftInterface = new ethers.utils.Interface([
-      "function safeMint(address _to)",
+    "function safeMint(address _to)",
   ]);
 
   const data = nftInterface.encodeFunctionData("safeMint", [address]);
@@ -365,100 +363,97 @@ async function mintNFT() {
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 
   const transaction = {
-      to: nftAddress,
-      data: data,
+    to: nftAddress,
+    data: data,
   };
 
   let partialUserOp = await smartAccount.buildUserOp([transaction]);
-  
+
   let finalUserOp = partialUserOp;
 
-  const biconomyPaymaster = smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
+  const biconomyPaymaster =
+    smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 
   const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
     partialUserOp,
     {
-        mode: PaymasterMode.ERC20,
-        tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
-    }
-);
+      mode: PaymasterMode.ERC20,
+      tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+    },
+  );
 
-const feeQuotes = feeQuotesResponse.feeQuotes as PaymasterFeeQuote[];
-const spender = feeQuotesResponse.tokenPaymasterAddress || "";
-const usdcFeeQuotes = feeQuotes[0];
+  const feeQuotes = feeQuotesResponse.feeQuotes as PaymasterFeeQuote[];
+  const spender = feeQuotesResponse.tokenPaymasterAddress || "";
+  const usdcFeeQuotes = feeQuotes[0];
 
-finalUserOp = await smartAccount.buildTokenPaymasterUserOp(partialUserOp, {
-  feeQuote: usdcFeeQuotes,
-  spender: spender,
-  maxApproval: false,
-});
+  finalUserOp = await smartAccount.buildTokenPaymasterUserOp(partialUserOp, {
+    feeQuote: usdcFeeQuotes,
+    spender: spender,
+    maxApproval: false,
+  });
 
-let paymasterServiceData = {
-  mode: PaymasterMode.ERC20,
-  feeTokenAddress: usdcFeeQuotes.tokenAddress,
-  calculateGasLimits: true, // Always recommended and especially when using token paymaster
-};
+  let paymasterServiceData = {
+    mode: PaymasterMode.ERC20,
+    feeTokenAddress: usdcFeeQuotes.tokenAddress,
+    calculateGasLimits: true, // Always recommended and especially when using token paymaster
+  };
 
-try{
-  const paymasterAndDataWithLimits =
-    await biconomyPaymaster.getPaymasterAndData(
-      finalUserOp,
-      paymasterServiceData
-    );
-  finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
-
-  // below code is only needed if you sent the flag calculateGasLimits = true
-  if (
-    paymasterAndDataWithLimits.callGasLimit &&
-    paymasterAndDataWithLimits.verificationGasLimit &&
-    paymasterAndDataWithLimits.preVerificationGas
-  ) {
-
-    // Returned gas limits must be replaced in your op as you update paymasterAndData.
-    // Because these are the limits paymaster service signed on to generate paymasterAndData
-    // If you receive AA34 error check here..   
-
-    finalUserOp.callGasLimit = paymasterAndDataWithLimits.callGasLimit;
-    finalUserOp.verificationGasLimit =
-      paymasterAndDataWithLimits.verificationGasLimit;
-    finalUserOp.preVerificationGas =
-      paymasterAndDataWithLimits.preVerificationGas;
-  }
-} catch (e) {
-  console.log("error received ", e);
-}
-
-try {
-  const paymasterAndDataWithLimits =
+  try {
+    const paymasterAndDataWithLimits =
       await biconomyPaymaster.getPaymasterAndData(
-          finalUserOp,
-          paymasterServiceData
+        finalUserOp,
+        paymasterServiceData,
       );
-  finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
-} catch (e) {
-  console.log("error received ", e);
-}
+    finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
 
-try {
-  const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
-  const transactionDetails = await userOpResponse.wait();
-  console.log(
-      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.logs[0].transactionHash}`
-  );
-  console.log(
-      `view minted nfts for smart account: https://testnets.opensea.io/${address}`
-  );
-} catch (e) {
-  console.log("error received ", e);
-}
+    // below code is only needed if you sent the flag calculateGasLimits = true
+    if (
+      paymasterAndDataWithLimits.callGasLimit &&
+      paymasterAndDataWithLimits.verificationGasLimit &&
+      paymasterAndDataWithLimits.preVerificationGas
+    ) {
+      // Returned gas limits must be replaced in your op as you update paymasterAndData.
+      // Because these are the limits paymaster service signed on to generate paymasterAndData
+      // If you receive AA34 error check here..
 
+      finalUserOp.callGasLimit = paymasterAndDataWithLimits.callGasLimit;
+      finalUserOp.verificationGasLimit =
+        paymasterAndDataWithLimits.verificationGasLimit;
+      finalUserOp.preVerificationGas =
+        paymasterAndDataWithLimits.preVerificationGas;
+    }
+  } catch (e) {
+    console.log("error received ", e);
+  }
+
+  try {
+    const paymasterAndDataWithLimits =
+      await biconomyPaymaster.getPaymasterAndData(
+        finalUserOp,
+        paymasterServiceData,
+      );
+    finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
+  } catch (e) {
+    console.log("error received ", e);
+  }
+
+  try {
+    const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
+    const transactionDetails = await userOpResponse.wait();
+    console.log(
+      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.logs[0].transactionHash}`,
+    );
+    console.log(
+      `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
+    );
+  } catch (e) {
+    console.log("error received ", e);
+  }
 }
 
 mintNFT();
-
 ```
 
 </details>
 
-Congratulations you can now execute ERC20 gas payment transactions utilizing the Biconomy SDK! Now let's take things Multi chain! 
-
+Congratulations you can now execute ERC20 gas payment transactions utilizing the Biconomy SDK! Now let's take things Multi chain!

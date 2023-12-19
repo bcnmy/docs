@@ -20,7 +20,7 @@ Biconomy SDK brings blockchain-agnostic, web2-like experiences to your dApp in a
 
 ### How Does It Work: Smart Contract Wallets
 
-The backbone of the Biconomy SDK is a Smart Contract Wallet (SCW) which is created when any new user onboards to a dApp. 
+The backbone of the Biconomy SDK is a Smart Contract Wallet (SCW) which is created when any new user onboards to a dApp.
 
 SCW address is counterfactual in nature. That means the user gets the address instantly after logging into the system, without even deploying anything on-chain. The actual smart contract is deployed along with the first transaction of the user.
 
@@ -40,7 +40,7 @@ The SCW address can remain consistent across chains making it easy to provide a 
 
 3. Whenever any transaction is executed via this SC Wallet, it is initiated by the EOA in the form of a cryptographic signature. Txn data along with the signature is then relayed by a Relayer.
 
-4. The user's SC Wallet address is counterfactual. That means the SC Wallet address can be generated without actually deploying smart contract code on-chain. It’s possible thanks to the CREATE2 opcode. It also means that the SC Wallet address can remain the same on all EVM chains that support the same realization of the CREATE2 opcode. 
+4. The user's SC Wallet address is counterfactual. That means the SC Wallet address can be generated without actually deploying smart contract code on-chain. It’s possible thanks to the CREATE2 opcode. It also means that the SC Wallet address can remain the same on all EVM chains that support the same realization of the CREATE2 opcode.
 
 5. All dApp interactions on a given chain and all cross-chain interactions happen via this SC Wallet only.
 

@@ -16,7 +16,7 @@ The recent standardized proposal [EIP-4337 for Account Abstraction](https://eips
 SCWs can enable the following features:
 
 - Allowing Multi-signature authorization - More than one user to approve the transaction for improved security.
-- Setting daily transaction amount limit -  Setting up a transaction amount limit for reducing the chances of the occurrence of expensive user transaction errors or manipulation done by hackers.
+- Setting daily transaction amount limit - Setting up a transaction amount limit for reducing the chances of the occurrence of expensive user transaction errors or manipulation done by hackers.
 - Batching transactions - Batched transactions allow users of the wallet to perform multiple transactions in one single on-chain transaction
 
 Most Ethereum wallets manage EOA accounts and, therefore, have limited functionality. Smart wallets, however, take advantage of Contract Account functionality—they manage funds via coded instructions that establish who can access them, under what conditions, and more.

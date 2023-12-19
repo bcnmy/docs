@@ -1,11 +1,12 @@
 ---
-sidebar_label: 'Get Methods'
+sidebar_label: "Get Methods"
 sidebar_position: 2
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/methods/getMethods.md
 ---
+
 # Get Methods
 
-The following are methods for getting information about your Smart Account. 
+The following are methods for getting information about your Smart Account.
 
 :::info
 These methods are available after creating an instance of your smart accounts. See [create method](/Account/methods/create) for more information. Make sure to call any of these from an async function!
@@ -16,9 +17,7 @@ These methods are available after creating an instance of your smart accounts. S
 This method returns a promise that resolves to a string representing the address of your smart account
 
 ```js
-
 const address = await smartAccount.getAccountAddress();
-
 ```
 
 ## getAllSupportedChains()
@@ -26,9 +25,7 @@ const address = await smartAccount.getAccountAddress();
 This method returns a promise that resolves into a list of all supported chains for the smart account
 
 ```js
-
-const supportedChains = await smartAccount.getAllSupportedChains()
-
+const supportedChains = await smartAccount.getAllSupportedChains();
 ```
 
 ## getAllTokenBalances()
@@ -36,32 +33,27 @@ const supportedChains = await smartAccount.getAllSupportedChains()
 This method returns a promise that resolves to the total token balances from your Smart Account it takes a balance params object as listed below.
 
 ```js
+const balanceParams = {
+  chainId: ChainId.POLYGON_MAINNET, // chainId of your choice
+  eoaAddress: address, // although it is defined as eoaAddress you need to pass your smart account address
+  tokenAddresses: [], // optionally provide token addresses you want to show
+};
 
-  const balanceParams =
-      {
-        chainId: ChainId.POLYGON_MAINNET, // chainId of your choice
-        eoaAddress: address, // although it is defined as eoaAddress you need to pass your smart account address
-        tokenAddresses: [], // optionally provide token addresses you want to show
-      };
-
-  const balFromSdk = await smartAccount.getAllTokenBalances(balanceParams);
+const balFromSdk = await smartAccount.getAllTokenBalances(balanceParams);
 ```
 
 ## getTotalBalanceInUsd()
 
-This method returns a promise that resolves to a list of token balances in USD for your smart account. 
+This method returns a promise that resolves to a list of token balances in USD for your smart account.
 
 ```js
-
-const balanceParams =
-      {
-        chainId: ChainId.POLYGON_MAINNET, // chainId of your choice
-        eoaAddress: address, // although it is defined as eoaAddress you need to pass your smart account address
-        tokenAddresses: [], // optionally provide token addresses you want to show
-      };
+const balanceParams = {
+  chainId: ChainId.POLYGON_MAINNET, // chainId of your choice
+  eoaAddress: address, // although it is defined as eoaAddress you need to pass your smart account address
+  tokenAddresses: [], // optionally provide token addresses you want to show
+};
 
 const usdBalFromSdk = await smartAccount.getTotalBalanceInUsd(balanceParams);
-
 ```
 
 ## getSmartAccountsByOwner()
@@ -69,15 +61,13 @@ const usdBalFromSdk = await smartAccount.getTotalBalanceInUsd(balanceParams);
 This method returns a smart account at a given index from a specific EOA
 
 ```js
-
 const params = {
   chainId: 80001, //or any chain id of your choice
   owner: "eoa address",
-  index: 0
-}
+  index: 0,
+};
 
-const account = getSmartAccountsByOwner({params})
-
+const account = getSmartAccountsByOwner({ params });
 ```
 
 ## getNonce()
@@ -85,10 +75,8 @@ const account = getSmartAccountsByOwner({params})
 This method returns a promise which resolves to a nonce as a big number
 
 ```js
-
-const nonce = await smartAccount.getNonce()
-console.log(nonce.toNumber())
-
+const nonce = await smartAccount.getNonce();
+console.log(nonce.toNumber());
 ```
 
 ## index
@@ -96,22 +84,18 @@ console.log(nonce.toNumber())
 This returns index of the current active smart account
 
 ```js
-
-const index = smartAccount.index
-
+const index = smartAccount.index;
 ```
 
 ## activeValidationModule
 
-This returns an object with information about the current active validation module 
+This returns an object with information about the current active validation module
 
 ```js
-
-const activeValidationModule = smartAccount.activeValidationModule
-
+const activeValidationModule = smartAccount.activeValidationModule;
 ```
 
-Sample object: 
+Sample object:
 
 ```js
 

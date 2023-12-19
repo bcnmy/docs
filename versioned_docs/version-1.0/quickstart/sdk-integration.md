@@ -66,7 +66,7 @@ async function login() {
   if (!sdkRef.current) {
     const socialLoginSDK = new SocialLogin();
     const signature1 = await socialLoginSDK.whitelistUrl(
-      "http://127.0.0.1:5173/"
+      "http://127.0.0.1:5173/",
     );
     await socialLoginSDK.init({
       chainId: ethers.utils.hexValue(ChainId.POLYGON_MUMBAI).toString(),
@@ -145,15 +145,15 @@ Finally our last function will be a logout function:
 
 ```js
 const logout = async () => {
-    if (!sdkRef.current) {
-      console.error('Web3Modal not initialized.')
-      return
-    }
-    await sdkRef.current.logout()
-    sdkRef.current.hideWallet()
-    setSmartAccount(null)
-    enableInterval(false)
+  if (!sdkRef.current) {
+    console.error("Web3Modal not initialized.");
+    return;
   }
+  await sdkRef.current.logout();
+  sdkRef.current.hideWallet();
+  setSmartAccount(null);
+  enableInterval(false);
+};
 ```
 
 The `logout` function is an asynchronous function that handles the logout flow for the application. Here's a breakdown of its functionality:

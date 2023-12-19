@@ -91,7 +91,8 @@ add it to our userOp.
 
 ```typescript
 try {
-  const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(partialUserOp);
+  const paymasterAndDataResponse =
+    await biconomyPaymaster.getPaymasterAndData(partialUserOp);
   partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
 } catch (e) {
   console.log("error received ", e);

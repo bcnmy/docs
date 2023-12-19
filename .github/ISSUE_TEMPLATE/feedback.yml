@@ -1,0 +1,18 @@
+name: Feedback
+description: Help us improve the Biconomy documentation site by leaving your feedback
+title: "[Feedback]"
+labels: ["documentation", "feedback", "community"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to leave your feedback!
+  - type: textarea
+    id: improvements
+    attributes:
+      label: How could we improve the Biconomy documentation site?
+      placeholder: Send us your ideas!
+  - type: markdown
+    attributes:
+      value: |
+        We welcome documentation contributions!

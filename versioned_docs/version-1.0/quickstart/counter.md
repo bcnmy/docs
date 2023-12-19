@@ -44,15 +44,15 @@ contract Counter {
 }
 ```
 
-Here is a breakdown of what this contract is doing: 
+Here is a breakdown of what this contract is doing:
 
 1. `uint256 public count`: This line declares a public unsigned integer variable named count. Unsigned integers are non-negative numbers. The `public` keyword automatically generates a function that allows you to access the current value of the `count` state variable from outside the contract.
 2. `event updateCount(uint newCount)`: This line declares an event named `updateCount`. Events are a way for your contract to communicate that something happened on the blockchain to your app front-end, which can be 'listening' for certain events and take action when they happen. In this case, the event will emit the new value of `count`.
 3. `function incrementCount() public returns(uint256)`: This line declares a public function named incrementCount that doesn't take any parameters and returns an unsigned integer.
-Inside the incrementCount function:
+   Inside the incrementCount function:
 
 - `count +=1`: This line increases the `count` variable by one.
 - `emit updateCount(count)`: This line triggers the `updateCount` event and sends the new value of the count variable to the listener.
 - `return count`: This line returns the new value of `count`.
-  
+
 Now that we have our basic contract let's deploy this to the Polygon Mumbai Test Network. You can follow the official [Remix Documentation](https://remix-ide.readthedocs.io/en/latest/run.html) for Deployment to get this deployed and verified.

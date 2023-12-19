@@ -4,7 +4,7 @@ sidebar_position: 8
 
 # Networks Supported
 
-Biconomy Smart Accounts are multi-chain. In order to make your users interact on another chain using their Smart Account, you'd only need to change either activeChainId or when interacting pass the chainId as part of Data Transfer Object (txn method argument).  We currently have support for the following blockchain networks & will be adding more soon.
+Biconomy Smart Accounts are multi-chain. In order to make your users interact on another chain using their Smart Account, you'd only need to change either activeChainId or when interacting pass the chainId as part of Data Transfer Object (txn method argument). We currently have support for the following blockchain networks & will be adding more soon.
 
 ## Mainnets
 

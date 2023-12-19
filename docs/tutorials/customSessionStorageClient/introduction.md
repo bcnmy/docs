@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Introduction'
+sidebar_label: "Introduction"
 sidebar_position: 1
 ---
 
@@ -12,11 +12,9 @@ Check out an end-to-end integration of custom session storage [repo](https://git
 
 :::
 
-In this tutorial we will: 
+In this tutorial we will:
 
 - Create File based custom session storage client, which will be used to save the session keys and signers
 - Go over a smart contract that allows for sessions to be validated for ERC20 token transfers.
 - Go over initilization and creation of a session module in Node JS.
-- Execute a basic ERC20 token transfer without the need to sign 
-
-
+- Execute a basic ERC20 token transfer without the need to sign

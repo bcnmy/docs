@@ -15,7 +15,7 @@ yarn add @biconomy/smart-account
 or
 
 ```bash
-npm install @biconomy/smart-account 
+npm install @biconomy/smart-account
 ```
 
 You can find the source code of all shipped packages on [Github](https://github.com/bcnmy/biconomy-client-sdk).

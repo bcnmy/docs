@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Initialize Frontend'
+sidebar_label: "Initialize Frontend"
 sidebar_position: 3
 ---
 
@@ -7,7 +7,7 @@ sidebar_position: 3
 
 Now it's time to work on our Frontend. We will be using Next JS which is a popular react Framework used by many Web3 projects for frontends.
 
-In your command prompt tool of choice navigate to any directory of choice and create your Next JS application using the [Create Next App tool](https://nextjs.org/docs/pages/api-reference/create-next-app). 
+In your command prompt tool of choice navigate to any directory of choice and create your Next JS application using the [Create Next App tool](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 With NPM:
 
@@ -20,7 +20,8 @@ With Yarn:
 ```bash
 yarn create next-app
 ```
-This is how we answered the Propts when creating the application: 
+
+This is how we answered the Propts when creating the application:
 
 ```bash
 What is your project named?  based-aa
@@ -43,7 +44,8 @@ Install the following dependencies:
 ```bash
 yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster @biconomy/modules ethers@5.7.2 react-toastify
 ```
-Additionaly to help with some polyfill errors we will need to update our `next.config.js` file which is located at the root of our project. Copy the code below and replace the current contents of the file: 
+
+Additionaly to help with some polyfill errors we will need to update our `next.config.js` file which is located at the root of our project. Copy the code below and replace the current contents of the file:
 
 ```js
 /** @type {import('next').NextConfig} */
@@ -52,21 +54,21 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
-        "fs": false,
-        "net": false,
-        "tls": false
-      }
+        fs: false,
+        net: false,
+        tls: false,
+      };
     }
-    return config
-  }
-}
+    return config;
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
-Lastly we're going to replace the default styles with some prewritten styles mentioned below. Similar to the smart contract section, we won't focus much on the CSS side of things but this will give you some basic layouts and center all of your content in the middle of the page. 
+Lastly we're going to replace the default styles with some prewritten styles mentioned below. Similar to the smart contract section, we won't focus much on the CSS side of things but this will give you some basic layouts and center all of your content in the middle of the page.
 
-Replace the `global.css` and the `Home.module.css` with the styles below. 
+Replace the `global.css` and the `Home.module.css` with the styles below.
 
 <details>
   <summary> global.css </summary>
@@ -141,7 +143,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-
 ```
 
 </details>
@@ -208,7 +209,7 @@ button:focus-visible {
   margin-bottom: 5px;
 }
 
-.demoButton:hover{
+.demoButton:hover {
   background-color: #b84814;
   transition: 0.7s;
 }
@@ -255,8 +256,8 @@ button:focus-visible {
   padding: 2em;
 }
 
-.readDocs{
-  color: #FF4E17;
+.readDocs {
+  color: #ff4e17;
 }
 
 .linkWrapper {
@@ -269,18 +270,18 @@ button:focus-visible {
 }
 
 .demoButton {
-  background-color: #FF4E17;
+  background-color: #ff4e17;
   color: #fff;
   margin-bottom: 5px;
 }
 
-.demoButton:hover{
+.demoButton:hover {
   background-color: #b84814;
   transition: 0.7s;
 }
 
 .viewNFT {
-  color: #FF4E17;
+  color: #ff4e17;
 }
 
 .demoContainter {
@@ -294,13 +295,11 @@ button:focus-visible {
 }
 
 .connect {
-  background-color: #FF4E17;
+  background-color: #ff4e17;
   color: #fff;
 }
-
-
 ```
 
 </details>
 
-Now with our frontend initialized lets start building out our integration in the next section. 
+Now with our frontend initialized lets start building out our integration in the next section.

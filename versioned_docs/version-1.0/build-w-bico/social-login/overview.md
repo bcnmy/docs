@@ -25,5 +25,3 @@ Users can log in to your dApp either via social login or by connecting their ext
 ## Modular SDK
 
 Our SDK is designed to be highly modular and versatile. It can be easily integrated with any social login provider, giving you the flexibility to choose the provider that best suits your needs. However, we recommend using either Particle Network or Web3Auth, as these providers offer robust and secure solutions for Web3 authentication. By using our SDK, you can leverage the benefits of social logins to provide a seamless and user-friendly experience for your users.
-
-

@@ -3,9 +3,10 @@ sidebar_position: 5
 ---
 
 # Common Contracts
+
 Smart contracts that extend Smart Account functionality
 
-***Module Manager***
+**_Module Manager_**
 
 (https://github.com/bcnmy/scw-contracts/blob/master/contracts/smart-contract-wallet/base/ModuleManager.sol)
 
@@ -18,7 +19,7 @@ Modules add additional functionalities to the Smart Accounts. They are smart con
 
 Modules can allow for Multisig access control, alternative signing schemes, such as passkeys, Social recovery, etc.
 
-***FallbackManager***
+**_FallbackManager_**
 
 (https://github.com/bcnmy/scw-contracts/blob/master/contracts/smart-contract-wallet/base/FallbackManager.sol)
 
@@ -27,6 +28,3 @@ A contract that manages fallback calls made to the Smart Account
 Fallback calls are handled by a `handler` contract that is stored at `FALLBACK_HANDLER_STORAGE_SLOT.`
 
 Fallback calls are not delegated to the `handler` so they can not directly change Smart Account storage.
-
-
-

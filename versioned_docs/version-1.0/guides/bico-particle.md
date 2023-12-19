@@ -59,7 +59,7 @@ const particle = new ParticleAuthModule.ParticleNetwork({
 
 Now can trigger the social login using
 
-```js
+````js
 const connect = async () => {
   try {
     const userInfo = await particle.auth.login();
@@ -129,7 +129,7 @@ const doAATX = async () => {
   const txReciept = await txResponse.wait();
   console.log("Tx hash", txReciept.transactionHash);
 };
-```
+````
 
 DONE! You just sent a gasless transaction with social login.
 
