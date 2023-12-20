@@ -1,0 +1,85 @@
+---
+sidebar_label: "ECDSA Module - Smart Contract Deep Dive"
+sidebar_position: 2
+---
+
+# 📜 ECDSA Ownership Registry Module: Smart Contract Deep Dive 🛠️
+
+## Introduction
+
+This document delves into the `EcdsaOwnershipRegistryModule` for Biconomy Smart Accounts, focusing on key functionalities and security aspects.
+
+## Core Functionalities
+
+### User Operation Validation (`validateUserOp`) 🛡️
+
+```solidity
+// Validates user operations signed by an EOA
+function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)
+    external view returns (uint256) {
+    (bytes memory cleanEcdsaSignature, ) = abi.decode(userOp.signature, (bytes, address));
+    if (_verifySignature(userOpHash, cleanEcdsaSignature, userOp.sender)) {
+        return VALIDATION_SUCCESS;
+    }
+    return SIG_VALIDATION_FAILED;
+}
+
+```
+
+- **Objective**: Ensures the authenticity of user operations.
+- **Method**: Decodes and verifies the user operation's signature.
+
+:::note
+The function is pivotal in securing user operations against unauthorized access.
+:::
+
+### Signature Verification (`_verifySignature`) 🔐
+
+```solidity
+// Internal function to verify the signature of a smart account
+function _verifySignature(bytes32 dataHash, bytes memory signature, address smartAccount)
+    internal view returns (bool) {
+    address expectedSigner = _smartAccountOwners[smartAccount];
+    // Reverts if no owner is registered
+    if (expectedSigner == address(0)) {
+        revert NoOwnerRegisteredForSmartAccount(smartAccount);
+    }
+    // Checks for signature length and recovers the signer
+    if (signature.length < 65) revert WrongSignatureLength();
+    address recovered = (dataHash.toEthSignedMessageHash()).recover(signature);
+    if (expectedSigner == recovered) {
+        return true;
+    }
+    recovered = dataHash.recover(signature);
+    return expectedSigner == recovered;
+}
+
+```
+
+- **Function**: Validates a signature against a data hash and registered owner.
+- **Support**: Includes both `personal_sign` and `typed_data` signatures.
+
+:::caution
+Proper handling and verification of signatures are crucial for maintaining the integrity of the Smart Account.
+:::
+
+## Security Considerations
+
+- **Strict Ownership Rules**: Ensures only EOAs can authorize transactions.
+- **Signature Verification**: Robust methods to validate signatures, mitigating risk of unauthorized operations.
+
+## Interaction with Smart Accounts 🤝
+
+The `EcdsaOwnershipRegistryModule` interacts with Smart Accounts primarily through its core functionalities:
+
+- **Initialization and Ownership**: Smart Accounts are initialized with an EOA owner using `initForSmartAccount` upon deployment. This setup is critical for subsequent operations and interactions within the account.
+- **User Operation Validation**: When a Smart Account attempts to perform an operation, `validateUserOp` is invoked to ensure the action is authorized by the registered owner.
+- **Signature Verification**: The module uses `_verifySignature` to verify any signatures associated with transactions initiated by the Smart Account.
+
+:::tip
+Understanding this interaction is key for developers working with Smart Accounts and the ECDSA module, as it forms the basis of secure and controlled operations within the Biconomy ecosystem.
+:::
+
+## Conclusion
+
+The `EcdsaOwnershipRegistryModule` is critical in Biconomy Smart Accounts, ensuring secure and authorized operations. Its careful implementation of user operation validation and signature verification upholds high-security standards within the Ethereum blockchain ecosystem.
