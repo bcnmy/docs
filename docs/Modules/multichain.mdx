@@ -1,22 +1,22 @@
 ---
 sidebar_position: 3
 ---
+
 # Multichain Validation Module
 
-This module acts as an extention of the [ECDSA Module](/Modules/ecdsa). The added benefit of this module is you now have the ability to use a single signer accross multiple blockchain networks. This allows you now to completely abstract away the chain that the user is interacting with. 
-
+This module acts as an extention of the [ECDSA Module](/Modules/ecdsa). The added benefit of this module is you now have the ability to use a single signer accross multiple blockchain networks. This allows you now to completely abstract away the chain that the user is interacting with.
 
 ## Installation
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 <Tabs>
 <TabItem value="js" label="npm">
 
 ```bash
 
-npm install @biconomy/modules 
+npm install @biconomy/modules
 
 ```
 
@@ -25,7 +25,7 @@ npm install @biconomy/modules
 
 ```bash
 
-yarn add @biconomy/modules 
+yarn add @biconomy/modules
 
 ```
 
@@ -34,34 +34,37 @@ yarn add @biconomy/modules
 
 ```bash
 
-pnpm add @biconomy/modules 
+pnpm add @biconomy/modules
 
 ```
 
 </TabItem>
 </Tabs>
 
-## Integration 
+## Integration
 
 ```typescript
+import {
+  MultiChainValidationModule,
+  DEFAULT_MULTICHAIN_MODULE,
+} from "@biconomy/modules";
 
-import { MultiChainValidationModule, DEFAULT_MULTICHAIN_MODULE } from "@biconomy/modules";
-
-    const multiChainModule = await MultiChainValidationModule.create({
-    signer: signer,
-    moduleAddress: DEFAULT_MULTICHAIN_MODULE
-  })
+const multiChainModule = await MultiChainValidationModule.create({
+  signer: signer,
+  moduleAddress: DEFAULT_MULTICHAIN_MODULE,
+});
 ```
-Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account. 
 
-Here is how you can set up Smart Account instances accross multiple chains: 
+Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account.
+
+Here is how you can set up Smart Account instances accross multiple chains:
 
 ```ts
 
 let baseAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.BASE_GOERLI_TESTNET,
-    paymaster: //basePaymaster, 
-    bundler: //baseBundler, 
+    paymaster: //basePaymaster,
+    bundler: //baseBundler,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
@@ -69,11 +72,11 @@ let baseAccount = await BiconomySmartAccountV2.create({
 
 let polygonAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,
-    paymaster: //polygonPaymaster, 
-    bundler: //polygonBundler, 
+    paymaster: //polygonPaymaster,
+    bundler: //polygonBundler,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
-  }); 
+  });
 
 ```

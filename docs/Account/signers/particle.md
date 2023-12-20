@@ -79,7 +79,7 @@ const connect = async () => {
     const particleProvider = new ParticleProvider(particle.auth);
     const web3Provider = new ethers.providers.Web3Provider(
       particleProvider,
-      "any"
+      "any",
     );
 
     const module = await ECDSAOwnershipValidationModule.create({

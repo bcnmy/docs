@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Sponsor UserOp End Point'
+sidebar_label: "Sponsor UserOp End Point"
 sidebar_position: 2
 ---
 
@@ -7,7 +7,7 @@ sidebar_position: 2
 
 :::caution
 
-This documentation is for using our Paymaster API's directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/paymastermethods). 
+This documentation is for using our Paymaster API's directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/paymastermethods).
 
 :::
 
@@ -17,7 +17,7 @@ You can get your Paymaster URL from the Biconomy [Dashboard](https://dashboard.b
 You can test this endpoint on our [Paymaster Explorer](/Paymaster/explorer)
 :::
 
-All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below. 
+All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below.
 
 This endpoint is responsible for calculating the `paymasterAndData` field, if applicable, for the given request.
 The API accepts a partial UserOp and an optional token address. By examining the mode parameter in the request, it identifies the type of paymaster associated with the request and handles the processing accordingly, as described in the following.
@@ -28,45 +28,46 @@ To determine whether a request can be sponsored by the Sponsorship Paymaster, on
 
 ### Token Paymaster
 
-Consider both the partial `UserOp` and `tokenAddress` parameters in this case. If the `tokenAddress` is absent, an error will be thrown. If both are present, check for the *TokenPaymaster* flow and send the `paymasterAndData` response accordingly. If the `tokenAddress` is not supported, an error will also be thrown. Please see the error response at the end of this document.
+Consider both the partial `UserOp` and `tokenAddress` parameters in this case. If the `tokenAddress` is absent, an error will be thrown. If both are present, check for the _TokenPaymaster_ flow and send the `paymasterAndData` response accordingly. If the `tokenAddress` is not supported, an error will also be thrown. Please see the error response at the end of this document.
 
 ## Parameters
 
 **Body**
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| method | string | Name of method in this case: pm_getFeeQuoteOrData  | Required |
-| params | array | An array consisting of the Useroperation object and Paymaster mode information | Required |
-| id | string | id for request determined by client for JSON RPC requests  | Required |
-| jsonrpc | string | JSON RPC version in this case 2.0.0  | Required |
+| Param   | Type   | Description                                                                    | Required |
+| ------- | ------ | ------------------------------------------------------------------------------ | -------- |
+| method  | string | Name of method in this case: pm_getFeeQuoteOrData                              | Required |
+| params  | array  | An array consisting of the Useroperation object and Paymaster mode information | Required |
+| id      | string | id for request determined by client for JSON RPC requests                      | Required |
+| jsonrpc | string | JSON RPC version in this case 2.0.0                                            | Required |
+
 <br/>
 **Params Array for Sponsorship requests**
 
-| Index | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| 0 | object | A partial userOperation object for the userOp that needs to be sponsored | Required |
-| 1 | object | Mode specified as "SPONSORSHIP" as well as sposorship information which includes any webhook data and smart account information: name and version | Required |
+| Index | Type   | Description                                                                                                                                       | Required |
+| ----- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 0     | object | A partial userOperation object for the userOp that needs to be sponsored                                                                          | Required |
+| 1     | object | Mode specified as "SPONSORSHIP" as well as sposorship information which includes any webhook data and smart account information: name and version | Required |
 
 <br/>
 **Params Array for ERC20 paymaster requests**
 
-| Index | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| 0 | object | A partial userOperation object for the userOp that needs to be sponsored | Required |
-| 1 | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
+| Index | Type   | Description                                                                                             | Required |
+| ----- | ------ | ------------------------------------------------------------------------------------------------------- | -------- |
+| 0     | object | A partial userOperation object for the userOp that needs to be sponsored                                | Required |
+| 1     | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
 
 <br/>
 :::note
-**"MODE"** is mandatory for `pm_sponsorUserOperation` API, 
+**"MODE"** is mandatory for `pm_sponsorUserOperation` API,
 
 - If **"MODE"** is **SPONSORED**, we check for request sponsorship. If request cannot be sponsored, we return 0x. This would mean users will pay for their gas fees.
 - If **"MODE"** is ERC20, we return `paymasterAndData` for TokenPaymaster. This would mean that users will pay in there preferred ERC20 Tokens
-:::
+  :::
 
 ## 1. Mode is **SPONSORED** :
 
-> ***POST Request***
+> **_POST Request_**
 
 ```javascript
 {
@@ -102,9 +103,7 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
 
 ```
 
-
-
-> ***Response***
+> **_Response_**
 
 **Success Response**
 
@@ -123,10 +122,9 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
 }
 ```
 
-
 ## 2. Mode is **ERC20** :
 
-> ***POST Request:***
+> **_POST Request:_**
 
 ```javascript
 {
@@ -142,7 +140,7 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
             maxFeePerGas, // string
             maxPriorityFeePerGas, // string
             //optional fields
-            callGasLimit, // string 
+            callGasLimit, // string
             verificationGasLimit, // string
             preVerificationGas, // string
         },
@@ -157,7 +155,7 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
 }
 ```
 
-> ***Response:***
+> **_Response:_**
 
 ```javascript
 {
@@ -173,6 +171,4 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
 }
 ```
 
-
 In response, the result field will contain `paymasterAndData` to be used in UserOp.
-

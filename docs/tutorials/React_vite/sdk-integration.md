@@ -15,12 +15,18 @@ import "@biconomy/web3-auth/dist/src/style.css";
 import { useState, useEffect, useRef } from "react";
 import SocialLogin from "@biconomy/web3-auth";
 import { ChainId } from "@biconomy/core-types";
-import { ethers } from 'ethers'
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { IPaymaster, BiconomyPaymaster,} from '@biconomy/paymaster'
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE, } from "@biconomy/modules";
-import Counter from './Components/Counter';
+import { ethers } from "ethers";
+import { IBundler, Bundler } from "@biconomy/bundler";
+import {
+  BiconomySmartAccountV2,
+  DEFAULT_ENTRYPOINT_ADDRESS,
+} from "@biconomy/account";
+import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
+import {
+  ECDSAOwnershipValidationModule,
+  DEFAULT_ECDSA_OWNERSHIP_MODULE,
+} from "@biconomy/modules";
+import Counter from "./Components/Counter";
 ```
 
 We are importing some css styles here but you can build your own login UI as
@@ -28,23 +34,23 @@ well if needed.
 
 Here is information about the rest of the imports:
 
--   `useState`, `useEffect`, `useRef`: React hooks for managing component state
-    and lifecycle.
--   `SocialLogin` from `@biconomy/web3-auth`: A class from Biconomy SDK that
-    allows you to leverage Web3Auth for social logins.
--   ChainId from `@biconomy/core-types`: An enumeration of supported blockchain
-    networks.
--   `ethers`: A library for interacting with Ethereum.
--   `Ibundler`and `bundler` will take UserOperations included in a mempool and
-    and handle sending them to an entry point contract to be executed as a
-    transaction onchain.
--   `BiconomySmartAccount`,`BiconomySmartAccountConfig`,
-    `DEFAULT_ENTRYPOINT_ADDRESS` from `@biconomy/account` to handle the
-    configuration and methods of smart accounts
--   `IPaymaster` and `Paymaster` will be used to sponsor gas fees for an
-    account, provided specific predefined conditions are satisfied.
--   `ECDSAOwnershipValidationModule`, and `DEFAULT_ECDSA_OWNERSHIP_MODULE,` to handle
-    the ECDSA Validation Signature for generating the smart accounts.  
+- `useState`, `useEffect`, `useRef`: React hooks for managing component state
+  and lifecycle.
+- `SocialLogin` from `@biconomy/web3-auth`: A class from Biconomy SDK that
+  allows you to leverage Web3Auth for social logins.
+- ChainId from `@biconomy/core-types`: An enumeration of supported blockchain
+  networks.
+- `ethers`: A library for interacting with Ethereum.
+- `Ibundler`and `bundler` will take UserOperations included in a mempool and
+  and handle sending them to an entry point contract to be executed as a
+  transaction onchain.
+- `BiconomySmartAccount`,`BiconomySmartAccountConfig`,
+  `DEFAULT_ENTRYPOINT_ADDRESS` from `@biconomy/account` to handle the
+  configuration and methods of smart accounts
+- `IPaymaster` and `Paymaster` will be used to sponsor gas fees for an
+  account, provided specific predefined conditions are satisfied.
+- `ECDSAOwnershipValidationModule`, and `DEFAULT_ECDSA_OWNERSHIP_MODULE,` to handle
+  the ECDSA Validation Signature for generating the smart accounts.
 
 Now, let's setup our paymaster and bundler :
 
@@ -106,26 +112,26 @@ Now let's build our login function:
 
 ```js
 async function login() {
-    if (!sdkRef.current) {
-        const socialLoginSDK = new SocialLogin();
-        const signature1 = await socialLoginSDK.whitelistUrl(
-            "http://127.0.0.1:5173/"
-        );
-        await socialLoginSDK.init({
-            chainId: ethers.utils.hexValue(ChainId.POLYGON_MUMBAI).toString(),
-            network: "testnet",
-            whitelistUrls: {
-                "http://127.0.0.1:5173/": signature1,
-            },
-        });
-        sdkRef.current = socialLoginSDK;
-    }
-    if (!sdkRef.current.provider) {
-        sdkRef.current.showWallet();
-        enableInterval(true);
-    } else {
-        setupSmartAccount();
-    }
+  if (!sdkRef.current) {
+    const socialLoginSDK = new SocialLogin();
+    const signature1 = await socialLoginSDK.whitelistUrl(
+      "http://127.0.0.1:5173/",
+    );
+    await socialLoginSDK.init({
+      chainId: ethers.utils.hexValue(ChainId.POLYGON_MUMBAI).toString(),
+      network: "testnet",
+      whitelistUrls: {
+        "http://127.0.0.1:5173/": signature1,
+      },
+    });
+    sdkRef.current = socialLoginSDK;
+  }
+  if (!sdkRef.current.provider) {
+    sdkRef.current.showWallet();
+    enableInterval(true);
+  } else {
+    setupSmartAccount();
+  }
 }
 ```
 
@@ -168,35 +174,38 @@ Now lets actually set up the smart account:
 
 ```js
 async function setupSmartAccount() {
-    if (!sdkRef?.current?.provider) return;
-    sdkRef.current.hideWallet();
-    setLoading(true);
-    const web3Provider = new ethers.providers.Web3Provider(
-        sdkRef.current.provider
-    );
-    setProvider(web3Provider);
+  if (!sdkRef?.current?.provider) return;
+  sdkRef.current.hideWallet();
+  setLoading(true);
+  const web3Provider = new ethers.providers.Web3Provider(
+    sdkRef.current.provider,
+  );
+  setProvider(web3Provider);
 
-     const module = await ECDSAOwnershipValidationModule.create({
-        signer: web3Provider.getSigner(),
-        moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+  const module = await ECDSAOwnershipValidationModule.create({
+    signer: web3Provider.getSigner(),
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+  });
+
+  try {
+    let biconomySmartAccount = await BiconomySmartAccountV2.create({
+      chainId: ChainId.POLYGON_MUMBAI,
+      bundler: bundler,
+      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+      defaultValidationModule: module,
+      activeValidationModule: module,
     });
+    console.log("address: ", await biconomySmartAccount.getAccountAddress());
+    console.log(
+      "deployed: ",
+      await biconomySmartAccount.isAccountDeployed(smartAccount.accountAddress),
+    );
 
-    try {
-      let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        chainId: ChainId.POLYGON_MUMBAI,
-        bundler: bundler, 
-        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-        defaultValidationModule: module,
-        activeValidationModule: module
-      })
-      console.log("address: ", await biconomySmartAccount.getAccountAddress())
-      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(smartAccount.accountAddress))
-
-      setSmartAccount(biconomySmartAccount)
-      setLoading(false)
-    } catch (err) {
-        console.log("error setting up smart account... ", err);
-    }
+    setSmartAccount(biconomySmartAccount);
+    setLoading(false);
+  } catch (err) {
+    console.log("error setting up smart account... ", err);
+  }
 }
 ```
 
@@ -233,31 +242,31 @@ step-by-step explanation of what it does:
 6. **`BiconomySmartAccountV2.create()`**
    Creates an instance of the BiconomySmartAccount. The configuration includes the following properties:
 
--   `signer:` The signer (wallet) associated with the web3Provider.
--   `chainId:` The chain ID, which is set to ChainId.POLYGON_MUMBAI. This
-    specifies the blockchain network where the BiconomySmartAccount is being
-    used (Polygon Mumbai, in this case).
--   `bundler:` The bundler used for optimizing and bundling smart contracts. It
-    is expected that the bundler variable is defined elsewhere in the code.
--   `paymaster:` The paymaster used for handling payment processing. It is
-    expected that the paymaster variable is defined elsewhere in the code.
+- `signer:` The signer (wallet) associated with the web3Provider.
+- `chainId:` The chain ID, which is set to ChainId.POLYGON_MUMBAI. This
+  specifies the blockchain network where the BiconomySmartAccount is being
+  used (Polygon Mumbai, in this case).
+- `bundler:` The bundler used for optimizing and bundling smart contracts. It
+  is expected that the bundler variable is defined elsewhere in the code.
+- `paymaster:` The paymaster used for handling payment processing. It is
+  expected that the paymaster variable is defined elsewhere in the code.
 
 7. Logging `BiconomySmartAccount` information:
 
--   **console.log("owner: ", biconomySmartAccount.owner):** Logs the owner of
-    the BiconomySmartAccount. The owner property might represent the Ethereum
-    address of the smart account owner.
+- **console.log("owner: ", biconomySmartAccount.owner):** Logs the owner of
+  the BiconomySmartAccount. The owner property might represent the Ethereum
+  address of the smart account owner.
 
--   **console.log("address: ", await
-    biconomySmartAccount.getAccountAddress()):** Logs the Ethereum address
-    of the BiconomySmartAccount using the getAccountAddress() method. This
-    address is the entrypoint address mentioned earlier, and it serves as the
-    point of entry for interacting with the smart account through Biconomy.
+- **console.log("address: ", await
+  biconomySmartAccount.getAccountAddress()):** Logs the Ethereum address
+  of the BiconomySmartAccount using the getAccountAddress() method. This
+  address is the entrypoint address mentioned earlier, and it serves as the
+  point of entry for interacting with the smart account through Biconomy.
 
--   **`console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(await biconomySmartAccount.getAccountAddress()))`:**
-    Logs whether the smart account has been deployed or not. It calls the
-    isAccountDeployed() method on the BiconomySmartAccount instance, passing the
-    entrypoint address as an argument.
+- **`console.log("deployed: ", await biconomySmartAccount.isAccountDeployed(await biconomySmartAccount.getAccountAddress()))`:**
+  Logs whether the smart account has been deployed or not. It calls the
+  isAccountDeployed() method on the BiconomySmartAccount instance, passing the
+  entrypoint address as an argument.
 
 8. **`setSmartAccount(biconomySmartAccount)`:** Sets the biconomySmartAccount as
    the state variable smartAccount. This step makes the BiconomySmartAccount
@@ -280,14 +289,14 @@ Finally our last function will be a logout function:
 
 ```js
 const logout = async () => {
-    if (!sdkRef.current) {
-        console.error("Web3Modal not initialized.");
-        return;
-    }
-    await sdkRef.current.logout();
-    sdkRef.current.hideWallet();
-    setSmartAccount(null);
-    enableInterval(false);
+  if (!sdkRef.current) {
+    console.error("Web3Modal not initialized.");
+    return;
+  }
+  await sdkRef.current.logout();
+  sdkRef.current.hideWallet();
+  setSmartAccount(null);
+  enableInterval(false);
 };
 ```
 
@@ -310,4 +319,3 @@ In summary, the logout function checks if the SDK is initialized, logs the user
 out and hides the wallet if it is, and then clears the smart account and
 disables the interval. If the SDK is not initialized, it logs an error message
 and does not execute the rest of the function.
-

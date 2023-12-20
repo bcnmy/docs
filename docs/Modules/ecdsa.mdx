@@ -1,21 +1,22 @@
 ---
 sidebar_position: 2
 ---
+
 # ECDSA Ownership Module
 
-This is a basic module that determines "ownership" of the smart account. Smart Accounts are not able to initiate their own transactions on chain and so an Externally Owned Account is needed to sign transactions before they can be sent on chain. The ECDSA ownership module allows us to use a traditional EOA to achieve this. 
+This is a basic module that determines "ownership" of the smart account. Smart Accounts are not able to initiate their own transactions on chain and so an Externally Owned Account is needed to sign transactions before they can be sent on chain. The ECDSA ownership module allows us to use a traditional EOA to achieve this.
 
 ## Installation
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 <Tabs>
 <TabItem value="js" label="npm">
 
 ```bash
 
-npm install @biconomy/modules 
+npm install @biconomy/modules
 
 ```
 
@@ -24,7 +25,7 @@ npm install @biconomy/modules
 
 ```bash
 
-yarn add @biconomy/modules 
+yarn add @biconomy/modules
 
 ```
 
@@ -33,23 +34,25 @@ yarn add @biconomy/modules
 
 ```bash
 
-pnpm add @biconomy/modules 
+pnpm add @biconomy/modules
 
 ```
 
 </TabItem>
 </Tabs>
 
-## Integration 
+## Integration
 
 ```typescript
-
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+import {
+  ECDSAOwnershipValidationModule,
+  DEFAULT_ECDSA_OWNERSHIP_MODULE,
+} from "@biconomy/modules";
 
 const module = await ECDSAOwnershipValidationModule.create({
   signer: signer, // you will need to supply a signer from an EOA in this step
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-})
-
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+});
 ```
-Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account. 
+
+Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account.

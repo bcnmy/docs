@@ -19,7 +19,7 @@ sidebar_position: 3
 Solution:
 
 ```js
-import "@biconomy/web3-auth/src/style.css"
+import "@biconomy/web3-auth/src/style.css";
 ```
 
 https://github.com/bcnmy/biconomy-client-sdk/issues/75
@@ -39,7 +39,7 @@ const Index = () => {
     () => import("../components/SocialLogin").then((res) => res.default),
     {
       ssr: false,
-    }
+    },
   );
 
   return (

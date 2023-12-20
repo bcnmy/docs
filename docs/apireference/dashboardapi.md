@@ -1,10 +1,9 @@
 ---
-sidebar_label: 'Dashboard API'
+sidebar_label: "Dashboard API"
 sidebar_position: 1
 ---
 
 # Dashboard APIs
-
 
 Using these APIs allow you to perform various actions without the need to access the dashboard UI manually.
 
@@ -12,11 +11,9 @@ Using these APIs allow you to perform various actions without the need to access
 
 To obtain an authToken required in the header, you can generate one in your account settings page on the [biconomy dashboard](https://dashboard.biconomy.io/account).
 
+#### 1. Get list of Paymasters:
 
-
-#### 1. Get list of Paymasters: 
-
-> ***GET Request***
+> **_GET Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
 
@@ -24,15 +21,13 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-
 
 Responses
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -53,8 +48,7 @@ Responses
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -63,9 +57,9 @@ Responses
 }
 ```
 
-#### 2. Create a new Paymaster: 
+#### 2. Create a new Paymaster:
 
-> ***POST Request***
+> **_POST Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
 
@@ -73,21 +67,20 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
 
 Body
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| name | string | Unique name of the DApp for a chain id | Required |
-| type | string | Type of paymaster to be set up, in this case will be "HYBRID"  | Required |
-| chainId | number | Network on which the DApp exists | Required |
+| Param   | Type   | Description                                                             | Required |
+| ------- | ------ | ----------------------------------------------------------------------- | -------- |
+| name    | string | Unique name of the DApp for a chain id                                  | Required |
+| type    | string | Type of paymaster to be set up, in this case will be "HYBRID"           | Required |
+| chainId | number | Network on which the DApp exists                                        | Required |
 | version | string | String that represents the version of Paymaster to be used for the dApp | Required |
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -101,7 +94,7 @@ Body
 }
 ```
 
-> ***400 Bad Request***
+> **_400 Bad Request_**
 
 Paymaster Name Already Exists
 
@@ -112,7 +105,7 @@ Paymaster Name Already Exists
 }
 ```
 
-> ***400 Bad Request***
+> **_400 Bad Request_**
 
 Chain Id not supported
 
@@ -123,8 +116,7 @@ Chain Id not supported
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -137,14 +129,13 @@ To manage the smart contracts associated with your DApp, we provide a set of end
 
 The "apiKey" can be obtained in two ways:
 
-When creating your DApp, you will receive an "apiKey" as part of the registration process. 
+When creating your DApp, you will receive an "apiKey" as part of the registration process.
 
 Alternatively, if you already have a DApp registered, you can find the "apiKey" in the list API of the DApp.
 
-
 #### 3. Create a Smart Contract:
 
-> ***POST Request***
+> **_POST Request_**
 
 URL: "https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract"
 
@@ -152,24 +143,23 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-| apiKey | string | API Key Associated with dApp | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
 
 Body
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| name | string | Unique name of smart contract | Required |
-| address | string | Address of smart contract | Required |
-| abi | string | Stringified ABI of smart contract | Required |
+| Param              | Type             | Description                                                              | Required |
+| ------------------ | ---------------- | ------------------------------------------------------------------------ | -------- |
+| name               | string           | Unique name of smart contract                                            | Required |
+| address            | string           | Address of smart contract                                                | Required |
+| abi                | string           | Stringified ABI of smart contract                                        | Required |
 | whitelistedMethods | array of strings | List of method names of smart contract which are to be sponsored by DApp | Optional |
 
 Responses
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -178,7 +168,7 @@ Responses
 }
 ```
 
-> ***400 Bad Request***
+> **_400 Bad Request_**
 
 Smart Contract Already Exists
 
@@ -189,8 +179,7 @@ Smart Contract Already Exists
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -199,10 +188,9 @@ Smart Contract Already Exists
 }
 ```
 
-
 #### 4. Get List of Smart Contracts:
 
-> ***GET Request***
+> **_GET Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
 
@@ -210,13 +198,12 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-| apiKey | string | API Key Associated with dApp | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -238,8 +225,7 @@ Header
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -248,10 +234,9 @@ Header
 }
 ```
 
-
 #### 5. Update Smart Contract Whitelisted Methods:
 
-> ***PATCH Request***
+> **_PATCH Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
 
@@ -259,22 +244,21 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-| apiKey | string | API Key Associated with dApp | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
 
 Body
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| address | string | Smart contract address | Required |
+| Param              | Type             | Description                                                              | Required |
+| ------------------ | ---------------- | ------------------------------------------------------------------------ | -------- |
+| address            | string           | Smart contract address                                                   | Required |
 | whitelistedMethods | array of strings | List of method names of smart contract which are to be sponsored by DApp | Required |
 
-Responses 
+Responses
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -291,11 +275,11 @@ Responses
             "setQuote"
         ]
     }
-    
+
 }
 ```
 
-> ***400 Bad Request***
+> **_400 Bad Request_**
 
 Whitelisted methods must be an array
 
@@ -306,8 +290,7 @@ Whitelisted methods must be an array
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -316,9 +299,9 @@ Whitelisted methods must be an array
 }
 ```
 
-> ***404 Not Found***
+> **_404 Not Found_**
 
-Usually, this occurs when incorrect apiKey is used or the address is not added 
+Usually, this occurs when incorrect apiKey is used or the address is not added
 
 ```javascript
 {
@@ -329,23 +312,24 @@ Usually, this occurs when incorrect apiKey is used or the address is not added
 
 #### 6. Update Sponsorship Paymaster Funding Wallet:
 
-##### It is a 3-step process. 
-##### *1. Generate a message from biconomy servers, for the sponsorship paymaster.*
-> ***GET Request***
+##### It is a 3-step process.
+
+##### _1. Generate a message from biconomy servers, for the sponsorship paymaster._
+
+> **_GET Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/funding-message/{{paymasterId}}
 
 Headers
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-| apiKey | string | API Key Associated with dApp | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
 
 Responses
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -357,8 +341,7 @@ Responses
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -366,10 +349,12 @@ Responses
     "message": "Auth token and API key is required in the headers"
 }
 ```
-##### *2. Sign the generated message using the private key of the EOA (Funding Wallet).*
-##### *3. Send the request to biconomy to update the funding wallet address.*
 
-> ***PATCH Request***
+##### _2. Sign the generated message using the private key of the EOA (Funding Wallet)._
+
+##### _3. Send the request to biconomy to update the funding wallet address._
+
+> **_PATCH Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io//api/v2/public/sdk/paymaster
 
@@ -377,24 +362,23 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-| apiKey | string | API Key Associated with dApp | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
 
 Body
 
 | Param       | Type   | Description                                                 | Required |
-|-------------|--------|-------------------------------------------------------------| --------------- |
+| ----------- | ------ | ----------------------------------------------------------- | -------- |
 | paymasterId | string | Sponsorship Paymaster Id                                    | Required |
-| type        | string | Method Name.  <br/>Use "paymasterFundingId" here                                              | Required |
+| type        | string | Method Name. <br/>Use "paymasterFundingId" here             | Required |
 | signature   | string | Signature generated using private key of EOA                | Required |
 | address     | string | Address of the EOA which is to be updated as funding wallet | Required |
 
 Responses
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -408,17 +392,19 @@ Responses
     }
 }
 ```
-> ***400 Bad Request***
 
-This happens, when there is a signature mismatch, either because an older message is used to generate the signature, or EOA address mentioned in the request body, is not the address which signed the message.   
+> **_400 Bad Request_**
+
+This happens, when there is a signature mismatch, either because an older message is used to generate the signature, or EOA address mentioned in the request body, is not the address which signed the message.
+
 ```javascript
 {
     "statusCode": 400,
     "message": "Invalid signature"
 }
 ```
-> ***401 Unauthorized***
 
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -426,9 +412,11 @@ This happens, when there is a signature mismatch, either because an older messag
     "message": "Auth token and API key is required in the headers"
 }
 ```
-> ***404 Not Found***
+
+> **_404 Not Found_**
 
 Usually, this occurs when incorrect apiKey or authToken is used
+
 ```javascript
 {
     "statusCode": 404,
@@ -436,10 +424,9 @@ Usually, this occurs when incorrect apiKey or authToken is used
 }
 ```
 
-
 #### 7. Delete Smart Contract
 
-> ***DELETE Request***
+> **_DELETE Request_**
 
 URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
 
@@ -447,21 +434,20 @@ Parameters
 
 Header
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
 | authToken | string | Token unique to every user account | Required |
-| apiKey | string | API Key Associated with dApp | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
 
 Body
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
+| Param   | Type   | Description            | Required |
+| ------- | ------ | ---------------------- | -------- |
 | address | string | Smart contract address | Required |
 
-Responses 
+Responses
 
-> ***200 OK***
-
+> **_200 OK_**
 
 ```javascript
 {
@@ -470,8 +456,7 @@ Responses
 }
 ```
 
-> ***401 Unauthorized***
-
+> **_401 Unauthorized_**
 
 ```javascript
 {
@@ -480,7 +465,7 @@ Responses
 }
 ```
 
-> ***404 Not Found***
+> **_404 Not Found_**
 
 ```javascript
 {

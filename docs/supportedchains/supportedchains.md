@@ -25,7 +25,6 @@ List of chains supported by our Paymasters and Bundlers.
 14. Manta Mainnet
 15. Core Mainnet
 
-
 ## Testnet Chains
 
 1. Goerli

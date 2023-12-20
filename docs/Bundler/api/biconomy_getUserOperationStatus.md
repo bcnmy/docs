@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Get UserOperation Status'
+sidebar_label: "Get UserOperation Status"
 sidebar_position: 8
 ---
 
@@ -7,7 +7,7 @@ sidebar_position: 8
 
 :::caution
 
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods). 
+This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
 
 :::
 
@@ -15,7 +15,7 @@ This documentation is for using our Bundler API directly. If you are building wi
 You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
 :::
 
-The endpoint is responsible for returning the status of transactionHash associated with the userOpHash. 
+The endpoint is responsible for returning the status of transactionHash associated with the userOpHash.
 
 Cases:
 
@@ -30,87 +30,79 @@ The backend should automatically return correct hashes and status in case of bum
 
 Body
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| method | string | Name of method in this case: eth_estimateUserOperationGas  | Required |
-| params | array | An array consisting of the userop hash returned by `eth_sendUserOperation`| Required |
-| id | string | id for request determined by client for JSON RPC requests  | Required |
-| jsonrpc | string | JSON RPC version in this case 2.0.0  | Required |
+| Param   | Type   | Description                                                                | Required |
+| ------- | ------ | -------------------------------------------------------------------------- | -------- |
+| method  | string | Name of method in this case: eth_estimateUserOperationGas                  | Required |
+| params  | array  | An array consisting of the userop hash returned by `eth_sendUserOperation` | Required |
+| id      | string | id for request determined by client for JSON RPC requests                  | Required |
+| jsonrpc | string | JSON RPC version in this case 2.0.0                                        | Required |
 
 ## Request
 
 ```json
 {
   "method": "biconomy_getUserOperationStatus",
-  "params": ["0x9aa5864f9ebb6ec43992bdc957d9bef454c661a351c1698919339cf2587ed11c"],
+  "params": [
+    "0x9aa5864f9ebb6ec43992bdc957d9bef454c661a351c1698919339cf2587ed11c"
+  ],
   "id": 1693369916,
   "jsonrpc": "2.0"
 }
-
 ```
 
 ## Responses
 
-If userOpHash was not found: 
+If userOpHash was not found:
 
 ```json
-
-{ 
-	"jsonrpc": "2.0", 
-	"id": 1693369916, 
-	"error": { 
-		code: -32094, 
-		message: "userOpHash not found", 
-	} 
+{
+  "jsonrpc": "2.0",
+  "id": 1693369916,
+  "error": {
+    "code": -32094,
+    "message": "userOpHash not found"
+  }
 }
-
 ```
 
 If userOp is in mempool
 
-
 ```json
-
 {
-    "jsonrpc": "2.0",
-    "id": 1693369916,
-    "result": {
-				state: "BUNDLER_MEMPOOL"
-		}
+  "jsonrpc": "2.0",
+  "id": 1693369916,
+  "result": {
+    "state": "BUNDLER_MEMPOOL"
+  }
 }
-
 ```
 
-If userOp could not be sent on chain: 
+If userOp could not be sent on chain:
 
 ```json
-
 {
-    "jsonrpc": "2.0",
-    "id": 1693369916,
-    "result": {
-				state: "DROPPED_FROM_BUNDLER_MEMPOOL"
-		}
+  "jsonrpc": "2.0",
+  "id": 1693369916,
+  "result": {
+    "state": "DROPPED_FROM_BUNDLER_MEMPOOL"
+  }
 }
-
 ```
 
 If transaction was submitted on chain but not confirmed
 
 ```json
-
 {
-    "jsonrpc": "2.0",
-    "id": 1693369916,
-    "result": {
-				state: "SUBMITTED",
-        transactionHash: "0xabc"
-		}
+  "jsonrpc": "2.0",
+  "id": 1693369916,
+  "result": {
+    "state": "SUBMITTED",
+    "transactionHash": "0xabc"
+  }
 }
-
 ```
 
-If transaction is confirmed: 
+If transaction is confirmed:
 
 ```json
 
@@ -236,8 +228,7 @@ If transaction is confirmed:
 
 ```
 
-If transaction failed: 
-
+If transaction failed:
 
 ```json
 

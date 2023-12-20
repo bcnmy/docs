@@ -19,7 +19,7 @@ If you wish to skip the explanation of how gasless transactions work via Biconom
 
 In this case, dApp is sponsoring the transaction gas fee using gasless transaction using the concept of paymasters as mentioned in [EIP-4337](https://eips.ethereum.org/EIPS/eip-4337) (Account Abstraction).
 
-EIP-4337 proposal introduces a higher-layer pseudo-transaction object called a `UserOperation`. Users send UserOperation objects into a separate mempool. A special class of actors called *bundlers* (either miners, or users that can send transactions to miners through a bundle marketplace) package up a set of these objects into a transaction making a `handleOps` call to a special contract, and that transaction then gets included in a block.
+EIP-4337 proposal introduces a higher-layer pseudo-transaction object called a `UserOperation`. Users send UserOperation objects into a separate mempool. A special class of actors called _bundlers_ (either miners, or users that can send transactions to miners through a bundle marketplace) package up a set of these objects into a transaction making a `handleOps` call to a special contract, and that transaction then gets included in a block.
 
 - **UserOperation** - a structure that describes a transaction to be sent on behalf of a user.
   - Like a transaction, it contains “sender”, “to”, “calldata”, “maxFeePerGas”, “maxPriorityFee”, “signature”, “nonce”

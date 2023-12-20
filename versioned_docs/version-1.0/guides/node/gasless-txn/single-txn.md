@@ -45,7 +45,7 @@ smartAccount.on('error', (response: any) => {
 // Sending gasless transaction
 const txResponse = await smartAccount.sendTransaction({ transaction: tx1 });
 console.log('userOp hash', txResponse.hash);
-// If you do not subscribe to listener, one can also get the receipt like shown below 
+// If you do not subscribe to listener, one can also get the receipt like shown below
 const txReciept = await txResponse.wait();
 console.log('Tx hash', txReciept.transactionHash);
 

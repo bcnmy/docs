@@ -20,28 +20,28 @@ import Transak from "@biconomy/transak";
 
 ```js
 // init the widget
-const transak = new Transak('STAGING');
+const transak = new Transak("STAGING");
 transak.init();
 ```
 
 - If you are using Fiat On Ramp then you can directly pass in the email like so:
 
 ```js
-import Transak from '@biconomy/transak';
+import Transak from "@biconomy/transak";
 
 // use this info for transak package
-const transak = new Transak('STAGING', {
+const transak = new Transak("STAGING", {
   walletAddress: userAddress,
   userData: {
-    firstName: userInfo?.name || '',
-    email: userInfo?.email || '',
+    firstName: userInfo?.name || "",
+    email: userInfo?.email || "",
   },
 });
 transak.init();
 ```
 
 - On `transak.init()` Transak widget opens and users can buy on-ramp.
-![Fiat-1](img/fiat-1.png)
+  ![Fiat-1](img/fiat-1.png)
 
 ## Code Examples
 
