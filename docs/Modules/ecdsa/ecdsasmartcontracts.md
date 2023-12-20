@@ -1,9 +1,9 @@
 ---
-sidebar_label: "ECDSA Module - Smart Contract Deep Dive"
+sidebar_label: "Smart Contract Deep Dive"
 sidebar_position: 2
 ---
 
-# 📜 ECDSA Ownership Registry Module: Smart Contract Deep Dive 🛠️
+# 📜 Smart Contract Deep Dive 🛠️
 
 ## Introduction
 

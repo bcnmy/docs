@@ -1,11 +1,11 @@
 ---
-sidebar_label: "ECDSA Validation Module"
+sidebar_label: "What is ECDSA Module"
 sidebar_position: 1
 ---
 
 ## Introduction 📄
 
-The ECDSA Validation Module is integral to Biconomy's Modular Smart Account, enhancing transaction security and user authentication in Ethereum. This document outlines its functionality, benefits, and use cases.
+The ECDSA Validation Module or ECDSA Module is integral to Biconomy's Modular Smart Account, enhancing transaction security and user authentication in Ethereum. This document outlines its functionality, benefits, and use cases.
 
 :::info
 Understanding the ECDSA Validation Module is crucial for developers working with Ethereum-based Smart Accounts.
