@@ -40,7 +40,7 @@ Following is the list of Validation Modules:
 
 **How to create custom Validation Module**
 
-Developers have the flexibility to create a custom validation module implementation according to their specific requirements. This validation module class should extend the BaseValidationModule, which implements the IValidationModule interface. After thorough testing and auditing, a pull request (PR) can be submitted to integrate the module with the SDK. A detailed walkthru of the same is linked here.
+Developers have the flexibility to create a custom validation module implementation according to their specific requirements. This validation module class should extend the BaseValidationModule, which implements the IValidationModule interface. After thorough testing and auditing, a pull request (PR) can be submitted to integrate the module with the SDK. A detailed walkthru of the same is linked [here](/tutorials/customValidationModule).
 
 ## Execution Modules
 
