@@ -1,12 +1,13 @@
 # Custom Validation Module
 
-In this tutorial we will look at how to create your own validation module. 
+In this tutorial we will look at how to create your own validation module.
 Any custom validation module needs to extend abstract contract [BaseAuthorizationModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/BaseAuthorizationModule.sol) - which extends IAuthorizationModule and ISignatureValidator interface.
-The implementation of this interface enables a module to receive userOp data and provide validation results back to the SmartAccount. 
+The implementation of this interface enables a module to receive userOp data and provide validation results back to the SmartAccount.
 
 Lets take a look at the step by step guide to create a custom Validation Module.
 
 **1. Create the custom module class**
+
 ```typescript
 import {BaseAuthorizationModule} from "./BaseAuthorizationModule.sol";
 
@@ -20,11 +21,14 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
     }
 }
 ```
+
 As per the code
+
 - First we import the BaseAuthorizationModule and initialize two constants name and version
 - Then we declare a method initForSmartAccount which gets used to initialize this module for the smart account. SA calls this function with msg.sender as the smart account address. It updates the relevant storage for the msg sender, It could be ownership information as shown in ECDSAOwnsership Module.
 
 **2. Implement validateUserOp method**
+
 ```typescript
 /// @inheritdoc IAuthorizationModule
 function validateUserOp(
@@ -43,11 +47,15 @@ function validateUserOp(
     return SIG_VALIDATION_FAILED;
 }
 ```
+
 As per the code
+
 - This function requires the userOp and the userOp Hash as the input parameters where userOp signature is the ABI-encoded signature and validation module address. we extract the module signature and call the verify signature method which we will implement next.
+
 - `_verifySignature` method expects moduleSignature which is a signature that should be processed by a module and made according to the requirements specified by the module that is expected to be processing it.
 
 **3. Implement isValidSignature method**
+
 ```typescript
 function isValidSignature(
     bytes32 dataHash,
@@ -80,10 +88,13 @@ function isValidSignatureForAddress(
     return bytes4(0xffffffff);
 }
 ```
-As per the code 
+
+As per the code
+
 - `isValidSignature`: this method validates an EIP-1271 signature. It internally calls the isValidSignatureForAddress which again calls the _verifySignature method.
 
 **4. Implement isValidSignatureUnsafe method**
+
 ```typescript
     /// @inheritdoc ISignatureValidator
     function isValidSignatureUnsafe(
@@ -110,10 +121,13 @@ As per the code
         return bytes4(0xffffffff);
     }
 ```
+
 As per the code
+
 - `isValidSignatureUnsafe`: this method validates an EIP-1271 signature but expects the data Hash to already include smart account address information.
 
 **5. Implement _verifySignature method**
+
 ```typescript
 /**
 * @param dataHash Hash of the data to be validated.
@@ -130,6 +144,7 @@ function _verifySignature(
     // verification according to signature scheme of this module
 }
 ```
+
 As per the code `_verifySignature` method contains the custom logic for this module, which developer can implement based on their requirements.
 
 Expand the code below to see the entire code:
@@ -262,6 +277,7 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
     
 }
 ```
+
 </details>
 
-Note: We could also create a module's own interface IMyCustomValidationModule to move storage, events and errors there and then make the above module extend this interface. 
+Note: We could also create a module's own interface IMyCustomValidationModule to move storage, events and errors there and then make the above module extend this interface.
