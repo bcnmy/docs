@@ -22,8 +22,7 @@ const Feedback = () => {
 
   return (
     <div>
-      <p>Was this page helpful?</p>
-      <div className="flex justify-end gap-4">
+      <p style={{marginBottom: 6 }}>Was this page helpful?</p>
       <label>
         <input
           type="radio"
@@ -45,10 +44,6 @@ const Feedback = () => {
         />
         No
       </label>
-      </div>
-      {/* <button onClick={() => handleFeedback(true)}>Yes</button>
-      <button onClick={() => handleFeedback(false)}>No</button> */}
-      
       {
          showYesCommentDiv && (
           <div>
