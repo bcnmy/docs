@@ -39,7 +39,7 @@ smartAccount.on('error', (response: any) => {
 // Sending gasless transaction
 const txResponse = await smartAccount.sendTransaction({ transaction: tx1 });
 console.log('userOp hash', txResponse.hash);
-// If you do not subscribe to listener, one can also get the receipt like shown below 
+// If you do not subscribe to listener, one can also get the receipt like shown below
 const txReciept = await txResponse.wait();
 console.log('Tx hash', txReciept.transactionHash);
 
@@ -47,7 +47,6 @@ console.log('Tx hash', txReciept.transactionHash);
 ```
 
 With batching functionality, you can send multiple token transfers in a single transaction
-
 
 ```js
 const erc20Interface = new ethers.utils.Interface([

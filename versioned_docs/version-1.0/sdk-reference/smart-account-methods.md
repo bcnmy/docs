@@ -17,7 +17,7 @@ let smartAccount = new SmartAccount(walletProvider, options);
 smartAccount = await smartAccount.init();
 
 const address = smartAccount.address;
-console.log('address', address);
+console.log("address", address);
 ```
 
 This returns a string representing the address of your Smart Account
@@ -29,8 +29,12 @@ smartAccount = await smartAccount.init();
 const anyEoaAddress = "0x048617BfD445FD1E0AC1b827AA0d00024439fe7a";
 const chainId = 137;
 const index = 0; // You can generate multiple smartAccount per EOA, index 0 is first/default
-const address = await smartAccount.getSmartAccountAddress(anyEoaAddress, chainId, index);
-console.log('address', address);
+const address = await smartAccount.getSmartAccountAddress(
+  anyEoaAddress,
+  chainId,
+  index,
+);
+console.log("address", address);
 ```
 
 You can also generate an array of all Smart Account addresses owned by an EOA, the address at index 0 will be the default address.
@@ -38,7 +42,7 @@ You can also generate an array of all Smart Account addresses owned by an EOA, t
 ## Owner
 
 ```js
-const ownerEOA = smartAccount.owner
+const ownerEOA = smartAccount.owner;
 ```
 
 This returns a string representing the address of the EOA wallet that owns this smart account. This information is derived from the Web3 Provider passed to the smart account initialization in the previous step.
@@ -46,7 +50,7 @@ This returns a string representing the address of the EOA wallet that owns this 
 ## Send Transaction
 
 ```js
-const trxResponse = smartAccount.sendTransaction({ transaction: tx })
+const trxResponse = smartAccount.sendTransaction({ transaction: tx });
 ```
 
 This method allows you to execute a gasless transaction paid by the paymaster you set up on the [Biconomy Dashboard](https://docs.biconomy.io/guides/biconomy-dashboard). It takes a transaction object as a parameter and returns a promise with the transaction response data.
@@ -64,7 +68,9 @@ data: myTx.data,
 ## Send Transaction Batch
 
 ```js
-const trxResponse = smartAccount.sendTransactionBatch({ transactions: [tx1, tx2]})
+const trxResponse = smartAccount.sendTransactionBatch({
+  transactions: [tx1, tx2],
+});
 ```
 
 This method allows you to execute a batch of gasless transactions paid by the paymaster you set up on the [Biconomy Dashboard](https://docs.biconomy.io/guides/biconomy-dashboard). It takes an object as a parameter with an array of transactions and works similarly to `sendTransaction`.
@@ -90,9 +96,9 @@ Before executing a User Paid transaction we need some information about the pote
 
 ```js
 const transaction = await smartAccount.createUserPaidTransaction({
-        transaction: tx,
-        feeQuote: quote,
-      });
+  transaction: tx,
+  feeQuote: quote,
+});
 ```
 
 After choosing a quote for the gas price this method will create a promise that resolves to transaction data that can be passed to the Send User Paid Transaction method.
@@ -101,15 +107,15 @@ After choosing a quote for the gas price this method will create a promise that 
 
 ```js
 smartAccount.sendUserPaidTransaction({
-        tx: transaction,
-        gasLimit: {
-          hex: "0xC3500",
-          type: "hex",
-        }
-      });
+  tx: transaction,
+  gasLimit: {
+    hex: "0xC3500",
+    type: "hex",
+  },
+});
 ```
 
-This method allows you to have the user sponsor their own transaction. It takes an object as a parameter that includes transaction information and a gas limit. 
+This method allows you to have the user sponsor their own transaction. It takes an object as a parameter that includes transaction information and a gas limit.
 
 ## Get Account Balances
 
@@ -127,7 +133,7 @@ const balanceParams: BalancesDto =
         // If empty string you receive balances of all tokens watched by Indexer
         // you can only whitelist token addresses that are listed in token respostory
         // specified above ^
-        tokenAddresses: [], 
+        tokenAddresses: [],
       };
 
 
@@ -147,7 +153,7 @@ https://github.com/bcnmy/token-list/blob/master/biconomy.tokenlist.json
 ## Deploy Wallet Using Paymaster
 
 ```js
-const deployTx = smartAccount.deployWalletUsingPaymaster()
+const deployTx = smartAccount.deployWalletUsingPaymaster();
 ```
 
 Using this method, you can choose to have a smart account deployed at any time. Gas fees will be deducted from your associated gas tank on your Pay master. Alternatively, you can allow for the smart account to be deployed when the user does their first transaction. This happens automatically during the first transaction.
@@ -155,7 +161,7 @@ Using this method, you can choose to have a smart account deployed at any time. 
 ## Smart Account is Deployed
 
 ```js
-smartAccount = await smartAccount.setActiveChain(chainID)
+smartAccount = await smartAccount.setActiveChain(chainID);
 ```
 
 This method returns a promise that resolves into the Smart Account Object and allows you to switch the active chain to the specified chain ID passed to the method.

@@ -22,9 +22,7 @@ Please refer to the [demo React app repository](https://github.com/bcnmy/sdk-exa
 :::
 
 ```js
-import {
-  ChainId
-} from "@biconomy/core-types";
+import { ChainId } from "@biconomy/core-types";
 import { useWeb3AuthContext } from "./contexts/SocialLoginContext";
 
 import SmartAccount from "@biconomy/smart-account";
@@ -36,10 +34,14 @@ const walletProvider = new ethers.providers.Web3Provider(provider);
 // Initialize the Smart Account
 
 let options = {
- activeNetworkId: ChainId.GOERLI,
- supportedNetworksIds: [ ChainId.GOERLI, ChainId.POLYGON_MAINNET, ChainId.POLYGON_MUMBAI
- ]}
-  
+  activeNetworkId: ChainId.GOERLI,
+  supportedNetworksIds: [
+    ChainId.GOERLI,
+    ChainId.POLYGON_MAINNET,
+    ChainId.POLYGON_MUMBAI,
+  ],
+};
+
 let smartAccount = new SmartAccount(walletProvider, options);
 smartAccount = await smartAccount.init();
 ```
@@ -52,15 +54,15 @@ Options that can be provided for Smart Account initialization are below. If you 
 
 ```js
 export interface SmartAccountConfig {
-  activeNetworkId: ChainId // active (default) networkId 
+  activeNetworkId: ChainId // active (default) networkId
   supportedNetworksIds: ChainId[] // array of supported networks your Dapp is on
-  backendUrl: string 
+  backendUrl: string
   relayerUrl: string // if you're running your own relayer provide url here
   socketServerUrl: string // specific to biconomy messaging sdk
   signType: SignTypeMethod // by default is EIP712_SIGN
   networkConfig: NetworkConfig[] // array of chain specific network config
   entryPointAddress?: string // optional entry point address
-  biconomySigningServiceUrl?: string 
+  biconomySigningServiceUrl?: string
   bundlerUrl?: string // bundlerUrl to fallback to if chain specific is not provided
   environment?: Environments // environment PROD/STAGING/DEV
 }
@@ -72,7 +74,7 @@ export type NetworkConfig = {
   providerUrl?: string // custom RPC url of your choice
   bundlerUrl?: string // if you're running your own bundler provide url here
   customPaymasterAPI?: IPaymasterAPI // if you need to plug in custom paymaster
-  dappAPIKey?: string // optional dapp api key. must be added while using Biconomy paymaster dashboard 
+  dappAPIKey?: string // optional dapp api key. must be added while using Biconomy paymaster dashboard
 }
 ```
 

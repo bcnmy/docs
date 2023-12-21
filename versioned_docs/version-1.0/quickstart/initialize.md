@@ -31,10 +31,10 @@ You can follow the prompts to receive the scaffolding for your React application
 Install the following dependencies:
 
 ```bash
-yarn add @biconomy/core-types @biconomy/smart-account @biconomy/web3-auth ethers@5.7.2 
+yarn add @biconomy/core-types @biconomy/smart-account @biconomy/web3-auth ethers@5.7.2
 ```
 
-We will use these tools to build out our front end. In addition, lets also install the following: 
+We will use these tools to build out our front end. In addition, lets also install the following:
 
 ```bash
 yarn add @esbuild-plugins/node-globals-polyfill rollup-plugin-polyfill-node stream-browserify
@@ -45,7 +45,7 @@ After installing the above dependencies update you vite.config.ts to the followi
 ```js
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 
 export default defineConfig({
   plugins: [react()],
@@ -56,9 +56,9 @@ export default defineConfig({
       },
       plugins: [
         NodeGlobalsPolyfillPlugin({
-            buffer: true
-        })
-    ]
+          buffer: true,
+        }),
+      ],
     },
   },
   resolve: {

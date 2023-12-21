@@ -184,6 +184,7 @@ Let's create your first **user operation (userOp)** for the transaction. Here ar
 - `data`: We are defaulting to `0x` as no specific data is needed for native transfers.
 - `value`: We need to indicate the amount we want to transfer and format it correctly using the `parseEther` utility function.
 
+
 Now we'll build the userOp. You can log the partial userOp if you want. We'll add `0x` to the `paymasterAndData` value to make it a regular transaction where the end user pays for the gas.
 
 ```typescript
@@ -283,7 +284,8 @@ const bundler: IBundler = new Bundler({
 });
 
 // Function to create and configure a Biconomy Smart Account
-async function initializeSmartAccount() {
+async function createAccount() {
+
   const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
@@ -358,6 +360,7 @@ submitUserOp();
 ```
 
 </details>
+If you are facing any error, do checkout the [troubleshooting](/troubleshooting/commonerrors) for common errors.
 
 🎉 **Congratulations on completing the quickstart!**
 To dive deeper, check out more use cases in our Quick Explore guide or explore our Node.js guides for additional insights.

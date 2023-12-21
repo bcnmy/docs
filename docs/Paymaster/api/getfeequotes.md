@@ -1,12 +1,13 @@
 ---
-sidebar_label: ' Get Fee Quotes'
+sidebar_label: " Get Fee Quotes"
 sidebar_position: 1
 ---
+
 # 1. pm_getFeeQuoteOrData
 
 :::caution
 
-This documentation is for using our Paymaster API's directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/paymastermethods). 
+This documentation is for using our Paymaster API's directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/paymastermethods).
 
 :::
 
@@ -16,42 +17,38 @@ You can get your Paymaster URL from the Biconomy [Dashboard](https://dashboard.b
 You can test this endpoint on our [Paymaster Explorer](/Paymaster/explorer)
 :::
 
-All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below. 
+All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below.
 
-This endpoint returns the `MODE` and `paymasterAndData` for sponsored request and returns specific fee quote information for token paymaster requests. 
+This endpoint returns the `MODE` and `paymasterAndData` for sponsored request and returns specific fee quote information for token paymaster requests.
 
 ## Parameters
 
 Body
 
-| Param | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| method | string | Name of method in this case: pm_getFeeQuoteOrData  | Required |
-| params | array | An array consisting of the Useroperation object and Paymaster mode information | Required |
-| id | string | id for request determined by client for JSON RPC requests  | Required |
-| jsonrpc | string | JSON RPC version in this case 2.0.0  | Required |
-
+| Param   | Type   | Description                                                                    | Required |
+| ------- | ------ | ------------------------------------------------------------------------------ | -------- |
+| method  | string | Name of method in this case: pm_getFeeQuoteOrData                              | Required |
+| params  | array  | An array consisting of the Useroperation object and Paymaster mode information | Required |
+| id      | string | id for request determined by client for JSON RPC requests                      | Required |
+| jsonrpc | string | JSON RPC version in this case 2.0.0                                            | Required |
 
 Params Array for Sponsorship requests
 
-| Index | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| 0 | object | A partial userOperation object for the userOp that needs to be sponsored | Required |
-| 1 | object | Mode specified as "SPONSORSHIP" as well as sposorship information which includes any webhook data and smart account information: name and version | Required |
+| Index | Type   | Description                                                                                                                                       | Required |
+| ----- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| 0     | object | A partial userOperation object for the userOp that needs to be sponsored                                                                          | Required |
+| 1     | object | Mode specified as "SPONSORSHIP" as well as sposorship information which includes any webhook data and smart account information: name and version | Required |
 
 Params Array for ERC20 paymaster requests
 
-| Index | Type | Description | Required |
-| --------------- | --------------- | --------------- | --------------- |
-| 0 | object | A partial userOperation object for the userOp that needs to be sponsored | Required |
-| 1 | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
+| Index | Type   | Description                                                                                             | Required |
+| ----- | ------ | ------------------------------------------------------------------------------------------------------- | -------- |
+| 0     | object | A partial userOperation object for the userOp that needs to be sponsored                                | Required |
+| 1     | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
 
+#### 1. Mode is **SPONSORED**:
 
-
-
-#### 1. Mode is **SPONSORED**: 
-
-> ***POST Request***
+> **_POST Request_**
 
 ```javascript
 
@@ -79,10 +76,8 @@ Params Array for ERC20 paymaster requests
 }
 ```
 
+> **_Response_**
 
-> ***Response***
-
- 
 ```javascript
 {
     "jsonrpc": "2.0",
@@ -99,7 +94,7 @@ Params Array for ERC20 paymaster requests
 
 #### 2. Mode is **ERC20**:
 
-> ***POST Request***
+> **_POST Request_**
 
 ```javascript
 {
@@ -126,10 +121,7 @@ Params Array for ERC20 paymaster requests
 }
 ```
 
-
-
-
-> ***Response***
+> **_Response_**
 
 ```javascript
 {
@@ -160,9 +152,6 @@ Params Array for ERC20 paymaster requests
 }
 ```
 
-
 :::note
 If both `preferredToken` & `tokenList` are present in the request body, but some tokens are not supported by Biconomy, those will be returned also in the response body under `unsupportedTokens`.
 :::
-
-

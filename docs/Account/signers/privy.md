@@ -1,7 +1,8 @@
 ---
-sidebar_label: 'Privy'
+sidebar_label: "Privy"
 sidebar_position: 4
 ---
+
 # Privy
 
 [Privy](https://docs.privy.io/) is a simple toolkit for progressive authentication in web3. With Privy you can add features that allow you to onboard users across traditional and web3 authentication methods. Users can sign in to your app with a crypto wallet, an email address, their phone number, or even a social profile (e.g., Twitter or Discord). Users don’t need to have a wallet to explore your product.
@@ -12,7 +13,7 @@ Check out an end-to-end integration of Privy with Biconomy on this [example app]
 
 :::
 
-Read below to learn how to configure your app to create smart accounts for all your users using Privy and Biconomy. This guide assumes you are using React or a React based framework such as Next JS.  
+Read below to learn how to configure your app to create smart accounts for all your users using Privy and Biconomy. This guide assumes you are using React or a React based framework such as Next JS.
 
 ## 1. Install Privy and Biconomy
 
@@ -59,6 +60,7 @@ Your PrivyProvider should then look like:
 </PrivyProvider>
 
 ```
+
 ## 3. Configure your Biconomy bundler and paymaster
 
 Go to the [Biconomy Dashboard](https://dashboard.biconomy.io/) and configure a Paymaster and a Bundler for your app. Make sure these correspond to the desired network for your user's smart accounts. You can learn more about the dashboard [here](/category/biconomy-dashboard)
@@ -195,5 +197,5 @@ const smartAccount = await BiconomySmartAccountV2.create({
 ```
 
 Note: if your app uses React, you can store the user's Biconomy smartAccount in a React context that wraps your application. This allows you to easily access the smart account from your app's pages and components. You can see an example of this in Privy's [example app](https://github.com/privy-io/biconomy-example).
-</details>
 
+</details>

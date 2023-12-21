@@ -1,3 +1,3 @@
-const redirectLinks= [];
+const redirectLinks = [];
 
-module.exports = {  redirectLinks };
+module.exports = { redirectLinks };

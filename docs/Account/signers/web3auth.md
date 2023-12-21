@@ -1,8 +1,7 @@
 ---
-sidebar_label: 'Web3Auth'
-sidebar_position: 7
+sidebar_label: "Web3Auth"
+sidebar_position: 8
 ---
-
 
 # Web3Auth
 
@@ -25,13 +24,16 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-typ
 ## Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { Wallet, providers, ethers } from 'ethers';
-import { ChainId } from "@biconomy/core-types"
+import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
+import { IBundler, Bundler } from "@biconomy/bundler";
+import {
+  BiconomySmartAccountV2,
+  DEFAULT_ENTRYPOINT_ADDRESS,
+} from "@biconomy/account";
+import { Wallet, providers, ethers } from "ethers";
+import { ChainId } from "@biconomy/core-types";
 import SocialLogin from "@biconomy/web3-auth";
-import "@biconomy/web3-auth/dist/src/style.css"
+import "@biconomy/web3-auth/dist/src/style.css";
 ```
 
 :::info
@@ -54,10 +56,10 @@ If you check the SocialLogin class you will find different methods which we've g
 Initialize the social login SDK
 
 ```js
-// create an instance of SocialLogin 
-const socialLogin = new SocialLogin()
+// create an instance of SocialLogin
+const socialLogin = new SocialLogin();
 // init social login SDK, all params are optional
-await socialLogin.init(); 
+await socialLogin.init();
 
 // pops up the UI widget
 socialLogin.showWallet();
@@ -67,14 +69,14 @@ For whitelisting your domain, please use the following code snippet. When deploy
 
 ```js
 // get signature that corresponds to your website domains
-const signature1 = await socialLogin.whitelistUrl('https://yourdomain1.com');
-const signature2 = await socialLogin.whitelistUrl('https://yourdomain2.com');
+const signature1 = await socialLogin.whitelistUrl("https://yourdomain1.com");
+const signature2 = await socialLogin.whitelistUrl("https://yourdomain2.com");
 // pass the signatures, you can pass one or many signatures you want to whitelist
 await socialLogin.init({
   whitelistUrls: {
-    'https://yourdomain1.com': signature1,
-    'https://yourdomain2.com': signature2,
-  }
+    "https://yourdomain1.com": signature1,
+    "https://yourdomain2.com": signature2,
+  },
 });
 ```
 
@@ -82,34 +84,30 @@ await socialLogin.init({
 
 ```js
 if (!socialLogin?.provider) return;
-// create a provider from the social login provider that 
+// create a provider from the social login provider that
 // will be used by the smart account package of the Biconomy SDK
-const provider = new ethers.providers.Web3Provider(
-    socialLogin.provider,
-);
+const provider = new ethers.providers.Web3Provider(socialLogin.provider);
 // get a list of accounts available with the provider
 const accounts = await provider.listAccounts();
-console.log("EOA address", accounts)
+console.log("EOA address", accounts);
 ```
 
 ## Setting Up Smart Account with Social Login
 
-
 ## Initialize Smart Account
-
 
 ```js
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { 
-  IPaymaster, 
-  BiconomyPaymaster,  
+import {
+  IPaymaster,
+  BiconomyPaymaster,
 } from '@biconomy/paymaster'
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 
 const bundler: IBundler = new Bundler({
     // get from biconomy dashboard https://dashboard.biconomy.io/
-    bundlerUrl: '',     
+    bundlerUrl: '',
     chainId: ChainId.POLYGON_MUMBAI,// or any supported chain of your choice
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
@@ -117,7 +115,7 @@ const bundler: IBundler = new Bundler({
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
   // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: '' 
+  paymasterUrl: ''
 })
 
 const module = await ECDSAOwnershipValidationModule.create({
@@ -128,7 +126,7 @@ const module = await ECDSAOwnershipValidationModule.create({
 
 let biconomySmartAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler, 
+    bundler: bundler,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: module,
     activeValidationModule: module

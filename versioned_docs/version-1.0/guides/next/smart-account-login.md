@@ -46,7 +46,7 @@ let options = {
       providerUrl: <YOUR_PROVIDER_URL>
     }
   ]
-} 
+}
 
 // this provider is from the social login which we created in previous setup
 let smartAccount = new SmartAccount(provider, options);

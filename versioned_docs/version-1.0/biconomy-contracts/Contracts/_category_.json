@@ -1,8 +1,7 @@
 {
-    "label": "Contracts",
-    "position": 4,
-    "link": {
-      "type": "generated-index"
-    }
+  "label": "Contracts",
+  "position": 4,
+  "link": {
+    "type": "generated-index"
   }
-  
+}

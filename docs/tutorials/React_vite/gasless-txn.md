@@ -7,39 +7,38 @@ sidebar_position: 6
 Now with our SDK integration set up let's render our UI and execute some transactions! First let's create a new import in our App.tsx file:
 
 ```js
-import Counter from './Components/Counter';
+import Counter from "./Components/Counter";
 ```
 
 In the return for this component lets add the following JSX:
 
 ```jsx
- <div>
-      <h1> Biconomy Smart Accounts using social login + Gasless Transactions</h1>
+<div>
+  <h1> Biconomy Smart Accounts using social login + Gasless Transactions</h1>
 
-      {
-        !smartAccount && !loading && <button onClick={login}>Login</button>
-      }
-      {
-        loading && <p>Loading account details...</p>
-      }
-      {
-        !!smartAccount && (
-          <div className="buttonWrapper">
-            <h3>Smart account address:</h3>
-            <p>{smartAccount.address}</p>
-            <Counter smartAccount={smartAccount} provider={provider} />
-            <button onClick={logout}>Logout</button>
-          </div>
-        )
-      }
-      <p>
-      Edit <code>src/App.tsx</code> and save to test
-      </p>
-      <a href="https://docs.biconomy.io/docs/overview" target="_blank" className="read-the-docs">
-  Click here to check out the docs
-    </a>
+  {!smartAccount && !loading && <button onClick={login}>Login</button>}
+  {loading && <p>Loading account details...</p>}
+  {!!smartAccount && (
+    <div className="buttonWrapper">
+      <h3>Smart account address:</h3>
+      <p>{smartAccount.address}</p>
+      <Counter smartAccount={smartAccount} provider={provider} />
+      <button onClick={logout}>Logout</button>
     </div>
+  )}
+  <p>
+    Edit <code>src/App.tsx</code> and save to test
+  </p>
+  <a
+    href="https://docs.biconomy.io/docs/overview"
+    target="_blank"
+    className="read-the-docs"
+  >
+    Click here to check out the docs
+  </a>
+</div>
 ```
+
 If you followed all instructions from the last step to now your file should look something like this:
 
 ```js
@@ -57,13 +56,13 @@ import styles from '@/styles/Home.module.css'
 
 
 const bundler: IBundler = new Bundler({
-  bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44', // you can get this value from biconomy dashboard.     
+  bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44', // you can get this value from biconomy dashboard.
   chainId: ChainId.POLYGON_MUMBAI,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 })
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: 'https://paymaster.biconomy.io/api/v1/80001/cIhIeS-I0.7e1f17b1-6ebb-454c-8499-c5f66dd098c6' 
+  paymasterUrl: 'https://paymaster.biconomy.io/api/v1/80001/cIhIeS-I0.7e1f17b1-6ebb-454c-8499-c5f66dd098c6'
 })
 
 export default function Home() {
@@ -114,7 +113,7 @@ export default function Home() {
       sdkRef.current.provider
     )
     setProvider(web3Provider)
-    
+
     try {
       const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
         signer: web3Provider.getSigner(),
@@ -195,16 +194,19 @@ Let's add our imports for this file:
 
 ```js
 import React, { useState, useEffect } from "react";
-import { BiconomySmartAccount} from "@biconomy/account"
-import {  IHybridPaymaster,SponsorUserOperationDto, PaymasterMode,} from '@biconomy/paymaster'
+import { BiconomySmartAccount } from "@biconomy/account";
+import {
+  IHybridPaymaster,
+  SponsorUserOperationDto,
+  PaymasterMode,
+} from "@biconomy/paymaster";
 import abi from "../utils/counterAbi.json";
 import { ethers } from "ethers";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 ```
 
-Make sure to get the abi from the smart contract we deployed in the first step. You can create utils folder and add the ABI json file there. 
+Make sure to get the abi from the smart contract we deployed in the first step. You can create utils folder and add the ABI json file there.
 
 Here is an interface we will use for the props of this component:
 
@@ -217,7 +219,7 @@ interface Props {
 
 ### Now we can start building out this Counter Component:
 
-**TotalCountDisplay** will be our functional component where the value of ***count*** will be passed to the component when it's used.
+**TotalCountDisplay** will be our functional component where the value of **_count_** will be passed to the component when it's used.
 
 ```tsx
 const TotalCountDisplay: React.FC<{ count: number }> = ({ count }) => {
@@ -225,9 +227,7 @@ const TotalCountDisplay: React.FC<{ count: number }> = ({ count }) => {
 };
 ```
 
-
 **Counter** is react function component. This component takes two props smartAccount and provider, which are expected to be passed when the component is used. The component uses React's useState hook to manage three states: **count, counterContract, and isLoading**. Additionally, the counterAddress variable is set to the value of `VITE_COUNTER_CONTRACT_ADDRESS`.
-
 
 ```ts
 const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
@@ -238,36 +238,34 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
   const counterAddress = import.meta.env.VITE_COUNTER_CONTRACT_ADDRESS;
 ```
 
-
-With this done let's go into the two functions this component will have: 
+With this done let's go into the two functions this component will have:
 
 ```ts
-
-
 useEffect(() => {
-    setIsLoading(true);
-    getCount(false);
-  }, []);
+  setIsLoading(true);
+  getCount(false);
+}, []);
 
-  const getCount = async (isUpdating: boolean) => {
-    const contract = new ethers.Contract(counterAddress, abi, provider);
-    setCounterContract(contract);
-    const currentCount = await contract.count();
-    setCount(currentCount.toNumber());
-    if (isUpdating) {
-      toast.success('Count has been updated!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
-  };
+const getCount = async (isUpdating: boolean) => {
+  const contract = new ethers.Contract(counterAddress, abi, provider);
+  setCounterContract(contract);
+  const currentCount = await contract.count();
+  setCount(currentCount.toNumber());
+  if (isUpdating) {
+    toast.success("Count has been updated!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
+};
 ```
+
 > We use **UseEffect** hook so that it sets the isLoading state to true initially and then calls the getCount(false).
 
 The `getCount` function is an asynchronous function responsible for fetching the current value of the counter from a smart contract on a blockchain and setting the state of the contract and count in the component.
@@ -294,6 +292,7 @@ const incrementCount = async () => {
         theme: "dark",
       });
 ```
+
 The `incrementCount` function is an asynchronous function that increments the count on the smart contract by sending a transaction to the blockchain.
 
 1. **Display Initial Toast Notification**: The function begins by displaying a toast notification to inform the user that the count is being processed on the blockchain.
@@ -310,32 +309,29 @@ In summary, the `incrementCount` function sends a transaction to a smart contrac
 Now, let's work on our transaction data :
 
 ```ts
+const incrementTx = new ethers.utils.Interface(["function incrementCount()"]);
+const data = incrementTx.encodeFunctionData("incrementCount");
 
-      const incrementTx = new ethers.utils.Interface(["function incrementCount()"]);
-      const data = incrementTx.encodeFunctionData("incrementCount");
+const tx1 = {
+  to: counterAddress,
+  data: data,
+};
 
-      const tx1 = {
-        to: counterAddress,
-        data: data,
-      };
+let partialUserOp = await smartAccount.buildUserOp([tx1]);
 
-      let partialUserOp = await smartAccount.buildUserOp([tx1]);
+const biconomyPaymaster =
+  smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 
-      const biconomyPaymaster = smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
-
-      let paymasterServiceData: SponsorUserOperationDto = {
-        mode: PaymasterMode.SPONSORED,
-        // optional params...
-      };
-
+let paymasterServiceData: SponsorUserOperationDto = {
+  mode: PaymasterMode.SPONSORED,
+  // optional params...
+};
 ```
-
 
 - Function `incrementCount` of the smart contract is being prepared using the `ethers.utils.Interface `to encode the function data.
 - A transaction object tx1 is created with the target contract address **(counterAddress)** and the encoded function data (data), representing the "incrementCount()" function call.
 - The smartAccount is used to build a partial user operation `partialUserOp` that includes tx1. The `paymasterServiceData` is prepared with optional parameters, specifying that the operation is sponsored. The IHybridPaymaster type ensures that the `smartAccount.paymaster` supports the sponsored mode for handling payment processing.
 - Here, we are supporting gasless transaction, which is why we setup `mode: PaymasterMode.SPONSORED`
-
 
 Now, let's build try and catch block :
 
@@ -386,7 +382,6 @@ try {
 
 Now, let's break down what's happening above :
 
-
 - **`const paymasterAndDataResponse` = await biconomyPaymaster.getPaymasterAndData(partialUserOp, paymasterServiceData);**: Calls the getPaymasterAndData function on the biconomyPaymaster instance. It sends the partialUserOp and paymasterServiceData as arguments to fetch the necessary information and data related to the sponsored user operation.
 
 - **`partialUserOp.paymasterAndData` = paymasterAndDataResponse.paymasterAndData;** : The paymasterAndData received from the previous step is added to the partialUserOp object. This likely includes data and configuration needed for the sponsored user operation.
@@ -410,9 +405,6 @@ c. `toast.success(...);` : A toast notification is displayed to the user to indi
 a. If any error occurs in the try block of code, the catch block will catch the error and log it to the console. Additionally, a toast notification is displayed to the user indicating that an error occurred. The details of the error are logged to the console for further investigation.
 
 b. If any error occurs in the inner try block (getPaymasterAndData, sendUserOp, etc.), it will be caught in the corresponding catch block, and an error toast notification is displayed to the user. The error message will be logged to the console for debugging purposes.
-
-
-
 
 Finally we round all this up by displaying the UI for our Toast and button:
 
@@ -594,5 +586,5 @@ export default Counter;
 
 ```
 
-If you would like to see the completed project on github you can use the template below: 
+If you would like to see the completed project on github you can use the template below:
 https://github.com/vanshika-srivastava/scw-gasless-bico-modular
