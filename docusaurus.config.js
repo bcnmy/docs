@@ -111,6 +111,12 @@ const config = {
           },
           {to: 'blog', label: 'Blog', position: 'left'},
           {
+            to: '/partners',
+            position: 'left',
+            label: 'Preferred Partners',
+            activeBaseRegex: `/partners/`,
+          },
+          {
             href: "https://github.com/bcnmy/docs",
             label: "GitHub",
             position: "right",
@@ -191,7 +197,18 @@ const config = {
         redirects: redirectsList,
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'partners',
+        path: 'partners',
+        routeBasePath: 'partners',
+        sidebarPath: './sidebarsPartners.js',
+        // ... other options
+      },
+    ],
   ],
+  
 };
 
 module.exports = config;
