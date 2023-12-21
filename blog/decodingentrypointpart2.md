@@ -4,7 +4,7 @@ sidebar_label: "Decoding EntryPoint and UserOperation with ERC-4337 Part 2"
 
 # Decoding EntryPoint and UserOperation with ERC-4337 Part 2
 
-This is Part-2 of our series on decoding EntryPoint and UserOps with ERC-4337. For introduction & basic definitions, [please check out part-1](./decodingentrypointpart1).
+This is Part-2 of our series on decoding EntryPoint and UserOps with ERC-4337. For introduction & basic definitions, [please check out part-1](/blog/decodingentrypointpart1).
 
 This part will dive deeper into the line by line code and transaction flow.
 

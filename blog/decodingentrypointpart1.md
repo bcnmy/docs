@@ -184,4 +184,4 @@ enum PostOpMode {
 
 Now we’ll be able to better relate the business logic when we go through the EP code line by line.
 
-Up next: In Part 2 of this post, we’ll be [Decoding EntryPoint code line by line](./decodingentrypointpart2).
+Up next: In Part 2 of this post, we’ll be [Decoding EntryPoint code line by line](/blog/decodingentrypointpart2).

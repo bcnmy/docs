@@ -246,13 +246,13 @@ Session Keys allow users to enjoy seamless experiences in DeFi and Web3 Gaming. 
 
 The modular Session Key approach allows developers to easily build new or customize existing Session Validation Modules to let users issue Session Keys with a set of configuration options that are specific to their dApp.
 
-You can read more about the Biconomy Modular Session Keys ecosystem and learn how to build your own Session Validation Module [here](./smartaccountmodules_sessionkeys).
+You can read more about the Biconomy Modular Session Keys ecosystem and learn how to build your own Session Validation Module [here](/blog/smartaccountmodules_sessionkeys).
 
 ## Batch Session Router
 
 Batch Session Router adds composability to the Session Keys ecosystem, allowing batching of several session key signed operations which should be validated by different Session Validation modules into one User Operation and execute them atomically.
 
-You can read more about this module [here](./smartaccountmodules_batchedsessionrouter).
+You can read more about this module [here](/blog/smartaccountmodules_batchedsessionrouter).
 
 ## Multichain Validation Module
 
@@ -262,7 +262,7 @@ The Biconomy Multichain Validator module significantly improves UX for deploying
 
 It allows for a user to only sign once and authorize any amount of userOps with this signature.
 
-You can read more about this module, how it works, and how it helps dApp improve UX [here](./smartaccountmodules_multichainvalidation).
+You can read more about this module, how it works, and how it helps dApp improve UX [here](/blog/smartaccountmodules_multichainvalidation).
 
 ## Account Recovery Module 
 
