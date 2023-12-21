@@ -24,20 +24,14 @@ The ECDSA Validation Module serves as the **default module** in Modular Smart Ac
 
 ### Key Functions 🔐
 
-- **Authorization of EOAs**: It enables EOAs to sign UserOps for Smart Accounts.
-- **Storage Rules Compliance**: Maintains a mapping of ownership on the module itself, following **ERC-4337** rules. This mapping associates smart account addresses with their respective EOA owners.
-- **User Experience**: Facilitates a more seamless interaction by integrating with MPC providers like Web3Auth to abstract EOA private key storage and management.
-- **EIP-1271 Compatibility**: Ensures compatibility with Ethereum standards, allowing Smart Accounts to sign Ethereum messages for logging into dApps.
+**Single Signer Simplicity**: Offers one-to-one, single-signature control, ideal for both Web2 users and MetaMask enthusiasts.
+**ECDSA Signature Scheme**: Utilizes the ECDSA secp256r1 curve for secure signing.
+**Flexible Owner Authentication**: Supports various signer solutions like Privy, Fireblocks, Arcana Auth, Web3Auth, or Particle.
+**EIP-1271 Compliance**: Allowing Smart Accounts to sign Ethereum messages for logging into dApps.
 
-:::caution
-
-The ECDSA Module is designed to have an **EOA, not a Smart Contract, as the owner**. This system **reproduces the same experiences as traditional EOAs**, making it more accessible to users familiar with conventional blockchain interactions.
-
+:::info
+One of the most popular module, it bridges the ease of traditional web logins with the security of blockchain technology.
 :::
-
-### Module Management in Smart Accounts 🛠️
-
-In **Biconomy's Modular Smart Account**, module management is streamlined and efficient. Each Smart Account maintains a simple mapping of available modules, including the **ECDSA Validation Module**. This modular architecture allows for greater flexibility and customization, enabling Smart Accounts to adapt to various user requirements and scenarios.
 
 ## Use Cases 🌟
 
@@ -45,18 +39,4 @@ In **Biconomy's Modular Smart Account**, module management is streamlined and ef
 2. **dApp Interaction**: Simplifies the process of logging into dApps using Ethereum messages.
 3. **Ownership Management**: Mirrors traditional ownership systems, providing a familiar framework within a more advanced blockchain context.
 
-## Comparison with Traditional Ownership Contracts ⚖️
-
-- **Traditional Ownership Contracts**: Define ownership in a more rigid and static manner.
-- **ECDSA Module**: Offers dynamic and secure ownership verification, providing better adaptability and security than traditional methods.
-
-### Examples of Case Studies 📚
-
-Imagine a user wanting to log into a decentralized application (dApp) using their Smart Account. The **ECDSA Validation Module** facilitates this process by verifying the user's ownership through their EOA. This module ensures secure, seamless access to dApps or interaction with Smart Contracts. Such practical applications highlight the module's utility in everyday blockchain interactions.
-
-:::note
-Such integration, especially when combined with MPC providers like Web3Auth or Silent Shard, streamlines access much like a traditional web2 experience, ensuring both security and ease of use.:::
-
-## Conclusion ✨
-
-The **ECDSA Validation Module** is a cornerstone of **Biconomy's Modular Smart Account**, offering a blend of security, usability, and compliance with Ethereum standards. Its integration into the Ethereum blockchain represents a significant advancement in secure and user-friendly digital asset management.
+For in-depth insights on the ECDSA Module's smart contract mechanics, refer to our comprehensive [Smart Contract Deep Dive](/Modules/ecdsa/ecdsasmartcontracts) and for guidance on SDK integration, check out our detailed [SDK Tutorial](/Modules/ecdsa/ecdsasdk).

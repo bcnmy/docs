@@ -57,8 +57,7 @@ function _verifySignature(bytes32 dataHash, bytes memory signature, address smar
 
 ```
 
-- **Function**: Validates a signature against a data hash and registered owner.
-- **Support**: Includes both `personal_sign` and `typed_data` signatures.
+Validates a signature against a data hash and registered owner.
 
 :::caution
 Proper handling and verification of signatures are crucial for maintaining the integrity of the Smart Account.
@@ -73,7 +72,7 @@ Proper handling and verification of signatures are crucial for maintaining the i
 
 The `EcdsaOwnershipRegistryModule` interacts with Smart Accounts primarily through its core functionalities:
 
-- **Initialization and Ownership**: Smart Accounts are initialized with an EOA owner using `initForSmartAccount` upon deployment. This setup is critical for subsequent operations and interactions within the account.
+- **Initialization and Ownership**: During deployment, Smart Accounts use `init` method to invoke `initForSmartAccount` on modules, setting initial ownership and configurations.
 - **User Operation Validation**: When a Smart Account attempts to perform an operation, `validateUserOp` is invoked to ensure the action is authorized by the registered owner.
 - **Signature Verification**: The module uses `_verifySignature` to verify any signatures associated with transactions initiated by the Smart Account.
 
