@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem";
 
 ## Introduction 📘
 
-Integrate the ECDSA Validation Module into Biconomy Smart Accounts for enhanced transaction security and user authentication using the SDK.
+Integrate the ECDSA Validation Module into Biconomy Smart Accounts using the SDK.
 
 ## Setup and Installation 🛠️
 
@@ -75,15 +75,11 @@ import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 const smartAccount = await BiconomySmartAccountV2.create({
   signer: signer,
-  validationModule: ecdsaModule,
+  defaultValidationModule: ecdsaModule,
   // Additional configurations
 });
 ```
 
 :::info
-The address of the Smart Account is counterfactually generated based on the initial module used.
+The Smart Account's address is counterfactual, its address can be calculated before deployment. This generated address depends on the default validation module specified during account creation.
 :::
-
-## Conclusion ✨
-
-Integrate the ECDSA Validation Module to enhance security in your Biconomy-based applications, leveraging the SDK for streamlined setup and account creation.
