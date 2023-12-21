@@ -94,7 +94,7 @@ const bundler: IBundler = new Bundler({
 });
 ```
 
-- Now we create an instance of our bundler with the following:
+- Now we have created an instance of our **Bundler** with the following:
   - A bundler URL which you can retrieve from the Biconomy Dashboard
   - Chain ID, in this case, we’re using Polygon Mumbai
   - Default entry point address imported from the Account package
@@ -115,13 +115,11 @@ const provider = new ethers.providers.JsonRpcProvider(
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
 
-- We create a provider using a public RPC provider endpoint from Ankr. Feel free to use any service, such as Infura or Alchemy.
-- Next, we create an instance of the wallet associated with our Private key.
+- Our provider is configured with Ankr's public RPC endpoint; alternatives like Infura or Alchemy are also viable.
+- Following this, we initiate a wallet instance linked to our Private Key.
 
-One more thing we need to include before we move on is the module for our Smart Account. You can learn more about modules [here](https://www.biconomy.io/post/making-biconomy-smart-accounts-modular).
-In this instance, we will create this Smart Account using the ECDSA module.
-
-First, we import our Module package:
+Before proceeding, we need to integrate the ECDSA module for our Smart Account. For details on modules, visit [Biconomy's page](https://www.biconomy.io/post/making-biconomy-smart-accounts-modular).
+We start by importing the ECDSA module:
 
 ```typescript
 import {
@@ -183,7 +181,6 @@ Let's create your first **user operation (userOp)** for the transaction. Here ar
 - `to`: The address towards which this interaction is directed. (Feel free to change to your own or send me more test tokens 😉)
 - `data`: We are defaulting to `0x` as no specific data is needed for native transfers.
 - `value`: We need to indicate the amount we want to transfer and format it correctly using the `parseEther` utility function.
-
 
 Now we'll build the userOp. You can log the partial userOp if you want. We'll add `0x` to the `paymasterAndData` value to make it a regular transaction where the end user pays for the gas.
 
@@ -253,29 +250,20 @@ Check out the long transaction details available now in your console! You just c
   <summary>View Complete Code</summary>
 
 ```typescript
-// Import necessary modules and packages
 import { config } from "dotenv";
 import { IBundler, Bundler } from "@biconomy/bundler";
-import { ChainId } from "@biconomy/core-types";
 import {
   BiconomySmartAccountV2,
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
+import { ethers } from "ethers";
+import { ChainId } from "@biconomy/core-types";
 import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
 } from "@biconomy/modules";
-import { ethers } from "ethers";
-
-// Initialize dotenv to use environment variables
 config();
 
-const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
-);
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
-
-// Set up the Biconomy bundler with specific parameters
 const bundler: IBundler = new Bundler({
   bundlerUrl:
     "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
@@ -283,9 +271,12 @@ const bundler: IBundler = new Bundler({
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
-// Function to create and configure a Biconomy Smart Account
-async function createAccount() {
+const provider = new ethers.providers.JsonRpcProvider(
+  "https://rpc.ankr.com/polygon_mumbai",
+);
+const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
+async function initializeSmartAccount() {
   const module = await ECDSAOwnershipValidationModule.create({
     signer: wallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
@@ -298,16 +289,17 @@ async function createAccount() {
     defaultValidationModule: module,
     activeValidationModule: module,
   });
+
   // Log the EOA owner's address and the Smart Account address
   console.log("EOA Owner Address:", wallet.address);
   console.log(
     "Smart Account Address:",
     await biconomyAccount.getAccountAddress(),
   );
+
   return biconomyAccount;
 }
 
-// Function to build a user operation (transaction)
 async function buildUserOp(smartAccount: BiconomySmartAccountV2) {
   try {
     const transaction = {
@@ -316,7 +308,6 @@ async function buildUserOp(smartAccount: BiconomySmartAccountV2) {
       value: ethers.utils.parseEther("0.0001"),
     };
 
-    // Build the user operation using the smart account
     const userOp = await smartAccount.buildUserOp([transaction]);
     userOp.paymasterAndData = "0x";
     return userOp;
@@ -327,35 +318,33 @@ async function buildUserOp(smartAccount: BiconomySmartAccountV2) {
   }
 }
 
-// Function to submit the user operation
 async function submitUserOp() {
   try {
-    // Create the smart account configuration
+    // Initialize your Smart Account
     const smartAccount = await initializeSmartAccount();
 
-    // Build the user operation for the transaction
+    // Build the user operation
     const userOp = await buildUserOp(smartAccount);
     if (!userOp) {
-      console.error("Failed to build user operation.");
+      console.error("Error: Could not create the user operation.");
       return;
     }
 
-    // Send the user operation and await the transaction details
+    // Send the user operation and wait for the transaction to complete
     const userOpResponse = await smartAccount.sendUserOp(userOp);
-    const transactionDetail = await userOpResponse.wait();
+    const transactionDetails = await userOpResponse.wait();
 
-    console.log("Transaction detail below:");
+    console.log("See your transaction details here:");
     console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetail.receipt.transactionHash}`,
+      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error("Error creating transaction:", error.message);
+      console.error("Transaction Error:", error.message);
     }
   }
 }
 
-// Execute the function to start the transaction process
 submitUserOp();
 ```
 
