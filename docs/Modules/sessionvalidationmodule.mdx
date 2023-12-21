@@ -1,22 +1,22 @@
 ---
 sidebar_position: 4
 ---
+
 # Session Key Manager Module
 
-This module enables the use of sessions with session validation modules. The session validation modules can be deployed at different addresses. The validation modules themselves do not get implemented as modules themselves as they will all be managed by Session Key Manager. 
-
+This module enables the use of sessions with session validation modules. The session validation modules can be deployed at different addresses. The validation modules themselves do not get implemented as modules themselves as they will all be managed by Session Key Manager.
 
 ## Installation
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 <Tabs>
 <TabItem value="js" label="npm">
 
 ```bash
 
-npm install @biconomy/modules 
+npm install @biconomy/modules
 
 ```
 
@@ -25,7 +25,7 @@ npm install @biconomy/modules
 
 ```bash
 
-yarn add @biconomy/modules 
+yarn add @biconomy/modules
 
 ```
 
@@ -34,21 +34,20 @@ yarn add @biconomy/modules
 
 ```bash
 
-pnpm add @biconomy/modules 
+pnpm add @biconomy/modules
 
 ```
 
 </TabItem>
 </Tabs>
 
-## Integration 
+## Integration
 
 ```typescript
- const sessionModule = await SessionKeyManagerModule.create({
-        moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
-        smartAccountAddress: address,
-      });
-
+const sessionModule = await SessionKeyManagerModule.create({
+  moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  smartAccountAddress: address,
+});
 ```
 
 For full implementation see this [guide](/category/session-keys-tutorial/)

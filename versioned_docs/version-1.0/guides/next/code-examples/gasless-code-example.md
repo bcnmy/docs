@@ -25,7 +25,7 @@ if (!socialLoginSDK?.provider) return;
 const provider = new ethers.providers.Web3Provider(
     socialLoginSDK.provider,
 );
-const walletProvider = new ethers.providers.Web3Provider(provider); 
+const walletProvider = new ethers.providers.Web3Provider(provider);
 const accounts = await provider.listAccounts();
 
 // Initialize the Smart Account
@@ -49,7 +49,7 @@ let options = {
       providerUrl: <YOUR_PROVIDER_URL>
     }
   ]
-} 
+}
 
 let smartAccount = new SmartAccount(walletProvider, options);
 smartAccount = await smartAccount.init();
@@ -86,7 +86,7 @@ smartAccount.on('error', (response: any) => {
 // Sending gasless transaction
 const txResponse = await smartAccount.sendTransaction({ transaction: tx1 });
 console.log('userOp hash', txResponse.hash);
-// If you do not subscribe to listener, one can also get the receipt like shown below 
+// If you do not subscribe to listener, one can also get the receipt like shown below
 const txReciept = await txResponse.wait();
 console.log('Tx hash', txReciept.transactionHash);
 
@@ -114,7 +114,7 @@ if (!socialLoginSDK?.provider) return;
 const provider = new ethers.providers.Web3Provider(
     socialLoginSDK.provider,
 );
-const walletProvider = new ethers.providers.Web3Provider(provider); 
+const walletProvider = new ethers.providers.Web3Provider(provider);
 const accounts = await provider.listAccounts();
 
 // Initialize the Smart Account
@@ -139,7 +139,7 @@ let options = {
     }
   ]
 }
-  
+
 
 let smartAccount = new SmartAccount(walletProvider, options);
 smartAccount = await smartAccount.init();
@@ -189,7 +189,7 @@ smartAccount.on('error', (response: any) => {
 // Sending gasless transaction
 const txResponse = await smartAccount.sendTransactionBatch({ transactions: txs });
 console.log('UserOp hash', txResponse.hash);
-// If you do not subscribe to listener, one can also get the receipt like shown below 
+// If you do not subscribe to listener, one can also get the receipt like shown below
 const txReciept = await txResponse.wait();
 console.log('Tx Hash', txReciept.transactionHash);
 // DONE! You just sent a batched gasless transaction

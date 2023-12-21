@@ -20,7 +20,7 @@ The dashboard is not live yet and will be launching soon. Meanwhile, to enable G
 **You'll need a dApp API key to create Smart Accounts for your users.**
 You can register your dApp and get an API key for it from the **Biconomy Dashboard.**
 
-If you have problems with using the Dashboard and configuring your dApp and Gas Tank, feel free to get in touch with us for spinning up personal test keys and gas tanks on other test networks. 
+If you have problems with using the Dashboard and configuring your dApp and Gas Tank, feel free to get in touch with us for spinning up personal test keys and gas tanks on other test networks.
 :::
 
 ## Steps to Enable Gasless Transactions
@@ -44,23 +44,27 @@ async function main() {
   // get SmartAccount address from wallet provider
   const wallet = new SmartAccount(walletProvider, {
     activeNetworkId: ChainId.GOERLI,
-    supportedNetworksIds: [ChainId.GOERLI, ChainId.POLYGON_MAINNET, ChainId.POLYGON_MUMBAI],
+    supportedNetworksIds: [
+      ChainId.GOERLI,
+      ChainId.POLYGON_MAINNET,
+      ChainId.POLYGON_MUMBAI,
+    ],
     networkConfig: [
       {
         chainId: ChainId.POLYGON_MUMBAI,
         // Dapp API Key you will get from new Biconomy dashboard that will be live soon
         // Meanwhile you can use the test dapp api key mentioned above
         dappAPIKey: "<DAPP_API_KEY>",
-        providerUrl: "<YOUR_PROVIDER_URL>"
+        providerUrl: "<YOUR_PROVIDER_URL>",
       },
       {
         chainId: ChainId.POLYGON_MAINNET,
         // Dapp API Key you will get from new Biconomy dashboard that will be live soon
         // Meanwhile you can use the test dapp api key mentioned above
         dappAPIKey: "<DAPP_API_KEY>",
-        providerUrl: "<YOUR_PROVIDER_URL>"
-      }
-    ]
+        providerUrl: "<YOUR_PROVIDER_URL>",
+      },
+    ],
   });
   const smartAccount = await wallet.init();
   const address = await smartAccount.getSmartAccountState();

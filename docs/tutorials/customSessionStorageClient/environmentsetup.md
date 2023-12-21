@@ -1,7 +1,8 @@
 ---
-sidebar_label: 'Environment Set up'
+sidebar_label: "Environment Set up"
 sidebar_position: 2
 ---
+
 # Environment set up
 
 :::info
@@ -18,7 +19,7 @@ We will clone a preconfigured Node.js project with TypeScript support to get sta
 git clone git@github.com:bcnmy/quickstart.git
 ```
 
-Note that this is the ssh example, use http or GithubCli options if you prefer. 
+Note that this is the ssh example, use http or GithubCli options if you prefer.
 
 ```bash
 git clone https://github.com/bcnmy/quickstart.git
@@ -30,7 +31,8 @@ Once you have the repository on your local machine - start by installing all dep
 yarn install
 yarn dev
 ```
-After running these two commands you should see the printed statement “Hello World!” in your terminal. Any changes made to the `index.ts` file in the src directory should now automatically run in your terminal upon save. 
+
+After running these two commands you should see the printed statement “Hello World!” in your terminal. Any changes made to the `index.ts` file in the src directory should now automatically run in your terminal upon save.
 
 All packages you need for this guide are all configured and installed for you, check out the `package.json` file if you want to explore the dependencies.
 
@@ -47,17 +49,18 @@ All packages you need for this guide are all configured and installed for you, c
 
 </details>
 
-Let’s first set up a .env file in the root of our project, this will need a Private Key of any Externally Owned Account (EOA) you would like to serve as the owner of the smart account we create. This is a private key you can get from wallets like MetaMask, TrustWallet, Coinbase Wallet etc. All of these wallets will have tutorials on how to export the Private key. 
+Let’s first set up a .env file in the root of our project, this will need a Private Key of any Externally Owned Account (EOA) you would like to serve as the owner of the smart account we create. This is a private key you can get from wallets like MetaMask, TrustWallet, Coinbase Wallet etc. All of these wallets will have tutorials on how to export the Private key.
 
 ```bash
 PRIVATE_KEY = "enter some private key"
 ```
 
-Let’s give our script the ability to access this environment variable. Delete the console log inside of `src/index.ts` and replace it with the code below. All of our work for the remainder of the tutorial will be in this file. 
+Let’s give our script the ability to access this environment variable. Delete the console log inside of `src/index.ts` and replace it with the code below. All of our work for the remainder of the tutorial will be in this file.
 
 ```typescript
-import { config } from "dotenv"
+import { config } from "dotenv";
 
-config()
+config();
 ```
+
 Now our code is configured to access the environment variable as needed. Let's continue in the next section with setting up our smart account

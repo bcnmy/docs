@@ -43,4 +43,3 @@ To enable this flow, please check out our guide to Enable Social Logins within y
 ## For FAQs related to Web3Auth and Key Management
 
 Please refer to the Web3Auth Key Management docs to learn more about the inner workings of the system: [Web3Auth Key Management](https://web3auth.io/docs/overview/key-management/)
-

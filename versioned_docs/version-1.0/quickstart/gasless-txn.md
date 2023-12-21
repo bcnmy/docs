@@ -7,38 +7,37 @@ sidebar_position: 6
 Now with our SDK integration set up let's render our UI and execute some transactions! First let's create a new import in our App.tsx file:
 
 ```js
-import Counter from './Components/Counter';
+import Counter from "./Components/Counter";
 ```
 
 In the return for this component lets add the following JSX:
 
 ```jsx
 <div>
-      <h1>Biconomy SDK Auth + Gasless Transactions</h1>
-      {
-        !smartAccount && !loading && <button onClick={login}>Login</button>
-      }
-      {
-        loading && <p>Loading account details...</p>
-      }
-      {
-        !!smartAccount && (
-          <div className="buttonWrapper">
-            <h3>Smart account address:</h3>
-            <p>{smartAccount.address}</p>
-            <Counter smartAccount={smartAccount} provider={provider} />
-            <button onClick={logout}>Logout</button>
-          </div>
-        )
-      }
-      <p>
-      Edit <code>src/App.tsx</code> and save to test
-      </p>
-      <a href="https://biconomy.gitbook.io/sdk/introduction/overview" target="_blank" className="read-the-docs">
-  Click here to check out the docs
-    </a>
+  <h1>Biconomy SDK Auth + Gasless Transactions</h1>
+  {!smartAccount && !loading && <button onClick={login}>Login</button>}
+  {loading && <p>Loading account details...</p>}
+  {!!smartAccount && (
+    <div className="buttonWrapper">
+      <h3>Smart account address:</h3>
+      <p>{smartAccount.address}</p>
+      <Counter smartAccount={smartAccount} provider={provider} />
+      <button onClick={logout}>Logout</button>
     </div>
+  )}
+  <p>
+    Edit <code>src/App.tsx</code> and save to test
+  </p>
+  <a
+    href="https://biconomy.gitbook.io/sdk/introduction/overview"
+    target="_blank"
+    className="read-the-docs"
+  >
+    Click here to check out the docs
+  </a>
+</div>
 ```
+
 If you followed all instructions from the last step to now your file should look something like this:
 
 ```js
@@ -177,8 +176,8 @@ import React, { useState, useEffect } from "react";
 import SmartAccount from "@biconomy/smart-account";
 import abi from "../utils/counterAbi.json";
 import { ethers } from "ethers";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 ```
 
 Make sure to get the abi from the smart contract we deployed in the first step - I created a utils folder to house that json file.
@@ -195,45 +194,41 @@ interface Props {
 Now we can start building out this Counter Component:
 
 ```ts
-const Counter: React.FC<Props> = ({ smartAccount, provider }) => {}
+const Counter: React.FC<Props> = ({ smartAccount, provider }) => {};
 ```
 
-Here we define a Functional component that with the props of `smartAccount` and `provider` 
+Here we define a Functional component that with the props of `smartAccount` and `provider`
 
 We will track two things in state: a count and an instance of the counterContract as well as a variable for the smart account address.
 
 ```ts
- const [count, setCount] = useState<number>(0)
- const [counterContract, setCounterContract] = useState<any>(null)
-  
-  const counterAddress = "address for smart account"
+const [count, setCount] = useState<number>(0);
+const [counterContract, setCounterContract] = useState<any>(null);
+
+const counterAddress = "address for smart account";
 ```
 
-With this done let's go into the two functions this component will have: 
+With this done let's go into the two functions this component will have:
 
 ```ts
 const getCount = async (isUpdating: boolean) => {
-    const contract = new ethers.Contract(
-      counterAddress,
-      abi,
-      provider,
-    )
-    setCounterContract(contract)
-    const currentCount = await contract.count()
-    setCount(currentCount.toNumber())
-    if(isUpdating) {
-      toast.success('count has been updated!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-    }
+  const contract = new ethers.Contract(counterAddress, abi, provider);
+  setCounterContract(contract);
+  const currentCount = await contract.count();
+  setCount(currentCount.toNumber());
+  if (isUpdating) {
+    toast.success("count has been updated!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   }
+};
 ```
 
 The `getCount` function is an asynchronous function responsible for fetching the current value of the counter from a smart contract on a blockchain and setting the state of the contract and count in the component.
@@ -248,42 +243,42 @@ In summary, the `getCount` function creates a contract instance, sets the state 
 
 ```ts
 const incrementCount = async () => {
-    try {
-      toast.info('processing count on the blockchain!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-      const incrementTx = await counterContract.populateTransaction.incrementCount()
-      const tx1 = {
-        to: counterAddress,
-        data: incrementTx.data,
-      }
-      const txResponse = await smartAccount.sendTransaction({ transaction: tx1})
+  try {
+    toast.info("processing count on the blockchain!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+    const incrementTx =
+      await counterContract.populateTransaction.incrementCount();
+    const tx1 = {
+      to: counterAddress,
+      data: incrementTx.data,
+    };
+    const txResponse = await smartAccount.sendTransaction({ transaction: tx1 });
 
-      const txHash = await txResponse.wait();
-      console.log(txHash)
-      getCount(true)
-
-    } catch (error) {
-      console.log({error})
-      toast.error('error occured check the console', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-    }
+    const txHash = await txResponse.wait();
+    console.log(txHash);
+    getCount(true);
+  } catch (error) {
+    console.log({ error });
+    toast.error("error occured check the console", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   }
+};
 ```
 
 The `incrementCount` function is an asynchronous function that increments the count on the smart contract by sending a transaction to the blockchain.
@@ -435,6 +430,6 @@ const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
 export default Counter;
 ```
 
-If you would like to see the completed project on github you can use the template below: 
+If you would like to see the completed project on github you can use the template below:
 
 https://github.com/Rahat-ch/biconomy-sdk-social-gasless-starter

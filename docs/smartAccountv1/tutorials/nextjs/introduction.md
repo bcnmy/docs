@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Introduction'
+sidebar_label: "Introduction"
 sidebar_position: 1
 ---
 
@@ -11,4 +11,3 @@ This tutorial will cover the basics of creating a dApp powered by the Biconomy S
 - Use Biconomy Dashboard for getting paymaster URL and bundler URL.
 - Register the contract and its write methods on the Biconomy Dashboard.
 - Create a frontend with Next JS and Particle network that aims to be friendly to use for web2 users onboarding to web3.
-

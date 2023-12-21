@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 ---
+
 # Smart Account Factory Contract
 
 Factory for deploying Smart Accounts as Proxies
@@ -15,7 +16,7 @@ This allows keeping the same address for the same Smart Account `owner` on vario
 
 The Smart Account is initialized directly after its deployment with owner and callback handler info.
 
-***getAddressForCounterFactualAccount()***
+**_getAddressForCounterFactualAccount()_**
 
 Returns an address for the Smart Account when it will be deployed by this factory with the same `_owner` and `_index` values. `_index` serves as a salt to be able to deploy several Smart Accounts for the same user from this factory.
 
@@ -26,7 +27,7 @@ function getAddressForCounterFactualAccount(
     ) external view returns (address _account)
 ```
 
-***deployCounterFactualAccount()***
+**_deployCounterFactualAccount()_**
 
 Deploys Smart Account with `CREATE2` and returns its address.
 
@@ -36,9 +37,11 @@ function deployCounterFactualAccount(
         uint256 _index
     ) public returns (address proxy)
 ```
-***deployAccount()***
 
-Deploys account using `CREATE`  (thus it deploys with a random address, rather than a counterfactual).
- ```javascript
- function deployAccount(address _owner) public returns (address proxy)
- ```
+**_deployAccount()_**
+
+Deploys account using `CREATE` (thus it deploys with a random address, rather than a counterfactual).
+
+```javascript
+function deployAccount(address _owner) public returns (address proxy)
+```

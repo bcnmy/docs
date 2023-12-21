@@ -8,7 +8,7 @@ sidebar_position: 2
 
 ## Node Client Package
 
-This package is responsible for the communication between the Client SDK and the Backend Node. 
+This package is responsible for the communication between the Client SDK and the Backend Node.
 
 ## Installation
 
@@ -25,22 +25,24 @@ npm install @biconomy/node-client
 ## Initialization
 
 ```js
-import NodeClient from "@biconomy/node-client"
-const nodeClient = new NodeClient({ txServiceUrl: 'https://sdk-backend.prod.biconomy.io/v1/' })
+import NodeClient from "@biconomy/node-client";
+const nodeClient = new NodeClient({
+  txServiceUrl: "https://sdk-backend.prod.biconomy.io/v1/",
+});
 ```
 
 ## Get all the supported Chains
 
 ```js
-const supportedChainList = await nodeClient.getAllSupportedChains()
-console.log(supportedChainList)
+const supportedChainList = await nodeClient.getAllSupportedChains();
+console.log(supportedChainList);
 ```
 
 ## Get all the supported Token
 
 ```js
-const supportedTokensList = await nodeClient.getAllTokens()
-console.log(supportedTokensList)
+const supportedTokensList = await nodeClient.getAllTokens();
+console.log(supportedTokensList);
 ```
 
 ## Get all the Smart Accounts By Owner
@@ -73,7 +75,7 @@ const balanceParams: BalancesDto =
         // If empty string you receive balances of all tokens watched by Indexer
         // you can only whitelist token addresses that are listed in token respostory
         // specified above ^
-        tokenAddresses: [], 
+        tokenAddresses: [],
       };
 
 

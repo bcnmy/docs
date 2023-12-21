@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Capsule'
+sidebar_label: "Capsule"
 sidebar_position: 7
 ---
 
@@ -20,38 +20,37 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-typ
 ## Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster'
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { Wallet, providers, ethers } from 'ethers';
-import { ChainId } from "@biconomy/core-types"
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
+import { IBundler, Bundler } from "@biconomy/bundler";
+import {
+  BiconomySmartAccountV2,
+  DEFAULT_ENTRYPOINT_ADDRESS,
+} from "@biconomy/account";
+import { Wallet, providers, ethers } from "ethers";
+import { ChainId } from "@biconomy/core-types";
+import {
+  ECDSAOwnershipValidationModule,
+  DEFAULT_ECDSA_OWNERSHIP_MODULE,
+} from "@biconomy/modules";
 ```
-## Capsule Configuration 
+
+## Capsule Configuration
 
 You will need to do some initial setup and get API keys from capsule, for additional help check out the [Capsule Starter Guide](https://docs.usecapsule.com/getting-started/initial-setup).
 
-
 ```typescript
-import { Capsule, Environment } from '@usecapsule/web-sdk';
-const capsule = new Capsule(
-  Environment.BETA,
-  YOUR_API_KEY
-);
+import { Capsule, Environment } from "@usecapsule/web-sdk";
+const capsule = new Capsule(Environment.BETA, YOUR_API_KEY);
 ```
 
-After setup we now need to get a signer from capsule update the import statement to get the Capusule ethers signer and pass the capsule instance we created above. 
+After setup we now need to get a signer from capsule update the import statement to get the Capusule ethers signer and pass the capsule instance we created above.
 
 ```typescript
-import Capsule, {Environment, CapsuleEthersSigner} from "@usecapsule/web-sdk"
+import Capsule, { Environment, CapsuleEthersSigner } from "@usecapsule/web-sdk";
 
-const provider = new ethers.JsonRpcProvider(
-  CHAIN_PROVIDER,
-  CHAIN,
-);
+const provider = new ethers.JsonRpcProvider(CHAIN_PROVIDER, CHAIN);
 
 const ethersSigner = new CapsuleEthersSigner(capsule, provider);
-
 ```
 
 ## Biconomy Configuration Values
@@ -59,47 +58,41 @@ const ethersSigner = new CapsuleEthersSigner(capsule, provider);
 Set up instances of Bundler, Paymaster. Alternativedly you can also use the Multi chain Module this way.
 
 ```typescript
-
 const bundler: IBundler = new Bundler({
-    // get from biconomy dashboard https://dashboard.biconomy.io/
-    bundlerUrl: '',     
-    chainId: ChainId.POLYGON_MUMBAI,// or any supported chain of your choice
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
-
+  // get from biconomy dashboard https://dashboard.biconomy.io/
+  bundlerUrl: "",
+  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
+  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+});
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
   // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: '' 
-})
-
+  paymasterUrl: "",
+});
 ```
 
-## Create the Biconomy Smart Account 
+## Create the Biconomy Smart Account
 
 ```typescript
-
 const connect = async () => {
-    try {
-
-      const module = await ECDSAOwnershipValidationModule.create({
+  try {
+    const module = await ECDSAOwnershipValidationModule.create({
       signer: ethersSigner, // signer value we got from capsule
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-      })
+      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+    });
 
-      let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        chainId: ChainId.POLYGON_MUMBAI,
-        bundler: bundler, 
-        paymaster: paymaster,
-        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-        defaultValidationModule: module,
-        activeValidationModule: module
-      })
+    let biconomySmartAccount = await BiconomySmartAccountV2.create({
+      chainId: ChainId.POLYGON_MUMBAI,
+      bundler: bundler,
+      paymaster: paymaster,
+      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+      defaultValidationModule: module,
+      activeValidationModule: module,
+    });
 
-      const address = await biconomySmartAccount.getAccountAddress()
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+    const address = await biconomySmartAccount.getAccountAddress();
+  } catch (error) {
+    console.error(error);
+  }
+};
 ```

@@ -18,7 +18,7 @@ npm install @biconomy/web3-auth
 
 ```js
 import SocialLogin from "@biconomy/web3-auth";
-import "@biconomy/web3-auth/dist/src/style.css"
+import "@biconomy/web3-auth/dist/src/style.css";
 ```
 
 :::info
@@ -45,10 +45,10 @@ If you check the SocialLogin class you will find different methods which we've g
 Initialize the social login SDK
 
 ```js
-// create an instance of SocialLogin 
-const socialLogin = new SocialLogin()
+// create an instance of SocialLogin
+const socialLogin = new SocialLogin();
 // init social login SDK, all params are optional
-await socialLogin.init(); 
+await socialLogin.init();
 
 // pops up the UI widget
 socialLogin.showWallet();
@@ -58,14 +58,14 @@ For whitelisting your domain, please use the following code snippet. When deploy
 
 ```js
 // get signature that corresponds to your website domains
-const signature1 = await socialLogin.whitelistUrl('https://yourdomain1.com');
-const signature2 = await socialLogin.whitelistUrl('https://yourdomain2.com');
+const signature1 = await socialLogin.whitelistUrl("https://yourdomain1.com");
+const signature2 = await socialLogin.whitelistUrl("https://yourdomain2.com");
 // pass the signatures, you can pass one or many signatures you want to whitelist
 await socialLogin.init({
   whitelistUrls: {
-    'https://yourdomain1.com': signature1,
-    'https://yourdomain2.com': signature2,
-  }
+    "https://yourdomain1.com": signature1,
+    "https://yourdomain2.com": signature2,
+  },
 });
 ```
 
@@ -73,14 +73,12 @@ await socialLogin.init({
 
 ```js
 if (!socialLogin?.provider) return;
-// create a provider from the social login provider that 
+// create a provider from the social login provider that
 // will be used by the smart account package of the Biconomy SDK
-const provider = new ethers.providers.Web3Provider(
-    socialLogin.provider,
-);
+const provider = new ethers.providers.Web3Provider(socialLogin.provider);
 // get a list of accounts available with the provider
 const accounts = await provider.listAccounts();
-console.log("EOA address", accounts)
+console.log("EOA address", accounts);
 ```
 
 :::info

@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Enable Fiat On Ramp'
+sidebar_label: "Enable Fiat On Ramp"
 sidebar_position: 7
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/fiatonramp.md
 ---
@@ -22,28 +22,27 @@ import Transak from "@biconomy/transak";
 
 ```js
 // init the widget
-const transak = new Transak('STAGING');
+const transak = new Transak("STAGING");
 transak.init();
 ```
 
 - If you are using Fiat On Ramp then you can directly pass in the email like so:
 
 ```js
-import Transak from '@biconomy/transak';
+import Transak from "@biconomy/transak";
 
 // use this info for transak package
-const transak = new Transak('STAGING', {
+const transak = new Transak("STAGING", {
   walletAddress: userAddress,
   userData: {
-    firstName: userInfo?.name || '',
-    email: userInfo?.email || '',
+    firstName: userInfo?.name || "",
+    email: userInfo?.email || "",
   },
 });
 transak.init();
 ```
 
 - On `transak.init()` Transak widget opens and users can buy on-ramp.
-
 
 ## Code Examples
 
