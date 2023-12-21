@@ -55,6 +55,11 @@ const config = {
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
+        blog: {
+          blogSidebarTitle: 'All posts',
+          blogSidebarCount: 'ALL',
+          postsPerPage: 'ALL'
+        }
       }),
     ],
   ],
@@ -105,6 +110,7 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
+          {to: 'blog', label: 'Blog', position: 'left'},
           {
             href: 'https://github.com/bcnmy/docs',
             label: 'GitHub',
