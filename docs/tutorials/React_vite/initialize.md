@@ -37,15 +37,7 @@ things simple we will be using Yarn from this point.
 Install the following dependencies:
 
 ```bash
-yarn add
-    @biconomy/account
-    @biconomy/bundler
-    @biconomy/common
-    @biconomy/core-types
-    @biconomy/paymaster
-    @biconomy/web3-auth
-    @biconomy/modules
-    ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster magic-sdk @biconomy/modules ethers@5.7.2
 ```
 
 We will use these tools to build out our front end. In addition, let's also
