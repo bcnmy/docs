@@ -57,16 +57,32 @@ function _verifySignature(bytes32 dataHash, bytes memory signature, address smar
 
 ```
 
-Validates a signature against a data hash and registered owner.
+**Validates a signature against a data hash and registered owner, supporting EIP-1271 standard.**
+
+```solidity 
+function isValidSignature(
+    bytes32 dataHash,
+    bytes memory signature
+) public view returns (bytes4);
+```
+
+:::note
+isValidSignature is crucial for external verification, allowing other smart contracts to confirm the legitimacy of signatures associated with user operations, thus upholding the integrity and security of transactions in decentralized applications.
+:::
 
 :::caution
-Proper handling and verification of signatures are crucial for maintaining the integrity of the Smart Account.
+Proper handling and verification of signatures are crucial for maintaining the integrity of the Smart Account. The `isValidSignature` function is essential for EIP-1271 support, validating that the signature matches the expected signer as per the EIP-1271 standard.
 :::
 
 ## Security Considerations
 
-- **Strict Ownership Rules**: Ensures only EOAs can authorize transactions.
-- **Signature Verification**: Robust methods to validate signatures, mitigating risk of unauthorized operations.
+- **Strict Ownership Rules**: Only Externally Owned Accounts (EOAs) can authorize transactions, ensuring secure control over Smart Account operations.
+- **Signature Verification**: Implements robust methods for signature validation, crucial for preventing unauthorized access.
+
+:::info
+The `initForSmartAccount` method doesn't include `isSmartContract` checks due to operational constraints. However, this doesn't compromise security as operations require valid EOA signatures. This ensures Smart Accounts remain secure within their operational framework.
+:::
+
 
 ## Interaction with Smart Accounts 🤝
 
