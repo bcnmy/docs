@@ -13,7 +13,7 @@ Biconomy MSA (Modular Smart Account) has two types of modules:
 
 ERC-7579 extends the objectives of ERC 4337, specifically the goal of abstracting logic for execution and validation for each modular smart account. It also enables developers to standardize these modules, to integrate new features for smart contract wallets, rather than building an entire account.
 
-**How to enable modules**
+### How to enable modules
 
 The Modular smart account is structured for optimal adaptability. Instead of storing ownership data internally or relying on a fixed signature verification method, it empowers users to choose their primary validation module. This flexibility, as part of Biconomy's [SmartAccountFactory](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/factory/SmartAccountFactory.sol#L73), ensures each account can validate userOps effectively and support diverse user requirements.
 
@@ -25,13 +25,13 @@ In addition to enabling the module, It also mandates the **moduleSetupData** to 
 
 Each account must have a default validation module which gets used when no is enabled. All validation modules can act as active validation modules, but the ones with the following functionality can act as default validation modules.
 
-::: caution
+:::caution
 It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become lost or unrecoverable.
 :::
 
 ## Validation Modules
 
-![validationModule.png]
+![validationModule.png](../images/modules/validationModule.png)
 
 The validation Module is a module that extends the abstract contract **BaseAuthorizationModule**** - which implements the **IBaseAuthorizationModule** interface. This interface requires the implementation of the following methods:
 
