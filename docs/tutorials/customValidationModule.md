@@ -1,8 +1,8 @@
 # Custom Validation Module
 
 In this tutorial we will look at how to create your own validation module.
-Any custom validation module needs to extend abstract contract [BaseAuthorizationModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/BaseAuthorizationModule.sol) - which extends IAuthorizationModule and ISignatureValidator interface.
-The implementation of this interface enables a module to receive userOp data and provide validation results back to the SmartAccount.
+As mentioned in the [overview](./../Modules/overview.md#how-to-create-a-custom-validation-module), any custom validation module needs to extend the abstract contract [BaseAuthorizationModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/BaseAuthorizationModule.sol). This contract is crucial as it connects your module to essential authorization functions.
+This implementation enables a module to receive userOp data and provide validation results back to the SmartAccount.
 
 Lets take a look at the step by step guide to create a custom Validation Module.
 
@@ -53,6 +53,8 @@ As per the code
 - This function requires the userOp and the userOp Hash as the input parameters where userOp signature is the ABI-encoded signature and validation module address. we extract the module signature and call the verify signature method which we will implement next.
 
 - `_verifySignature` method expects moduleSignature which is a signature that should be processed by a module and made according to the requirements specified by the module that is expected to be processing it.
+
+- validation status constants are imported from AuthorizationModulesConstants contract. VALIDATION_SUCCESS indicates successful validation, while VALIDATION_FAILED signifies validation failure.
 
 **3. Implement isValidSignature method**
 
@@ -280,4 +282,4 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
 
 </details>
 
-Note: We could also create a module's own interface IMyCustomValidationModule to move storage, events and errors there and then make the above module extend this interface.
+Note: We could also create a module's own interface IMyCustomValidationModule to move events and errors there and then make the above module extend this interface.

@@ -40,16 +40,40 @@ The validation Module is a module that extends the abstract contract **BaseAutho
 
 Validation modules are invoked with a “call”. It has its own storage and doesn’t share storage with Biconomy Smart Account. Since validation module storage is accessed during the validation phase, ERC-4337 [storage rules](https://github.com/eth-infinitism/account-abstraction/blob/abff2aca61a8f0934e533d0d352978055fddbd96/eip/EIPS/eip-4337.md#storage-associated-with-an-address) apply to this.
 
+:::info
+Validation Modules in MSA play a crucial role in determining who can perform actions, ensuring security and proper authorization.
+:::
+
 Following is the list of Validation Modules:
 
-- [**ECDSA Ownership Module**](ecdsa.mdx): This module is widely adopted as a validation module for Biconomy smart accounts. It seamlessly integrates with MPC providers such as Web3Auth, abstracting EOA Private Key storage and enabling a web2-like experience for eg. email login.
+- [**ECDSA Ownership Module**](ecdsa.mdx): This module is widely adopted as a validation module for Biconomy smart accounts. It can seamlessly integrates with MPC providers such as Web3Auth, abstracting EOA Private Key storage and enabling a web2-like experience such as email login.
 - [**Multichain ECDSA Validator Module**](multichain.mdx): This module significantly improves UX for deploying and setting up Smart Accounts on several chains. It is an extension of ECDSA Module enabling used to dispatch multiple userOps on different chains using a single signature.
 - [**Session key Manager Validation Module**](sessionvalidationmodule.mdx): This module enables the use of sessions to execute transactions. It verifies whether a given user operation adheres to the permissions defined within the session key and confirms that the operation has been signed by that session key. This can only be used as an active validation module.
 - **MultiOwnedECDSAModule**: This is an alteration of ECDSA Module which allows multiple signers to be set up, and any one of the enabled owners can authorize a transaction using ECDSA signature.
 
-**How to create a custom Validation Module**
+### How to create a custom Validation Module
 
-Developers have the flexibility to create a custom validation module implementation according to their specific requirements. This validation module class should extend the BaseValidationModule, which implements the IValidationModule interface. After thorough testing and auditing, a pull request (PR) can be submitted to integrate the module with the SDK. A detailed walkthrough of the same is linked [here](/tutorials/customValidationModule).
+Developers have the flexibility to create a custom validation module according to their specific requirements. This validation module must extend the BaseAuthorizationModule, which further implements the IAuthorizationModule and ISignatureValidator interfaces.
+
+**Key Imports and Their Roles**
+
+1. `BaseAuthorizationModule`
+    - **Core Structure**: Forms the foundation of your custom module.
+    - **Link to Interfaces**: Connects to IAuthorizationModule and ISignatureValidator
+2. `IAuthorizationModule`
+    - **Operation Validation**: Manages validation of user operations (userOp)
+    - **Method Implementation**: Defines methods for operation validation your module must implement.
+3. `ISignatureValidator`
+    - **Signature Security & Standardization**: Focuses on signature validation and adheres to the ERC-1271 standard for smart contract-based signature
+    - **isValidSignature Method**: Essential for verifying signatures and ensuring security.
+
+:::note
+
+Adhering closely to the functionalities and specifications of these interfaces and standards is fundamental. It ensures your custom validation module operates securely and efficiently.
+
+:::
+
+After thorough testing and auditing, a pull request (PR) can be submitted to integrate the module with the SDK. A detailed walkthrough of the same is linked [here](/tutorials/customValidationModule).
 
 ## Execution Modules
 
@@ -59,3 +83,7 @@ There are two default execution functions - called execute and executeBatch whic
 The diagram below illustrates the execution flow for Modular Smart Accounts.
 
 ![executionModule.png](../images/modules/executionModule.png)
+
+:::caution
+Execution modules should be carefully developed and integrated, as they directly control the actions an account can perform.
+:::
