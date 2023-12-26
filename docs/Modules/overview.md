@@ -23,13 +23,13 @@ Each account must have a default validation module which gets used when no is en
 ## Validation Modules
 ![validationModule.png](../images/modules/validationModule.png)
 
-Validation Module is a module that extends abstract contract **BaseAuthorizationModule** - which implements **IBaseAuthorizationModule** interface. This interface requires the implementation of the following methods:
+Validation Module is a module that extends the abstract contract **BaseAuthorizationModule** - which implements **IBaseAuthorizationModule** interface. This interface requires the implementation of the following methods:
 
 - `validateUserOp`: this method validates userOperation. It expects userOp callData to execute method calls of the Smart account and userOp signature being the ABI-encoded signature and module address.
 - `isValidSignature`: this method validates an EIP-1271 signature.
 - `isValidSignatureUnsafe`: this method validates an EIP-1271 signature but expects the data Hash to already include smart account address information.
 
-Validation modules are invoked with a “call”. It has it’s own storage and doesn’t share storage with Biconomy Smart Account. Since validation module storage is accessed during the validation phase, ERC-4337 [storage rules](https://github.com/eth-infinitism/account-abstraction/blob/abff2aca61a8f0934e533d0d352978055fddbd96/eip/EIPS/eip-4337.md#storage-associated-with-an-address) apply to this.
+Validation modules are invoked with a “call”. It has its own storage and doesn’t share storage with Biconomy Smart Account. Since validation module storage is accessed during the validation phase, ERC-4337 [storage rules](https://github.com/eth-infinitism/account-abstraction/blob/abff2aca61a8f0934e533d0d352978055fddbd96/eip/EIPS/eip-4337.md#storage-associated-with-an-address) apply to this.
 
 Following is the list of Validation Modules:
 
