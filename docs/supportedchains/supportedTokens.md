@@ -5,9 +5,9 @@ sidebar_position: 2
 
 # ERC20 Gas Payments
 
-Our Paymaster not only allows you to sponsor gasless tokens for your users but also allows for users to pay for tokens in supported ERC20 tokens. Below are supported tokens grouped by chain.
+Our Paymaster not only allows you to sponsor gasless tokens for your users but also allows users to pay for tokens in supported ERC20 tokens. Below are supported tokens grouped by chain.
 
-Please note that we will be reviewing DEX activitiy on each network to determine additional ERC20 token supoort on an ongoing basis.
+Please note that we will be reviewing DEX activity on each network to determine additional ERC20 token support on an ongoing basis.
 
 ## Polygon Mainnet
 
@@ -91,3 +91,12 @@ Please note that we will be reviewing DEX activitiy on each network to determine
 | BUSD         | BUSD Token     | 0x19860ccb0a68fd4213ab9d8266f7bbf05a8dde98 | BUSD / USD |
 | USDC         | USD Coin       | 0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e | USDC / USD |
 | TUSD         | TrueUSD        | 0x1c20e891bab6b1727d14da358fae2984ed9b59eb | TUSD / USD |
+
+## Ethereum Mainnet
+
+| Token symbol | Token name     | Token Address                              | Pair       |
+| ------------ | -------------- | ------------------------------------------ | ---------- |
+| AVAX         | Ether          | 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee | ETH / USD |
+| USDC         | USD Coin       | 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 | USDC / USD  |
+| USDT         | Tether USD     | 0xdac17f958d2ee523a2206206994597c13d831ec7 | USDT / USD |
+| DAI          | Dai Stablecoin | 0x6b175474e89094c44da98b954eedeac495271d0f | DAI / USD |
