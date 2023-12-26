@@ -21,8 +21,8 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
 }
 ```
 As per the code
-- First we import the BaseAuthorizationModule and initialise two constants name and version
-- Then we declare a method initForSmartAccount which gets used to initialise this module for the smart account. SA calls this function with msg.sender as smart account address. It updates the relevant storage for the msg sender, It could be ownership information as shown in ECDSAOwnsership Module.
+- First we import the BaseAuthorizationModule and initialize two constants name and version
+- Then we declare a method initForSmartAccount which gets used to initialize this module for the smart account. SA calls this function with msg.sender as the smart account address. It updates the relevant storage for the msg sender, It could be ownership information as shown in ECDSAOwnsership Module.
 
 **2. Implement validateUserOp method**
 ```typescript
