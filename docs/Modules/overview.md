@@ -36,7 +36,7 @@ Following is the list of Validation Modules:
 - [**ECDSA Ownership Module**](ecdsa.mdx): This module is widely adopted as a validation module for Biconomy smart accounts. It seamlessly integrates with MPC providers such as Web3Auth, abstracting EOA Private Key storage and enabling a web2-like experience for eg. email login.
 - [**Multichain ECDSA Validator Module**](multichain.mdx): This module significantly improves UX for deploying and setting up Smart Accounts on several chains. It is an extension of ECDSA Module enabling used to dispatch multiple userOps on different chains using a single signature.
 - [**Session key Manager Validation Module**](sessionvalidationmodule.mdx): This module enables the use of sessions to execute  transactions. It verifies whether a given user operation adheres to the permissions defined within the session key and confirms that the operation has been signed by that session key. This can only be used as an active validation module.
-- **MultiOwnedECDSAModule**: This is alteration of ECDSA Module which allows multiple signers to be set up, and any one of n enabled owners can authorise a transaction using ECDSA signature. 
+- **MultiOwnedECDSAModule**: This is an alteration of ECDSA Module which allows multiple signers to be set up, and any one of the enabled owners can authorize a transaction using ECDSA signature. 
 
 **How to create a custom Validation Module**
 
