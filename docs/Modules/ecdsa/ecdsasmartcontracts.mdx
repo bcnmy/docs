@@ -16,15 +16,21 @@ This document delves into the `EcdsaOwnershipRegistryModule` for Biconomy Smart 
 
 ```solidity
 // Validates user operations signed by an EOA
-function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)
-    external view returns (uint256) {
-    (bytes memory cleanEcdsaSignature, ) = abi.decode(userOp.signature, (bytes, address));
-    if (_verifySignature(userOpHash, cleanEcdsaSignature, userOp.sender)) {
-        return VALIDATION_SUCCESS;
+    function validateUserOp(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    ) external view virtual override returns (uint256) {
+        if (
+            _verifySignature(
+                userOpHash,
+                userOp.signature[96:161],
+                userOp.sender
+            )
+        ) {
+            return VALIDATION_SUCCESS;
+        }
+        return SIG_VALIDATION_FAILED;
     }
-    return SIG_VALIDATION_FAILED;
-}
-
 ```
 
 :::note
