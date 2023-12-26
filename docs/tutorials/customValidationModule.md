@@ -264,4 +264,4 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
 ```
 </details>
 
-Note: We could also create module's own interface IMyCustomValidationModule to move storage, events and errors there and then make the above module extend this interface. 
+Note: We could also create a module's own interface IMyCustomValidationModule to move storage, events and errors there and then make the above module extend this interface. 
