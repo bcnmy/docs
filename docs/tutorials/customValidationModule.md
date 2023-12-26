@@ -146,7 +146,7 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
     /**
         Smart contract account calls this function with msg.sender as smart account address
         It updates the relevant storage for the msg sender, It could be ownership information as mentioned in ECDSAOwnsership Module.
-        Function signature of this method will be used as moduleSetupData in Account Factory
+        The function signature of this method will be used as moduleSetupData in Account Factory
     */
     function initForSmartAccount() {
       
