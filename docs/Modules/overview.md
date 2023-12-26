@@ -17,14 +17,15 @@ ERC-7579 extends the objectives of ERC 4337, specifically the goal of abstracti
 
 The Modular smart account is structured for optimal adaptability. Instead of storing ownership data internally or relying on a fixed signature verification method, it empowers users to choose their primary validation module. This flexibility, as part of Biconomy's [SmartAccountFactory](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/factory/SmartAccountFactory.sol#L73), ensures each account can validate userOps effectively and support diverse user requirements.
 
-::: tip The module selected to deploy the MSA determines its final address, due to MSA's counterfactual nature at deployment.
+:::note
+The module selected to deploy the MSA determines its final address, due to MSA's counterfactual nature at deployment.
 :::
 
 In addition to enabling the module, It also mandates the **moduleSetupData** to set up the module by the smart account during initialization. It only stores a reference to the module address, thus making it possible for multiple modules to use the same function selector.
 
 Each account must have a default validation module which gets used when no is enabled. All validation modules can act as active validation modules, but the ones with the following functionality can act as default validation modules.
 
-::: warning
+::: caution
 It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become lost or unrecoverable.
 :::
 
