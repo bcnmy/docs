@@ -38,9 +38,9 @@ Following is the list of Validation Modules:
 - [**Session key Manager Validation Module**](sessionvalidationmodule.mdx): This module enables the use of sessions to execute  transactions. It verifies whether a given user operation adheres to the permissions defined within the session key and confirms that the operation has been signed by that session key. This can only be used as an active validation module.
 - **MultiOwnedECDSAModule**: This is alteration of ECDSA Module which allows multiple signers to be set up, and any one of n enabled owners can authorise a transaction using ECDSA signature. 
 
-**How to create custom Validation Module**
+**How to create a custom Validation Module**
 
-Developers have the flexibility to create a custom validation module implementation according to their specific requirements. This validation module class should extend the BaseValidationModule, which implements the IValidationModule interface. After thorough testing and auditing, a pull request (PR) can be submitted to integrate the module with the SDK. A detailed walkthru of the same is linked [here](/tutorials/customValidationModule).
+Developers have the flexibility to create a custom validation module implementation according to their specific requirements. This validation module class should extend the BaseValidationModule, which implements the IValidationModule interface. After thorough testing and auditing, a pull request (PR) can be submitted to integrate the module with the SDK. A detailed walkthrough of the same is linked [here](/tutorials/customValidationModule).
 
 ## Execution Modules
 
