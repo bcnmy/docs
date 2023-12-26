@@ -58,6 +58,7 @@ import {
 import { ChainId } from "@biconomy/core-types";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
+import { Signer } from "ethers";
 
 // create instance of bundler
 const bundler: IBundler = new Bundler({
@@ -75,11 +76,11 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 
 // instance of ownership module
 const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-  signer: {}, // ethers signer object
+  signer: {} as Signer, // ethers signer object
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
 });
 
-const biconomyAccount = await BiconomySmartAccountV2.create({
+const biconomySmartAccount = await BiconomySmartAccountV2.create({
   chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
   bundler: bundler, // instance of bundler
   paymaster: paymaster, // instance of paymaster
