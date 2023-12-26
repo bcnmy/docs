@@ -27,11 +27,10 @@ function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash)
 
 ```
 
-- **Objective**: Ensures the authenticity of user operations.
-- **Method**: Decodes and verifies the user operation's signature.
-
 :::note
-The function is pivotal in securing user operations against unauthorized access.
+Objective: The function safeguards the authenticity of user operations on Smart Accounts.
+
+Method: It specifically decodes and verifies a segment of the userOp.signature. This segmentation is crucial because userOp.signature typically contains both the signature and the validation module's address. By extracting only the signature part, the function accurately validates the operation against the intended owner's signature, ensuring that the operation is legitimately authorized.
 :::
 
 ### Signature Verification (`_verifySignature`) 🔐
@@ -59,7 +58,7 @@ function _verifySignature(bytes32 dataHash, bytes memory signature, address smar
 
 **Validates a signature against a data hash and registered owner, supporting EIP-1271 standard.**
 
-```solidity 
+```solidity
 function isValidSignature(
     bytes32 dataHash,
     bytes memory signature
@@ -67,7 +66,7 @@ function isValidSignature(
 ```
 
 :::note
-isValidSignature is crucial for external verification, allowing other smart contracts to confirm the legitimacy of signatures associated with user operations, thus upholding the integrity and security of transactions in decentralized applications.
+`isValidSignature` serves as a key function for external smart contracts to verify signature authenticity.
 :::
 
 :::caution
@@ -82,7 +81,6 @@ Proper handling and verification of signatures are crucial for maintaining the i
 :::info
 The `initForSmartAccount` method doesn't include `isSmartContract` checks due to operational constraints. However, this doesn't compromise security as operations require valid EOA signatures. This ensures Smart Accounts remain secure within their operational framework.
 :::
-
 
 ## Interaction with Smart Accounts 🤝
 
