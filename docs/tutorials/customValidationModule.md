@@ -6,7 +6,7 @@ The implementation of this interface enables a module to receive userOp data and
 
 Lets take a look at the step by step guide to create a custom Validation Module.
 
-**1. Create the custom module class**
+**1. Create the custom validation contract**
 
 ```typescript
 import {BaseAuthorizationModule} from "./BaseAuthorizationModule.sol";
