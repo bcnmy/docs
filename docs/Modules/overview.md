@@ -46,8 +46,8 @@ Developers have the flexibility to create a custom validation module implementat
 
 **Execution functions** execute any custom logic allowed by the account.
 
-There are two default execution functions - called execute and executeBatch which allow for open-ended execution that is required for AA-flow. Custom execution module needs to call back into Smart Account to initialize a function call from within the context of the account. 
-Diagram below illustrates the execution flow for Modular Smart Accounts.
+There are two default execution functions - called execute and executeBatch which allow for open-ended execution that is required for AA-flow. The custom execution module needs to call back into Smart Account to initialize a function call from within the context of the account. 
+The diagram below illustrates the execution flow for Modular Smart Accounts.
 
 ![executionModule.png](../images/modules/executionModule.png)
 
