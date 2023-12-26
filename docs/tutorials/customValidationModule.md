@@ -44,7 +44,7 @@ function validateUserOp(
 }
 ```
 As per the code
-- This functions requires the userOp and the userOp Hash as the input parameters where userOp signature being the ABI-encoded signature and validation module address. we extract the module signature and call the verify signature method which we will implement next.
+- This function requires the userOp and the userOp Hash as the input parameters where userOp signature is the ABI-encoded signature and validation module address. we extract the module signature and call the verify signature method which we will implement next.
 - `_verifySignature` method expects moduleSignature which is a signature that should be processed by a module and made according to the requirements specified by the module that is expected to be processing it.
 
 **3. Implement isValidSignature method**
