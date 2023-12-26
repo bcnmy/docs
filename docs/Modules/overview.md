@@ -10,7 +10,7 @@ Biconomy MSCA (Modular smart contract account) has two types of modules:
 - **Validation modules** - These modules define different signature schemes or authorisation mechanisms to validate who is allowed to perform what action on the account, by implementing standard interfaces.
 - **Execution modules** - These modules define custom execution functions to facilitate the actions allowed by the account.
 
-Many new features of accounts can be built by customizing the logic that goes into the validation and execution steps. ERC-6900 extends the objectives of ERC 4337, specifically the goal of abstracting logic for execution and validation for each smart contract wallet. It also enables developers to standardise these modules, in order to integrate new features for smart contract wallets, rather than building an entire account.
+Many new features of accounts can be built by customizing the logic that goes into the validation and execution steps. ERC-6900 extends the objectives of ERC 4337, specifically the goal of abstracting logic for execution and validation for each smart contract wallet. It also enables developers to standardize these modules, in order to integrate new features for smart contract wallets, rather than building an entire account.
 
 **How to enable modules**
 
