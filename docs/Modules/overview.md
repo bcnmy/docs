@@ -26,7 +26,7 @@ In addition to enabling the module, It also mandates the **moduleSetupData** to 
 Each account must have a default validation module which gets used when no is enabled. All validation modules can act as active validation modules, but the ones with the following functionality can act as default validation modules.
 
 :::caution
-It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become  unrecoverable without atleast one module.
+It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become unrecoverable without at least one module.
 :::
 
 ## Validation Modules
