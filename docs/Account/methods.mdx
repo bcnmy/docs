@@ -9,7 +9,7 @@ The SDK provides following methods for a smart account.
 
 ### BiconomySmartAccountV2: Create
 
-The `create()` method is used to create an instance of the Biconomy Smart Account V2.This method takes a configuration object and returns the smart account instance.
+The `create()` method is used to create an instance of the Biconomy Smart Account V2. This method takes a configuration object and returns the smart account instance.
 
 The addresses of ERC-4337 smart accounts follow a deterministic pattern. This enables you to get the address off-chain before the account is actually deployed.
 
@@ -32,14 +32,15 @@ const smartAccount = await BiconomySmartAccountV2.create({
 
 *required params are explictly mentioned*
 
-- `chainId` (`number`, required): The identifier for the blockchain network (e.g., ChainId.POLYGON_MUMBAI).
-- `bundler` (`object`): An instance of the bundler.
-- `paymaster` (`object`): An instance of the paymaster.
-- `entryPointAddress` (`string`, required): The entry point address for the specified chain.
-- `defaultValidationModule` (`object`, required): The default validation module to start with ( either ECDSA or Multi-chain ).
-- `activeValidationModule` (`object`): The active validation module to start with ( either ECDSA or Multi-chain ).
-- `rpcUrl` (`string`): rpc url of the chain
-- `index` (`number`): index to create multiple smart accounts for an EOA
+- config (`object`, required): A `BiconomySmartAccountV2Config` object containing configuration options for creating the smart account.
+  - chainId (`number`, required): The identifier for the blockchain network (e.g., ChainId.POLYGON_MUMBAI).
+  - bundler (`object`): An instance of the bundler.
+  - paymaster (`object`): An instance of the paymaster.
+  - entryPointAddress (`string`, required): The entry point address for the specified chain.
+  - defaultValidationModule (`object`, required): The default validation module to start with ( either ECDSA or Multi-chain ).
+  - activeValidationModule (`object`): The active validation module to start with ( either ECDSA or Multi-chain ).
+  - rpcUrl (`string`): rpc url of the chain
+  - index (`number`): index to create multiple smart accounts for an EOA
 
 **Returns**
 
@@ -61,4 +62,4 @@ const address = await smartAccount.getAccountAddress();
 
 **Returns**
 
-- `address` (`Promise<string>`): A Promise resolving to the account address associated with the smartAccount instance.
+- address (`Promise<string>`): A Promise resolving to the account address associated with the smartAccount instance.
