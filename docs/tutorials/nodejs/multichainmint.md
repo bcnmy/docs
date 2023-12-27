@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Multi Chain NFT Mint"
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 # Mint your NFT on Multiple chains with one signature

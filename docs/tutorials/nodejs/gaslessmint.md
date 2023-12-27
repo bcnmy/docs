@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Creating Gasless Transactions"
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Creating Gasless Transactions
@@ -9,8 +9,7 @@ In this guide, we will walk through creating a basic Node.js script using
 TypeScript that allows user to mint an NFT without paying for any Gas.
 
 :::info This tutorial has a two other steps in the previous sections:
-[Environment Setup](environmentsetup) and
-[Initializing Account](initializeaccount)
+[Environment Setup and Account Initialization](initializeaccount).
 :::
 
 This tutorial will be done on the Polygon Mumbai Network and the smart contract

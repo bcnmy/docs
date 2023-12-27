@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Pay for Gas with ERC20 Tokens"
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Paying for gas with ERC20 Tokens

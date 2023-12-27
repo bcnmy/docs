@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Batching Multiple Transactions"
-sidebar_position: 4
+sidebar_position: 3
 ---
 
 # Batching Multiple Transactions
