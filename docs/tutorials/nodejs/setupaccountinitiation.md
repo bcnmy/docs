@@ -75,21 +75,22 @@ PRIVATE_KEY = "<your_private_key>"
 Prepare by organizing all necessary imports:
 
 ```typescript
-import { config } from "dotenv";
-import { IBundler, Bundler } from "@biconomy/bundler";
+// Import necessary modules and configurations
+import { config } from "dotenv"; // dotenv for loading environment variables from a .env file
+import { IBundler, Bundler } from "@biconomy/bundler"; // Biconomy bundler for managing gasless transactions
 import {
   DEFAULT_ENTRYPOINT_ADDRESS,
   BiconomySmartAccountV2,
-} from "@biconomy/account";
-import { Wallet, providers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
+} from "@biconomy/account"; // Default entry point and smart account module from Biconomy
+import { Wallet, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
+import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
+import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster"; // Paymaster interface and Biconomy implementation
 import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
+} from "@biconomy/modules"; // Modules for ownership validation
 
-config(); // Load .env variables
+config(); // Load environment variables from .env file
 ```
 
 ### Smart Account Creation
@@ -101,10 +102,11 @@ Now, let's create a smart account:
 Generate an Ethereum wallet (Ethers) instance:
 
 ```typescript
+// Set up the Ethereum provider and wallet
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc.ankr.com/polygon_mumbai", // JSON-RPC provider URL for the Polygon Mumbai test network
 );
-const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
+const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider); // Creating a wallet instance with a private key from environment variables
 ```
 
 :::caution
@@ -113,22 +115,24 @@ const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
 
 #### Initializing Bundler and Paymaster
 
--   **Bundlers:** Special nodes that bundle user operations into single transactions for smart contract accounts. They monitor an alternative mempool, execute transactions using their EOAs, and cover the initial gas fee.
--   **Paymasters:** Smart contracts enabling flexible gas policies, such as sponsoring operations or accepting ERC-20 tokens for gas fees. They work with bundlers and entry point contracts to manage gas fee transactions​​​​​.
+- **Bundlers:** Special nodes that bundle user operations into single transactions for smart contract accounts. They monitor an alternative mempool, execute transactions using their EOAs, and cover the initial gas fee.
+- **Paymasters:** Smart contracts enabling flexible gas policies, such as sponsoring operations or accepting ERC-20 tokens for gas fees. They work with bundlers and entry point contracts to manage gas fee transactions​​​​​.
 
 Configure the bundler and paymaster for transaction facilitation:
 
 ```typescript
+// Configure the Biconomy Bundler
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44", // URL to the Biconomy bundler service
+  chainId: ChainId.POLYGON_MUMBAI, // Chain ID for Polygon Mumbai test network
+  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address for the bundler
 });
 
+// Configure the Biconomy Paymaster
 const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a", // URL to the Biconomy paymaster service
 });
 ```
 
@@ -139,10 +143,13 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 Set up the ECDSA module for your smart account:
 
 ```typescript
-const module = await ECDSAOwnershipValidationModule.create({
-  signer: wallet,
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-});
+// Function to create a module for ownership validation
+async function createModule() {
+  return await ECDSAOwnershipValidationModule.create({
+    signer: wallet, // The wallet acting as the signer
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE, // Address of the default ECDSA ownership validation module
+  });
+}
 ```
 
 :::tip
@@ -154,19 +161,26 @@ const module = await ECDSAOwnershipValidationModule.create({
 Integrate all elements to finalize your smart account:
 
 ```typescript
-let biconomySmartAccount = await BiconomySmartAccountV2.create({
-  chainId: ChainId.POLYGON_MUMBAI,
-  bundler: bundler,
-  paymaster: paymaster,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  defaultValidationModule: module,
-  activeValidationModule: module,
-});
+// Function to create a Biconomy Smart Account
+async function createSmartAccount() {
+  const module = await createModule(); // Create the validation module
 
-console.log(
-  "Smart Account Address: ",
-  await biconomySmartAccount.getAccountAddress(),
-);
+  let smartAccount = await BiconomySmartAccountV2.create({
+    chainId: ChainId.POLYGON_MUMBAI, // Chain ID for the Polygon Mumbai network
+    bundler: bundler, // The configured bundler instance
+    paymaster: paymaster, // The configured paymaster instance
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address
+    defaultValidationModule: module, // The default validation module
+    activeValidationModule: module, // The active validation module
+  });
+  console.log(
+    "Smart Account Address: ",
+    await smartAccount.getAccountAddress(), // Logging the address of the created smart account
+  );
+  return smartAccount;
+}
+
+createSmartAccount(); // Execute the function to create a smart account
 ```
 
 :::note
@@ -174,7 +188,11 @@ console.log(
 :::
 
 :::info
-The contract for your smart account is **not yet deployed** at this stage. Thanks to counterfactual address generation, you can know the address beforehand. This address is derived from the module and parameters used during creation specifically, the **signer** in this case.
+The contract for your smart account is **not yet deployed** at this stage. Thanks to counterfactual address generation, you can know the address beforehand. This address is derived from the module and parameters used during creation specifically, the **signer** in this case. 
 :::
 
-Run this script, and your command prompt will show your smart account's address, marking the successful setup and initialization.
+:::note
+Note that the smart account will be deployed with the first transaction
+:::
+
+Run this script, and your command prompt will show your **smart account's address**, marking the successful setup and initialization.
