@@ -1,0 +1,64 @@
+---
+title: Methods
+---
+
+
+## Smart Account Methods
+
+The SDK provides following methods for a smart account.
+
+### BiconomySmartAccountV2: Create
+
+The `create()` method is used to create an instance of the Biconomy Smart Account V2.This method takes a configuration object and returns the smart account instance.
+
+The addresses of ERC-4337 smart accounts follow a deterministic pattern. This enables you to get the address off-chain before the account is actually deployed.
+
+**Usage**
+
+```jsx
+
+const smartAccount = await BiconomySmartAccountV2.create({
+  chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
+  bundler: bundler, // Instance of the bundler (required)
+  paymaster: paymaster, // Instance of the paymaster (required)
+  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Entry point address for the specified chain (required)
+  defaultValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the default validation module (required)
+  activeValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the active validation module to start (required)
+});
+
+```
+
+**Parameters**
+
+*required params are explictly mentioned*
+
+- `chainId` (`number`, required): The identifier for the blockchain network (e.g., ChainId.POLYGON_MUMBAI).
+- `bundler` (`object`): An instance of the bundler.
+- `paymaster` (`object`): An instance of the paymaster.
+- `entryPointAddress` (`string`, required): The entry point address for the specified chain.
+- `defaultValidationModule` (`object`, required): The default validation module to start with ( either ECDSA or Multi-chain ).
+- `activeValidationModule` (`object`): The active validation module to start with ( either ECDSA or Multi-chain ).
+- `rpcUrl` (`string`): rpc url of the chain
+- `index` (`number`): index to create multiple smart accounts for an EOA
+
+**Returns**
+
+- `smartAccount` (`object`): An instance of the Biconomy Smart Account V2.
+
+:::info
+Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on this is different as it was deployed by us on the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
+:::
+
+### smartAccount: getAccountAddress
+
+This method is used to retrieve the account address associated with the `smartAccount` instance.
+
+**Usage**
+
+```jsx
+const address = await smartAccount.getAccountAddress();
+```
+
+**Returns**
+
+- `address` (`Promise<string>`): A Promise resolving to the account address associated with the smartAccount instance.
