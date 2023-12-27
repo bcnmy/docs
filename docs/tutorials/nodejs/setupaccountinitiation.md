@@ -113,6 +113,9 @@ const wallet = new Wallet(process.env.PRIVATE_KEY, provider);
 
 #### Initializing Bundler and Paymaster
 
+-   **Bundlers:** Special nodes that bundle user operations into single transactions for smart contract accounts. They monitor an alternative mempool, execute transactions using their EOAs, and cover the initial gas fee.
+-   **Paymasters:** Smart contracts enabling flexible gas policies, such as sponsoring operations or accepting ERC-20 tokens for gas fees. They work with bundlers and entry point contracts to manage gas fee transactions​​​​​.
+
 Configure the bundler and paymaster for transaction facilitation:
 
 ```typescript
@@ -130,6 +133,8 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 ```
 
 #### Creating the ECDSA Module
+
+**ECDSA Validation Module:** Allows EOAs to authorize signing user operations for a Smart Account, resembling a traditional ownership system. Compatible with EIP-1271, it enables Smart Accounts to sign Ethereum messages for dApps.
 
 Set up the ECDSA module for your smart account:
 
@@ -169,7 +174,7 @@ console.log(
 :::
 
 :::info
-**Did You Know?** 🤔 The contract for your smart account is **not yet deployed** at this stage. Thanks to counterfactual address generation, you can know the address beforehand. This address is derived from the module and parameters used during creation—specifically, the signer in this case.
+The contract for your smart account is **not yet deployed** at this stage. Thanks to counterfactual address generation, you can know the address beforehand. This address is derived from the module and parameters used during creation—specifically, the **signer** in this case.
 :::
 
 Run this script, and your command prompt will show your smart account's address, marking the successful setup and initialization.
