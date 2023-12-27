@@ -3,8 +3,8 @@ sidebar_position: 1
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Modules/overview.md
 ---
 # Overview
-Modular smart accounts (MSA) move functionality to external contracts called `modules` to increase the speed of feature development.
-MSA offer more flexibility than 'static' accounts. Static accounts often need a developer for changes and involve complex proxy upgrades. In contrast, Modular Smart Accounts lets users install or uninstall modules, avoiding the need for redeployment.
+
+Modular smart accounts (MSA) offer more flexibility than 'static' accounts. Static accounts often need a developer for changes and involve complex proxy upgrades. In contrast, with MSA the functionalities are moved to external contracts called `modules` to increase the speed of feature development. MSA lets users install or uninstall these modules, avoiding the need for entire account redeployment.
 
 Biconomy MSA (Modular Smart Account) has two types of modules:
 
