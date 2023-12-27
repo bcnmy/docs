@@ -3,19 +3,19 @@ sidebar_position: 1
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Modules/overview.md
 ---
 # Overview
-
-Modular Smart Accounts offer more flexibility than 'static' accounts. Static accounts often need a developer for changes and involve complex proxy upgrades. In contrast, Modular Smart Accounts lets users install or uninstall modules, avoiding the need for redeployment.
+Modular smart accounts (MSA) move functionality to external contracts called `modules` to increase the speed of feature development.
+MSA offer more flexibility than 'static' accounts. Static accounts often need a developer for changes and involve complex proxy upgrades. In contrast, Modular Smart Accounts lets users install or uninstall modules, avoiding the need for redeployment.
 
 Biconomy MSA (Modular Smart Account) has two types of modules:
 
 - **Validation modules** - These modules define different signature schemes or authorization mechanisms to validate who is allowed to perform what action on the account, by implementing standard interfaces.
 - **Execution modules** - These modules define custom execution functions to facilitate the actions allowed by the account.
 
-ERC-7579 extends the objectives of ERC 4337, specifically the goal of abstracting logic for execution and validation for each modular smart account. It also enables developers to standardize these modules, to integrate new features for smart contract wallets, rather than building an entire account.
+ERC 7579 enables developers to standardize these modules with minimal impact on the implementation logic of the account. It extends the objectives of ERC 4337, specifically the goal of abstracting logic for execution and validation for each modular smart account.
 
 ### How to enable modules
 
-The Modular smart account is structured for optimal adaptability. Instead of storing ownership data internally or relying on a fixed signature verification method, it empowers users to choose their primary validation module. This flexibility, as part of Biconomy's [SmartAccountFactory](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/factory/SmartAccountFactory.sol#L73), ensures each account can validate userOps effectively and support diverse user requirements.
+The Modular smart account is designed to be adaptable and flexible. Instead of storing ownership data internally or relying on a fixed signature verification method, it empowers users to choose their primary validation module. This flexibility, as part of Biconomy's [SmartAccountFactory](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/factory/SmartAccountFactory.sol#L73), ensures each account can validate userOps effectively and support diverse user requirements.
 
 :::note
 The module selected to deploy the MSA determines its final address, due to MSA's counterfactual nature at deployment.
@@ -26,7 +26,7 @@ In addition to enabling the module, It also mandates the **moduleSetupData** to 
 Each account must have a default validation module which gets used when no is enabled. All validation modules can act as active validation modules, but the ones with the following functionality can act as default validation modules.
 
 :::caution
-It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become lost or unrecoverable.
+It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become  unrecoverable without atleast one module.
 :::
 
 ## Validation Modules
