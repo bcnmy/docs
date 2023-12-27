@@ -30,7 +30,7 @@ Before proceeding lets make a mental image of all the methods are going to be ca
   |    ├──  _validateAndUpdateNonce
   │    └──  _validatePaymasterPrepayment
   │         └── Paymaster(paymaster).validatePaymasterUserOp
-  │    
+  │
   ├──  _validateAccountAndPaymasterValidationData
   ├──  _executeUserOp
   │    ├──  innerHandleOp
@@ -55,19 +55,19 @@ You’ll find more “We are here” sections, that will help you visualise wher
 
 ```
 
-function handleOps(UserOperation[] calldata ops, address payable beneficiary) public nonReentrant 
+function handleOps(UserOperation[] calldata ops, address payable beneficiary) public nonReentrant
 
 ```
 
 This is a public function with nonReentrant modifier(to prevent reentrancy attacks) that accepts two parameters:
 
-`UserOperation[] calldata ops`  ⇒ Array of UserOperation objects with `calldata` storage.
+`UserOperation[] calldata ops` ⇒ Array of UserOperation objects with `calldata` storage.
 
-`address payable beneficiary`    ⇒ Beneficiary address where the gas is refunded after execution. This can be any address where bundler wants to receive the refund.
+`address payable beneficiary` ⇒ Beneficiary address where the gas is refunded after execution. This can be any address where bundler wants to receive the refund.
 
 :::note
 
-`handleOps` is called by the bundler account and if bundler send this transaction in public mempool on blockchain validator node, anyone can frontrun this transaction and change the beneficiary address so front runner can get the refund of this transaction. 
+`handleOps` is called by the bundler account and if bundler send this transaction in public mempool on blockchain validator node, anyone can frontrun this transaction and change the beneficiary address so front runner can get the refund of this transaction.
 So it’s important for bundler to send these transaction via private RPC to node providers or Block Builders so it doesn’t end up in public mempool.
 
 :::
@@ -98,6 +98,7 @@ unchecked {
 	}
 
 ```
+
 We are inside => handleOps
 
 Here an unchecked block is started (it’s closed at the end of the method) and we start a for loop that will iterate over each UserOp object. In each iteration,
@@ -116,13 +117,14 @@ Here an unchecked block is started (it’s closed at the end of the method) and 
 } // Closing Unchecked block.
 
 ```
+
 We are inside => handleOps
 
 A BeforeExecution() event is emitted to mark the flow where any event emitted before this event, is part of the validation.
 
-For each UserOp, an internal function `_executeUserOp` is called which internally calls the SCW and do the actual execution (calling a dapp smart contract or transferring funds to other address etc) and also calls postOp method on Paymaster if paymaster info is available in UserOp. 
+For each UserOp, an internal function `_executeUserOp` is called which internally calls the SCW and do the actual execution (calling a dapp smart contract or transferring funds to other address etc) and also calls postOp method on Paymaster if paymaster info is available in UserOp.
 
-It returns the total gasFee for this UserOp that needs to be refunded to the beneficiary. 
+It returns the total gasFee for this UserOp that needs to be refunded to the beneficiary.
 
 This happen for each UserOperation, and the fee refund for each UserOp is accumulated in collected variable, which will contain the total gas fee refund to be given to beneficiary for all the UserOp.
 
@@ -132,6 +134,7 @@ Next,
 _compensate(beneficiary, collected);
 
 ```
+
 We are inside => handleOps
 
 At last, `_compensate` method is called. It’s a very simple function which just transfer the collected amount of native currency to the beneficiary address. Nothing else happens in this method.
@@ -140,16 +143,16 @@ At last, `_compensate` method is called. It’s a very simple function which jus
 
 Here is a simple pseudo code for you to understand what exactly is happening in handleOps method.
 
-Pseudo code for `handleOps`  function:
+Pseudo code for `handleOps` function:
 
 1. Take the length of `userOps` as `n`.
 2. Create a `UserOpInfo` array of length `n`.
 3. For each user operation (**Verification Loop**):
-    1. Call `_validatePrepayment(index, userOp, userOpInfo)`, which returns `validationData` and `paymasterValidationData`.
-    2. Call `validateAccountAndpaymasterValidationData(index, validationData, pmValidationData, address(0))`.
+   1. Call `_validatePrepayment(index, userOp, userOpInfo)`, which returns `validationData` and `paymasterValidationData`.
+   2. Call `validateAccountAndpaymasterValidationData(index, validationData, pmValidationData, address(0))`.
 4. For each user operation (**Execution Loop**):
-    1. Call `_executeUserOp(index, userOp, userOpInfo)`, which returns the gas fee to be refunded to `beneficiary`.
-    2. Sum all the fee refunds for each user operation.
+   1. Call `_executeUserOp(index, userOp, userOpInfo)`, which returns the gas fee to be refunded to `beneficiary`.
+   2. Sum all the fee refunds for each user operation.
 5. Compensate the `beneficiary` address with all the collected gas fee.
 
 ### Summary
@@ -184,7 +187,7 @@ function _validatePrepayment(uint256 opIndex, UserOperation calldata userOp, Use
 
 We are inside ⇒ handleOps > validatePrepayment
 
-Remember this function is being called from the Verification Loop in hanldeOps method, so 
+Remember this function is being called from the Verification Loop in hanldeOps method, so
 
 1. First parameter is the index of the for loop happening in handleOps
 2. Second parameter is the UserOp object itself
@@ -192,9 +195,9 @@ Remember this function is being called from the Verification Loop in hanldeOps m
 
 Returns,
 
-validationData                      ⇒      validation data returned by Smart Contract Wallet `validateUserOp` method
+validationData ⇒ validation data returned by Smart Contract Wallet `validateUserOp` method
 
-paymasterValidationData   ⇒      validation data returned by Paymaster `validatePaymasterUserOp` method
+paymasterValidationData ⇒ validation data returned by Paymaster `validatePaymasterUserOp` method
 
 ### Function Definition
 
@@ -222,7 +225,7 @@ outOpInfo.userOpHash = getUserOpHash(userOp);
 
 In first line the on chain gas tracking is started. We get the amount of gas left at the start of the method.
 
-Next, we are taking the mUserOp field from the userOpInfo object. 
+Next, we are taking the mUserOp field from the userOpInfo object.
 
 Then we initialise the mUserOp object using values from userOp. [Check here](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21) to see how it is done visually.
 
@@ -283,11 +286,11 @@ uint256 maxGasValues = mUserOp.preVerificationGas |
 require(maxGasValues <= type(uint120).max, "AA94 gas values overflow");
 
 ```
+
 We are inside ⇒ handleOps > validatePrepayment
 
-
 The bitwise OR operation (**`|`**) combines some userOp values by setting each bit in the result to 1 if the corresponding bit is set in any of the input values. This means that the resulting **`maxGasValues`**
- variable will contain a value that is a combination of all of the specified gas limits and fees.
+variable will contain a value that is a combination of all of the specified gas limits and fees.
 
 Here, the code checks that all numeric values in the `userOp` object are below 128 bits, so that they can be safely added and multiplied without causing an overflow error.
 
@@ -304,7 +307,7 @@ We are inside ⇒ handleOps > validatePrepayment
 
 Here we defined a variable `gasUsedByValidateAccountPrepayment` that we’ll initialise in next lines, and we calculate `requiredPreFund` by calling `_getRequiredPrefund(mUserOp)` method.
 
-Before we understand what `_requiredPreFund` is we need to understand that one of the responsibilities of EntryPoint is to ensure that bundler is paid back the gas fee used to execute UserOperations. Now the question is who pays this gas to bundler. This is either paid by Paymaster or Smart Contract Wallet itself. 
+Before we understand what `_requiredPreFund` is we need to understand that one of the responsibilities of EntryPoint is to ensure that bundler is paid back the gas fee used to execute UserOperations. Now the question is who pays this gas to bundler. This is either paid by Paymaster or Smart Contract Wallet itself.
 
 In order to do that, Paymaster or SCW are expected to do a deposit of ether (or native currency of the blockchain) on EP contract and then EP uses this deposit to pay back the bundler.
 
@@ -328,11 +331,11 @@ function _getRequiredPrefund(MemoryUserOp memory mUserOp) internal pure returns 
 
 ```
 
-We are inside ⇒ handleOps > validatePrepayment > _getRequiredPrefund
+We are inside ⇒ handleOps > validatePrepayment > \_getRequiredPrefund
 
 ![getrequiredprefund](./images/get%20required%20pre%20fund.png)
 
-We all know how to calculate gas fee using the formula `GasFee = GasPrice * GasUsed` 
+We all know how to calculate gas fee using the formula `GasFee = GasPrice * GasUsed`
 
 Here the gasPrice part is calculated from `mUserOp.maxFeePerGas` because we are trying to calculate the maximum fee that can be deducted from EP deposit.
 
@@ -350,12 +353,12 @@ So this is actually a challenge for clients when generating these gasLimit value
 Next,
 
 ```
-(gasUsedByValidateAccountPrepayment, validationData) 
+(gasUsedByValidateAccountPrepayment, validationData)
 	= _validateAccountPrepayment(opIndex, userOp, outOpInfo, requiredPreFund);
 
 ```
 
-We are inside ⇒ handleOps > validatePrepayment 
+We are inside ⇒ handleOps > validatePrepayment
 
 We are here
 
@@ -431,17 +434,17 @@ function _validateAccountPrepayment(
 
 ```
 
-We are inside ⇒ handleOps > validatePrepayment > _validateAccountPrepayment
+We are inside ⇒ handleOps > validatePrepayment > \_validateAccountPrepayment
 
 Explanation of above code snippet:
 
 1. First the on chain gas tracking is started.
-2. We get `mUserOp` and `sender` from `opInfo` object. `opInfo` is the same UserOpInfo object whose type is [defined here](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21). 
+2. We get `mUserOp` and `sender` from `opInfo` object. `opInfo` is the same UserOpInfo object whose type is [defined here](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21).
 3. Next we call `_createSenderIfNeeded()` method to call Factory contract to deploy new SCW if it’s not already deployed.
 4. Call `numberMarker()` method. This function is used as a checkpoint in the code. It adds a specific opcode in the flow, so that during off chain simulation we can get this while tracing the simulation call in bundlers.
 5. Check if paymaster address is zero, this means that SCW is supposed to pay for the current UserOperation execution.
-    1. Calls balanceOf() method defined in the EP to get the deposit balance of sender (SCW)
-    2. Check if current deposit is enough to cover the max gas fee for this UserOperation.
+   1. Calls balanceOf() method defined in the EP to get the deposit balance of sender (SCW)
+   2. Check if current deposit is enough to cover the max gas fee for this UserOperation.
 6. Calls `validateUserOp` method on SCW. It uses `mUserOp.verificationGasLimit` as gas limit in this call. It pass (userOp, userOpHash, missingAccountFunds) as parameter to validateUserOp method.
 7. It returns a validationData which is stored in the return variable `validationData`
 8. If validateUserOp call fails, the whole operation reverts.
@@ -476,12 +479,12 @@ We are inside ⇒ handleOps > validatePrepayment
 
 ![validatepaymasterprepayment](./images/validate%20paymaster%20prepayment.png)
 
-First, `_validateAndUpdateNonce` is called which takes `mUserOp.sender` and `mUserOp.nonce` as argument. It validate the nonce field and increment the value against sender address. 
+First, `_validateAndUpdateNonce` is called which takes `mUserOp.sender` and `mUserOp.nonce` as argument. It validate the nonce field and increment the value against sender address.
 
 Note: Smart Contract Wallet is not supposed to handle the nonce field in validateUserOp method anymore as this is done in EntryPoint now.
 
 ```
-function _validateAndUpdateNonce(address sender, uint256 nonce) 
+function _validateAndUpdateNonce(address sender, uint256 nonce)
 internal returns (bool) {
     uint192 key = uint192(nonce >> 64);
     uint64 seq = uint64(nonce);
@@ -553,18 +556,18 @@ function _validatePaymasterPrepayment(
 
 ```
 
-We are inside ⇒ handleOps > validatePrepayment > _validatePaymasterPrepayment
+We are inside ⇒ handleOps > validatePrepayment > \_validatePaymasterPrepayment
 
 Explanation of above code snippet:
 
-1. Get `mUserOp` object from opInfo. `opInfo` is the same UserOpInfo object whose type is [defined here](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21). 
+1. Get `mUserOp` object from opInfo. `opInfo` is the same UserOpInfo object whose type is [defined here](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21).
 2. Check if gas used by [account validation](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21) is less than `userOp.verificationGasLimit`.
 3. **By now this is understood that, `userOp.verificationGasLimit` value should cover at least the gas for account validation (including account deployment) and paymaster validation.**
 4. Get the paymaster deposit from the `deposits` mapping in EP.
 5. If paymaster deposit is not enough to cover the max gas fee, EP reverts.
 6. Else deduct the max gas fee (`requiredPrefund`) from paymaster deposit in EP.
 7. Call Paymaster `validatePaymasterUserOp` method. Pass `userOp.verificationGasLimit` as gas limit.
-8. Pass (`userOp, userOpHash, requiredPrefund`) as arguments. 
+8. Pass (`userOp, userOpHash, requiredPrefund`) as arguments.
 9. If Paymaster validation call fails, whole operation reverts.
 10. Else return the context object and validation data returned by as returned by `validatePaymasterUserOp` call.
 
@@ -575,20 +578,20 @@ Ok take a deep breath, we have done most of the verification part till now. So f
 1. We called SCW.validateUserOp() which internally deploys the wallet if required.
 2. We called called Paymaster.validatePaymasterUserOp()
 
-Looks simple, right? 
+Looks simple, right?
 
 There are many small checks related to gas and deposits inside these methods. So the code might look long, but conceptually its just getting the verification done by SCW and Paymaster. Remember devil is in the details.
 
 Just to remind you again the `handleOps` flow looks like this
 
-1. validatePrepayment               ← We are here
+1. validatePrepayment ← We are here
 2. validateAccountAndPaymasterValidationData
 3. executeUserOp
 4. compensate
 
 We are still at the first step `validatePrepayment`. Now let’s finish the rest of the part of this method.
 
-Next, 
+Next,
 
 ```
 unchecked {
@@ -616,19 +619,20 @@ Explanation of above code snippet:
 2. Now we check if userOp.verificationGasLimit is able to cover the gas used so far.
 3. If not, the whole operation reverts.
 4. Else we proceed and fill out rest of the fields on UserOpInfo object.
-5. `outOpInfo.prefund` is assigned the requiredPreFund value which is max gas fee deducted from the deposit on EP. 
+5. `outOpInfo.prefund` is assigned the requiredPreFund value which is max gas fee deducted from the deposit on EP.
 6. `outOpInfo.contextOffset` is assigned the offset of context object in memory. Remember context is the object returned by `Paymaster.validatePaymasterUserOp` call.
-So instead of assigning the whole context object, we just save its memory offset. So we don’t have to pass around this heavy context object while calling internal methods.
+   So instead of assigning the whole context object, we just save its memory offset. So we don’t have to pass around this heavy context object while calling internal methods.
 7. `outOpInfo.preOpGas` is assigned (Total gas used so far + `userOp.preVerificationGas`)
 
 :::tip
 
-As explained at the beginning, UserOpInfo.preOpGas will contain total gas used so far, it includes 
+As explained at the beginning, UserOpInfo.preOpGas will contain total gas used so far, it includes
+
 1. The actual logic written in EntryPoint contract
-2. Other gas units, which is 
-     a. Base gas fee(21000)
-     b. Gas spent in calling the handleOps and it’s parameters
-     c. Gas that will be used in later part of EntryPoint which can’t be tracked using gasleft() opcode. Will come back to this point again later in this article.
+2. Other gas units, which is
+   a. Base gas fee(21000)
+   b. Gas spent in calling the handleOps and it’s parameters
+   c. Gas that will be used in later part of EntryPoint which can’t be tracked using gasleft() opcode. Will come back to this point again later in this article.
 
 The second point can’t be tracked on chain, so we rely on userOp.preVerificationGas field and assume its value has covered these gas units.
 
@@ -638,8 +642,8 @@ OK, the prePayment part is done, let’s move to the next method that is called 
 
 Just to remind you again the `handleOps` flow looks like this
 
-1. [validatePrepayment](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21)               ← This is Done
-2. validateAccountAndPaymasterValidationData      ← We’ll begin with this method now
+1. [validatePrepayment](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21) ← This is Done
+2. validateAccountAndPaymasterValidationData ← We’ll begin with this method now
 3. executeUserOp
 4. compensate
 
@@ -662,12 +666,12 @@ function _validateAccountAndPaymasterValidationData(
 
 We are inside ⇒ handleOps > validateAccountAndPaymasterValidationData
 
-Remember this function is being called from the Verification Loop in `hanldeOps` method, so 
+Remember this function is being called from the Verification Loop in `hanldeOps` method, so
 
 1. First parameter is the index of the for loop happening in handleOps
 2. Second parameter is the validation data returned by validateUserOp method on SCW
 3. Third parameter is the validation data returned by validatePaymasterUserOp method on Paymaster
-4. Fourth parameter is the expected aggregator address (This is out of scope for this article, and in our flow address(0) is passed from `handleOps` 
+4. Fourth parameter is the expected aggregator address (This is out of scope for this article, and in our flow address(0) is passed from `handleOps`
 
 This function doesn’t return anything, it just revert if any of the validation data is not valid.
 
@@ -681,7 +685,7 @@ As per this ERC, the `uint256 validationData` value returned by SCW or Paymaster
 
 Above all three values are packed in a single uint256 value.
 
-`authorizer`  ⇒ 0 for valid signature, 1 to mark signature failure. Otherwise, an address of an `authorizer` contract. This ERC defines “signature aggregator” as `authorizer`.
+`authorizer` ⇒ 0 for valid signature, 1 to mark signature failure. Otherwise, an address of an `authorizer` contract. This ERC defines “signature aggregator” as `authorizer`.
 
 `validUntil`  ⇒ 6-byte timestamp value, or zero for “infinite”. The UserOp is valid only up to this time.
 
@@ -691,7 +695,7 @@ It’s upto the SCW or Paymaster to defined these values depending on their own 
 
 ![validationdataformat](./images/validation%20data%20format.png)
 
-Let's start with the code 
+Let's start with the code
 
 ```
 
@@ -724,13 +728,13 @@ We are here
 
 ![validateaccoutnandpaymaster](./images/Validate%20Account%20and%20Paymaster%20Validation.png)
 
-The code is self explanatory, 
+The code is self explanatory,
 
 1. First the validationData is decoded into aggregator address and a boolean value which tells if `validUntil` and `validAfter` part of validationData is valid as per the `block.timestamp` or not.
 2. If aggregator returned by SCW, doesn’t match with expectedAggregator, EP reverts.
-3. Remember expectedAggregator is passed as address(0) from handleOps. So in this flow SCW just need to return 0 value. 
+3. Remember expectedAggregator is passed as address(0) from handleOps. So in this flow SCW just need to return 0 value.
 4. If validUntil and validAfter are out of time range as per block.timestamp, EP reverts.
-5. Step 1-4 is repeated for paymasterValidationData as well. 
+5. Step 1-4 is repeated for paymasterValidationData as well.
 6. Only with one exception that if aggregator address is non-zero, EP reverts. So paymaster must return 0 value for this in `validatePaymasterUserOp` method.
 
 :::note
@@ -743,9 +747,9 @@ OK, our second method in handleOps is also done. Let’s see where we are now.
 
 `handleOps` flow looks like this
 
-1. [validatePrepayment](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21)               ← This is Done
-2. validateAccountAndPaymasterValidationData      ← This is Done
-3. executeUserOp                       ← We’ll begin with this method now
+1. [validatePrepayment](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21) ← This is Done
+2. validateAccountAndPaymasterValidationData ← This is Done
+3. executeUserOp ← We’ll begin with this method now
 4. compensate
 
 ## executeUserop method
@@ -804,8 +808,8 @@ bytes memory context = getMemoryBytesFromOffset(opInfo.contextOffset);
 We are inside ⇒ handleOps > executeUserOp
 
 1. First, the on chain gas tracking again starts.
-2. We fetch the context object from the memory using `opInfo.contextOffset`. This context object was returned by Paymaster when we called validatePaymasterUserOp. 
-Now we need to pass this object back to Paymaster after userOp execution, when we’ll call postOp method of Paymaster.
+2. We fetch the context object from the memory using `opInfo.contextOffset`. This context object was returned by Paymaster when we called validatePaymasterUserOp.
+   Now we need to pass this object back to Paymaster after userOp execution, when we’ll call postOp method of Paymaster.
 
 Next,
 
@@ -848,20 +852,19 @@ Explanation of above code snippet:
 3. It’s interesting to see all the code in catch block. Let’s see what it is.
 4. In case call to innerHandleOp reverts, code execution will come to this catch block. Here we need to know the failure reason in catch block.
 5. The flow will come to catch block because of following reasons
-    1. If OOG error comes during execution
-    2. If paymaster `postOp` method reverts which called from `innerHandleOp` method.
-6. Now in catch block, first the revertCode is extracted using assembly code. 
-    1. **`returndatacopy(0, 0, 32)`** copies 32 bytes of data from EP contract's memory starting at position 0 (which is where the returned data from the inner function call will be stored) to memory position 0
-    2. **`innerRevertCode := mload(0)`** loads 32 bytes of data from the memory position 0 and stores it in the **`innerRevertCode`**variable.
-7. If the revertCode matches with `INNER_OUT_OF_GAS`, EP reverts the operation. 
-    1. This `INNER_OUT_OF_GAS` can be emitted by OOG checks in case bundler didn’t pass enough gas limit while calling handleOps.
-    2. But even a malicious paymaster can revert with the same error code and cause a bundler to think it is "internal" error. That’s why in this case bundler should report the paymaster if this happens.
+   1. If OOG error comes during execution
+   2. If paymaster `postOp` method reverts which called from `innerHandleOp` method.
+6. Now in catch block, first the revertCode is extracted using assembly code.
+   1. **`returndatacopy(0, 0, 32)`** copies 32 bytes of data from EP contract's memory starting at position 0 (which is where the returned data from the inner function call will be stored) to memory position 0
+   2. **`innerRevertCode := mload(0)`** loads 32 bytes of data from the memory position 0 and stores it in the **`innerRevertCode`**variable.
+7. If the revertCode matches with `INNER_OUT_OF_GAS`, EP reverts the operation.
+   1. This `INNER_OUT_OF_GAS` can be emitted by OOG checks in case bundler didn’t pass enough gas limit while calling handleOps.
+   2. But even a malicious paymaster can revert with the same error code and cause a bundler to think it is "internal" error. That’s why in this case bundler should report the paymaster if this happens.
 8. If the revert reason is something else, then EP calls `_handlePostOp()` method with `IPaymaster.PostOpMode.postOpReverted` mode. We’ll come back to this method later.
 
 Now let’s go inside innerHandleOp method and see what’s happening.
 
 ![innerhandleop](./images/Inner%20HandleOp.png)
-
 
 ```
 /**
@@ -908,28 +911,29 @@ function innerHandleOp(
 }
 
 ```
+
 We are inside ⇒ handleOps > executeUserOp > innerHandleOp
 
 1. First thing to notice here is that it is declared as external method to open a call context, but it can only be called by handleOps method.
 2. It starts on chain gas tracking using `gasleft()` opcode.
 3. Check if msg.sender is address of EntryPoint only, else reverts.
 4. Then in unchecked block, it checks if gas left so far is less than `callGasLimit + mUserOp.verificationGasLimit + 5000`
-    1. Here callGasLimit is the userOp.callGasLimit ⇒ gas limit used while calling SCW method to execute userOp.callData
-    2. We add userOp.verificationGasLimit coz we are going to make a call to Paymaster postOp method where this value is used as gas limit.
-    3. This 5000 value is there to protect against an edge-case where bundler crafted gas-limit can cause inner call (SCW call) to revert and still pay.
+   1. Here callGasLimit is the userOp.callGasLimit ⇒ gas limit used while calling SCW method to execute userOp.callData
+   2. We add userOp.verificationGasLimit coz we are going to make a call to Paymaster postOp method where this value is used as gas limit.
+   3. This 5000 value is there to protect against an edge-case where bundler crafted gas-limit can cause inner call (SCW call) to revert and still pay.
 5. If step 4 is true, it revert with `INNER_OUT_OF_GAS` as revert reason.
 6. Else we proceed to call SCW using userOp.callData. Here a library Exec is used to make this call. This is regular assembly code to call a destination with callData.
 7. You can check Exec library [code here.](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/utils/Exec.sol#L11)
 8. If SCW call revert, the EP does’t revert but it just emits an event and initialise mode variable with value `IPaymaster.PostOpMode.opReverted`
-9. This mode variable is passed as argument to _handlePostOp method (called at the end of this method), for it to know from where it is being called.
+9. This mode variable is passed as argument to \_handlePostOp method (called at the end of this method), for it to know from where it is being called.
 10. Remember `_handlePostOp()` is also called from `_executeUserOp` method in the [catch block.](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21)
-11. The last unchecked block, first calculate total gas used so far till this point. 
+11. The last unchecked block, first calculate total gas used so far till this point.
 12. It is calculated as total gas used in this method + all earlier gas used starting from handleOps call which is already captured in [opInfo.preOpGas](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21)
-13. At last it calls _handlePostOp.
+13. At last it calls \_handlePostOp.
 
 Now let’s go inside `_handlePostOp` method and see what’s happening. This is the final internal method call in Execution Flow.
 
-## _handlePostOp method
+## \_handlePostOp method
 
 :::note
 
@@ -941,7 +945,7 @@ Till here, SCW execution is completed and now we just need to make last call to 
 
 This is a bit long function, so lets break down this in Function Declaration and Function Definition
 
-### Function Declaration 
+### Function Declaration
 
 ```
 function _handlePostOp(
@@ -954,13 +958,13 @@ function _handlePostOp(
 
 ```
 
-We are inside ⇒ handleOps > executeUserOp > innerHandleOp > _handlePostOp
+We are inside ⇒ handleOps > executeUserOp > innerHandleOp > \_handlePostOp
 
-`opIndex`      ⇒  index in the user operation batch
-`mode`            ⇒  whether is called from innerHandleOp, or outside (postOpReverted)
-`opInfo`        ⇒  userOp fields and info collected during validation
-`context`      ⇒  the context returned in validatePaymasterUserOp
-`actualGas`  ⇒  the gas used so far by this user operation
+`opIndex` ⇒ index in the user operation batch
+`mode` ⇒ whether is called from innerHandleOp, or outside (postOpReverted)
+`opInfo` ⇒ userOp fields and info collected during validation
+`context` ⇒ the context returned in validatePaymasterUserOp
+`actualGas` ⇒ the gas used so far by this user operation
 
 ### Function Definition
 
@@ -975,13 +979,13 @@ unchecked {
 
 ```
 
-We are inside ⇒ handleOps > executeUserOp > innerHandleOp > _handlePostOp
+We are inside ⇒ handleOps > executeUserOp > innerHandleOp > \_handlePostOp
 
 This is the part where we calculate the userOp gas price.
 
-1. It calculate the gasPrice to be used to calculate the final gas cost of this userOp. 
+1. It calculate the gasPrice to be used to calculate the final gas cost of this userOp.
 2. `maxFeePerGas` and `maxPriorityFeePerGas` param are taken from userOp for this.
-3. `gasPrice ← min(maxFeePerGas, maxPriorityFeePerGas + block.basefee)`  Calculation is same as done in EIP-1559 for transactions.
+3. `gasPrice ← min(maxFeePerGas, maxPriorityFeePerGas + block.basefee)` Calculation is same as done in EIP-1559 for transactions.
 
 Next,
 
@@ -1011,14 +1015,14 @@ if (paymaster == address(0)) {
 
 ```
 
-We are inside ⇒ handleOps > executeUserOp > innerHandleOp > _handlePostOp
+We are inside ⇒ handleOps > executeUserOp > innerHandleOp > \_handlePostOp
 
 1. Then we check who is paying for the gas for this userOp, SCW or Paymaster. Then we assign a refundAddress accordingly.
 2. If `context` object is not empty, we proceed to call `postOp` method on Paymaster.
 3. If this call is coming from `innerHandleOp` method, it calls postOp method. Here we don’t care if postOp reverts or not. EP will still pay the bundler the gas fee for this userOp.
-4. If this call is coming from `_executeUserOp` catch block, it calls postOp method. 
-    1. If postOp reverts this time, the whole operation reverts with proper revert reason (if available).
-    2. If flow is coming here, that means postOp is already called once, and this is second time the postOp is called.
+4. If this call is coming from `_executeUserOp` catch block, it calls postOp method.
+   1. If postOp reverts this time, the whole operation reverts with proper revert reason (if available).
+   2. If flow is coming here, that means postOp is already called once, and this is second time the postOp is called.
 
 Next,
 
@@ -1042,7 +1046,8 @@ emit UserOperationEvent(
 );
 
 ```
-We are inside ⇒ handleOps > executeUserOp > innerHandleOp > _handlePostOp
+
+We are inside ⇒ handleOps > executeUserOp > innerHandleOp > \_handlePostOp
 
 1. At the end, it calculate the final gas cost of user operation.
 2. It checks if the actual gas cost used is less than the requiredPrefund calculated very early in handleOps flow.
@@ -1053,11 +1058,10 @@ OK we are almost done with the whole handleOps flow. Lets see where we are now
 
 `handleOps` flow looks like this
 
-1. [validatePrepayment](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21)               ← This is Done
-2. validateAccountAndPaymasterValidationData      ← This is Done
-3. executeUserOp                       ← This is Done
-4. compensate                             ← We’ll begin with this method now
-
+1. [validatePrepayment](https://www.notion.so/c9589d072041413486d2caef49260f9f?pvs=21) ← This is Done
+2. validateAccountAndPaymasterValidationData ← This is Done
+3. executeUserOp ← This is Done
+4. compensate ← We’ll begin with this method now
 
 ## compensate method
 
@@ -1077,7 +1081,7 @@ function _compensate(address payable beneficiary, uint256 amount) internal {
 
 ```
 
-We are inside ⇒ handleOps > _compensate
+We are inside ⇒ handleOps > \_compensate
 
 This method is not called from any for loop in handleOps so there’s no index parameter.
 
@@ -1098,7 +1102,7 @@ require(success, "AA91 failed send to beneficiary");
 
 ```
 
-This code is pretty self explanatory, 
+This code is pretty self explanatory,
 
 1. It checks if beneficiary is not a zero address.
 2. Then it transfers the gas fee in native currency of blockchain to the beneficiary.
@@ -1106,9 +1110,9 @@ This code is pretty self explanatory,
 
 ## And we are done!
 
-Huh, let’s take a break. Grab a cup of coffee or whatever calm your mind. 
+Huh, let’s take a break. Grab a cup of coffee or whatever calm your mind.
 
-This was a pretty long piece of code to understand. And it might take a lot of reading again to understand it end to end. 
+This was a pretty long piece of code to understand. And it might take a lot of reading again to understand it end to end.
 
 So I’d recommend you go through the EntryPoint contract code yourself now and try to make some other developer in your team understand this code.
 
@@ -1121,6 +1125,6 @@ If you have made it this far, it calls for a recap of some important concept aga
 3. EP has handleOps method which is called by the bundler. Bundler can pass multiple UserOperation to this method and a beneficiary address where the gas refund goes from EP.
 4. EP stores the gas deposited by either Paymaster or SCW. Based on the UserOperation fields it decides from which deposit it will refund the bundler(beneficiary) address.
 5. EP does its best to calculate the actual gas used during the execution. But unfortunately it can’t track all of the gas used, so it relies on `UserOp.preVerificationGas` field to cover the untracked gas during the execution.
-    1. So higher value of `preVerificationGas` means more profit for the Bundler.
+   1. So higher value of `preVerificationGas` means more profit for the Bundler.
 6. `UserOp.maxFeePerGas` and `UserOp.maxPriorityFeePerGas` decides the gasPrice to be used by EP for calculate the bundler refund.
-    1. So Bundler should try to send handleOps transaction with lower gas fee for actual `handleOps` transaction to make some profit.
+   1. So Bundler should try to send handleOps transaction with lower gas fee for actual `handleOps` transaction to make some profit.

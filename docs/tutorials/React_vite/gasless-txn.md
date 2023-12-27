@@ -38,8 +38,6 @@ In the return for this component lets add the following JSX:
 </div>
 ```
 
-
-
 Now lets create our Counter component!
 
 If you do not already have a Components folder go ahead and create one within source and create a new file called Counter.tsx
@@ -182,11 +180,9 @@ const userOp = await smartAccount.buildUserOp([transaction], {
     mode: PaymasterMode.SPONSORED,
   },
 });
-
-
 ```
 
-Now that the userOp is built and will be sponsored, lets send the final userOp. 
+Now that the userOp is built and will be sponsored, lets send the final userOp.
 
 Now, let's build try and catch block :
 
@@ -282,4 +278,4 @@ export default Counter;
 
 ```
 
-Congratulations you just created your first AA powered dApp. Users can now log in and have a smart account created for them and interact with a smart contract without the need to paying gas fees. 
+Congratulations you just created your first AA powered dApp. Users can now log in and have a smart account created for them and interact with a smart contract without the need to paying gas fees.

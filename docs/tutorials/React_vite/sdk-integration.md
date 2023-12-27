@@ -67,7 +67,7 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 });
 ```
 
-:::info 
+:::info
 You can get your Paymaster URL and bundler URL from Biconomy Dashboard.
 Follow the steps mentioned
 [here](https://docs.biconomy.io/docs/category/biconomy-dashboard).
@@ -83,11 +83,9 @@ const [provider, setProvider] = useState < any > (null);
 const [address, setAddress] = useState <string> ("";)
 ```
 
-Next let's implement the connect function for activating magic social login and Biconomy Smart Account creation: 
-
+Next let's implement the connect function for activating magic social login and Biconomy Smart Account creation:
 
 ```js
-
 const connect = async () => {
   try {
     await magic.wallet.connectWithUI();
@@ -95,12 +93,12 @@ const connect = async () => {
       magic.rpcProvider,
       "any",
     );
-    setProvider(web3Provider)
+    setProvider(web3Provider);
     const module = await ECDSAOwnershipValidationModule.create({
       signer: web3Provider.getSigner(),
       moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
     });
-    setLoading(true)
+    setLoading(true);
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
       chainId: ChainId.POLYGON_MUMBAI,
       bundler: bundler,
@@ -111,11 +109,10 @@ const connect = async () => {
     });
 
     const address = await biconomySmartAccount.getAccountAddress();
-    setAddress(address)
-    setLoading(false)
+    setAddress(address);
+    setLoading(false);
   } catch (error) {
     console.error(error);
   }
 };
-
 ```

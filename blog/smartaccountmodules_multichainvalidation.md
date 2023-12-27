@@ -59,11 +59,9 @@ However, userOps on several chains may have various nonces, various gas values, 
 
 With Biconomy Multichain Validator module it is possible to protect any amount of such userOps build for various chains with just one signature!
 
-
 ![multichainvalidation](./images/multichainvalidation.png)
 
 ## How it works
-
 
 There is an efficient way to prove that a blob of data has been included in a list of trusted blobs without going over the entire list or even knowing the entire list. This is done using Merkle Trees.
 
