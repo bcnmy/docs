@@ -174,7 +174,7 @@ console.log(
 :::
 
 :::info
-The contract for your smart account is **not yet deployed** at this stage. Thanks to counterfactual address generation, you can know the address beforehand. This address is derived from the module and parameters used during creation—specifically, the **signer** in this case.
+The contract for your smart account is **not yet deployed** at this stage. Thanks to counterfactual address generation, you can know the address beforehand. This address is derived from the module and parameters used during creation specifically, the **signer** in this case.
 :::
 
 Run this script, and your command prompt will show your smart account's address, marking the successful setup and initialization.
