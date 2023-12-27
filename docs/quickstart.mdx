@@ -83,7 +83,7 @@ All packages you need for this guide are configured and installed for you. Check
 Let’s first set up a `.env` file in the root of our project, this will need a **Private Key** of any **Externally Owned Account (EOA)** you would like to serve as the owner of the Smart Account we create. This is a private key you can get from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. Each of these wallets will include step-by-step guides on how to export the Private key. 🔑
 
 ```bash
-PRIVATE_KEY = "Enter a private key"
+PRIVATE_KEY = "<your_private_key>"
 ```
 
 Let’s give our script the ability to access this environment variable. Delete the console log inside of `src/index.ts` and replace it with the code below. All of our work for the remainder of the tutorial will be in this file.
