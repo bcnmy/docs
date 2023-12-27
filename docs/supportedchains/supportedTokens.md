@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # ERC20 Gas Payments
 
-Our Paymaster not only allows you to sponsor transactions for your users but also allows users to pay for transactions using ERC20 tokens. Below are supported tokens list grouped by chain.
+Our Paymaster not only allows you to sponsor transactions for your users but also allows users to pay for transactions using ERC20 tokens. Below are the supported tokens list grouped by chain.
 
 Please note that we will be reviewing DEX activity on each network to determine additional ERC20 token support on an ongoing basis.
 
