@@ -12,22 +12,37 @@ Biconomy MSA (Modular Smart Account) has two types of modules:
 - **Validation modules** - These modules define different signature schemes or authorization mechanisms to validate who is allowed to perform what action on the account, by implementing standard interfaces.
 - **Execution modules** - These modules define custom execution functions to facilitate the actions allowed by the account.
 
-ERC 7579 enables developers to standardize these modules with minimal impact on the implementation logic of the account. It extends the objectives of ERC 4337, specifically the goal of abstracting logic for execution and validation for each modular smart account.
+**Standardizing Modularity for Smart Accounts**
+
+*ERC 6900* is the first proposal that aims to standardize modularity for Smart Accounts, introduced by Alchemy in April 2023. It provides standards for how plugins (modules) should be written as well as how compliant accounts should add, update, remove, and inspect plugins.
+
+Similarly, *ERC 7579* enables developers to standardize these modules with minimal impact on the implementation logic of the account. It was developed by Rhinestone, Biconomy, ZeroDev, and OKX and presented in December 2023. This proposal outlines the minimally required interfaces and behavior for smart accounts and modules to ensure interoperability across implementations.
+
+ERC 7579 is less opinionated and allows developers to experiment and innovate, making their own trade-offs around complexity and security. In contrast, ERC 6900 is more prescriptive due to an extensive description of all the aspects of compliant account behavior.
 
 ### How to enable modules
 
 The Modular smart account is designed to be adaptable and flexible. Instead of storing ownership data internally or relying on a fixed signature verification method, it empowers users to choose their primary validation module. This flexibility, as part of Biconomy's [SmartAccountFactory](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/factory/SmartAccountFactory.sol#L73), ensures each account can validate userOps effectively and support diverse user requirements.
 
+Modules can be enabled using following methods:
+
+- During MSA deployment, a default validation module is enabled. Internally, it calls the [deployCounterFactualAccount](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/factory/SmartAccountFactory.sol#L57) method on smart account factory. The module selected to deploy the MSA determines its final address, due to its counterfactual nature.
+
+- A new module can be enabled via a userOp transaction on smart account by specifying the module address and moduleSetupData. Internally, it calls [setupAndEnableModule](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/base/ModuleManager.sol#L196) method on Module Manager. It can be set as an active validation module to be used for next transactions.
+
+```jsx
+const isEnabled = await smartAccount.isModuleEnabled(module_address)
+if ( !isEnabled ) {
+    const enableModuleTrx = await smartAccount.getEnableModuleData(module_address);
+    transactionArray.push( enableModuleTrx );
+}
+smartAccount = smartAccount.setActiveValidationModule( module )
+```
+
+As per the code, the initial step is to verify whether the module is already enabled. If the module is not enabled, a transaction can be performed to enable it.
+
 :::note
-The module selected to deploy the MSA determines its final address, due to MSA's counterfactual nature at deployment.
-:::
-
-In addition to enabling the module, It also mandates the **moduleSetupData** to set up the module by the smart account during initialization. It only stores a reference to the module address, thus making it possible for multiple modules to use the same function selector.
-
-Each account must have a default validation module which gets used when no is enabled. All validation modules can act as active validation modules, but the ones with the following functionality can act as default validation modules.
-
-:::caution
-It's crucial to have at least one module in a Smart Account. Without a module, the Smart Account might become unrecoverable without at least one module.
+The module passed during the deployment acts as default validaiton module. This module gets used as an active validaiton module, if no other module is enabled.
 :::
 
 ## Validation Modules
