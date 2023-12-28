@@ -100,7 +100,7 @@ async function mintNFT() {
       await biconomyPaymaster.getPaymasterAndData(partialUserOp);
     partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
   } catch (e) {
-    console.log("error received ", e);
+    console.log("Error encountered: ", e);
   }
 
   try {
@@ -113,7 +113,7 @@ async function mintNFT() {
       `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
     );
   } catch (e) {
-    console.log("error received ", e);
+    console.log("Error encountered: ", e);
   }
 }
 
@@ -228,7 +228,7 @@ try {
     await basePaymaster.getPaymasterAndData(partialUserOp2);
   partialUserOp2.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
 } catch (e) {
-  console.log("error received ", e);
+  console.log("Error encountered: ", e);
 }
 
 const returnedOps = await multiChainModule.signUserOps([
@@ -250,7 +250,7 @@ try {
     `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
   );
 } catch (e) {
-  console.log("error received ", e);
+  console.log("Error encountered: ", e);
 }
 
 try {
@@ -263,7 +263,7 @@ try {
     `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
   );
 } catch (e) {
-  console.log("error received ", e);
+  console.log("Error encountered: ", e);
 }
 ```
 
@@ -394,7 +394,7 @@ async function mintNFT() {
       await biconomyPaymaster.getPaymasterAndData(partialUserOp);
     partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
   } catch (e) {
-    console.log("error received ", e);
+    console.log("Error encountered: ", e);
   }
 
   const { baseAccount, multiChainModule } = await createBaseAccount();
@@ -422,7 +422,7 @@ async function mintNFT() {
       await basePaymaster.getPaymasterAndData(partialUserOp2);
     partialUserOp2.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
   } catch (e) {
-    console.log("error received ", e);
+    console.log("Error encountered: ", e);
   }
 
   const returnedOps = await multiChainModule.signUserOps([
@@ -440,7 +440,7 @@ async function mintNFT() {
       `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
     );
   } catch (e) {
-    console.log("error received ", e);
+    console.log("Error encountered: ", e);
   }
 
   try {
@@ -453,7 +453,7 @@ async function mintNFT() {
       `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
     );
   } catch (e) {
-    console.log("error received ", e);
+    console.log("Error encountered: ", e);
   }
 }
 
