@@ -3,68 +3,108 @@ sidebar_label: "Creating Gasless Transactions"
 sidebar_position: 2
 ---
 
-# Creating Gasless Transactions
+# Creating Gasless Transactions ⛽️
 
-In this guide, we will walk through creating a basic Node.js script using
-TypeScript that allows user to mint an NFT without paying for any Gas.
+Here, we'll guide you through a Node.js script in TypeScript to mint NFTs **without any gas fees** on the Polygon Mumbai.
 
-:::info This tutorial has a two other steps in the previous sections:
-[Environment Setup and Account Initialization](setupaccountinitiation).
+:::info Prerequisites
+Before you dive in, please make sure you've covered [Environment Setup and Account Initialization](setupaccountinitiation). We'll be using the NFT contract [here](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
+Contract Address: `0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e`.
 :::
 
-This tutorial will be done on the Polygon Mumbai Network and the smart contract
-for the NFT mint is available
-[here](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
-The address for the contract is 0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e.
+## 🔄 Updated Imports for Gasless NFT Transactions
 
-## Building the NFT Mint Function
+We've added new imports to our existing setup for gasless NFT minting:
 
-Now it's time to construct and execute our NFT Minting function:
+- **`ethers`**: Essential for specific Ethereum contract functions, such as encoding NFT minting data.
+- **`PaymasterMode`**: This defines how the Paymaster handles gas fees, enabling gasless transactions by setting it to `SPONSORED`.
 
 ```typescript
-async function mintNFT() {}
+// Import necessary modules and configurations
+import { config } from "dotenv"; // dotenv for loading environment variables from a .env file
+import { IBundler, Bundler } from "@biconomy/bundler"; // Biconomy bundler for managing gasless transactions
+import {
+  DEFAULT_ENTRYPOINT_ADDRESS,
+  BiconomySmartAccountV2,
+} from "@biconomy/account"; // Default entry point and smart account module from Biconomy
+import { Wallet, ethers, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
+import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
+import {
+  IPaymaster,
+  BiconomyPaymaster,
+  PaymasterMode,
+} from "@biconomy/paymaster"; // Paymaster interface and Biconomy implementation
+import {
+  ECDSAOwnershipValidationModule,
+  DEFAULT_ECDSA_OWNERSHIP_MODULE,
+} from "@biconomy/modules"; // Modules for ownership validation
+
+config(); // Load environment variables from .env file
 ```
 
-All of the code from this point forward will be code we add to the mintNFT
-function defined above. Let's start with instantiate the Smart Account and retrieve its address.
+## 🛠 Building the NFT Mint Function
+
+We'll build the mintNFT function in a step-by-step manner for clarity.
+
+### Step 1: Initialize the Smart Account
 
 ```typescript
-const smartAccount = await createAccount();
-const address = await smartAccount.getAccountAddress();
+async function mintNFT() {
+  // Create and initialize the smart account
+  const smartAccount = await createSmartAccount();
+  // Retrieve the address of the initialized smart account
+  const address = await smartAccount.getAccountAddress();
+  // ...[continuing the function]...
+}
 ```
 
-Then we need to create an interface for our NFT contract.
+- **`createSmartAccount()`**: This custom function creates and initializes your Smart Account.
+- **`getAccountAddress()`**: Retrieves the address of your newly minted Smart Account.
+
+### Step 2: Create the NFT Contract Interface
 
 ```typescript
+// Define the interface for interacting with the NFT contract
 const nftInterface = new ethers.utils.Interface([
   "function safeMint(address _to)",
 ]);
 ```
 
-Now we'll need to collect the data needed for building our userOp, we'll do that
-using the ethers encodeFunctionData method:
+- **`Interface` from `ethers`**: This utility helps us interact with our NFT contract.
+
+### Step 3: Encode Function Data
 
 ```typescript
+// Encode the data for the 'safeMint' function call with the smart account address
 const data = nftInterface.encodeFunctionData("safeMint", [address]);
 ```
 
-## Constructing the Userop
+- **`encodeFunctionData`**: Packs your function call into a transaction, targeting the `safeMint` function.
 
-Let's declare a variable for our NFT contract address and start constructing the
-first part of our transaction:
+## 🧱 Constructing the UserOp
+
+Now, let's assemble the User Operation (UserOp) for our gasless transaction:
+
+### Step 1: Declare Contract Address and Build Transaction
 
 ```typescript
+// Specify the address of the NFT contract
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 
+// Define the transaction to be sent to the NFT contract
 const transaction = {
   to: nftAddress,
   data: data,
 };
 ```
 
-We will now start building out the partial userOp for this transaction:
+- **Contract Address**: Where our NFT lives.
+- **Transaction**: The action we're preparing to execute.
+
+### Step 2: Construct the Partial UserOp
 
 ```typescript
+// Build a partial User Operation (UserOp) with the transaction and set it to be sponsored
 let partialUserOp = await smartAccount.buildUserOp([transaction], {
   paymasterServiceData: {
     mode: PaymasterMode.SPONSORED,
@@ -72,159 +112,220 @@ let partialUserOp = await smartAccount.buildUserOp([transaction], {
 });
 ```
 
-Since we want to have this become a sponsored transaction we will need to ensure that we pass the `paymasterServiceData` object with a `SPONSORED` paymaster mode.
+- **`buildUserOp`**: Prepares our UserOp with the required transaction details.
+- **`PaymasterMode.SPONSORED`**: Ensures our transaction is gasless!
 
-## Paymaster Service Data response
+## 🌟 Execute the UserOp with Paymaster
 
-Now we need to construct the paymasterServiceData field of our userOp to make
-sure that our Paymaster is used to sponsor the transaction. We start by defining
-the following variable
-
-```typescript
-const biconomyPaymaster =
-  smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
-```
-
-With this done let's get the paymaster and Data response from our paymaster and
-add it to our userOp.
+Time to mint that NFT! 🖼️
 
 ```typescript
+// Try to execute the UserOp and handle any errors
 try {
-  const paymasterAndDataResponse =
-    await biconomyPaymaster.getPaymasterAndData(partialUserOp);
-  partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
-} catch (e) {
-  console.log("error received ", e);
-}
-```
-
-## Execute the UserOp with Paymaster
-
-Finally let's go ahead and mint this NFT!
-
-```typescript
-try {
+  // Send the UserOp through the smart account
   const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+  // Wait for the transaction to complete and retrieve details
   const transactionDetails = await userOpResponse.wait();
+  // Log the transaction details URL and the URL to view minted NFTs
   console.log(
-    `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+    `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
   );
-  console.log(
-    `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
-  );
+  console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
 } catch (e) {
-  console.log("error received ", e);
+  // Log any errors encountered during the transaction
+  console.log("Error encountered: ", e);
 }
 ```
 
-In this final try/catch block we send the user op and log out the transaction
-details into a nicely formatted polygonscan link as well as a formatted opensea
-link to quickly view NFT's minted by our smart account.
+- **`sendUserOp`**: Sends our prepared UserOp.
+- **`wait`**: Awaits the transaction confirmation.
+- **Result**: Outputs links to view the transaction and the minted NFT.
 
 <details>
-  <summary> Click to view final code </summary>
+  <summary>📝 Click to view the complete mintNFT function</summary>
+
+And that's it! You've successfully executed a gasless NFT minting transaction. 🚀💡
 
 ```typescript
-import { config } from "dotenv";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import { ChainId } from "@biconomy/core-types";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
-import { ethers } from "ethers";
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-  IHybridPaymaster,
-  PaymasterMode,
-  SponsorUserOperationDto,
-} from "@biconomy/paymaster";
-
-config();
-
-const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
-);
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
-
-const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
-});
-
-async function createAccount() {
-  const module = await ECDSAOwnershipValidationModule.create({
-    signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-
-  let biconomyAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
-  });
-  console.log("address", await biconomyAccount.getAccountAddress());
-  return biconomyAccount;
-}
-
+// Function to mint an NFT gaslessly
 async function mintNFT() {
-  const smartAccount = await createAccount();
+  // Create and initialize the smart account
+  const smartAccount = await createSmartAccount();
+  // Retrieve the address of the initialized smart account
   const address = await smartAccount.getAccountAddress();
+
+  // Define the interface for interacting with the NFT contract
   const nftInterface = new ethers.utils.Interface([
     "function safeMint(address _to)",
   ]);
 
+  // Encode the data for the 'safeMint' function call with the smart account address
   const data = nftInterface.encodeFunctionData("safeMint", [address]);
 
+  // Specify the address of the NFT contract
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 
+  // Define the transaction to be sent to the NFT contract
   const transaction = {
     to: nftAddress,
     data: data,
   };
 
+  // Build a partial User Operation (UserOp) with the transaction and set it to be sponsored
   let partialUserOp = await smartAccount.buildUserOp([transaction], {
     paymasterServiceData: {
       mode: PaymasterMode.SPONSORED,
     },
   });
 
-  const biconomyPaymaster =
-    smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
-
+  // Try to execute the UserOp and handle any errors
   try {
+    // Send the UserOp through the smart account
     const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+    // Wait for the transaction to complete and retrieve details
     const transactionDetails = await userOpResponse.wait();
+    // Log the transaction details URL and the URL to view minted NFTs
     console.log(
-      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+      `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
     );
-    console.log(
-      `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
-    );
+    console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
   } catch (e) {
-    console.log("error received ", e);
+    // Log any errors encountered during the transaction
+    console.log("Error encountered: ", e);
   }
 }
-
-mintNFT();
 ```
 
 </details>
 
-Now that you've executed your first gasless transaction, let's edit this code in
-the next session to help us with batching multiple transactions together.
+And that's it! You've successfully executed a gasless NFT minting transaction. 🚀💡
+
+<details>
+  <summary>📝 Click to view the complete</summary>
+
+```typescript
+// Import necessary modules and configurations
+import { config } from "dotenv"; // dotenv for loading environment variables from a .env file
+import { IBundler, Bundler } from "@biconomy/bundler"; // Biconomy bundler for managing gasless transactions
+import {
+  DEFAULT_ENTRYPOINT_ADDRESS,
+  BiconomySmartAccountV2,
+} from "@biconomy/account"; // Default entry point and smart account module from Biconomy
+import { Wallet, ethers, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
+import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
+import {
+  IPaymaster,
+  BiconomyPaymaster,
+  PaymasterMode,
+} from "@biconomy/paymaster"; // Paymaster interface and Biconomy implementation
+import {
+  ECDSAOwnershipValidationModule,
+  DEFAULT_ECDSA_OWNERSHIP_MODULE,
+} from "@biconomy/modules"; // Modules for ownership validation
+
+config(); // Load environment variables from .env file
+
+// Set up the Ethereum provider and wallet
+const provider = new providers.JsonRpcProvider(
+  "https://rpc.ankr.com/polygon_mumbai", // JSON-RPC provider URL for the Polygon Mumbai test network
+);
+
+const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider); // Creating a wallet instance with a private key from environment variables
+
+// Configure the Biconomy Bundler
+const bundler: IBundler = new Bundler({
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44", // URL to the Biconomy bundler service
+
+  chainId: ChainId.POLYGON_MUMBAI, // Chain ID for Polygon Mumbai test network
+
+  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address for the bundler
+});
+
+// Configure the Paymaster
+const paymaster: IPaymaster = new BiconomyPaymaster({
+  paymasterUrl:
+    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a", // URL to the Biconomy paymaster service
+});
+
+// Function to create a module for ownership validation
+async function createModule() {
+  return await ECDSAOwnershipValidationModule.create({
+    signer: wallet, // The wallet acting as the signer
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE, // Address of the default ECDSA ownership validation module
+  });
+}
+
+// Function to create a Biconomy Smart Account
+async function createSmartAccount() {
+  const module = await createModule(); // Create the validation module
+
+  let smartAccount = await BiconomySmartAccountV2.create({
+    chainId: ChainId.POLYGON_MUMBAI, // Chain ID for the Polygon Mumbai network
+    bundler: bundler, // The configured bundler instance
+    paymaster: paymaster, // The configured paymaster instance
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address
+    defaultValidationModule: module, // The default validation module
+    activeValidationModule: module, // The active validation module
+  });
+
+  console.log(
+    "Smart Account Address: ",
+    await smartAccount.getAccountAddress(), // Logging the address of the created smart account
+  );
+
+  return smartAccount;
+}
+
+// Function to mint an NFT gaslessly
+async function mintNFT() {
+  // Create and initialize the smart account
+  const smartAccount = await createSmartAccount();
+  // Retrieve the address of the initialized smart account
+  const address = await smartAccount.getAccountAddress();
+
+  // Define the interface for interacting with the NFT contract
+  const nftInterface = new ethers.utils.Interface([
+    "function safeMint(address _to)",
+  ]);
+
+  // Encode the data for the 'safeMint' function call with the smart account address
+  const data = nftInterface.encodeFunctionData("safeMint", [address]);
+
+  // Specify the address of the NFT contract
+  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+
+  // Define the transaction to be sent to the NFT contract
+  const transaction = {
+    to: nftAddress,
+    data: data,
+  };
+
+  // Build a partial User Operation (UserOp) with the transaction and set it to be sponsored
+  let partialUserOp = await smartAccount.buildUserOp([transaction], {
+    paymasterServiceData: {
+      mode: PaymasterMode.SPONSORED,
+    },
+  });
+
+  // Try to execute the UserOp and handle any errors
+  try {
+    // Send the UserOp through the smart account
+    const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+    // Wait for the transaction to complete and retrieve details
+    const transactionDetails = await userOpResponse.wait();
+    // Log the transaction details URL and the URL to view minted NFTs
+    console.log(
+      `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+    );
+    console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
+  } catch (e) {
+    // Log any errors encountered during the transaction
+    console.log("Error encountered: ", e);
+  }
+}
+
+mintNFT(); // Call mintNFT function
+```
+
+</details>
