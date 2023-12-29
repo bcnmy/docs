@@ -14,13 +14,18 @@ The addresses of ERC-4337 smart accounts follow a deterministic pattern. This en
 
 ```jsx
 
+const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+  signer: wallet,
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
+})
+
 const smartAccount = await BiconomySmartAccountV2.create({
   chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
   bundler: bundler, // Instance of the bundler (required)
   paymaster: paymaster, // Instance of the paymaster (required)
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Entry point address for the specified chain (required)
   defaultValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the default validation module (required)
-  activeValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the active validation module to start (required)
+  activeValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the active validation module to start 
 });
 
 ```
@@ -30,12 +35,12 @@ const smartAccount = await BiconomySmartAccountV2.create({
 *required params are explicitly mentioned*
 
 - config (`object`, required): A `BiconomySmartAccountV2Config` object containing configuration options for creating the smart account.
-  - chainId (`number`, required): The identifier for the blockchain network (e.g., ChainId.POLYGON_MUMBAI).
-  - bundler (`object`): An instance of the bundler.
-  - paymaster (`object`): An instance of the paymaster.
+  - chainId (`ChainId` enum, required): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
+  - bundler (`IBundler`): An instance of the bundler.
+  - paymaster (`IPaymaster`): An instance of the paymaster.
   - entryPointAddress (`string`, required): The entry point address for the specified chain.
-  - defaultValidationModule (`object`, required): The default validation module to start with (either ECDSA or Multi-chain).
-  - activeValidationModule (`object`): The active validation module to start with ( either ECDSA or Multi-chain ).
+  - defaultValidationModule (`BaseValidationModule`, required): The default validation module to start with ( either ECDSA or Multi-chain ).
+  - activeValidationModule (`BaseValidationModule`): The active validation module to start with ( either ECDSA or Multi-chain ).
   - rpcUrl (`string`): rpc url of the chain
   - index (`number`): index to create multiple smart accounts for an EOA
 
