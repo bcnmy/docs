@@ -1,0 +1,216 @@
+---
+sidebar_label: "ECDSA Ownership"
+sidebar_position: 2
+description: "Overview of ECDSA Ownership Validation Module's role in Smart Accounts"
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# ECDSA Ownership Module
+
+## What is it? 🤔
+
+The **ECDSA Validation Module** or **ECDSA Module** is integral to **Biconomy's Modular Smart Account**, enhancing transaction security and user authentication. This document outlines its functionality, benefits, and use cases.
+
+:::info
+Understanding the ECDSA Validation Module is crucial for developers working with Ethereum-based Smart Accounts.
+:::
+
+### What is the ECDSA Ownership Module? 🤔
+
+This module allows **Externally Owned Accounts (EOAs)** to authorize and sign user operations (UserOps) for Biconomy Smart Accounts. It operates similarly to non-modular Smart Account ownership but is reconstructed as a **Validation Module** within the **Account Abstraction + Modular Smart Accounts** ecosystem.
+
+:::tip
+The ECDSA Validation Module serves as the **default module** for Biconomy Modular Smart Accounts if no other Validation Module is set during deployment, streamlining user operations and ownership management.
+:::
+
+#### Key Functions 🔐
+
+- **Single Signer Simplicity**: Offers 1/1, single-signature control, ideal for both Web2 users and MetaMask enthusiasts.  
+- **ECDSA Signature Scheme**: Utilizes the ECDSA secp256r1 curve for secure signing.
+- **Flexible Owner Authentication**: Supports various signer solutions like Privy, Fireblocks, Arcana Auth, Web3Auth, or Particle.
+- **EIP-1271 Compliance**: Allowing Smart Accounts to sign Ethereum messages for logging into dApps.
+
+:::info
+One of the most popular modules, it bridges the ease of traditional web logins with the security of blockchain technology.  
+:::
+
+#### Use Cases 🌟
+
+1. **Secure Transaction Signing**: EOAs can securely authorize transactions for Smart Accounts.
+2. **dApp Interaction**: Simplifies the process of logging into dApps using Ethereum messages thanks to EIP-1271 support.
+3. **Ownership Management**: Mirrors traditional ownership systems, providing a familiar framework within a more advanced blockchain context.
+
+## Smart Contract Deep Dive 🛠️
+
+This section delves into the `EcdsaOwnershipRegistryModule` for Biconomy Smart Accounts, focusing on key functionalities and security aspects.
+
+### Core Functionalities
+
+#### User Operation Validation (`validateUserOp`) 🛡️
+
+```solidity
+// Validates user operations signed by an EOA
+    function validateUserOp(
+        UserOperation calldata userOp,
+        bytes32 userOpHash
+    ) external view virtual override returns (uint256) {
+        if (
+            _verifySignature(
+                userOpHash,
+                userOp.signature[96:161],
+                userOp.sender
+            )
+        ) {
+            return VALIDATION_SUCCESS;
+        }
+        return SIG_VALIDATION_FAILED;
+    }
+```
+
+:::note
+Objective: The function safeguards the authenticity of user operations on Smart Accounts.
+
+Method: It specifically decodes and verifies a segment of the userOp.signature. This segmentation is crucial because userOp.signature typically contains both the signature and the validation module's address. By extracting only the signature part, the function accurately validates the operation against the intended owner's signature, ensuring that the operation is legitimately authorized.
+:::
+
+#### Signature Verification (`_verifySignature`) 🔐
+
+```solidity
+// Internal function to verify the signature of a smart account
+function _verifySignature(bytes32 dataHash, bytes memory signature, address smartAccount)
+    internal view returns (bool) {
+    address expectedSigner = _smartAccountOwners[smartAccount];
+    // Reverts if no owner is registered
+    if (expectedSigner == address(0)) {
+        revert NoOwnerRegisteredForSmartAccount(smartAccount);
+    }
+    // Checks for signature length and recovers the signer
+    if (signature.length < 65) revert WrongSignatureLength();
+    address recovered = (dataHash.toEthSignedMessageHash()).recover(signature);
+    if (expectedSigner == recovered) {
+        return true;
+    }
+    recovered = dataHash.recover(signature);
+    return expectedSigner == recovered;
+}
+
+```
+
+**Validates a signature against a data hash and registered owner, supporting EIP-1271 standard.**
+
+```solidity
+function isValidSignature(
+    bytes32 dataHash,
+    bytes memory signature
+) public view returns (bytes4);
+```
+
+:::note
+`isValidSignature` serves as a key function for external smart contracts to verify signature authenticity.
+:::
+
+:::caution
+Proper handling and verification of signatures are crucial for maintaining the integrity of the Smart Account. The `isValidSignature` function is essential for EIP-1271 support, validating that the signature matches the expected signer as per the EIP-1271 standard.
+:::
+
+### Security Considerations
+
+- **Strict Ownership Rules**: Only Externally Owned Accounts (EOAs) can authorize transactions, ensuring secure control over Smart Account operations.
+- **Signature Verification**: Implements robust methods for signature validation, crucial for preventing unauthorized access.
+
+:::info
+The `initForSmartAccount` method doesn't include `isSmartContract` checks due to operational constraints. However, this doesn't compromise security as operations require valid EOA signatures. This ensures Smart Accounts remain secure within their operational framework.
+:::
+
+### Interaction with Smart Accounts 🤝
+
+The `EcdsaOwnershipRegistryModule` interacts with Smart Accounts primarily through its core functionalities:
+
+- **Initialization and Ownership**: During deployment, Smart Accounts use `init` method to invoke `initForSmartAccount` on modules, setting initial ownership and configurations.
+- **User Operation Validation**: When a Smart Account attempts to perform an operation, `validateUserOp` is invoked to ensure the action is authorized by the registered owner.
+- **Signature Verification**: The module uses `_verifySignature` to verify any signatures associated with transactions initiated by the Smart Account.
+
+:::tip
+Understanding this interaction is key for developers working with Smart Accounts and the ECDSA module, as it forms the basis of secure and controlled operations within the Biconomy ecosystem.
+:::
+
+## SDK Guide 📘 
+
+Integrate the ECDSA Validation Module into Biconomy Smart Accounts using the SDK.
+
+### Setup and Installation 🛠️
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/modules ethers
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/modules ethers
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/modules ethers
+
+```
+
+</TabItem>
+</Tabs>
+
+### Creating a Signer 🗝️
+
+```javascript
+import { ethers } from "ethers";
+
+const provider = new ethers.providers.JsonRpcProvider("[RPC_Endpoint]");
+const signer = new ethers.Wallet("[Private_Key]", provider);
+```
+
+### Importing and Initializing ECDSA Module 🌟
+
+```javascript
+import {
+  ECDSAOwnershipValidationModule,
+  DEFAULT_ECDSA_OWNERSHIP_MODULE,
+} from "@biconomy/modules";
+
+const ecdsaModule = await ECDSAOwnershipValidationModule.create({
+  signer: signer,
+  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+});
+```
+
+### Creating a Smart Account 🚀
+
+```javascript
+import { BiconomySmartAccountV2 } from "@biconomy/account";
+
+const smartAccount = await BiconomySmartAccountV2.create({
+  signer: signer,
+  defaultValidationModule: ecdsaModule,
+  // Additional configurations
+});
+```
+
+:::info
+The Smart Account's address is counterfactually generated based on the signer's public key, which is the owner's address used in the ECDSA Module. This feature allows for the pre-calculation of the account address before deployment.
+:::
+
+:::warning
+To deploy the same Smart Account (with the same address) on different chains, it's crucial to use the same initialization data (here, the owner's EOA address) for the ECDSA Module. This ensures consistency in the account's address across various blockchains.
+:::
