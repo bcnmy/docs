@@ -26,7 +26,7 @@ The Modular smart account is designed to be adaptable and flexible. Instead of s
 
 Modules can be enabled using the following methods:
 
-- During MSA deployment, a default validation module is enabled. Internally, it calls the [deployCounterFactualAccount](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/factory/SmartAccountFactory.sol#L57) method on smart account factory. The module selected to deploy the MSA determines its final address, due to its counterfactual nature.
+- During MSA deployment, a default validation module is enabled. Internally, it calls the [deployCounterFactualAccount](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/factory/SmartAccountFactory.sol#L57) method on the smart account factory. The module selected to deploy the MSA determines its final address, due to its counterfactual nature.
 
 - A new module can be enabled via a userOp transaction on a smart account by specifying the module address and moduleSetupData. Internally, it calls [setupAndEnableModule](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/base/ModuleManager.sol#L196) method on Module Manager. It can be set as an active validation module to be used for the next transactions.
 
