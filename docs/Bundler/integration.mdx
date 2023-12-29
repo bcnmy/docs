@@ -44,7 +44,7 @@ pnpm add @biconomy/bundler @biconomy/account
 </TabItem>
 </Tabs>
 
-## Integration Example
+## Old Integration Example
 
 ```typescript
 import { IBundler, Bundler } from "@biconomy/bundler";
@@ -57,6 +57,20 @@ const bundler: IBundler = new Bundler({
   chainId: ChainId.POLYGON_MUMBAI,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
+```
+
+## New Integration Example
+If you do not wish to use any custom bundler you can simply pass the bunlder url in the smart account config.
+
+```typescript
+import { IBundler, Bundler } from "@biconomy/bundler";
+import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
+
+const biconomySmartAccountConfig = {
+    signer: signer,
+    chainId: 80001,
+    bundlerUrl: ""
+};
 ```
 
 :::info

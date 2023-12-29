@@ -44,7 +44,7 @@ pnpm add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/commo
 </TabItem>
 </Tabs>
 
-## Integration Example
+## Old Integration Example 
 
 ```typescript
 import {
@@ -98,3 +98,39 @@ Make sure to call both create methods from an async function!
 :::
 
 Regardless of what frontend framework you may use these steps for creating a smart account will remain the same. See our [tutorials](/category/tutorials) for in depth integrations of the smart account.
+
+## New Integration Example - Default Smart Account
+
+```typescript
+  import { ethers } from "ethers";	
+  import { BiconomySmartAccountV2} from "@biconomy/account";
+	import { PaymasterMode } from "@biconomy/paymaster";
+
+  let provider = new ethers.providers.JsonRpcProvider("rpcUrl");
+  let signer = new ethers.Wallet("private key", provider);
+
+  const biconomySmartAccountConfig = {
+    signer: signer,
+    chainId: 80001
+    biconomyPaymasterApiKey: "",
+    bundlerUrl: ""
+  };
+
+  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+    biconomySmartAccountConfig
+  );
+
+  const transaction = {
+      to: "0xd3C85Fdd1235Aee3f0A12B3376aCD8DC54020221",
+      data: "0x"
+  }
+
+  let partialUserOp = await biconomySmartAccount.buildUserOp([transaction], 
+    paymasterServiceData: {
+      mode: PaymasterMode.SPONSORED,
+    },
+  );
+
+  const userOpResponse = await biconomySmartAccount.sendUserOp(partialUserOp);
+  await userOpResponse.wait();
+```

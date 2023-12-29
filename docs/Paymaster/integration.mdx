@@ -43,7 +43,7 @@ pnpm add @biconomy/paymaster
 </TabItem>
 </Tabs>
 
-## Integration Example
+## Old Integration Example
 
 ```typescript
 import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
@@ -55,6 +55,20 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 });
 ```
 
+## New Integration Example
+You can now assign a paymaster by providing only the paymaster api key to the smart account. By default this will use Sponsored mode.
+
+```typescript
+// creating paymaster through "biconomyPaymasterApiKey"
+const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  {
+    signer: signer,
+    chainId: 80001
+    biconomyPaymasterApiKey: "paymaster api key",
+    bundlerUrl: "bundler url"
+  }
+);
+```
 :::info
 
 [Click here](/dashboard/paymaster) to learn more about our dashboard and how to get your own Paymaster URL

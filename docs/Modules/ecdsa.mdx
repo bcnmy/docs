@@ -41,7 +41,7 @@ pnpm add @biconomy/modules
 </TabItem>
 </Tabs>
 
-## Integration
+## Old Integration
 
 ```typescript
 import {
@@ -54,5 +54,8 @@ const module = await ECDSAOwnershipValidationModule.create({
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
 });
 ```
-
 Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account.
+
+## New Integration
+There is no need to specify a module in the smart account config if the desired module to use is ECDSA.
+
