@@ -131,11 +131,104 @@ async function createSmartAccount(
 🚨 Your Smart Account address is counterfactually generated based on the module and parameters used. When switching to multichain module, the address will change while deploying your Smart Account.
 :::
 
-## 🎨 Minting NFTs on Both Networks
+## 🌐 Minting NFTs on Multiple Networks
 
-### Setting Up NFT Minting Transactions
+The `mintNFT` function is the core of our multi-chain NFT minting process. Let's break it down to understand its functionality.
 
-Prepare your NFT minting transactions for both networks.
+### Creating Smart Accounts for Each Network 🛠️
+
+First, we create smart accounts for both networks. Each account is configured with its respective chain ID, bundler, and paymaster.
+
+```typescript
+const mumbaiSmartAccount = await createSmartAccount(
+  ChainId.POLYGON_MUMBAI,
+  mumbaiBundler,
+  mumbaiPaymaster,
+);
+const baseSmartAccount = await createSmartAccount(
+  ChainId.BASE_GOERLI_TESTNET,
+  baseBundler,
+  basePaymaster,
+);
+```
+
+### Setting Up the NFT Contract Interface 📜
+
+Next, we define the NFT contract interface and encode the data for the `safeMint` function. This data is crucial for creating our NFT minting transaction.
+
+```typescript
+const nftInterface = new ethers.utils.Interface([
+  "function safeMint(address _to)",
+]);
+const data = nftInterface.encodeFunctionData("safeMint", [
+  await baseSmartAccount.getAccountAddress(),
+]);
+```
+
+### Preparing Transactions for Each Network 📦
+
+For each network, we build a user operation (UserOp) for the minting transaction. These operations will later be signed and executed.
+
+```typescript
+let partialUserOp = await mumbaiSmartAccount.buildUserOp(
+  [{ to: nftAddress, data }],
+  { paymasterServiceData: { mode: PaymasterMode.SPONSORED } },
+);
+let partialUserOp2 = await baseSmartAccount.buildUserOp(
+  [{ to: nftAddress, data }],
+  { paymasterServiceData: { mode: PaymasterMode.SPONSORED } },
+);
+```
+
+### Signing Operations for Both Networks ✍️
+
+Using the Multichain Module, we sign the operations for both networks. This step is crucial for validating our transactions across different blockchains.
+
+```typescript
+const resolvedOps = await(await createModule()).signUserOps([
+  { userOp: partialUserOp, chainId: ChainId.POLYGON_MUMBAI },
+  { userOp: partialUserOp2, chainId: ChainId.BASE_GOERLI_TESTNET },
+]);
+```
+
+### Executing Transactions on Each Network 🚀
+
+Finally, we execute the signed operations on each network. The function waits for the transaction to complete and logs the transaction details for verification.
+
+```typescript
+try {
+  const userOpResponse1 = await mumbaiSmartAccount.sendSignedUserOp(
+    resolvedOps[0],
+  );
+  const userOpResponse2 = await baseSmartAccount.sendSignedUserOp(
+    resolvedOps[1],
+  );
+
+  const transactionDetails1 = await userOpResponse1.wait();
+  const transactionDetails2 = await userOpResponse2.wait();
+  console.log(
+    "Polygon Mumbai Transaction: https://mumbai.polygonscan.com/tx/" +
+      transactionDetails1.receipt.transactionHash,
+  );
+  console.log(
+    "Base Goerli Transaction: https://goerli.basescan.org/tx/" +
+      transactionDetails2.receipt.transactionHash,
+  );
+} catch (e) {
+  console.log("Error:", e);
+}
+```
+
+### 🚀 Launching the Mint Function
+
+Trigger the `mintNFT` function to start minting your NFTs on both networks.
+
+```typescript
+mintNFT();
+```
+
+<details>
+  <summary>📝 Click to view the complete mintNFT function</summary>
 
 ```typescript
 async function mintNFT() {
@@ -209,11 +302,7 @@ async function mintNFT() {
 }
 ```
 
-Execute the `mintNFT` function to mint NFTs on both **Polygon Mumbai** and **Base Goerli Testnet**, demonstrating the power of Multichain operations.
-
-```typescript
-mintNFT();
-```
+</details>
 
 :::tip
 Feel free to modify the `mintNFT` function as per your contract's requirements.
