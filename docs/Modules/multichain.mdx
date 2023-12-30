@@ -244,7 +244,7 @@ let polygonAccount = await BiconomySmartAccountV2.create({
 ```
 
 :::info
-If the Smart Account has not been deployed yet then it makes sense to pass multiChainModule as defaultValidationModule. This ensures its default activation and has all the capabilities of the ECDSA Module (popular go-to module). 
+When the Smart Account isn't yet deployed, setting **multiChainModule** as the default validation module is beneficial. This activates it by default and retains all functions of the **ECDSA Module**, a popular go-to module.
 :::
 
 ## Conclusion
