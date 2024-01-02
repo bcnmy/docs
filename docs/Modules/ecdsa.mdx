@@ -1,7 +1,7 @@
 ---
 sidebar_label: "ECDSA Ownership"
 sidebar_position: 2
-description: "Overview of ECDSA Ownership Validation Module's role in Smart Accounts"
+description: "Overview of ECDSA Ownership Validation Module"
 ---
 
 import Tabs from "@theme/Tabs";
@@ -11,25 +11,21 @@ import TabItem from "@theme/TabItem";
 
 ## What is it? 🤔
 
-The **ECDSA Validation Module** or **ECDSA Module** is integral to **Biconomy's Modular Smart Account**, enhancing transaction security and user authentication. This document outlines its functionality, benefits, and use cases.
-
-:::info
-Understanding the ECDSA Validation Module is crucial for developers working with Ethereum-based Smart Accounts.
-:::
+The **ECDSA Ownership Registry Module** or **ECDSA Validation Module** is integral to **Biconomy's Modular Smart Account**, enhancing transaction security and user authentication. This document outlines its functionality, benefits, and use cases.
 
 ### What is the ECDSA Ownership Module? 🤔
 
-This module allows **Externally Owned Accounts (EOAs)** to authorize and sign user operations (UserOps) for Biconomy Smart Accounts. It operates similarly to non-modular Smart Account ownership but is reconstructed as a **Validation Module** within the **Account Abstraction + Modular Smart Accounts** ecosystem.
+This module allows **Externally Owned Accounts (EOAs)** to authorize and sign user operations (UserOps) for Smart Account. It operates similarly to non-modular Smart Account ownership but is reconstructed as a **Validation Module** within the **Account Abstraction + Modular Smart Accounts** ecosystem.
 
 :::tip
-The ECDSA Validation Module serves as the **default module** for Biconomy Modular Smart Accounts if no other Validation Module is set during deployment, streamlining user operations and ownership management.
+The ECDSA Validation Module is the standard choice for Biconomy Modular Smart Accounts unless another module is chosen during setup. It makes things easier for users and helps manage ownership smoothly.
 :::
 
 #### Key Functions 🔐
 
-- **Single Signer Simplicity**: Offers 1/1, single-signature control, ideal for both Web2 users and MetaMask enthusiasts.  
-- **ECDSA Signature Scheme**: Utilizes the ECDSA secp256r1 curve for secure signing.
-- **Flexible Owner Authentication**: Supports various signer solutions like Privy, Fireblocks, Arcana Auth, Web3Auth, or Particle.
+- **Single Signer Simplicity**: Offers 1/1 multisig, single-signature control, ideal for both Web2 users and crypto-native users who already possess an EOA wallet.
+- **ECDSA Signature Scheme**: Utilizes the ECDSA secp256k1 curve for secure signing.
+- **Flexible Owner Authentication**: Supports various signer solutions like Privy, Fireblocks, Arcana Auth, Web3Auth, Magic, Capsule, Turnkey or Particle.
 - **EIP-1271 Compliance**: Allowing Smart Accounts to sign Ethereum messages for logging into dApps.
 
 :::info
@@ -40,11 +36,11 @@ One of the most popular modules, it bridges the ease of traditional web logins w
 
 1. **Secure Transaction Signing**: EOAs can securely authorize transactions for Smart Accounts.
 2. **dApp Interaction**: Simplifies the process of logging into dApps using Ethereum messages thanks to EIP-1271 support.
-3. **Ownership Management**: Mirrors traditional ownership systems, providing a familiar framework within a more advanced blockchain context.
+3. **Ownership Management**: Mirrors traditional ownership systems, providing a familiar framework within a more advanced blockchain setting.
 
 ## Smart Contract Deep Dive 🛠️
 
-This section delves into the `EcdsaOwnershipRegistryModule` for Biconomy Smart Accounts, focusing on key functionalities and security aspects.
+This section dives into the `EcdsaOwnershipRegistryModule` for Biconomy Smart Accounts, focusing on key functionalities and security aspects.
 
 ### Core Functionalities
 
@@ -72,7 +68,7 @@ This section delves into the `EcdsaOwnershipRegistryModule` for Biconomy Smart A
 :::note
 Objective: The function safeguards the authenticity of user operations on Smart Accounts.
 
-Method: It specifically decodes and verifies a segment of the userOp.signature. This segmentation is crucial because userOp.signature typically contains both the signature and the validation module's address. By extracting only the signature part, the function accurately validates the operation against the intended owner's signature, ensuring that the operation is legitimately authorized.
+Method: It specifically decodes and verifies a segment of the userOp.signature. This segmentation is crucial because userOp.signature contains both the signature and the validation module's address. By extracting only the signature part, the function accurately validates the operation against the intended owner's signature, ensuring that the operation is legitimately authorized.
 :::
 
 #### Signature Verification (`_verifySignature`) 🔐
@@ -131,10 +127,6 @@ The `EcdsaOwnershipRegistryModule` interacts with Smart Accounts primarily throu
 - **Initialization and Ownership**: During deployment, Smart Accounts use `init` method to invoke `initForSmartAccount` on modules, setting initial ownership and configurations.
 - **User Operation Validation**: When a Smart Account attempts to perform an operation, `validateUserOp` is invoked to ensure the action is authorized by the registered owner.
 - **Signature Verification**: The module uses `_verifySignature` to verify any signatures associated with transactions initiated by the Smart Account.
-
-:::tip
-Understanding this interaction is key for developers working with Smart Accounts and the ECDSA module, as it forms the basis of secure and controlled operations within the Biconomy ecosystem.
-:::
 
 ## SDK Guide 📘 
 
@@ -201,8 +193,12 @@ const ecdsaModule = await ECDSAOwnershipValidationModule.create({
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 const smartAccount = await BiconomySmartAccountV2.create({
-  signer: signer,
+  chainId: ChainId.BASE_GOERLI_TESTNET,
+  paymaster: //basePaymaster,
+  bundler: //baseBundler,
+  rpcUrl: // Base Goerli Rpc
   defaultValidationModule: ecdsaModule,
+  activeValidationModule: ecdsaModule, // If not provided, it will be same as provided defaultValidationModule
   // Additional configurations
 });
 ```
@@ -212,5 +208,5 @@ The Smart Account's address is counterfactually generated based on the signer's 
 :::
 
 :::warning
-To deploy the same Smart Account (with the same address) on different chains, it's crucial to use the same initialization data (here, the owner's EOA address) for the ECDSA Module. This ensures consistency in the account's address across various blockchains.
+To deploy the same Smart Account (with the same address) on different chains, it's crucial to use the same module address, the same initialization data (here, the owner's EOA address) for the ECDSA Module here and the index. This ensures consistency in the account's address across various blockchains.
 :::
