@@ -127,10 +127,10 @@ try {
   // Wait for the transaction to complete and retrieve details
   const transactionDetails = await userOpResponse.wait();
   // Log the transaction details URL and the URL to view minted NFTs
+  console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
   console.log(
     `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
   );
-  console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
 } catch (e) {
   // Log any errors encountered during the transaction
   console.log("Error encountered: ", e);
