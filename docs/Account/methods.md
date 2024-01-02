@@ -41,7 +41,7 @@ const smartAccount = await BiconomySmartAccountV2.create({
   - entryPointAddress (`string`, required): The entry point address for the specified chain.
   - defaultValidationModule (`BaseValidationModule`, required): The default validation module to start with ( either ECDSA or Multi-chain ).
   - activeValidationModule (`BaseValidationModule`): The active validation module to start with ( either ECDSA or Multi-chain ).
-  - rpcUrl (`string`): rpc url of the chain
+  - rpcUrl (`string`): RPC URL of the chain
   - index (`number`): index to create multiple smart accounts for an EOA
 
 **Returns**
