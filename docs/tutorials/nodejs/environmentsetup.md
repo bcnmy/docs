@@ -41,7 +41,6 @@ All packages you need for this guide are all configured and installed for you, c
 
 - The account package will help you with creating smart contract accounts and an interface with them to create transactions.
 - The bundler package helps you with interacting with our bundler or alternatively another bundler of your choice.
-- The core types package will give us Enums for the proper ChainId we may want to use
 - The paymaster package works similarly to the bundler package in that you can use our paymaster or any other one of your choice.
 - The core types package will give us Enums for the proper ChainId we may want to use.
 - The common package is needed by our accounts package as another dependency.

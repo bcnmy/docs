@@ -16,14 +16,13 @@ In the return for this component lets add the following JSX:
 <div>
   <h1> Biconomy Smart Accounts using social login + Gasless Transactions</h1>
 
-  {!smartAccount && !loading && <button onClick={login}>Login</button>}
+  {!smartAccount && <button onClick={login}>Login</button>}
   {loading && <p>Loading account details...</p>}
   {!!smartAccount && (
     <div className="buttonWrapper">
       <h3>Smart account address:</h3>
-      <p>{smartAccount.address}</p>
+      <p>address}</p>
       <Counter smartAccount={smartAccount} provider={provider} />
-      <button onClick={logout}>Logout</button>
     </div>
   )}
   <p>
@@ -39,146 +38,7 @@ In the return for this component lets add the following JSX:
 </div>
 ```
 
-If you followed all instructions from the last step to now your file should look something like this:
 
-```js
-import './App.css'
-import "@Biconomy/web3-auth/dist/src/style.css"
-import { useState, useEffect, useRef } from 'react'
-import SocialLogin from "@biconomy/web3-auth"
-import { ChainId } from "@biconomy/core-types";
-import { ethers } from 'ethers'
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccount,BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { IPaymaster, BiconomyPaymaster,} from '@biconomy/paymaster'
-import Counter from './Components/Counter';
-import styles from '@/styles/Home.module.css'
-
-
-const bundler: IBundler = new Bundler({
-  bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44', // you can get this value from biconomy dashboard.
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-})
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: 'https://paymaster.biconomy.io/api/v1/80001/cIhIeS-I0.7e1f17b1-6ebb-454c-8499-c5f66dd098c6'
-})
-
-export default function Home() {
-  const [smartAccount, setSmartAccount] = useState<any>(null)
-  const [interval, enableInterval] = useState(false)
-  const sdkRef = useRef<SocialLogin | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
-  const [provider, setProvider] = useState<any>(null);
-
-  useEffect(() => {
-    let configureLogin:any
-    if (interval) {
-      configureLogin = setInterval(() => {
-        if (!!sdkRef.current?.provider) {
-          setupSmartAccount()
-          clearInterval(configureLogin)
-        }
-      }, 1000)
-    }
-  }, [interval])
-
-  async function login() {
-    if (!sdkRef.current) {
-      const socialLoginSDK = new SocialLogin()
-      const signature1 = await socialLoginSDK.whitelistUrl("http://127.0.0.1:5173/")
-      await socialLoginSDK.init({
-        chainId: ethers.utils.hexValue(ChainId.POLYGON_MUMBAI).toString(),
-        network: "testnet",
-        whitelistUrls: {
-          "http://127.0.0.1:5173/": signature1,
-        }
-      })
-      sdkRef.current = socialLoginSDK
-    }
-    if (!sdkRef.current.provider) {
-      sdkRef.current.showWallet()
-      enableInterval(true)
-    } else {
-      setupSmartAccount()
-    }
-  }
-
-  async function setupSmartAccount() {
-    if (!sdkRef?.current?.provider) return
-    sdkRef.current.hideWallet()
-    setLoading(true)
-    const web3Provider = new ethers.providers.Web3Provider(
-      sdkRef.current.provider
-    )
-    setProvider(web3Provider)
-
-    try {
-      const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
-        signer: web3Provider.getSigner(),
-        chainId: ChainId.POLYGON_MUMBAI,
-        bundler: bundler,
-        paymaster: paymaster
-      }
-      let biconomySmartAccount = new BiconomySmartAccount(biconomySmartAccountConfig)
-      biconomySmartAccount =  await biconomySmartAccount.init()
-      console.log("owner: ", biconomySmartAccount.owner)
-      console.log("address: ", await biconomySmartAccount.getSmartAccountAddress())
-      console.log("deployed: ", await biconomySmartAccount.isAccountDeployed( await biconomySmartAccount.getSmartAccountAddress()))
-
-      setSmartAccount(biconomySmartAccount)
-      setLoading(false)
-    } catch (err) {
-      console.log('error setting up smart account... ', err)
-    }
-  }
-
-  const logout = async () => {
-    if (!sdkRef.current) {
-      console.error('Web3Modal not initialized.')
-      return
-    }
-    await sdkRef.current.logout()
-    sdkRef.current.hideWallet()
-    setSmartAccount(null)
-    enableInterval(false)
-  }
-
-  return (
-    <div>
-      <h1> Biconomy Smart Accounts using social login + Gasless Transactions</h1>
-
-      {
-        !smartAccount && !loading && <button onClick={login}>Login</button>
-      }
-      {
-        loading && <p>Loading account details...</p>
-      }
-      {
-        !!smartAccount && (
-          <div className="buttonWrapper">
-            <h3>Smart account address:</h3>
-            <p>{smartAccount.address}</p>
-            <Counter smartAccount={smartAccount} provider={provider} />
-            <button onClick={logout}>Logout</button>
-          </div>
-        )
-      }
-      <p>
-      Edit <code>src/App.tsx</code> and save to test
-      </p>
-      <a href="https://docs.biconomy.io/docs/overview" target="_blank" className="read-the-docs">
-  Click here to check out the docs
-    </a>
-    </div>
-  )
-}
-
-
-
-
-```
 
 Now lets create our Counter component!
 
@@ -317,37 +177,29 @@ const tx1 = {
   data: data,
 };
 
-let partialUserOp = await smartAccount.buildUserOp([tx1]);
+const userOp = await smartAccount.buildUserOp([transaction], {
+  paymasterServiceData: {
+    mode: PaymasterMode.SPONSORED,
+  },
+});
 
-const biconomyPaymaster =
-  smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 
-let paymasterServiceData: SponsorUserOperationDto = {
-  mode: PaymasterMode.SPONSORED,
-  // optional params...
-};
 ```
 
-- Function `incrementCount` of the smart contract is being prepared using the `ethers.utils.Interface `to encode the function data.
-- A transaction object tx1 is created with the target contract address **(counterAddress)** and the encoded function data (data), representing the "incrementCount()" function call.
-- The smartAccount is used to build a partial user operation `partialUserOp` that includes tx1. The `paymasterServiceData` is prepared with optional parameters, specifying that the operation is sponsored. The IHybridPaymaster type ensures that the `smartAccount.paymaster` supports the sponsored mode for handling payment processing.
-- Here, we are supporting gasless transaction, which is why we setup `mode: PaymasterMode.SPONSORED`
+Now that the userOp is built and will be sponsored, lets send the final userOp. 
 
 Now, let's build try and catch block :
 
 ```ts
 
 try {
-        const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(partialUserOp, paymasterServiceData);
-        partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
-
         const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
         const transactionDetails = await userOpResponse.wait();
 
         console.log("Transaction Details:", transactionDetails);
-        console.log("Transaction Hash:", userOpResponse.userOpHash);
+        console.log("Transaction Hash:", transactionDetails.receipt.transactionHash);
 
-        toast.success(`Transaction Hash: ${userOpResponse.userOpHash}`, {
+        toast.success(`Transaction Hash: ${transactionDetails.receipt.transactionHash}`, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -381,10 +233,6 @@ try {
 ```
 
 Now, let's break down what's happening above :
-
-- **`const paymasterAndDataResponse` = await biconomyPaymaster.getPaymasterAndData(partialUserOp, paymasterServiceData);**: Calls the getPaymasterAndData function on the biconomyPaymaster instance. It sends the partialUserOp and paymasterServiceData as arguments to fetch the necessary information and data related to the sponsored user operation.
-
-- **`partialUserOp.paymasterAndData` = paymasterAndDataResponse.paymasterAndData;** : The paymasterAndData received from the previous step is added to the partialUserOp object. This likely includes data and configuration needed for the sponsored user operation.
 
 - **`const userOpResponse` = await smartAccount.sendUserOp(partialUserOp);** : The partialUserOp containing the transaction details and paymaster information is sent as a user operation (sendUserOp) to the smartAccount. The smartAccount handles the meta-transaction and submits it to the blockchain.
 
@@ -434,157 +282,4 @@ export default Counter;
 
 ```
 
-Congratulations you just created your first AA powered dApp. Users can now log in and have a smart account created for them and interact with a smart contract without the need to paying gas fees. Here is the complete implimintation of **`Counter.tsx`**:
-
-```ts
-import React, { useState, useEffect } from "react";
-import { BiconomySmartAccount} from "@biconomy/account"
-import {  IHybridPaymaster,SponsorUserOperationDto, PaymasterMode,} from '@biconomy/paymaster'
-import abi from "../utils/counterAbi.json";
-import { ethers } from "ethers";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-
-interface Props {
-  smartAccount: BiconomySmartAccount
-  provider: any
-}
-
-const TotalCountDisplay: React.FC<{ count: number }> = ({ count }) => {
-  return <div>Total count is {count}</div>;
-};
-
-const Counter: React.FC<Props> = ({ smartAccount, provider }) => {
-  const [count, setCount] = useState<number>(0);
-  const [counterContract, setCounterContract] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const counterAddress = import.meta.env.VITE_COUNTER_CONTRACT_ADDRESS;
-
-  useEffect(() => {
-    setIsLoading(true);
-    getCount(false);
-  }, []);
-
-  const getCount = async (isUpdating: boolean) => {
-    const contract = new ethers.Contract(counterAddress, abi, provider);
-    setCounterContract(contract);
-    const currentCount = await contract.count();
-    setCount(currentCount.toNumber());
-    if (isUpdating) {
-      toast.success('Count has been updated!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
-  };
-
-  const incrementCount = async () => {
-    try {
-      toast.info('Processing count on the blockchain!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-
-      const incrementTx = new ethers.utils.Interface(["function incrementCount()"]);
-      const data = incrementTx.encodeFunctionData("incrementCount");
-
-      const tx1 = {
-        to: counterAddress,
-        data: data,
-      };
-
-      let partialUserOp = await smartAccount.buildUserOp([tx1]);
-
-      const biconomyPaymaster = smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
-
-      let paymasterServiceData: SponsorUserOperationDto = {
-        mode: PaymasterMode.SPONSORED,
-        smartAccountInfo: {
-          name: 'BICONOMY',
-          version: '2.0.0'
-        },
-        // optional params...
-      };
-
-      try {
-        const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(partialUserOp, paymasterServiceData);
-        partialUserOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
-
-        const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
-        const transactionDetails = await userOpResponse.wait();
-
-        console.log("Transaction Details:", transactionDetails);
-        console.log("Transaction Hash:", userOpResponse.userOpHash);
-
-        toast.success(`Transaction Hash: ${userOpResponse.userOpHash}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-
-        getCount(true);
-      } catch (e) {
-        console.error("Error executing transaction:", e);
-        // ... handle the error if needed ...
-      }
-    } catch (error) {
-      console.error("Error executing transaction:", error);
-      toast.error('Error occurred, check the console', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
-  };
-
-  return (
-    <>
-      <TotalCountDisplay count={count} />
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
-      <br></br>
-      <button onClick={() => incrementCount()}>Increment Count</button>
-    </>
-  );
-};
-
-export default Counter;
-
-```
-
-If you would like to see the completed project on github you can use the template below:
-https://github.com/vanshika-srivastava/scw-gasless-bico-modular
+Congratulations you just created your first AA powered dApp. Users can now log in and have a smart account created for them and interact with a smart contract without the need to paying gas fees. 
