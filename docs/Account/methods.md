@@ -14,19 +14,15 @@ The addresses of ERC-4337 smart accounts follow a deterministic pattern. This en
 **Usage**
 
 ```jsx
+let provider = new ethers.providers.JsonRpcProvider("rpcUrl");
+let signer = new ethers.Wallet("private key", provider);
 
-const ecdsaOwnershipModule = await ECDSAOwnershipValidationModule.create({
-  signer: wallet,
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-})
 
 const smartAccount = await BiconomySmartAccountV2.create({
+  signer: signer,
   chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
-  bundler: bundler, // Instance of the bundler (required)
-  paymaster: paymaster, // Instance of the paymaster (required)
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Entry point address for the specified chain (required)
-  defaultValidationModule: ecdsaOwnershipModule, // Choose either ECDSA or Multi-chain as the default validation module (required)
-  activeValidationModule: ecdsaOwnershipModule, // Choose either ECDSA or Multi-chain as the active validation module to start 
+  bundlerUrl: "", // bundler URL (required)
+  biconomyPaymasterApiKey: "", // Instance of the paymaster
 });
 
 ```
@@ -36,11 +32,12 @@ const smartAccount = await BiconomySmartAccountV2.create({
 *required params are explicitly mentioned*
 
 - config (`object`, required): A `BiconomySmartAccountV2Config` object containing configuration options for creating the smart account.
+  - signer(`Signer`, required): The signer instance that will need to be passed. 
   - chainId (`ChainId` enum, required): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
-  - bundler (`IBundler`): An instance of the bundler.
-  - paymaster (`IPaymaster`): An instance of the paymaster.
-  - entryPointAddress (`string`, required): The entry point address for the specified chain.
-  - defaultValidationModule (`BaseValidationModule`, required): The default validation module to start with ( either ECDSA or Multi-chain ).
+  - bundlerUrl (`string`, required) OR bundler (`IBundler`, required) : bundler url which will be internally used to create bundler instance or the bundler instance. Bundler instance can also be used if one wants to customise the bundler. Refer to bundler [integration](./../Bundler/integration.mdx) for more details on bundler.
+  - biconomyPaymasterApiKey(`string`) OR paymaster (`IPaymaster`): one can either pass paymaster API key or the paymaster instance.
+  - entryPointAddress (`string`): default entry point address will be used if not passed, otherwise the passed address will be used.
+  - defaultValidationModule (`BaseValidationModule`): The default validation module to start with ( ECDSA ).
   - activeValidationModule (`BaseValidationModule`): The active validation module to start with ( either ECDSA or Multi-chain ).
   - rpcUrl (`string`): RPC URL of the chain
   - index (`number`): index to create multiple smart accounts for an EOA
