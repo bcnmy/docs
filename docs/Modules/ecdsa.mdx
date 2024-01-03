@@ -6,56 +6,6 @@ sidebar_position: 2
 
 This is a basic module that determines "ownership" of the smart account. Smart Accounts are not able to initiate their own transactions on chain and so an Externally Owned Account is needed to sign transactions before they can be sent on chain. The ECDSA ownership module allows us to use a traditional EOA to achieve this.
 
-## Installation
-
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
-<Tabs>
-<TabItem value="js" label="npm">
-
-```bash
-
-npm install @biconomy/modules
-
-```
-
-</TabItem>
-<TabItem value="py" label="yarn">
-
-```bash
-
-yarn add @biconomy/modules
-
-```
-
-</TabItem>
-<TabItem value="java" label="pnpm">
-
-```bash
-
-pnpm add @biconomy/modules
-
-```
-
-</TabItem>
-</Tabs>
-
-## Old Integration
-
-```typescript
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
-
-const module = await ECDSAOwnershipValidationModule.create({
-  signer: signer, // you will need to supply a signer from an EOA in this step
-  moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-});
-```
-Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account.
-
-## New Integration
-There is no need to specify a module in the smart account config if the desired module to use is ECDSA.
+## Integration
+There is no need to create a module instance if the desired module to use is ECDSA Ownership Module, the Biconomy SDK will set that by default.
 

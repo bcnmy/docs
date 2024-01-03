@@ -63,18 +63,16 @@ Here is how you can set up Smart Account instances accross multiple chains:
 
 let baseAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.BASE_GOERLI_TESTNET,
-    paymaster: //basePaymaster,
-    bundler: //baseBundler,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    paymasterUrl: "paymaster url",
+    bundlerUrl: "bundler url",
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
   });
 
 let polygonAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,
-    paymaster: //polygonPaymaster,
-    bundler: //polygonBundler,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    paymasterUrl: "paymaster url",
+    bundlerUrl: "bundler url",
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
   });
