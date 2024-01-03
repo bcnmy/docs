@@ -15,7 +15,7 @@ The addresses of ERC-4337 smart accounts follow a deterministic pattern. This en
 
 ```jsx
 
-const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+const ecdsaOwnershipModule = await ECDSAOwnershipValidationModule.create({
   signer: wallet,
   moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
 })
@@ -25,8 +25,8 @@ const smartAccount = await BiconomySmartAccountV2.create({
   bundler: bundler, // Instance of the bundler (required)
   paymaster: paymaster, // Instance of the paymaster (required)
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Entry point address for the specified chain (required)
-  defaultValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the default validation module (required)
-  activeValidationModule: ownerShipModule, // Choose either ECDSA or Multi-chain as the active validation module to start 
+  defaultValidationModule: ecdsaOwnershipModule, // Choose either ECDSA or Multi-chain as the default validation module (required)
+  activeValidationModule: ecdsaOwnershipModule, // Choose either ECDSA or Multi-chain as the active validation module to start 
 });
 
 ```
