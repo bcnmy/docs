@@ -245,7 +245,7 @@ type UserOpReceipt = {
 ```
 
 **Parameters**
-- userOp (`Partial<UserOperation>`, required): The `userOp` object includes essential fields like `sender`, `nonce`, `callData`, `gas` related properties, and `signature`.
+- userOp (`Partial<UserOperation>`, required): The `userOp` object includes essential fields like `sender`, `nonce`, `callData`, `gas` related properties.
 
 - params (`SendUserOpParams`): The `SendUserOpParams` object can contain fields such as `sessionID`, `sessionSigner`, `sessionValidationModule`, `additionalSessionData`, `batchSessionParams`, and `simulationType`. These parameters are used to customize the behavior of the `sendUserOp` method and are optional. 
   ```ts
@@ -259,6 +259,28 @@ type UserOpReceipt = {
 :::note
 Please note that `simulationType` allows for more debugging insights about `callData` on why an internal transaction fails. It is set to "validation" by default, but can be changed to "validation_and_execution" for more detailed tracing.
 :::
+
+**Returns**
+- userOpsResponse (`UserOpResponse`): The method returns an object of type `UserOpResponse` which has a `userOpHash` and two methods: `wait()` and `waitForTxHash()`.
+The `wait()` method resolves when the user operation is dispatched by the bundler on-chain and gets mined. The `waitForTxHash()` method returns a `UserOpStatus` object which includes the transaction hash and the receipt once added on-chain.
+
+
+### sendSignedUserOp( )
+
+This method is designed to handle user operations that have already been signed. These signed operations are sent directly to the bundler for on-chain processing.
+This method is particularly useful when handling operations that have been grouped together with a multi-chain module, as it allows for the submission of these combined operations in a single request.
+
+**Usage**
+```ts
+const userOpResponse = await smartAccount.sendSignedUserOp(userOp)
+```
+:::note
+Please ensure that the user operations have been correctly signed before using this method⁠
+:::
+**Parameters**
+- userOp (`UserOperation`, required): The `userOp` object includes essential fields like `sender`, `nonce`, `callData`, `gas` related properties, and `signature`.
+
+- params (`SendUserOpParams`): The `SendUserOpParams` object can contain fields such as `sessionID`, `sessionSigner`, `sessionValidationModule`, `additionalSessionData`, `batchSessionParams`, and `simulationType`. These parameters are used to customize the behavior of the `sendUserOp` method and are optional. 
 
 **Returns**
 - userOpsResponse (`UserOpResponse`): The method returns an object of type `UserOpResponse` which has a `userOpHash` and two methods: `wait()` and `waitForTxHash()`.
