@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integrat
 
 # Integration
 
-This guide soley focuses on the code to integrate the Bundler package. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
+This guide soley focuses on the code to integrate the Bundler. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
 
 ## Installation
 
@@ -44,39 +44,53 @@ pnpm add @biconomy/bundler @biconomy/account
 </TabItem>
 </Tabs>
 
-## Old Integration Example
-
-```typescript
-import { IBundler, Bundler } from "@biconomy/bundler";
-import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
-
-// create instance of bundler
-const bundler: IBundler = new Bundler({
-  //https://dashboard.biconomy.io/ get bundler urls from your dashboard
-  bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-```
-
-## New Integration Example
-If you do not wish to use any custom bundler you can simply pass the bunlder url in the smart account config.
-
-```typescript
-import { IBundler, Bundler } from "@biconomy/bundler";
-import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
-
-const biconomySmartAccountConfig = {
-    signer: signer,
-    chainId: 80001,
-    bundlerUrl: ""
-};
-```
+## Integration 
+Simply pass a bundler url as a parameter for the smart account.
 
 :::info
 
-[Click here](/dashboard/keys) to learn more about our dashboard and how to get your own Paymaster URL
+[Click here](/dashboard/keys) to learn more about our dashboard and how to get your own bundler url.
 
 :::
+
+```typescript
+  import { BiconomySmartAccountV2 } from "@biconomy/account";
+
+  const biconomySmartAccountConfig = {
+      signer: signer,
+      chainId: 80001,
+      bundlerUrl: ""
+  };
+
+  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+      biconomySmartAccountConfig
+  );
+```
+
+Or you can create your own instance of the Bundler if you wish to pass more params to it like:
+- userOpReceiptIntervals
+- userOpWaitForTxHashIntervals
+- userOpReceiptMaxDurationIntervals
+- userOpWaitForTxHashMaxDurationIntervals
+
+```typescript
+  import { Bundler } from "@biconomy/bundler";
+  import { BiconomySmartAccountV2 } from "@biconomy/account";
+
+  const bundler = new Bundler({
+    bundlerUrl: "bundler url",
+    chainId: 80001,
+    userOpWaitForTxHashIntervals: 1000
+  });
+
+  const biconomySmartAccountConfig = {
+      signer: signer,
+      bundler
+  };
+
+  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+      biconomySmartAccountConfig
+  );
+```
 
 Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/category/tutorials) for in depth integrations of the Smart Account and Bundler.
