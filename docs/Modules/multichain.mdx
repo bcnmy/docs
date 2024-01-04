@@ -56,58 +56,31 @@ You have the option to transmit a multi-chain signature, enabling the sending of
 #### User Operation Validation (`validateUserOp`) 🛡️
 
 ```solidity
-function validateUserOp(
-        UserOperation calldata userOp,
-        bytes32 userOpHash
-    ) external view virtual override returns (uint256) {
-       // userOp.signature contains both the signature and the validation module's address
-        (bytes memory moduleSignature, ) = abi.decode(
-            userOp.signature,
-            (bytes, address)
-        );
-       // Validates the operation against the intended owner's signature, ensuring it's authorized. 
-        if (moduleSignature.length == 65) {
-            // it's not a multichain signature
-            return
-                _verifySignature(
-                    userOpHash,
-                    moduleSignature,
-                    address(uint160(sender))
-                )
-                    ? VALIDATION_SUCCESS
-                    : SIG_VALIDATION_FAILED;
-        }
-        // otherwise it is a multichain signature
-        (
-            uint48 validUntil,
-            uint48 validAfter,
-            bytes32 merkleTreeRoot,
-            bytes32[] memory merkleProof,
-            bytes memory multichainSignature
-        ) = abi.decode(
-                moduleSignature,
-                (uint48, uint48, bytes32, bytes32[], bytes)
-            );
-        // make a leaf out of userOpHash, validUntil and validAfter
-        bytes32 leaf = keccak256(
-            abi.encodePacked(validUntil, validAfter, userOpHash)
-        );
-        if (!MerkleProof.verify(merkleProof, merkleTreeRoot, leaf)) {
-            revert("Invalid UserOp");
-        }
-        return
-            _verifySignature(
-                merkleTreeRoot,
-                multichainSignature,
-                address(uint160(sender))
-            )
-                ? _packValidationData(
-                    false, //sigVerificationFailed = false
-                    validUntil == 0 ? type(uint48).max : validUntil,
-                    validAfter
-                )
-                : SIG_VALIDATION_FAILED;
+function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash) external view virtual override returns (uint256) {
+    (bytes memory moduleSignature, ) = abi.decode(userOp.signature, (bytes, address));
+
+    if (moduleSignature.length == 65) {
+        return _verifySignature(userOpHash, moduleSignature, address(uint160(sender))) ? VALIDATION_SUCCESS : SIG_VALIDATION_FAILED;
     }
+
+    (
+        uint48 validUntil,
+        uint48 validAfter,
+        bytes32 merkleTreeRoot,
+        bytes32[] memory merkleProof,
+        bytes memory multichainSignature
+    ) = abi.decode(moduleSignature, (uint48, uint48, bytes32, bytes32[], bytes));
+
+    bytes32 leaf = keccak256(abi.encodePacked(validUntil, validAfter, userOpHash));
+
+    if (!MerkleProof.verify(merkleProof, merkleTreeRoot, leaf)) {
+        revert("Invalid UserOp");
+    }
+
+    return _verifySignature(merkleTreeRoot, multichainSignature, address(uint160(sender)))
+        ? _packValidationData(false, validUntil == 0 ? type(uint48).max : validUntil, validAfter)
+        : SIG_VALIDATION_FAILED;
+}
 ```
 
 All the other methods are inherited from [ECDSAOwnershipRegistryModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol)
