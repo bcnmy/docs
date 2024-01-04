@@ -15,7 +15,7 @@ When using these methods you will need to create a `userOp`. The [accounts metho
 
 ## sendUserOp
 
-Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](/Account/methods#senduserop).
+Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](../Account/methods.md#senduserop).
 
 ## getUserOpReceipt
 
