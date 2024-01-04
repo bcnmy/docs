@@ -170,7 +170,7 @@ const userOp = await smartAccount.buildUserOp([tx1]);
         batchSessionParams?: SessionParams[];
       }
       ```
-  4. nonceOptions(`NonceOptions`) : this can be used to execute multiple transactions in parallel. One can implement their own logic for nonce management.
+  4. nonceOptions(`NonceOptions`) : this can be used to execute multiple user operations in parallel for the same smart account.
 
       ```ts
       type NonceOptions = {
