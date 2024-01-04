@@ -32,12 +32,11 @@ const smartAccount = await BiconomySmartAccountV2.create({
 *required params are explicitly mentioned*
 
 - config (`object`, required): A `BiconomySmartAccountV2Config` object containing configuration options for creating the smart account.
-  - signer(`Signer`, required): The signer instance that will need to be passed. 
+  - signer(`Signer`, required) OR defaultValidationModule (`BaseValidationModule`, required): One either needs to pass the signer instance or the default validation module which gets used to detect address of the smart account. If not passed explictly, ECDSA module gets used as default.
   - chainId (`ChainId` enum, required): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
   - bundlerUrl (`string`, required) OR bundler (`IBundler`, required) : bundler url which will be internally used to create bundler instance or the bundler instance. Bundler instance can also be used if one wants to customise the bundler. Refer to bundler [integration](./../Bundler/integration.mdx) for more details on bundler.
   - biconomyPaymasterApiKey(`string`) OR paymaster (`IPaymaster`): one can either pass paymaster API key or custom paymaster instance to use the paymaster.
   - entryPointAddress (`string`): DEFAULT_ENTRY_POINT_ADDRESS will be used if not passed, otherwise the passed address will be used. On specific chains like Chiliz Mainnet it is a different address, so will need to be passed explicitly. Refer to below notes on this.
-  - defaultValidationModule (`BaseValidationModule`): The default validation module used to detect address of the smart account and deploy if not deployed. If not passed explictly, ECDSA module gets used as default. 
   - activeValidationModule (`BaseValidationModule`): The run-time validation module (must be one of enabled validation modules) to sign and validate next userOp.
   - rpcUrl (`string`): RPC URL of the chain
   - index (`number`): index to create multiple smart accounts for an EOA
@@ -102,7 +101,7 @@ const index = smartAccount.index;
 ## UserOp Methods
 
 ### buildUserOp( )
-This method is used for configuring and setting up properties of the `userOp` object. It involves preparing and populating the userOp with necessary information and parameters required for execution by bundler.
+This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as This step also involves estimating gas for the userOp internally)
 
 **Usage**
 
