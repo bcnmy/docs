@@ -189,7 +189,7 @@ const userOp = await smartAccount.buildUserOp([tx1]);
     
   5. forceEncodeForBatch (`boolean`): 
 
-  6. paymasterServiceData (`SponsorUserOperationDto`): The `paymasterServiceData` includes details about the kind of sponsorship and payment token. It contains information about the paymaster service, which is used to calculate the `paymasterAndData` field in the user operation.
+  6. paymasterServiceData (`SponsorUserOperationDto`): The `paymasterServiceData` includes details about the kind of sponsorship and payment token in case mode is ERC20. It contains information about the paymaster service, which is used to calculate the `paymasterAndData` field in the user operation. Note that this is only applicable if you're using Biconomy paymaster.
 
       ```ts
       type SponsorUserOperationDto = {
