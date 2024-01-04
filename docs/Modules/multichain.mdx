@@ -1,22 +1,109 @@
 ---
+sidebar_label: "Multichain Validation"
 sidebar_position: 3
+description: "Overview of Multichain Validation Module with ECDSA Ownership"
 ---
-
-# Multichain Validation Module
-
-This module acts as an extention of the [ECDSA Module](/Modules/ecdsa). The added benefit of this module is you now have the ability to use a single signer accross multiple blockchain networks. This allows you now to completely abstract away the chain that the user is interacting with.
-
-## Installation
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+
+# Multichain Validation Module
+
+This module acts as an extension of the [ECDSA Module](/Modules/ecdsa). The added benefit of this module is you now have the ability to sign once and authorize any number of userOps across multiple blockchain networks.
+
+### What is the Multichain Validation Module? 🤔
+
+This module allows **Externally Owned Accounts (EOAs)** to authorize and sign user operations (UserOps) for Biconomy Smart Accounts on Multiple chains with a single ECDSA signature. 
+
+**Benefits**
+- Significantly improves UX for deploying and setting up Smart Accounts on several chains 
+- Significantly reduces user friction for multichain operations.
+
+:::tip
+You can also use this module as the **default module** just like the ECDSA Validation Module, as it has all its capabilities for sending userOps on the particular chain.
+:::
+
+#### Key Functions 🔐
+
+- **ECDSA Signature Scheme**: Utilizes the ECDSA secp256r1 curve for secure signing.
+- **Flexible Signer Authentication**: Supports various signer solutions like Privy, Fireblocks, Arcana Auth, Capsule, Lit protocol, Turnkey, Web3Auth, Particle, Magic, Portal, etc.
+- **EIP-1271 Compliance**: Allowing Smart Accounts to sign Ethereum messages for logging into dApps.
+- **Sign once, Execute on multiple chains**
+
+#### Use Cases 🌟
+
+Enables use cases which require several actions to be authorized for several chains with just one signature required from user.
+
+1. Multichain intent for example exit all my native tokens for USDC
+2. Allows a dApp to require just one signature from their user to configure & deploy smart accounts on multiple chains and delegate certain actions with permission via session keys on all those chains
+3. Cross-chain state sync actions e.g transfer ownership of a smart account, change ENS, similar actions on a protocol that are deployed on multiple chains
+4. Onboard a user on x chains by deploying their smart account and some action like registering in a raffle 
+
+### How does it work? 🤔
+
+1. Collecting the set of userOps for signing
+2. Calculate userOpHash
+3. Every userOpHash is now a leaf of a Merkle Tree.
+4. Instead of signing individual hashes, the user signs the Merkle Root.
+
+Now this signed Merkle Root serves as on-chain evidence, proving any userOp within the tree is authorized. With this, Users can authorize any number of userOps with just one signature over the Merkle Tree Root.
+
+
+## Smart Contract Deep Dive 🛠️
+
+You have the option to transmit a multi-chain signature, enabling the sending of various user operations on distinct chains. This signature is then validated by the module. Alternatively, if a plain ECDSA signature (65 bytes) is sent, the module interprets it as a standard ECDSA validation.
+
+#### User Operation Validation (`validateUserOp`) 🛡️
+
+```solidity
+function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash) external view virtual override returns (uint256) {
+    (bytes memory moduleSignature, ) = abi.decode(userOp.signature, (bytes, address));
+
+    if (moduleSignature.length == 65) {
+        return _verifySignature(userOpHash, moduleSignature, address(uint160(sender))) ? VALIDATION_SUCCESS : SIG_VALIDATION_FAILED;
+    }
+
+    (
+        uint48 validUntil,
+        uint48 validAfter,
+        bytes32 merkleTreeRoot,
+        bytes32[] memory merkleProof,
+        bytes memory multichainSignature
+    ) = abi.decode(moduleSignature, (uint48, uint48, bytes32, bytes32[], bytes));
+
+    bytes32 leaf = keccak256(abi.encodePacked(validUntil, validAfter, userOpHash));
+
+    if (!MerkleProof.verify(merkleProof, merkleTreeRoot, leaf)) {
+        revert("Invalid UserOp");
+    }
+
+    return _verifySignature(merkleTreeRoot, multichainSignature, address(uint160(sender)))
+        ? _packValidationData(false, validUntil == 0 ? type(uint48).max : validUntil, validAfter)
+        : SIG_VALIDATION_FAILED;
+}
+```
+
+All the other methods are inherited from [ECDSAOwnershipRegistryModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol)
+
+
+#### References
+
+1. **[Source code](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/modules/MultichainECDSAValidator.sol)**
+
+2. **[Merkle Trees](https://www.simplilearn.com/tutorials/blockchain-tutorial/merkle-tree-in-blockchain)**
+
+
+## How to Guide - Biconomy SDK 📘 
+Integrate the Multichain Validation Module into Biconomy Smart Accounts using the SDK.
+
+### Setup and Installation
 
 <Tabs>
 <TabItem value="js" label="npm">
 
 ```bash
 
-npm install @biconomy/modules
+npm install @biconomy/modules ethers
 
 ```
 
@@ -25,7 +112,7 @@ npm install @biconomy/modules
 
 ```bash
 
-yarn add @biconomy/modules
+yarn add @biconomy/modules ethers
 
 ```
 
@@ -34,14 +121,23 @@ yarn add @biconomy/modules
 
 ```bash
 
-pnpm add @biconomy/modules
+pnpm add @biconomy/modules ethers
 
 ```
 
 </TabItem>
 </Tabs>
 
-## Integration
+### Creating a Signer
+
+```javascript
+import { ethers } from "ethers";
+
+const provider = new ethers.providers.JsonRpcProvider("[RPC_Endpoint]");
+const signer = new ethers.Wallet("[Private_Key]", provider);
+```
+
+### Importing and Initializing Multichain Validation Module
 
 ```typescript
 import {
@@ -49,24 +145,27 @@ import {
   DEFAULT_MULTICHAIN_MODULE,
 } from "@biconomy/modules";
 
+// Notice this is chain agnostic so same instance can be used on instances of Smart account API on different chains
 const multiChainModule = await MultiChainValidationModule.create({
   signer: signer,
   moduleAddress: DEFAULT_MULTICHAIN_MODULE,
 });
 ```
 
-Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create a smart account.
+Once initialized it can be passed to the smart account [create method](/Account/methods/create) to create instances of the smart account.
+Check [Paymaster integration](/Paymaster/integration) and [Bundler integration](/Bundler/integration) sections to create instances of them.
 
 Here is how you can set up Smart Account instances accross multiple chains:
-
 ```ts
+import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 let baseAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.BASE_GOERLI_TESTNET,
     paymaster: //basePaymaster,
     bundler: //baseBundler,
+    rpcUrl: // Base Goerli Rpc
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: multiChainModule,
+    defaultValidationModule: multiChainModule, // this can also be ecdsaModule instance (MUST if SA is already created with ecdsa as default module)
     activeValidationModule: multiChainModule
   });
 
@@ -74,9 +173,56 @@ let polygonAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,
     paymaster: //polygonPaymaster,
     bundler: //polygonBundler,
+    rpcUrl: // Polygon Mumbai Rpc
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: multiChainModule,
+    defaultValidationModule: multiChainModule, // this can also be ecdsaModule instance
     activeValidationModule: multiChainModule
   });
-
 ```
+
+### Signing and Sending Multichain userOps
+
+```typescript
+  // This could be swap action, mint nft, transfer ownership, enable different module as such (check use cases above) which you intend to do on multiple chains
+  // You can also batch with providing just array of transactions
+  // If the smart account is not deployed it would be deployed as part of this transaction. No additional action needed in below payload 
+  const transaction = {
+    to: <DESTINATION_CONTRACT_ADDRESS>, 
+    data: <DESTINATION_CONTRACT_METHOD_ENCODED_DATA>,
+  };
+
+  // Build partial userOp for chain1
+  let partialUserOp1 = await baseAccount.buildUserOp([transaction], { 
+    // Assuming Sponsorship Paymaster is to be used otherwise leave as it's optional
+    paymasterServiceData: {
+    mode: PaymasterMode.SPONSORED,
+  }});
+
+  // Build partial userOp for chain2
+  let partialUserOp2 = await polygonAccount.buildUserOp([transaction], { 
+    // Assuming Sponsorship Paymaster is to be used otherwise leave as it's optional
+    paymasterServiceData: {
+    mode: PaymasterMode.SPONSORED,
+  }});
+
+  // Use multichain module to sign once for all ops
+  const returnedOps = await multiChainModule.signUserOps([{userOp: partialUserOp1, chainId: ChainId.BASE_GOERLI_TESTNET}, {userOp: partialUserOp2, chainId: ChainId.POLYGON_MUMBAI}]);
+
+  const userOpResponse1 = await baseAccount.sendSignedUserOp(returnedOps[0] as any);
+  // You can also just wait for transaction hash by waitForTxHash()
+  const transactionDetails1 = await userOpResponse1.wait();
+
+  const userOpResponse2 = await polygonAccount.sendSignedUserOp(returnedOps[1] as any);
+  const transactionDetails2 = await userOpResponse2.wait();
+```
+
+:::info
+When the Smart Account isn't yet deployed, setting **multiChainModule** as the default validation module is beneficial. This activates it by default and retains all functions of the **ECDSA Module**, a popular go-to module.
+:::
+
+## Conclusion
+It makes it easier for dApps to deploy and set up Smart Accounts across multiple chains or issue session keys with different permissions for each chain, reducing user difficulties.
+
+> Multichain module allows us to use session keys and setup sessions on multiple chains with single wallet signature.
+>
+> — [Rage Trade](https://www.rage.trade/)
