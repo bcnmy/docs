@@ -163,21 +163,17 @@ import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 let baseAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.BASE_GOERLI_TESTNET,
-    paymaster: //basePaymaster,
-    bundler: //baseBundler,
-    rpcUrl: // Base Goerli Rpc
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: multiChainModule, // this can also be ecdsaModule instance (MUST if SA is already created with ecdsa as default module)
+    biconomyPaymasterApiKey: "paymaster api key",
+    bundlerUrl: "bundler url",
+    defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
   });
 
 let polygonAccount = await BiconomySmartAccountV2.create({
     chainId: ChainId.POLYGON_MUMBAI,
-    paymaster: //polygonPaymaster,
-    bundler: //polygonBundler,
-    rpcUrl: // Polygon Mumbai Rpc
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: multiChainModule, // this can also be ecdsaModule instance
+    biconomyPaymasterApiKey: "paymaster api key",
+    bundlerUrl: "bundler url",
+    defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
   });
 ```
