@@ -111,4 +111,31 @@ const createSmartAccount = async () => {
 };
 ```
 
+## Create the Biconomy Smart Account with ECDSA default
+In the latest version of the SDK (3.1.2) we can easily create a smart account with ECDSA validation module without creating the instance, this will now require to pass signer directly to the smart account. 
+WalletClientSigner can now be passed.
+```typescript
+const createSmartAccount = async () => {
+  if (!walletClient) return;
+  const signer = new WalletClientSigner(walletClient, "json-rpc");
+  const ownerShipModule = await ECDSAOwnershipValidationModule.create({
+    signer: signer,
+    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+  });
+
+  let biconomySmartAccount = await BiconomySmartAccountV2.create({
+    chainId: ChainId.BASE_GOERLI_TESTNET,
+    bundler: bundler,
+    paymaster: paymaster,
+    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
+    defaultValidationModule: ownerShipModule,
+    activeValidationModule: ownerShipModule,
+  });
+
+  const address = await biconomySmartAccount.getAccountAddress();
+  setSaAddress(address);
+  setSmartAccount(biconomySmartAccount);
+};
+```
+
 You are now ready to get started using Viem with Biconomy. For a full code implementation check out [this example repo](https://github.com/bcnmy/biconomy_viem_example).
