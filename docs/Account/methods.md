@@ -264,7 +264,7 @@ The `wait()` method resolves when the user operation is dispatched by the bundle
 
 ### sendSignedUserOp( )
 
-This method is designed to handle user operations that have already been signed. These signed operations are sent directly to the bundler for on-chain processing.
+This method is designed to dispatch signed user operations to the bundler.
 This method is particularly useful when handling operations that have been grouped together with a multi-chain module, as it allows for the submission of these combined operations in a single request.
 
 **Usage**
