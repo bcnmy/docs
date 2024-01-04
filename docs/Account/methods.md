@@ -157,11 +157,11 @@ const userOp = await smartAccount.buildUserOp([tx1]);
         maxFeePerGas?: BigNumberish;
         maxPriorityFeePerGas?: BigNumberish;
         paymasterData?: string;
-        signature?: string; // todo - add the definition
+        signature?: string;
       }
       ```
 
-  2. skipBundlerGasEstimation (`boolean`): This boolean param can be set to false to skip some Gas Estimations on the bundler which can help with reducing latency on requests.
+  2. skipBundlerGasEstimation (`boolean`): This parameter allows one to manage gas estimations more efficiently depending on the transactions. By default, it's set to true, which means if a paymaster is present, gas estimations are done on the paymaster side to facilitate gasless transactions.
 
   3. params (`ModuleInfo`): One can use this param to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
 
