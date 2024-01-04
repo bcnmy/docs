@@ -21,8 +21,8 @@ let signer = new ethers.Wallet("private key", provider);
 const smartAccount = await BiconomySmartAccountV2.create({
   signer: signer,
   chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
-  bundlerUrl: "", // bundler URL (required)
-  biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key  
+  bundlerUrl: "", // bundler URL can be obtained from the dashboard
+  biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
 });
 
 ```
@@ -35,7 +35,7 @@ const smartAccount = await BiconomySmartAccountV2.create({
   - signer(`Signer`, required): The signer instance that will need to be passed. 
   - chainId (`ChainId` enum, required): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
   - bundlerUrl (`string`, required) OR bundler (`IBundler`, required) : bundler url which will be internally used to create bundler instance or the bundler instance. Bundler instance can also be used if one wants to customise the bundler. Refer to bundler [integration](./../Bundler/integration.mdx) for more details on bundler.
-  - biconomyPaymasterApiKey(`string`) OR paymaster (`IPaymaster`): one can either pass paymaster API key or custom paymaster instance.
+  - biconomyPaymasterApiKey(`string`) OR paymaster (`IPaymaster`): one can either pass paymaster API key or custom paymaster instance to use the paymaster.
   - entryPointAddress (`string`): DEFAULT_ENTRY_POINT_ADDRESS will be used if not passed, otherwise the passed address will be used. On specific chains like Chiliz Mainnet it is a different address, so will need to be passed explicitly. Refer to below notes on this.
   - defaultValidationModule (`BaseValidationModule`): The default validation module used to detect address of the smart account and deploy if not deployed. If not passed explictly, ECDSA module gets used as default. 
   - activeValidationModule (`BaseValidationModule`): The run-time validation module (must be one of enabled validation modules) to sign and validate next userOp.
