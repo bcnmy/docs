@@ -207,7 +207,7 @@ const userOp = await smartAccount.buildUserOp([tx1]);
   
 
 **Returns**
-- partialUserOp (`Promise<Partial<UserOperation>>`): A Promise resolving to `partialUserOp` which can be further sent for execution⁠.
+- partialUserOp (`Promise<Partial<UserOperation>>`): A Promise resolving to `partialUserOp` which can be further signed and sent to the bundler.
 
 ### senduserOp( )
 
