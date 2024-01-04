@@ -183,7 +183,7 @@ const userOp = await smartAccount.buildUserOp([tx1]);
         nonceOptions: { nonceKey: i++ },
       });
       ```
-      Nonce can be initialised at any arbitrary number and incremented as one builds transactions. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be if you know the order in which you are sending the userOps.
+nonceKey can be initialised at any arbitrary number and incremented as one builds user operations to be sent in parallel. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be used if you know the order in which you are sending the userOps.
 
     
     
