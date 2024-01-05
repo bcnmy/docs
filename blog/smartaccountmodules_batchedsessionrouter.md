@@ -9,7 +9,7 @@ Disclaimer: pre-requisites. The Batch Session Router module is a part of the Bic
 ## What it enables
 
 Those who are familiar with the [Biconomy Modular Session Keys framework](https://www.biconomy.io/post/modular-session-keys) know that it provides great flexibility and allows for quick building of the Session Validation Modules for every new use case without touching the core Session Keys logic.
-Batched Session Router adds *composability*, allowing batching of several session key signed operations which should be validated by different Session Validation modules into one User Operation and execute them atomically.
+Batched Session Router adds _composability_, allowing batching of several session key signed operations which should be validated by different Session Validation modules into one User Operation and execute them atomically.
 
 ## UX Impact
 
@@ -26,11 +26,11 @@ It also doesn’t want to make this on behalf of the users when the rate of the 
 In this case, they will use Session Keys to sign those operations.
 Since those actions are very common there already are the building blocks for this = appropriate Session Validation Modules (SVMs): ERC20ApprovalSVM, DEXSwapSVM, ProtocolERC20StakeSVM.
 
-Each of those SVMs is only able to validate userOps which specifically performs a given action: swap, approve, or stake. So none of them is able to validate the userOp which leverages `executeBatch()` method to perform those 3 actions together. 
+Each of those SVMs is only able to validate userOps which specifically performs a given action: swap, approve, or stake. So none of them is able to validate the userOp which leverages `executeBatch()` method to perform those 3 actions together.
 
 Of course, we can always build 3 separate userOps for those 3 actions, however, they won’t be included in the same bundle as per ERC-4337 specification, so they end up on 3 different bundles, and that’s not what the user wants in DeFi.
 
-It’s also possible to build a custom Session Validation Module that works with this specific flow and validates such atomic userOps which leverages `executeBatch()`. However, if in the future there’s a need to add one more step to this flow, this will require a new Session Validation Module to be built. 
+It’s also possible to build a custom Session Validation Module that works with this specific flow and validates such atomic userOps which leverages `executeBatch()`. However, if in the future there’s a need to add one more step to this flow, this will require a new Session Validation Module to be built.
 Such an SVM would also double-use some of the code already implemented in the basic SVMs and that is not a good practice. Also, this would require permissions to be separately set up for every new SVM.
 
 Session Router addresses those issues by parsing `executeBatch()` calldata and routing validation flow to the specific SVMs based on the actions into the batch.
@@ -43,13 +43,14 @@ Batched Session Router leverages `SmartAccount.executeBatch()` method to execute
 
 It is a Validation module, that validates the `userOps` with the `callData` field containing a call to `SmartAccount.executeBatch()`.
 
-Every operation in the batch is expected to be an action managed by a specific Session Validation Module. 
+Every operation in the batch is expected to be an action managed by a specific Session Validation Module.
 
 Of course, this action should be permitted for a given session key by enabling the appropriate session key + parameters in the Session Key Manager module.
 
 ![sessionrouter](./images/Session%20Router.png)
 
-So, the Batched Session Router 
+So, the Batched Session Router
+
 1. Verifies every action this userOp claims to perform is enabled for a given Smart Account.
 2. Checks which Session Key was used to sign the userOp.
 
@@ -64,6 +65,6 @@ The Batched Session Router is stateless and does not perform (and require) any a
 
 ## Conclusion
 
-Batched Session Router allows validating userOps that leverage `SmartAccount.executeBatch()` method to execute several actions atomically, signed by a single Session Key. 
+Batched Session Router allows validating userOps that leverage `SmartAccount.executeBatch()` method to execute several actions atomically, signed by a single Session Key.
 
 Batched Session Router is an important addition to the Biconomy Session Keys framework which further improves UX and DevX and allows for great composability in addition to flexibility it already has.

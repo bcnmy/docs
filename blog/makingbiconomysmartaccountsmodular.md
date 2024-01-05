@@ -84,7 +84,6 @@ To ensure every Smart Account is able to validate userOps right after its deploy
 
 Because of the requirements to use only Associated Storage during the validation phase set by ERC-4337, in most cases, the Module will return its own address as configured_module_address. However, if those requirements change it will be possible to build a ModuleFactory that deploys a new proxy instance of Module for every SA.
 
-
 ![deploynewsa](./images/deploynewsa.png)
 
 Any Module can be enabled as a first validation module. It can be the ECDSA Ownership Module, which mimics the behavior of the EOA-owned Smart Contract Wallets we are all used to and validates userOps based on the signature issued by a privileged EOA.
@@ -93,7 +92,7 @@ However, it can be a Passkey Module, that expects a cp256r1-compliant signature.
 
 It can also be a Session Key Module. Or any other module that allows ensuring userOp has been initiated by a trusted party or just meets certain conditions like recurring payments.
 
-With this approach Biconomy Smart Account achieves ****the key goal of account abstraction: allow users to use smart contract wallets containing arbitrary verification logic instead of EOAs as their primary account and completely remove any need at all for users to also have EOAs.
+With this approach Biconomy Smart Account achieves \*\*\*\*the key goal of account abstraction: allow users to use smart contract wallets containing arbitrary verification logic instead of EOAs as their primary account and completely remove any need at all for users to also have EOAs.
 
 ## Enabling Modules
 
@@ -134,7 +133,6 @@ There’s no categorization of modules, and also validation modules are not asso
 It makes enabling a module easy and transparent.
 
 ## Validation
-
 
 At validation phase `SmartAccount.validateUserOp` is called by `EntryPoint` . `EntryPoint` expects `validationData` to be returned.
 
@@ -196,7 +194,7 @@ The only place where delegatecalls are still present is execTransactionFromModul
 
 To learn more about other approaches to Modularity, we recommend this article by Konrad Kopp. It contains extensive information regarding Modularity in the Account Abstraction. It compares various approaches to Modularity and provides links to additional materials on the topic.
 
-## Modules 
+## Modules
 
 Biconomy Smart Account Platform ships with a basic set of Modules that cover the most important use cases.
 
@@ -220,7 +218,6 @@ With passkeys, users can avoid having regular EOA at all. It effectively allows 
 
 Thus, developers can provide their users with Smart Accounts that have Passkeys (FaceId, Fingerprint etc.) as the only validation mechanism.
 
-
 ### Session Key Authorization Module
 
 Session Keys are a powerful concept of temporary user-issued cryptographic keys, that are authorized to sign only a predefined set of operations. Thus passkeys are safe to be shared with dApps and other users to perform allowed operations on the user’s behalf.
@@ -230,7 +227,6 @@ It opens endless opportunities for dApps to significantly improve UX. Session Ke
 With this in mind, we designed the Biconomy Session Key system to be flexible, extensible, and reliable.
 
 It features a Session Key Manager Module that performs general checks: is Session Key enabled and not expired? If everything is valid, it forwards the Session Validation flow to one of the Session Validation modules. Those modules contain use case-specific logic to check if the Session Key that signed the userOp is authorized to perform actions, specified in the userOp.calldata field.
-
 
 ![sessionkeydataflow](./images/sessionkeydataflow.png)
 
@@ -264,7 +260,7 @@ It allows for a user to only sign once and authorize any amount of userOps with 
 
 You can read more about this module, how it works, and how it helps dApp improve UX [here](/blog/smartaccountmodules_multichainvalidation).
 
-## Account Recovery Module 
+## Account Recovery Module
 
 Vitalik described the need for Social Recovery in [this article](https://vitalik.ca/general/2021/01/11/recovery.html) more than two years ago. However, until recent times it was the choice of SCW developers whether to enable Account Recovery or not. For EOA, social recovery is not possible by its nature.
 
@@ -280,7 +276,7 @@ If the security delay is set to 0, and all the signatures are valid, the request
 If the delay is not 0, the request is recorded on-chain and will require another userOp (which can be sent by anyone as it doesn't even require any signature) to execute it after the delay has passed. This 2nd userOp won't be validated before the delay has passed.
 The design of the Biconomy Account Recovery Module is highly inspired by the above-mentioned Vitalik’s article.
 
-## Release 
+## Release
 
 [GitHub repository](https://github.com/bcnmy/scw-contracts/tree/SCW-V2-Modular-SA) for Biconomy Smart Account Platform.
 
@@ -288,7 +284,7 @@ The design of the Biconomy Account Recovery Module is highly inspired by the abo
 - [ECDSA Ownership Module](https://github.com/bcnmy/scw-contracts/blob/SCW-V2-Modular-SA/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol)
 - [Passkey Module](https://github.com/bcnmy/scw-contracts/blob/feat-ownerless-passkey-module/contracts/smart-contract-wallet/modules/PasskeyRegistryModule.sol)
 - [Session Key Manager Module](https://github.com/bcnmy/scw-contracts/blob/SCW-V2-Modular-SA/contracts/smart-account/modules/SessionKeyManagerModule.sol) and [Session Validation Modules](https://github.com/bcnmy/scw-contracts/tree/SCW-V2-Modular-SA/contracts/smart-account/modules/SessionValidationModules).
-We’re proud of our extensive test specs suite that showcases how Biconomy Smart Account works. We suggest starting with the [Smart Account Basics](https://github.com/bcnmy/scw-contracts/blob/SCW-V2-Modular-SA/test/smart-account/SA.Basics.specs.ts) spec.
+  We’re proud of our extensive test specs suite that showcases how Biconomy Smart Account works. We suggest starting with the [Smart Account Basics](https://github.com/bcnmy/scw-contracts/blob/SCW-V2-Modular-SA/test/smart-account/SA.Basics.specs.ts) spec.
 
 Biconomy Modular SDK with full support for the Biconomy Modular Smart Account will be released soon.
 

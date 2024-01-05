@@ -3,6 +3,9 @@ sidebar_label: "Quickstart"
 sidebar_position: 2
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Quickstart: Smart Account Native Transfer ⚡️
 
 In this guide, we will create a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a **Smart Account** and perform **user operations** by sending a native transfer of tokens.
@@ -19,22 +22,45 @@ We will clone a preconfigured Node.js project with TypeScript support to get sta
 2. Navigate to the desired directory where you would like to clone the repository.
 3. Execute the following command to clone the repository from the provided [GitHub link](https://github.com/bcnmy/quickstart)
 
-```bash
-git clone git@github.com:bcnmy/quickstart.git
-```
-
-Note that this is the `SSH` example. Use `HTTP` or `GithubCli` options if you prefer.
+<Tabs>
+<TabItem value="http" label="HTTP">
 
 ```bash
 git clone https://github.com/bcnmy/quickstart.git
 ```
 
+</TabItem>
+<TabItem value="ssh" label="SSH">
+
+```bash
+git clone git@github.com:bcnmy/quickstart.git
+```
+
+</TabItem>
+
+</Tabs>
+
 Once you have the repository on your local machine, install all dependencies using your preferred package manager. In this tutorial, we will use `yarn`.
+
+<Tabs>
+<TabItem value="yarn" label="Yarn">
 
 ```bash
 yarn install
 yarn dev
 ```
+
+</TabItem>
+<TabItem value="npm" label="Npm">
+
+```bash
+npm install
+npm run dev
+```
+
+</TabItem>
+
+</Tabs>
 
 After running these two commands you should see the printed statement `Hello World!` in your terminal.
 Any changes made to the `index.ts` file in the src directory should now automatically run in your terminal upon saving.
@@ -57,7 +83,7 @@ All packages you need for this guide are configured and installed for you. Check
 Let’s first set up a `.env` file in the root of our project, this will need a **Private Key** of any **Externally Owned Account (EOA)** you would like to serve as the owner of the Smart Account we create. This is a private key you can get from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. Each of these wallets will include step-by-step guides on how to export the Private key. 🔑
 
 ```bash
-PRIVATE_KEY = "Enter a private key"
+PRIVATE_KEY = "<your_private_key>"
 ```
 
 Let’s give our script the ability to access this environment variable. Delete the console log inside of `src/index.ts` and replace it with the code below. All of our work for the remainder of the tutorial will be in this file.
