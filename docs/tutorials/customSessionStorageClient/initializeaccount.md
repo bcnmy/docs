@@ -94,7 +94,7 @@ import {
 } from "@biconomy/modules";
 ```
 
-Now lets initialize the module and use the `create` method on the `BiconomySmartAccountV2` class to generate a new instance of our smart account. Additional information about this method can be found [here](https://docs.biconomy.io/Account/methods/create).
+Now lets initialize the module and use the `create` method on the `BiconomySmartAccountV2` class to generate a new instance of our smart account. Additional information about this method can be found [here](https://docs.biconomy.io/Account/methods#create).
 
 ```typescript
 async function createAccount() {

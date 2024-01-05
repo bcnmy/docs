@@ -8,7 +8,7 @@ This section will cover methods that can be called using the Paymaster Package.
 
 :::note
 
-When using these methods you will need to create a `userOp`. The [accounts methods](/category/methods) will help you in creating these for the paymaster methods below.
+When using these methods you will need to create a `userOp`. The [accounts methods](../Account/methods.md) will help you in creating these for the paymaster methods below.
 
 :::
 
