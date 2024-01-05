@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Initialize Smart Account"
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Initialize Smart Account
