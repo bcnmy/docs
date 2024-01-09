@@ -56,10 +56,10 @@ const config = {
           customCss: require.resolve("./src/css/custom.css"),
         },
         blog: {
-          blogSidebarTitle: 'All posts',
-          blogSidebarCount: 'ALL',
-          postsPerPage: 'ALL'
-        }
+          blogSidebarTitle: "All posts",
+          blogSidebarCount: "ALL",
+          postsPerPage: "ALL",
+        },
       }),
     ],
   ],
@@ -109,7 +109,13 @@ const config = {
             position: "left",
             label: "Docs",
           },
-          {to: 'blog', label: 'Blog', position: 'left'},
+          { to: "blog", label: "Blog", position: "left" },
+          {
+            to: "/partners",
+            position: "left",
+            label: "Preferred Partners",
+            activeBaseRegex: `/partners/`,
+          },
           {
             href: "https://github.com/bcnmy/docs",
             label: "GitHub",
@@ -181,7 +187,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
-        additionalLanguages: ['solidity']
+        additionalLanguages: ["solidity"],
       },
     }),
 
@@ -190,6 +196,16 @@ const config = {
       "@docusaurus/plugin-client-redirects",
       {
         redirects: redirectsList,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "partners",
+        path: "partners",
+        routeBasePath: "partners",
+        sidebarPath: "./sidebarsPartners.js",
+        // ... other options
       },
     ],
   ],
