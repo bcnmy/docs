@@ -505,4 +505,4 @@ Any kind of automation can be handled via Session Keys as well. Current automati
 
 ## Conclusion
 
-In this article, we discussed how the Modular approach to Session Keys allows for quickly enabling efficient solutions for custom use cases in Web3, decomposed how userOp validation happens through Biconomy Session Key Module, and went through a step-by-step guide to creating a new custom Session Validation Module.
+In this article, we discussed how the Modular approach to Session Keys allows for quickly enabling efficient solutions for custom use cases in Web3, decomposed how userOp validation happens through the Biconomy Session Key Module, and went through a step-by-step guide to creating a new custom Session Validation Module.
