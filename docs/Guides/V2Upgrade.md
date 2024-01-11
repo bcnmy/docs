@@ -37,7 +37,7 @@ Its critical to add the **moduleSetupData** while doing the upgrade when using g
     txList.push(transaction) // any transaction user needs to combine
     const partialUserOp = await biconomySmartAccount.buildUserOp(txList);
   ```
-- If user wants to upgrade the acount explicitly by doing a transaction then `updateImplementationUserOp` method can be used which returns the partial userOp directly. 
+- If user wants to only upgrade the account then `updateImplementationUserOp` method can be used which returns the partial userOp directly. 
   ```tsx
     const partialUserOp = await biconomySmartAccount.updateImplementationUserOp() 
     console.log('partial userOp', partialUserOp)
