@@ -83,7 +83,7 @@ const [provider, setProvider] = useState < any > (null);
 const [address, setAddress] = useState <string> ("";)
 ```
 
-Next let's implement the connect function for activating magic social login and Biconomy Smart Account creation:
+Next, let's implement the connect function for activating magic social login and Biconomy Smart Account creation:
 
 ```js
 const connect = async () => {
