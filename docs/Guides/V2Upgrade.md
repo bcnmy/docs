@@ -14,18 +14,14 @@ In the [SDK release](https://github.com/bcnmy/biconomy-client-sdk/releases/tag/r
 
 ### Steps to upgrade
 
-1. create a Biconomy account V1 instance and execute **`getUpdateImplementationData`** transaction.
+1. create a Biconomy account V1 instance and execute **`updateImplementationUserOp`** transaction. This includes upgrade transaction and the enabling ECDSA validation module.
 
 ```tsx
   const biconomyAccount = new BiconomySmartAccount(biconomySmartAccountConfig);
   const biconomySmartAccount = await biconomyAccount.init();
 
-  const tx = await biconomySmartAccount.getUpdateImplementationData() 
-  console.log('account update tx', tx)
-
-  // transaction is any existing transaction
-
-  let partialUserOp = await biconomySmartAccount.buildUserOp([transaction, tx]);
+  const partialUserOp = await biconomySmartAccount.updateImplementationUserOp() 
+  console.log('partial userOp', partialUserOp)
 
   const userOpResponse = await biconomySmartAccount.sendUserOp(partialUserOp);
   const transactionDetails = await userOpResponse.wait();
