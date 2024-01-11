@@ -45,7 +45,7 @@ Its critical to add the **moduleSetupData** while doing the upgrade when using g
 3. Once we have the partial User operation, we can execute it using following methods.
 
 ```tsx
-  // get the paymasterData
+  // get the paymasterData, user can also use ERC20 mode
   const biconomyPaymaster =
     biconomySmartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 
