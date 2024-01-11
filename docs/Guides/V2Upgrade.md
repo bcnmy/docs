@@ -8,7 +8,7 @@ Account V1’s single EOA ownership is comparable to Account V2 with the ECDSA O
 
 In the [SDK release](https://github.com/bcnmy/biconomy-client-sdk/releases/tag/r6) (npm version 3.1.1), below API methods have been added to V1 Account API specs (BiconomySmartAccount.ts in accounts package) to help with the upgrades
 
-- **getUpdateImplementationData( )** : This returns transaction object which can be used in buildUserOp() method for batching with other transactions. To use this method one must enable a validation module. This method can be used while batching the upgrade with other transactions.
+- **getUpdateImplementationData( )** : This returns transaction object which can be used in buildUserOp() method for batching with other transactions. If you do an upgrade by using this transaction payload you must also enable a validation module (get this data by getModuleSetupData()) as part of the Same transaction. These methods can be used while batching the upgrade with other transactions on your new implementation.
 
 - **updateImplementationUserOp( )** : This returns the userOp, which can be sent as a **single** action to do the upgrade. 
 
