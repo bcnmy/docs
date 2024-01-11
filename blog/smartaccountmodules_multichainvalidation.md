@@ -109,4 +109,4 @@ Thus the Multi userOp approach introduced by the described module does not intro
 
 ## Conclusion
 
-With the Multichain Validation module described above we start building the tools for the rollup-centric transition described by Vitalik. Even this simple module significantly improves UX for deploying and setting up Smart Accounts on several chains. It can be used not only with Biconomy Smart Account, but with any Smart Account which follows the EIP-6900 interface for validation modules. We’re looking forward to build more tools which enable the best multi chain UX for the users of Biconomy-powered dApps.
+With the Multichain Validation module described above we start building the tools for the rollup-centric transition described by Vitalik. Even this simple module significantly improves UX for deploying and setting up Smart Accounts on several chains. It can be used not only with Biconomy Smart Account, but with any Smart Account which follows the EIP-6900 interface for validation modules. We’re looking forward to building more tools which enable the best multi-chain UX for the users of Biconomy-powered dApps.
