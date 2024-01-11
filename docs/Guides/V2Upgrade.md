@@ -21,10 +21,14 @@ In the [SDK release](https://github.com/bcnmy/biconomy-client-sdk/releases/tag/r
   const biconomySmartAccount = await biconomyAccount.init();
 ```
 
-2. Create partial userOp using following methods depending on the usecase. 
+2. Create partial userOp using one of the following methods depending on the usecase. 
 - If user wants to batch the upgrade transaction with other transactions, `getUpdateImplementationData` method can be used along with `getModuleSetupData`. 
+
+:::info
+Its critical to add the **moduleSetupData** while doing the upgrade when using getUpdateImplementationData to ensure atleast one validation method can be enabled.
+:::
+
   ```tsx
-    //Method 1
     const txList = [];
     const updrageTransaction = await biconomySmartAccount.getUpdateImplementationData();
     const moduleSetupData = await biconomySmartAccount.getModuleSetupData();
