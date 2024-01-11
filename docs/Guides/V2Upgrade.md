@@ -25,7 +25,7 @@ In the [SDK release](https://github.com/bcnmy/biconomy-client-sdk/releases/tag/r
 - If user wants to batch the upgrade transaction with other transactions, `getUpdateImplementationData` method can be used along with `getModuleSetupData`. 
 
 :::info
-Its critical to add the **moduleSetupData** while doing the upgrade when using getUpdateImplementationData to ensure atleast one validation method can be enabled.
+Its critical to add the **moduleSetupData** while doing the upgrade when using getUpdateImplementationData to ensure at least one validation module is enabled. Otherwise your V2 account will be left without any authorization and unusable.
 :::
 
   ```tsx
