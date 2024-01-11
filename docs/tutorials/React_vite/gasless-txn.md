@@ -278,4 +278,4 @@ export default Counter;
 
 ```
 
-Congratulations you just created your first AA powered dApp. Users can now log in and have a smart account created for them and interact with a smart contract without the need to paying gas fees.
+Congratulations you just created your first AA powered dApp. Users can now log in, have a smart account created for them, and interact with a smart contract without needing to pay gas fees.
