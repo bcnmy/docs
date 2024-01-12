@@ -1,6 +1,6 @@
 ---
-sidebar_label: "API Keys and URLS"
-sidebar_position: 3
+sidebar_label: "API Keys and URLs"
+sidebar_position: 4
 ---
 
 # API Keys

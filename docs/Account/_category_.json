@@ -1,8 +1,8 @@
 {
   "label": "Smart Accounts",
-  "position": 4,
+  "position": 3,
   "collapsible": true,
-  "collapsed": false,
+  "collapsed": true,
   "link": {
     "type": "generated-index",
     "description": "Learn more about using the Biconomy Smart Account Package. Explore how to plug in programmable modules. And how to build & send UserOps"

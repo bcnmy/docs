@@ -14,7 +14,7 @@ This documentation is for using our Bundler API directly. If you are building wi
 :::info
 You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
 
-You can test this endpoint on our [Bundler Explorer](/Bundler/explorer)
+You can test this endpoint on our [Bundler Explorer](/Bundler/api/explorer)
 :::
 
 This endpoint is used to estimate the gas values for a UserOperation. Request constitutes given UserOperation optionally without gas limits and gas prices & returns the needed gas limits. The signature field is ignored by the wallet, so that the operation will not require user’s approval. It still requires putting a “semi-valid” signature (e.g. a signature in the right length)

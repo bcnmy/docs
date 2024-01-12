@@ -2,7 +2,7 @@
   "label": "Paymaster",
   "position": 5,
   "collapsible": true,
-  "collapsed": false,
+  "collapsed": true,
   "link": {
     "type": "generated-index",
     "description": "Learn more about using the Biconomy Paymaster Package"

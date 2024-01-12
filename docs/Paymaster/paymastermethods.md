@@ -1,4 +1,5 @@
 ---
+sidebar_label: "Methods"
 sidebar_position: 3
 ---
 
