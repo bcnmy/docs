@@ -1,6 +1,6 @@
 ---
-sidebar_label: "Dashboard API"
-sidebar_position: 1
+sidebar_label: "APIs"
+sidebar_position: 6
 ---
 
 # Dashboard APIs

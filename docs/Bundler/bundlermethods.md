@@ -1,4 +1,5 @@
 ---
+sidebar_label: "Methods"
 sidebar_position: 3
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integration.mdx
 ---

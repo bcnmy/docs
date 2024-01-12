@@ -5,7 +5,7 @@ sidebar_position: 3
 # Using Paymaster and Biconomy Dashboard
 
 Now, let's setup our biconomy dashboard. Follow the instructions
-[on this page](https://docs.biconomy.io/docs/category/biconomy-dashboard).
+[on this page](https://docs.biconomy.io/docs/category/dashboard).
 
 Before continuing onto the the next step be sure that you have completed the
 following:

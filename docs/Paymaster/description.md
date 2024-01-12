@@ -16,6 +16,6 @@ If the mode you choose in the request to the Paymaster URL is the sponsored mode
 
 ![Erc20](../images/overview/erc20gas.png)
 
-Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/supportedchains/supportedTokens).
+Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/paymaster/supportedNetworks).
 
 Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/category/executing-transactions)

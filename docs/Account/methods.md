@@ -1,5 +1,7 @@
 ---
 title: Methods
+sidebar_position: 6
+
 ---
 
 The SDK provides the following API methods for a smart account.
