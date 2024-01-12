@@ -19,7 +19,7 @@ For dApps that deal with ERC-20 tokens, it can be
     uint48 validAfter;
     address receiver
     uint256 maxAmountPerTransfer
-} 
+}
 
 ```
 
@@ -78,7 +78,6 @@ This method is called from `SmartAccount.sol` when Smart Account identifies user
 
 The method receives `userOp` and `userOpHash`, both initially provided by an `EntryPoint`.
 
-
 ```
 
 SessionStorage storage sessionKeyStorage = _getSessionData(msg.sender);
@@ -115,6 +114,7 @@ The next block is more interesting
     );
 
 ```
+
 In this code, we parse the `moduleSignature` to get the module-specific data from it.
 
 `validUntil` and `validAfter` are the standard values that identify the window where userOp is valid. Used like this, they will identify the validity period for a Session Key and we won’t need to write additional code to validate those parameters. It will be done in the `EntryPoint`, as described below.
@@ -128,7 +128,6 @@ merkleProof is the proof required to verify the fact that a SessionKey with the 
 And finally, `sessionKeySignature` is a userOpHash signed by a Session Key.
 
 The next block makes verifies the Session Key with the parameters is actually enabled.
-
 
 ```
 
@@ -181,9 +180,9 @@ Let’s explore its `validateSessionUserOp` method, as it is being executed now.
 
 ## SessionValidationModule.validateSessionUserOp
 
-It accepts _op, which is basically the userOp,  _userOpHash, _sessionKeyData , and _sessionKeySignature.
+It accepts \_op, which is basically the userOp, \_userOpHash, \_sessionKeyData , and \_sessionKeySignature.
 
-What is happening then, is that the Session Validation Module actually parses this use case-specific data from a _sessionKeyData. Each Session Validation module will have to make it in its own way as it operates with its own set of parameters.
+What is happening then, is that the Session Validation Module actually parses this use case-specific data from a \_sessionKeyData. Each Session Validation module will have to make it in its own way as it operates with its own set of parameters.
 
 ```
 address sessionKey = address(bytes20(_sessionKeyData[0:20]));
@@ -199,6 +198,7 @@ This by the way will most probably be common for all the Session Validation modu
       address token = address(bytes20(_sessionKeyData[20:40]));
 
 ```
+
 Here, we decode the main ERC20 Transfer parameters: `recipient`, `maxAmount`, and `token`.
 
 We are sure that exactly those parameters have been set by a Smart Account authorized party for this `sessionKey` as we already verified that a leaf, composed of not signed data, is, in fact, a part of a Merkle Tree represented on-chain by a Merkle Root.
@@ -217,10 +217,9 @@ And the `validateSessionUserOp` function returns the bool value, which represent
 
 Now, let’s return to `SessionKeyManager.validateUserOp` method
 
-
 ## validateUserOp again
 
-If the Session Validation module returns `true`, that means, everything is right and what userOp tries to accomplish via its `callData` is allowed to be authorized with a Session Key, which was used to sign the ``userOpHash`` provided.
+If the Session Validation module returns `true`, that means, everything is right and what userOp tries to accomplish via its `callData` is allowed to be authorized with a Session Key, which was used to sign the `userOpHash` provided.
 
 In this case, we have to pack 0 to the `validationData`, as 0 means signature validation has not failed.
 
@@ -271,7 +270,7 @@ address nftContract = address(bytes20(_sessionKeyData[20:40]));
 
 Bob will still use SmartAccount.executeCall to perform a call on behalf of our Smart Account.
 
-So, we know how to decode _op.calldata.
+So, we know how to decode \_op.calldata.
 
 ```
 
@@ -281,7 +280,6 @@ So, we know how to decode _op.calldata.
 );
 
 ```
-
 
 Now let’s check that Bob tries to `setApprovalForAll` for our Bored Lady Penguins, not other NFTs.
 
@@ -319,7 +317,7 @@ For this, we need to parse the inner calldata, that will be used by `executeCall
       }
 ```
 
-Since we know, that setApprovalForAll has 2 arguments, we know that the bytes _approvalForAllCalldata consists of 32 bytes for storing the calldata length, then there are 4 bytes for the function selector, then 32 bytes for address, then 32 bytes for bool.
+Since we know, that setApprovalForAll has 2 arguments, we know that the bytes \_approvalForAllCalldata consists of 32 bytes for storing the calldata length, then there are 4 bytes for the function selector, then 32 bytes for address, then 32 bytes for bool.
 
 We get the required info from the calldata and return it.
 
@@ -366,8 +364,9 @@ Then we need to add a new Session Key to the Session Key Manager (it has already
 const sessionKeyData = hexConcat([
   hexZeroPad(sessionKey.address, 20),
   hexZeroPad(mockNFT.address, 20),
-]); 
+]);
 ```
+
 Here we fill our Session Validation module-specific data, which is only the sessionKey itself and our ERC-721 contract address.
 
 ```
@@ -442,28 +441,30 @@ Here’s how we do it.
 const paddedSig = defaultAbiCoder.encode(
     //validUntil, validAfter, sessionVerificationModule address, validationData, merkleProof, signature
     ["uint48", "uint48", "address", "bytes", "bytes32[]", "bytes"],
-    [ 
-      validUntil, 
-      validAfter, 
-      sessionValidationModuleAddress, 
-      sessionKeyParamsData, 
-      merkleProof, 
+    [
+      validUntil,
+      validAfter,
+      sessionValidationModuleAddress,
+      sessionKeyParamsData,
+      merkleProof,
       userOp.signature
     ]
   );
 ```
+
 First, we pack all the session key parameters (general and specific) along with the signature.
 
 This data is used by Session Key Manager and Session Validation modules.
 
 ```
 const signatureWithModuleAddress = ethers.utils.defaultAbiCoder.encode(
-    ["bytes", "address"], 
+    ["bytes", "address"],
     [paddedSig, sessionKeyManagerAddress]
   );
   userOp.signature = signatureWithModuleAddress;
 
 ```
+
 Then we append the Session Key Manager address to the signature, so Smart Account knows which Finally we put the new signature back into the userOp.
 
 And return the userOp.
@@ -504,4 +505,4 @@ Any kind of automation can be handled via Session Keys as well. Current automati
 
 ## Conclusion
 
-In this article, we discussed how the Modular approach to Session Keys allows for quickly enabling efficient solutions for custom use cases in Web3, decomposed how userOp validation happens through Biconomy Session Key Module, and went through a step-by-step guide to creating a new custom Session Validation Module.
+In this article, we discussed how the Modular approach to Session Keys allows for quickly enabling efficient solutions for custom use cases in Web3, decomposed how userOp validation happens through the Biconomy Session Key Module, and went through a step-by-step guide to creating a new custom Session Validation Module.

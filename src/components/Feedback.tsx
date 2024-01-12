@@ -1,7 +1,7 @@
 // src/components/Feedback.js
 
-import React, { useState } from 'react';
-import {useLocation} from '@docusaurus/router';
+import React, { useState } from "react";
+import { useLocation } from "@docusaurus/router";
 
 const Feedback = () => {
   const location = useLocation();
@@ -9,8 +9,8 @@ const Feedback = () => {
   const [showNoCommentDiv, setShowNoCommentDiv] = useState(false);
   const handleFeedback = (isHelpful: boolean) => {
     // Implement logic to handle user feedback (e.g., send to analytics or API)
-    console.log(`User feedback: ${isHelpful ? 'Helpful' : 'Not helpful'}`);
-    if(isHelpful) {
+    console.log(`User feedback: ${isHelpful ? "Helpful" : "Not helpful"}`);
+    if (isHelpful) {
       setShowYesCommentDiv(true);
       setShowNoCommentDiv(false);
     } else {
@@ -22,7 +22,7 @@ const Feedback = () => {
 
   return (
     <div>
-      <p style={{marginBottom: 6 }}>Was this page helpful?</p>
+      <p style={{ marginBottom: 6 }}>Was this page helpful?</p>
       <label>
         <input
           type="radio"
@@ -44,24 +44,22 @@ const Feedback = () => {
         />
         No
       </label>
-      {
-         showYesCommentDiv && (
-          <div>
-          <p>Thanks!</p>
-          </div>
-          )
-      }
-      {
-       
-      showNoCommentDiv && (
+      {showYesCommentDiv && (
         <div>
-          <p>Thanks! Help us improve by leaving a comment:{'  '}
-          <a
-            href={`https://github.com/bcnmy/docs/issues/new?assignees=&amp;labels=documentation%2Cfeedback%2Ccommunity&amp;template=feedback.yml&amp;title=%5BFeedback%5D%20Page:%20${location.pathname}`}
-            target="_blank"
-            rel="noreferrer noopener"
-          >Leave a comment
-          </a>
+          <p>Thanks!</p>
+        </div>
+      )}
+      {showNoCommentDiv && (
+        <div>
+          <p>
+            Thanks! Help us improve by leaving a comment:{"  "}
+            <a
+              href={`https://github.com/bcnmy/docs/issues/new?assignees=&amp;labels=documentation%2Cfeedback%2Ccommunity&amp;template=feedback.yml&amp;title=%5BFeedback%5D%20Page:%20${location.pathname}`}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Leave a comment
+            </a>
           </p>
         </div>
       )}
