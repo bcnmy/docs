@@ -1,9 +1,9 @@
 ---
-sidebar_label: "Obvious"
+sidebar_label: "Wallet UI Kit"
 sidebar_position: 3
 ---
 
-# Obvious - Embedded wallet UI
+# Obvious - Embedded Wallet UI Kit
 
 Developers can now integrate Biconomy’s account abstraction based wallet in their apps in just 5 minutes and a few lines of code. Our partners at Obvious have built out a UI kit on our existing infrastructure that removes the need for developers to build an in-app wallet UI experience for the user. The developers can now use the Obvious Embed for a smooth in-app Smart Account experience.
 
@@ -27,3 +27,5 @@ This is how the wallet embed might be integrated into the application, seamlessl
 [**Link for the SDK Docs**](https://obvious-embed.vercel.app/docs)
 
 [**Obvious Embed**](https://obvious-embed.vercel.app/)
+
+**[Contact](https://t.me/SarDwi8) Biconomy's BD/Sales team to integrate with Wallet UI Kit.**

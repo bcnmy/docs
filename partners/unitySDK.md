@@ -1,9 +1,9 @@
 ---
-sidebar_label: "Lync"
+sidebar_label: "Unity SDK"
 sidebar_position: 5
 ---
 
-# Lync Documentation
+# Lync - Unity SDK 
 
 Introducing the LYNC Account Abstraction SDK – a pioneering no-code solution designed for seamless integration into the gaming world of Web3. Developed in collaboration with Lync, this SDK is your gateway to simplified and efficient gamer onboarding. With the LYNC AA SDK, game developers can now offer players effortless login options through social media accounts, digital wallets, email, and more.
 
@@ -13,4 +13,6 @@ The LYNC AA SDK is tailored to enhance the gaming experience, offering a user-fr
 
 Embrace the future of gaming with the LYNC Account Abstraction SDK. Simplify your game’s user experience and open doors to a wider audience in the ever-expanding world of Web3 gaming.
 
-**[Contact](https://t.me/SarDwi8) the team of Biconomy to integrate with Lync AA SDK.**
+![Image1](./img/lync.png)
+
+**[Contact](https://t.me/SarDwi8) Biconomy's BD/Sales team to integrate with Lync AA SDK.**

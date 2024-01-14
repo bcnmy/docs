@@ -1,9 +1,9 @@
 ---
-sidebar_label: "Aarc"
+sidebar_label: "EOA to SA Migration"
 sidebar_position: 4
 ---
 
-# Aarc x Biconomy Documentation
+# Aarc - Fund Migration SDK
 
 ## Introduction
 
