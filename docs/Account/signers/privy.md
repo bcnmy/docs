@@ -63,7 +63,7 @@ Your PrivyProvider should then look like:
 
 ## 3. Configure your Biconomy bundler and paymaster
 
-Go to the [Biconomy Dashboard](https://dashboard.biconomy.io/) and configure a Paymaster and a Bundler for your app. Make sure these correspond to the desired network for your user's smart accounts. You can learn more about the dashboard [here](/category/dashboard)
+Go to the [Biconomy Dashboard](https://dashboard.biconomy.io/) and configure a Paymaster and a Bundler for your app. Make sure these correspond to the desired network for your user's smart accounts. You can learn more about the dashboard [here](/dashboard)
 
 ## 4. Initialize your users' smart accounts
 

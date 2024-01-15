@@ -5,14 +5,14 @@ sidebar_position: 3
 # Paymaster, Bundler, And The Biconomy Dashboard
 
 Now, let's setup our biconomy dashboard. Follow the instructions
-[on this page](https://docs.biconomy.io/docs/category/dashboard).
+[on this page](https://docs.biconomy.io/docs/dashboard).
 
 Before continuing onto the the next step be sure that you have completed the
 following:
 
 - Created an account on the Biconomy Dashboard.
 - Register a new paymaster on the Dashboard.
-- Get the [Paymaster URL](https://docs.biconomy.io/docs/dashboard/keys) and
+- Get the [Paymaster URL](https://docs.biconomy.io/docs/dashboard) and
   bundler URL from dashboard.
 - Set up a Gas tank with some Base Goerli Eth. We recommend around .02 Eth to
   start.
