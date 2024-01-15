@@ -83,7 +83,7 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 ```
 
 :::info
-Note that using the above paymaster URL will only work on Polygon Mumbai network and will only allow sponsored transactions from the contract address mentioned at the start of this tutorial. If you would like to learn how to use our dashboard to get your own paymaster url on any of our supported chains make sure to check out our [Dashboard Documentation](/category/dashboard/)
+Note that using the above paymaster URL will only work on Polygon Mumbai network and will only allow sponsored transactions from the contract address mentioned at the start of this tutorial. If you would like to learn how to use our dashboard to get your own paymaster url on any of our supported chains make sure to check out our [Dashboard Documentation](/dashboard/)
 :::
 
 We now need an object that will hold the configuration values for our Smart Account.
