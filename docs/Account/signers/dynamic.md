@@ -44,6 +44,7 @@ import { EthersExtension } from "@dynamic-labs/ethers-v6";
 
 :::tip
 We are using Ethers here instead of the default Viem, as Biconomy requires an Ethers signer object. Learn more about switching between Viem and Ethers [here](https://docs.dynamic.xyz/react-sdk/viem-ethers).
+:::
 
 :::tip
 To enable embedded wallets for your users, toggle it on along with email/social auth [in the dashboard](https://app.dynamic.xyz/dashboard/configurations#emailsocialsignin).
