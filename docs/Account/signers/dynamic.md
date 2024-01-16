@@ -74,7 +74,7 @@ Go to the [Biconomy Dashboard](https://dashboard.biconomy.io/) and configure a P
 
 ## 4. Configure Biconomy to create the smart accounts
 
-Once a user signs up through Dynamic, you can create a Biconomy smart account and use their Dynamic wallet as a signer for that new smart account. This means that the user will be able to user Biconomy's account abstraction features out of the box! Just before you do that though, you need to follow two more steps:
+Once a user signs up through Dynamic, you can create a Biconomy smart account and use their Dynamic wallet as a signer for that new smart account. This means that the user will be able to use Biconomy's account abstraction features out of the box! Just before you do that though, you need to follow two more steps:
 
 ### 4a. Initialize a bundler and paymaster
 
