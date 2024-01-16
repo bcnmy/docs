@@ -5,39 +5,119 @@ sidebar_position: 3
 
 # Paymaster Methods
 
-This section will cover methods that can be called using the Paymaster Package.
-
-:::note
-
-When using these methods you will need to create a `userOp`. The [accounts methods](/account/methods) will help you in creating these for the paymaster methods below.
-
-:::
-
 Imports needed for these methods:
 
 ```ts
-import {
-  IHybridPaymaster,
-  PaymasterFeeQuote,
-  PaymasterMode,
-  SponsorUserOperationDto,
-} from "@biconomy/paymaster";
-```
+import { IHybridPaymaster, PaymasterFeeQuote,
+ PaymasterMode, SponsorUserOperationDto} from "@biconomy/paymaster";
 
-After setting up your smart account as mentioned above you can start using the Paymaster in this way:
-
-```ts
 const biconomyPaymaster =
   smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
 ```
 
+After setting up your smart account as mentioned above you can start using the Paymaster.
+
+## getPaymasterFeeQuotesOrData() 
+This method is particularly useful for `ERC20` mode and is used to get the fee quotes information for the ERC20 tokens.
+
+### Usage 
+
+```ts
+const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
+  userOp,
+  {
+    mode: PaymasterMode.ERC20,
+    tokenList: ["0xdA5289FCAAF71d52A80A254dA614A192B693e975"],
+    preferredToken: "0xdA5289FCAAF71d52A80A254dA614A192B693e975",
+  },
+);
+```
+As per the code
+- We set mode to ERC20
+- In token list we can specify a list of addresses of the ERC20 tokens we want to have our users pay in.
+- We can also decide to choose a preferred token for the response to include.
+
+### Parameters
+
+- userOp(`Partial<UserOperation>`, required): A UserOperation object representing the user's request that needs to be processed.
+- paymasterServiceData(`FeeQuotesOrDataDto`, required):  The paymaster service data containing token information and sponsorship details. you can send just the preferred token or array of token addresses.
+
+    ```ts
+    type FeeQuotesOrDataDto = {
+      mode?: PaymasterMode; // enum values ERC20 and SPONSORED
+      expiryDuration?: number; // 
+      calculateGasLimits?: boolean;
+      tokenList?: string[]; // If you pass tokenList as an empty array. and it 
+      // would return fee quotes for all tokens supported by the Biconomy paymaster
+      preferredToken?: string; // If you want to pass only one token
+      webhookData?: {
+        [key: string]: any;
+      };
+      smartAccountInfo?: SmartAccountData; // use this to calulate the gas for smart account v1, otherwise by default it will return for latest smart account version
+    };
+    ```
+
+### Returns
+- response(`Promise<FeeQuotesOrDataResponse>`): It returns a promise that resolves to the following object containing a feeQuotes Array. A paymaster Fee quote will have additional information about the fee being paid in the specifed ERC20 token, how long this fee is valid, what type of premium is going to be paid, as well as general token information and amount in USD. Here is the full typing for a single fee quote:
+
+    ```ts
+    type FeeQuotesOrDataResponse = {
+      feeQuotes?: PaymasterFeeQuote[];
+      tokenPaymasterAddress?: string;
+      paymasterAndData?: string;
+      preVerificationGas?: BigNumberish;
+      verificationGasLimit?: BigNumberish;
+      callGasLimit?: BigNumberish;
+    };
+
+    type PaymasterFeeQuote = {
+      symbol: string; // ERC20 token symbol
+      tokenAddress: string; // ERC20 token address
+      decimal: number; // 
+      logoUrl?: string; // logo url of the ERC20 token
+      maxGasFee: number;
+      maxGasFeeUSD?: number;
+      usdPayment?: number; // the fee converted into the USD
+      premiumPercentage: number;
+      validUntil?: number;
+    };
+    ```
+
 ## getPaymasterAndData()
 
-This method takes a `userOp` and optionally an object with information about sponsorship for the `userOp`. It returns a promise that resolves to a Paymaster and Data Response object. The data in this response can be used to update the userOp to include sponsorship data or data for paying gas in ERC20 tokens. There are two modes for using this function: `SPONSORED` and `ERC20`.
+The `getPaymasterAndData` method is used to get the information on how the transactionFees will be covered for the transactions. The returned `PaymasterAndDataResponse` includes a signed string (paymasterAndData) that signifies the paymaster's commitment to covering the transaction fee.
 
-### Mode: `SPONSORED`
+### Parameters
 
-Below is an example of the sponsorship data or `paymasterServiceData`
+- userOperation (`UserOperation`, required): A UserOperation object representing the user's request that needs to be processed.
+- paymasterServiceData (`SponsorUserOperationDto`, Optional): An optional parameter that allows you to provide additional data specific to the paymaster service.
+
+    ```ts
+    type SponsorUserOperationDto = {
+      mode: PaymasterMode;
+      calculateGasLimits?: boolean;
+      expiryDuration?: number;
+      webhookData?: {
+        [key: string]: any;
+      };
+      smartAccountInfo?: SmartAccountData;
+      feeTokenAddress?: string;
+    };
+    ```
+
+### Returns
+- paymasterAndDataResponse(`Promise<PaymasterAndDataResponse>`): It returns a promise that resolves to a Paymaster and Data Response object. The data in this response can be used to update the userOp to include sponsorship data or data for paying gas in ERC20 tokens.
+    ```ts
+    type PaymasterAndDataResponse = {
+      paymasterAndData: string;
+      preVerificationGas?: BigNumberish;
+      verificationGasLimit?: BigNumberish;
+      callGasLimit?: BigNumberish;
+    };
+    ```
+
+### Usage
+There are two modes for using this function: `SPONSORED` and `ERC20`.
 
 Here it is meant to act as Sponsorship/Verifying paymaster hence we send mode: PaymasterMode.SPONSORED which is required
 
@@ -51,26 +131,6 @@ let paymasterServiceData: SponsorUserOperationDto = {
   // optional params...
   calculateGasLimits: true,
 };
-```
-
-Additionally here is the full typing for this operation:
-
-```ts
-type SponsorUserOperationDto = {
-  mode: PaymasterMode;
-  calculateGasLimits?: boolean;
-  expiryDuration?: number;
-  webhookData?: {
-    [key: string]: any;
-  };
-  smartAccountInfo?: SmartAccountData;
-  feeTokenAddress?: string;
-};
-```
-
-Now we can get the Paymaster and Data Response and update our userOp with the returned data:
-
-```ts
 const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(
   userOp,
   paymasterServiceData,
@@ -78,23 +138,21 @@ const paymasterAndDataResponse = await biconomyPaymaster.getPaymasterAndData(
 
 userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
 ```
-
-This way we update our userOp to specify that this will be a sponsored transaction by the Biconomy Paymaster. Here is the full typing for the `paymasterAndDataResponse`
-
-```ts
-type PaymasterAndDataResponse = {
-  paymasterAndData: string;
-  preVerificationGas?: BigNumberish;
-  verificationGasLimit?: BigNumberish;
-  callGasLimit?: BigNumberish;
-};
-```
+As per the code we get the Paymaster Data Response and update the userOp, to specify that this will be a sponsored transaction by the Biconomy Paymaster.
 
 ### Mode: `ERC20`
 
-When switching mode to sponsored there are a couple of additional steps that need to be considered.
+ERC20 mode enables to pay the gas fees of your users in exchange for ERC-20 tokens. When switching mode to ERC20 there are additional steps that need to be considered.
 
-First we need to get quotes for the swap of the ERC20 token that the user is paying into the native token of the network we are on.
+:::warning
+
+**_Important:_** When using **Token Paymaster** with ERC20 tokens, always ensure to calculate the **feeQuote** correctly. This is crucial to avoid transaction reverts due to insufficient token balance after execution. The `feeQuote` should consider both the transaction cost and any other **token** movements within the same operation.
+
+_Example:_ If a user is transacting with **USDC**, and the feeQuote is **2 USDC**, the DApp must ensure that the user's balance post-callData execution is sufficient to cover this fee. Incorrect fee calculations can lead to transaction failures and a degraded user experience.
+
+:::
+
+**1. Get paymaster fee quote**: We need to get the swap quotes of the ERC20 tokens that the user is paying for the native token of the network we are on.
 
 ```ts
 const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
@@ -107,66 +165,7 @@ const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
 );
 ```
 
-- We set mode to ERC20
-- In token list we can specify a list of addresses for the choices in tokens we want to have our users pay in
-- We can also decide to choose a preferred token for the response to include
-
-:::warning
-
-**_Important:_** When using **Token Paymaster** with ERC20 tokens, always ensure to calculate the **feeQuote** correctly. This is crucial to avoid transaction reverts due to insufficient token balance after execution. The `feeQuote` should consider both the transaction cost and any other **token** movements within the same operation.
-
-_Example:_ If a user is transacting with **USDC**, and the feeQuote is **2 USDC**, the DApp must ensure that the user's balance post-callData execution is sufficient to cover this fee. Incorrect fee calculations can lead to transaction failures and a degraded user experience.
-
-:::
-
-Here is the typing for the full data object you can pass here:
-
-```ts
-type FeeQuotesOrDataDto = {
-  mode?: PaymasterMode;
-  expiryDuration?: number;
-  calculateGasLimits?: boolean;
-  tokenList?: string[];
-  preferredToken?: string;
-  webhookData?: {
-    [key: string]: any;
-  };
-  smartAccountInfo?: SmartAccountData;
-};
-```
-
-Now lets take a look at the response we would get from this:
-
-```ts
-type FeeQuotesOrDataResponse = {
-  feeQuotes?: PaymasterFeeQuote[];
-  tokenPaymasterAddress?: string;
-  paymasterAndData?: string;
-  preVerificationGas?: BigNumberish;
-  verificationGasLimit?: BigNumberish;
-  callGasLimit?: BigNumberish;
-};
-```
-
-Similar to other Paymaster responses but this also includes a feeQuotes Array. A paymaster Fee quote will have additional information about the fee being paid in the specifed ERC20 token. Here is the full typing for a single fee quote:
-
-```ts
-type PaymasterFeeQuote = {
-  symbol: string;
-  tokenAddress: string;
-  decimal: number;
-  logoUrl?: string;
-  maxGasFee: number;
-  maxGasFeeUSD?: number;
-  usdPayment?: number;
-  premiumPercentage: number;
-  validUntil?: number;
-};
-```
-
-This returns information about the gas fee, how long this fee is valid, what type of premium is going to be paid, as well as general token information and amount in USD.
-
-After getting this information we need to build our updated userOp with the preferred `feeQuote` from the `feeQuotes` array.
+**2. Update userOp**: After getting this information we need to build our updated userOp with the preferred `feeQuote` from the `feeQuotes` array.
 
 ```ts
 finalUserOp = await smartAccount.buildTokenPaymasterUserOp(userOp, {
@@ -176,7 +175,7 @@ finalUserOp = await smartAccount.buildTokenPaymasterUserOp(userOp, {
 });
 ```
 
-Now we create our `paymasterServiceData` again:
+**3. Create paymaster data**: Now we create our `paymasterServiceData` again and call the `getPaymasterAndData` method
 
 ```ts
 let paymasterServiceData = {
@@ -184,16 +183,12 @@ let paymasterServiceData = {
   feeTokenAddress: selectedFeeQuote.tokenAddress,
   calculateGasLimits: true, // Always recommended and especially when using token paymaster
 };
-```
-
-Now we ready our userOp to get sent to Bundler:
-
-```ts
 const paymasterAndDataWithLimits = await biconomyPaymaster.getPaymasterAndData(
   finalUserOp,
   paymasterServiceData,
 );
 finalUserOp.paymasterAndData = paymasterAndDataWithLimits.paymasterAndData;
+
 ```
 
 :::tip
