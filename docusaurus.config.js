@@ -132,7 +132,7 @@ const config = {
               },
               {
                 label: "Smart Accounts",
-                to: "/smart-accounts",
+                to: "/account",
               },
               {
                 label: "Paymaster",

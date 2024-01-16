@@ -1,8 +1,0 @@
-{
-  "label": "React + Vite Fullstack Tutorial",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "A counter dApp made using social login and allows gasless transactions using Biconomy SDK"
-  }
-}

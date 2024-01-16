@@ -10,13 +10,13 @@ Following are the methods that can be called on bundler instance
 
 :::note
 
-When using these methods you will need to create a `userOp`. The [accounts methods](../Account/methods.md) will help you in creating these for the paymaster methods below.
+When using these methods you will need to create a `userOp`. The [accounts methods](/account/methods) will help you in creating these for the paymaster methods below.
 
 :::
 
 ## sendUserOp
 
-Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](../Account/methods.md#senduserop).
+Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](/account/methods#senduserop).
 
 ## getUserOpReceipt
 
