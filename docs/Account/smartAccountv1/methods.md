@@ -1,7 +1,7 @@
 ---
 sidebar_position: 3
+title: Methods
 ---
-
 # Smart Account V1 Methods
 
 ```typescript
