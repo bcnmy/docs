@@ -105,7 +105,7 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 
 ### 4b. Initialize a ECDSAOwnershipValidationModule
 
-Now you're ready to allow the user to authorize actions from their Biconomy smart account by signing messages with their Dynamic wallet. This is done by initializing a `ECDSAOwnershipValidationModule` for the user's smart account and passing in a signer from the users wallet.
+Now you're ready to allow the user to authorize actions from their Biconomy smart account by signing messages with their Dynamic wallet. This is done by initializing a `ECDSAOwnershipValidationModule` for the user's smart account and passing in a signer from the user's wallet.
 
 ```tsx
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
