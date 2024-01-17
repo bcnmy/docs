@@ -1,21 +1,10 @@
 ---
-sidebar_label: "Send Useroperation"
+sidebar_label: "Send UserOperation"
 sidebar_position: 2
 ---
 
-# 2. eth_sendUserOperation
-
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-
-You can test this endpoint on our [Bundler Explorer](/Bundler/api/explorer)
-:::
+# Send UserOperation
+`eth_sendUserOperation`
 
 This endpoint submits a User Operation object to the User Operation pool of the bundler. The result is set to the userOpHash if and only if the request passed simulation and was accepted in the client’s User Operation pool. If the validation, simulation, or User Operation pool inclusion fails, the failure reason will be returned.
 

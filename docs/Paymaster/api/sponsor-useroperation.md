@@ -1,30 +1,19 @@
 ---
-sidebar_label: "Sponsor UserOp End Point"
+sidebar_label: "Sponsor UserOperation End Point"
 sidebar_position: 2
 ---
 
-# 2. pm_sponsorUserOperation
+# Sponsor UserOperation End Point
+`pm_sponsorUserOperation`
 
-:::caution
-
-This documentation is for using our Paymaster API's directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/paymastermethods).
-
-:::
-
-:::info
-You can get your Paymaster URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-
-You can test this endpoint on our [Paymaster Explorer](/Paymaster/api/explorer)
-:::
-
-All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below.
+All paymaster URLs allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both types of requests below.
 
 This endpoint is responsible for calculating the `paymasterAndData` field, if applicable, for the given request.
 The API accepts a partial UserOp and an optional token address. By examining the mode parameter in the request, it identifies the type of paymaster associated with the request and handles the processing accordingly, as described in the following.
 
 ### Sponsorship Paymaster
 
-To determine whether a request can be sponsored by the Sponsorship Paymaster, only consider the partial UserOp object and the sponsorshipInfo. If the request cannot be sponsored, the `paymasterAndData` would return "0x".
+To determine whether a request can be sponsored by the Sponsorship Paymaster, only consider the partial UserOp object and the sponsorshipInfo. If the request cannot be sponsored, the `paymasterAndData` will return "0x".
 
 ### Token Paymaster
 
@@ -61,8 +50,8 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
 :::note
 **"MODE"** is mandatory for `pm_sponsorUserOperation` API,
 
-- If **"MODE"** is **SPONSORED**, we check for request sponsorship. If request cannot be sponsored, we return 0x. This would mean users will pay for their gas fees.
-- If **"MODE"** is ERC20, we return `paymasterAndData` for TokenPaymaster. This would mean that users will pay in there preferred ERC20 Tokens
+- If **"MODE"** is **SPONSORED**, we check for request sponsorship. If a request cannot be sponsored, we return 0x. This would mean users will pay for their gas fees.
+- If **"MODE"** is ERC20, we return `paymasterAndData` for TokenPaymaster. This would mean that users will pay in their preferred ERC20 Tokens
   :::
 
 ## 1. Mode is **SPONSORED** :
