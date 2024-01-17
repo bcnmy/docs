@@ -5,11 +5,11 @@ sidebar_position: 3
 
 # Webhook APIs
 
-API's to help programatically allow our Paymasters to sponsor gas when specified conditions are met.
+API's to help programmatically allow our Paymasters to sponsor gas when specified conditions are met.
 
 ### Auth Token
 
-To obtain an authToken required in the header, go to yout account settings page on the dashboard and generate an auth token: https://dashboard.biconomy.io/account
+To obtain an authToken required in the header, go to your account settings page on the dashboard and generate an auth token: https://dashboard.biconomy.io/account
 
 #### 1. Create a Webhook:
 
@@ -233,7 +233,7 @@ Webhook ID must be a string
 
 Using Webhooks with the SDK:
 
-When building out the `paymasterServiceData` object you can optionally pass your `webhookData` to it.In the below example we pass a num value of 2 into the webhook data. Our webhook will check this data and verify if the number passed is an even or odd number.
+When building out the `paymasterServiceData` object you can optionally pass your `webhookData` to it. In the example below we pass a num value of 2 into the webhook data. Our webhook will check this data and verify if the number passed is an even or odd number.
 
 ```typescript
 let paymasterServiceData: SponsorUserOperationDto = {

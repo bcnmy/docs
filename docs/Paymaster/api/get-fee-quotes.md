@@ -1,25 +1,14 @@
 ---
-sidebar_label: " Get Fee Quotes"
+sidebar_label: "Get Fee Quotes"
 sidebar_position: 1
 ---
 
-# 1. pm_getFeeQuoteOrData
+# Get Fee Quotes
+`pm_getFeeQuoteOrData`
 
-:::caution
+All paymaster URLs allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both types of requests below.
 
-This documentation is for using our Paymaster API's directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/paymastermethods).
-
-:::
-
-:::info
-You can get your Paymaster URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-
-You can test this endpoint on our [Paymaster Explorer](/Paymaster/api/explorer)
-:::
-
-All paymaster URL's allow you to use both Sponsorship and Token Paymasters. To switch between paymasters you will simply change the Mode of a specific request. We will highlight both type of requests below.
-
-This endpoint returns the `MODE` and `paymasterAndData` for sponsored request and returns specific fee quote information for token paymaster requests.
+This endpoint returns the `MODE` and `paymasterAndData` for sponsored requests and returns specific fee quote information for token paymaster requests.
 
 ## Parameters
 

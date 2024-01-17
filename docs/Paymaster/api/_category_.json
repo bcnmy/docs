@@ -1,8 +1,0 @@
-{
-  "label": "APIs",
-  "position": 4,
-  "link": {
-    "type": "generated-index",
-    "description": "Biconomy paymaster allows to have a single paymaster URL generated on our dashboard, which can be used for gas sponsorship as well as enabling users to pay gas in ERC20 tokens. Instead of keeping multiple paymaster URLs to differentiate the paymaster type, the API request body now includes a MODE parameter which will be sent to indicate whether the dApp wants sponsored transactions for its users or wants to enable ERC20 payments by users."
-  }
-}
