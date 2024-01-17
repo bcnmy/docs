@@ -33,8 +33,8 @@ const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
 );
 ```
 As per the code
-- We set mode to ERC20
-- In token list we can specify a list of addresses of the ERC20 tokens we want to have our users pay in.
+- We set the mode to ERC20
+- In the token list we can specify a list of addresses of the ERC20 tokens we want to have our users pay in.
 - We can also decide to choose a preferred token for the response to include.
 
 ### Parameters
