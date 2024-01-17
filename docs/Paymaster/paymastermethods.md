@@ -58,7 +58,7 @@ As per the code
     ```
 
 ### Returns
-- response(`Promise<FeeQuotesOrDataResponse>`): It returns a promise that resolves to the following object containing a feeQuotes Array. A paymaster Fee quote will have additional information about the fee being paid in the specifed ERC20 token, how long this fee is valid, what type of premium is going to be paid, as well as general token information and amount in USD. Here is the full typing for a single fee quote:
+- response(`Promise<FeeQuotesOrDataResponse>`): It returns a promise that resolves to the following object containing a feeQuotes Array. A paymaster Fee quote will have additional information about the fee being paid in the specified ERC20 token, how long this fee is valid, what type of premium is going to be paid, as well as general token information and the amount in USD. Here is the full typing for a single fee quote:
 
     ```ts
     type FeeQuotesOrDataResponse = {
