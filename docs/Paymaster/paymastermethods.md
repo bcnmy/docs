@@ -40,7 +40,7 @@ As per the code
 ### Parameters
 
 - userOp(`Partial<UserOperation>`, required): A UserOperation object representing the user's request that needs to be processed.
-- paymasterServiceData(`FeeQuotesOrDataDto`, required):  The paymaster service data containing token information and sponsorship details. you can send just the preferred token or array of token addresses.
+- paymasterServiceData(`FeeQuotesOrDataDto`, required):  The paymaster service data containing token information and sponsorship details. You can send just the preferred token or an array of token addresses.
 
     ```ts
     type FeeQuotesOrDataDto = {
