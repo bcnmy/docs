@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Unity SDK"
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # Lync - Unity SDK 
