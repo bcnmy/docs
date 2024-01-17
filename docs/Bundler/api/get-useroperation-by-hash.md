@@ -1,21 +1,12 @@
 ---
-sidebar_label: "Get UserOp by Hash"
+sidebar_label: "Get UserOperation by Hash"
 sidebar_position: 4
 ---
 
-# 4. eth_getUserOperationByHash
+# Get UserOperation by Hash
+`eth_getUserOperationByHash`
 
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-:::
-
-This endpoint returns a UserOperation based on a hash (userOpHash) returned by `eth_sendUserOperation`
+This endpoint returns a UserOperation based on a hash (userOpHash) returned by `eth_sendUserOperation`.
 
 ## Parameters
 

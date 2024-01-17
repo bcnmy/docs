@@ -3,17 +3,8 @@ sidebar_label: "Get Supported Entry Points"
 sidebar_position: 6
 ---
 
-# 6. eth_supportedEntryPoints
-
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-:::
+# Get Supported Entry Points
+`eth_supportedEntryPoints`
 
 This endpoint returns an array of the entryPoint addresses supported by the bundler. The first element of the array is the entryPoint addressed preferred by the bundler.
 

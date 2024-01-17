@@ -1,19 +1,11 @@
 ---
 sidebar_label: "Get gas fee values"
 sidebar_position: 7
+title: Get gas fee values
 ---
 
-# 7. biconomy_getGasFeeValues
-
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-:::
+# Get gas fee values
+`biconomy_getGasFeeValues`
 
 This endpoint returns the maxFeePerGas & maxPriorityFeePerGas.
 

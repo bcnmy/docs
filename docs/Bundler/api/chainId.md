@@ -3,19 +3,10 @@ sidebar_label: "Get Chain ID"
 sidebar_position: 5
 ---
 
-# 5. eth_chainId
+# Get Chain ID
+`eth_chainId`
 
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-:::
-
-This endpoint returns [EIP-155](https://eips.ethereum.org/EIPS/eip-155) Chain ID
+This endpoint returns [EIP-155](https://eips.ethereum.org/EIPS/eip-155) Chain ID.
 
 ## Parameters
 

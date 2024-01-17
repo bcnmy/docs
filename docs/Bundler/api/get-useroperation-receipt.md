@@ -1,23 +1,13 @@
 ---
-sidebar_label: "Get UserOp Receipt"
+sidebar_label: "Get UserOperation Receipt"
 sidebar_position: 3
+title: eth_getUserOperationReceipt
 ---
 
-# 3. eth_getUserOperationReceipt
+# Get UserOperation Receipt 
+`eth_getUserOperationReceipt`
 
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-
-You can test this endpoint on our [Bundler Explorer](/Bundler/api/explorer)
-:::
-
-This endpoint returns a UserOperation receipt based on a hash (userOpHash) returned by `eth_sendUserOperation`
+This endpoint returns a UserOperation receipt based on a hash (userOpHash) returned by `eth_sendUserOperation`.
 
 ## Parameters
 
