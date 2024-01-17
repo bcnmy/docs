@@ -142,7 +142,7 @@ As per the code we get the Paymaster Data Response and update the userOp, to spe
 
 ### Mode: `ERC20`
 
-ERC20 mode enables to pay the gas fees of your users in exchange for ERC-20 tokens. When switching mode to ERC20 there are additional steps that need to be considered.
+ERC20 mode enables you to pay the gas fees of your users in exchange for ERC-20 tokens. When switching mode to ERC20 there are additional steps that need to be considered.
 
 :::warning
 
