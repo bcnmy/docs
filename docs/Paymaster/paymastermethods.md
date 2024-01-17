@@ -85,7 +85,7 @@ As per the code
 
 ## getPaymasterAndData()
 
-The `getPaymasterAndData` method is used to get the information on how the transactionFees will be covered for the transactions. The returned `PaymasterAndDataResponse` includes a signed string (paymasterAndData) that signifies the paymaster's commitment to covering the transaction fee.
+The `getPaymasterAndData` method is used to get the information on how the transaction fees will be covered for the transactions. The returned `PaymasterAndDataResponse` includes a signed string (paymasterAndData) that signifies the paymaster's commitment to covering the transaction fee.
 
 ### Parameters
 
