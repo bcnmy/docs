@@ -3,17 +3,8 @@ sidebar_label: "Get UserOperation Status"
 sidebar_position: 8
 ---
 
-# 8. biconomy_getUserOperationStatus
-
-:::caution
-
-This documentation is for using our Bundler API directly. If you are building with the Biconomy SDK you can follow the instructions on this [page](/Bundler/bundlermethods).
-
-:::
-
-:::info
-You can get your Bundler URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/bundlers). This is the same endpoint URL used for all requests. All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
-:::
+# Get UserOperation Status
+`biconomy_getUserOperationStatus`
 
 The endpoint is responsible for returning the status of transactionHash associated with the userOpHash.
 
@@ -24,7 +15,7 @@ Cases:
 - Submitted on chain but not included in a block
 - Included in a block
 
-The backend should automatically return correct hashes and status in case of bumped up transaction or front runned transactions
+The backend should automatically return correct hashes and status in case of bumped up transactions or front-runned transactions.
 
 ## Parameters
 
