@@ -45,7 +45,7 @@ As per the code
     ```ts
     type FeeQuotesOrDataDto = {
       mode?: PaymasterMode; // enum values ERC20 and SPONSORED
-      expiryDuration?: number; // 
+      expiryDuration?: number; // Specifies the duration, in seconds, for which the user intends the paymasterAndData to remain valid, minimum duration is 300 secs.
       calculateGasLimits?: boolean;
       tokenList?: string[]; // If you pass tokenList as an empty array. and it 
       // would return fee quotes for all tokens supported by the Biconomy paymaster
@@ -73,13 +73,13 @@ As per the code
     type PaymasterFeeQuote = {
       symbol: string; // ERC20 token symbol
       tokenAddress: string; // ERC20 token address
-      decimal: number; // 
+      decimal: number; //  number of decimal places used to represent the token
       logoUrl?: string; // logo url of the ERC20 token
       maxGasFee: number;
       maxGasFeeUSD?: number;
       usdPayment?: number; // the fee converted into the USD
-      premiumPercentage: number;
-      validUntil?: number;
+      premiumPercentage: number; // premium in percentage that biconomy charges for the txn, generally ranges between 7-12
+      validUntil?: number; // number (epoch time in milliseconds, till these fee quotes are valid)
     };
     ```
 
@@ -116,7 +116,7 @@ The `getPaymasterAndData` method is used to get the information on how the trans
     };
     ```
 
-### Usage
+### Usage Mode: `SPONSORED`
 There are two modes for using this function: `SPONSORED` and `ERC20`.
 
 Here it is meant to act as Sponsorship/Verifying paymaster hence we send mode: PaymasterMode.SPONSORED which is required
@@ -140,7 +140,7 @@ userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
 ```
 As per the code we get the Paymaster Data Response and update the userOp, to specify that this will be a sponsored transaction by the Biconomy Paymaster.
 
-### Mode: `ERC20`
+### Usage Mode: `ERC20`
 
 ERC20 mode enables you to pay the gas fees of your users in exchange for ERC-20 tokens. When switching mode to ERC20 there are additional steps that need to be considered.
 
