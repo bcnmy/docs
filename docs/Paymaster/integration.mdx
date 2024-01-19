@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Integration
 
-This guide soley focuses on the code to integrate the Paymaster. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
+To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
 
 ## Installation
 
@@ -17,35 +17,29 @@ import TabItem from "@theme/TabItem";
 <TabItem value="js" label="npm">
 
 ```bash
-
 npm install @biconomy/paymaster
-
 ```
 
 </TabItem>
 <TabItem value="py" label="yarn">
 
 ```bash
-
 yarn add @biconomy/paymaster
-
 ```
 
 </TabItem>
 <TabItem value="java" label="pnpm">
 
 ```bash
-
 pnpm add @biconomy/paymaster
-
 ```
 
 </TabItem>
 </Tabs>
 
 ## Integration 
-Assign a paymaster by providing only the paymaster api key to the smart account. By default this will use Sponsored mode.
 
+Set up a paymaster for the smart account by providing only the paymaster API key. The default mode used is `Sponsored` mode in this case.
 :::info
 
 [Click here](/dashboard/paymaster) to learn more about our dashboard and how to get your Paymaster api key.
@@ -54,7 +48,6 @@ Assign a paymaster by providing only the paymaster api key to the smart account.
 
 ```typescript
   import { BiconomySmartAccountV2 } from "@biconomy/account";
-
 
   const biconomySmartAccount = await BiconomySmartAccountV2.create(
     {

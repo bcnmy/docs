@@ -1,12 +1,12 @@
 ---
 sidebar_label: "Enable Fiat On Ramp"
-sidebar_position: 7
+sidebar_position: 5
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/fiatonramp.md
 ---
 
 # Enable Fiat On-Ramp
 
-BiconomySDK's Transak library is made for developers who just want on-ramp solutions and don't want to go through with all steps to integrate the SDK.
+BiconomySDK's Transak library is made for developers who just want on-ramp solutions and don't want to go through with all the steps to integrate the SDK.
 
 It is a typescript wrapper on `transak.js` SDK which abstracts a few steps for the developers and users.
 

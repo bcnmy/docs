@@ -37,7 +37,8 @@
   margin-bottom: 20px;
   border: 1px solid #454342;
   border-radius: 4px;
-  color: #ffffff;
+  --light-text-color: #333
+  --dark-text-color: #fff
 }
 
 .inputField::placeholder {

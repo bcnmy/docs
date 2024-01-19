@@ -1,8 +1,0 @@
-{
-  "label": "Supported Chains",
-  "position": 10,
-  "link": {
-    "type": "generated-index",
-    "description": "Supported chains by our Paymaster"
-  }
-}

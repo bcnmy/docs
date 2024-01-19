@@ -40,7 +40,7 @@ import {
 const provider = new providers.JsonRpcProvider(
   "https://rpc.ankr.com/polygon_mumbai",
 ); // or any other rpc provider link
-const signer = new Wallet("private key" || "", provider);
+const signer = new Wallet("<your_private_key>" || "", provider);
 // we recommend using environment variables for your private keys!
 ```
 

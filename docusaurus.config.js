@@ -45,7 +45,7 @@ const config = {
           lastVersion: "current",
           versions: {
             current: {
-              label: "SDK V2",
+              label: "SDK V3 (latest)",
             },
             "1.0": {
               label: "SDK V1",
@@ -138,15 +138,15 @@ const config = {
               },
               {
                 label: "Smart Accounts",
-                to: "/category/smart-accounts",
+                to: "/account",
               },
               {
                 label: "Paymaster",
-                to: "/category/paymaster",
+                to: "/paymaster",
               },
               {
                 label: "Bundler",
-                to: "/category/bundler",
+                to: "/bundler",
               },
             ],
           },

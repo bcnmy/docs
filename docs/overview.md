@@ -13,13 +13,13 @@ The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX 
 
 The Biconomy Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Smart Accounts are governed by code instead of ECDSA, which allows for other types of signature algorithms to be used with the Smart Account. Additionally, the smart accounts package allows you to quickly and easily build and execute User Operations or userOps. These are pseudo-transaction objects that eventually execute as a transaction on the EVM.
 
-The Biconomy Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account. Check out different ways you can create a Biconomy Smart Account [here](/category/signers).
+The Biconomy Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account. Check out different ways you can create a Biconomy Smart Account [here](/account/signers).
 
 Smart Accounts are further enhanced by validation modules that allow you to execute arbitrary logic before validating a userOp. This allows you, as a developer, to build modules that allow for session keys, multi-chain validation modules, pass keys, and more.
 
 ![ModularSA](./images/overview/modularsa.png)
 
-If you want to start diving into Smart Accounts you can do so [here](/category/smart-accounts). If you know all about Smart Accounts and prefer to start working with modules, start learning about them [here](/modules) or follow this step-by-step [tutorial](/category/session-keys-tutorial) on how to build a dApp that utilizes session key modules.
+If you want to start diving into Smart Accounts you can do so [here](/account). If you know all about Smart Accounts and prefer to start working with modules, start learning about them [here](/modules) or follow this step-by-step [tutorial](/category/session-keys-tutorial) on how to build a dApp that utilizes session key modules.
 
 ## Paymaster
 
@@ -35,9 +35,9 @@ If the mode you choose in the request to the Paymaster URL is the sponsored mode
 
 ![Erc20](./images/overview/erc20gas.png)
 
-Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/supportedchains/supportedTokens).
+Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/paymaster/supportedNetworks).
 
-Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/category/executing-transactions)
+Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/account/transactions)
 
 ## Bundler
 

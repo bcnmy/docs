@@ -1,8 +1,0 @@
-{
-  "label": "Biconomy Dashboard",
-  "position": 6,
-  "link": {
-    "type": "generated-index",
-    "description": "The Biconomy dashboard is your gateway to accessing our services such as Paymaster, Bundlers, and allows you to retreive your API keys for usage with our SDK and API. Additionally this is where you can top up and configure your Paymasters for sponsoring transactions. "
-  }
-}
