@@ -34,3 +34,11 @@ img {
   margin: 0 auto;
   height: fit-content;
 }
+
+.my-button {
+  padding: 4px 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
