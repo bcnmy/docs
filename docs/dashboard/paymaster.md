@@ -30,6 +30,8 @@ Your gas tank is now set up.
 
 Now that your gas tank is set up, you can deposit funds into it. Choose an amount and click "Deposit" to fill up your tank. Once the transaction is confirmed, you'll be able to see the available funds in your gas tank.
 
+You can programmatically deposit funds using the paymasterContract `depositFor` function by passing the `amount` and `paymasterId` which is the EOA address. For instance, you can invoke the following [function](https://polygonscan.com/address/0x00000f79b7faf42eebadba19acc07cd08af44789#writeContract#F3) on the Polygon chain.
+
 ![Deposit funds](../images/paymaster//deposit_funds.png)
 
 ## Withdraw funds
