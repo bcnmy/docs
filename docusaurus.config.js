@@ -117,6 +117,11 @@ const config = {
             activeBaseRegex: `/partners/`,
           },
           {
+            href: "https://dashboard.biconomy.io/",
+            label: "Dashboard",
+            position: "right",
+          },
+          {
             href: "https://github.com/bcnmy/docs",
             label: "GitHub",
             position: "right",
