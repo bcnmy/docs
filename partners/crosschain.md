@@ -7,7 +7,7 @@ sidebar_position: 5
 
 ## **Seamless Crypto-to-Crypto Swap Integration**
 
-We've established partnerships with leading crypto-to-crypto swap service providers and aggregators to facilitate a seamless integration of swap functionalities within our platform. Through their developer integration toolkits, users can now exchange cryptocurrencies directly within any app, website, or web plugin. This collaboration enables users to swap between various crypto assets without the need for multiple transactions or dealing with the intricacies of swapping different assets on separate platforms. It simplifies the process and ensures a convenient experience for managing their crypto portfolios. Please note that compliance with relevant regulatory requirements may apply for working with some of these providers.
+We've established partnerships with leading crypto-to-crypto swap service providers and aggregators to facilitate a seamless integration of swap functionalities within our platform. Through their developer integration toolkits, users can now exchange cryptocurrencies directly within any app, website, or web plugin. This collaboration enables users to swap between various crypto assets without the need for multiple transactions or dealing with the intricacies of swapping different assets on separate platforms. It simplifies the process and ensures a convenient experience for managing their crypto portfolios. Please note that compliance with relevant regulatory requirements may apply to working with some of these providers.
 
 ## Our preferred Swap aggregator
 
