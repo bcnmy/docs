@@ -1,6 +1,6 @@
 ---
-sidebar_label: "Cross-chain Swap API-s"
-sidebar_position: 5
+sidebar_label: "Cross-chain Swaps"
+sidebar_position: 6
 ---
 
 # Cross-chain Swap API-s
@@ -11,18 +11,21 @@ We've established partnerships with leading crypto-to-crypto swap service provid
 
 ## Our preferred Swap aggregator
 
+## Our preferred Cross-chain Swap aggregator
+
 Crypto swap aggregators enable access to multiple swap providers. The one listed below can be integrated through a unified interface, providing access to a broader audience right from the start.
 
-| Partner     | KYC requirement for users    | Outlier factor                                                                                                                                                                                        | Link to docs                                                         | KYB requirement to integrate                           |
-| ----------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------ |
-| **1inch Swaps** | no KYC, self-custodial Swaps | less than 400ms <br></br> Response time <br></br><br></br> Supports all major networks and most popular assets <br></br><br></br> Finds the lowest prices across multiple DEX providers on the market | [docs](https://docs.1inch.io/docs/aggregation-protocol/introduction) | No, get started [here](https://portal.1inch.dev/login) |
+| Partner | KYC requirement for users                                | Outlier factor                                                                                                                                       | Link to docs                | Supported pairs                                                                | KYB requirement to integrate |
+| ------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------ | ---------------------------- |
+| Li Fi   | no KYC, self-custodial cross chain or single chain swaps | Supports all major networks and most popular assets <br></br> <br></br>Finds the lowest prices across multiple DEX providers & bridges on the market | [Docs](https://docs.li.fi/) | [Link](https://docs.li.fi/list-chains-bridges-dexs-solvers) to Supported Pairs | No!                          |
+
 
 ## Our preferred Swap partners
 
-| Partner            | KYC requirements for users   | Outlier factor                                                                                                  | Link to docs                                                                                                             | Supported pairs                                                    | KYB requirement to integrate                                                  |
-| ------------------ | ---------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Partner                | KYC requirements for users   | Outlier factor                                                                                                  | Link to docs                                                                                                             | Supported pairs                                                    | KYB requirement to integrate                                                  |
+| ---------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | **XO Swaps by Exodus** | no KYC, self-custodial swaps | 1000+ tokens, millions of trading pairs across 50+ networks <br></br><br></br> Fast & frictionless atomic swaps | Available after KYB <br></br><br></br> Read more and get in touch with the team [here](https://www.exodus.com/xo-swap/). | Link to [supported pairs](https://www.exodus.com/status/)          | Yes, get in touch with the team [here](https://www.exodus.com/xo-swap/).      |
-| **Moonpay Swaps**     | KYC-d swaps                  | 1500+ trading pairs across major blockchains <br></br><br></br> Regulated, compliant, secure (ISO 27001)        | [Read docs](https://dev.moonpay.com/docs/ramps-swap)                                                                     | Link to [supported pairs](https://dev.moonpay.com/docs/swap-pairs) | Yes, get started [here](https://dashboard.moonpay.com/signup?invite=16548771) |
+| **Moonpay Swaps**      | KYC-d swaps                  | 1500+ trading pairs across major blockchains <br></br><br></br> Regulated, compliant, secure (ISO 27001)        | [Read docs](https://dev.moonpay.com/docs/ramps-swap)                                                                     | Link to [supported pairs](https://dev.moonpay.com/docs/swap-pairs) | Yes, get started [here](https://dashboard.moonpay.com/signup?invite=16548771) |
 
 ## Example User flow via Moonpay
 

@@ -113,7 +113,7 @@ const config = {
           {
             to: "/partners",
             position: "left",
-            label: "Preferred Partners",
+            label: "Add Ons",
             activeBaseRegex: `/partners/`,
           },
           {
