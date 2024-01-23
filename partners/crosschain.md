@@ -40,7 +40,7 @@ Review the details of the exchange, including swap amount, destination crypto wa
 
 In your wallet application, sign the transaction to send crypto to the MoonPay wallet address to complete the exchange. Make sure that you have enough crypto in your wallet to cover any network fees.
 
-> 💡 Using **Session Keys** within your app will eliminate the need for this step, and using our **Paymaster** will eliminate the need for the user to keep blockchain’s native token to complete the swap.
+> 💡 Using **Session Keys** within your app will eliminate the need for this step, and using our **Paymaster** will eliminate the need for the user to keep the blockchain’s native token to complete the swap.
 
 ### 4. **Check your crypto wallet**
 
