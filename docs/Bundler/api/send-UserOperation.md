@@ -15,7 +15,7 @@ Body
 | Param   | Type   | Description                                                                            | Required |
 | ------- | ------ | -------------------------------------------------------------------------------------- | -------- |
 | method  | string | Name of method in this case: eth_sendUserOperation                                     | Required |
-| params  | array  | An array consisting of the Useroperation object, Bundler address, and simulation type. | Required |
+| params  | array  | An array consisting of the Useroperation object, Entry point address, and simulation type. | Required |
 | id      | string | id for request determined by client for JSON RPC requests                              | Required |
 | jsonrpc | string | JSON RPC version in this case 2.0.0                                                    | Required |
 
