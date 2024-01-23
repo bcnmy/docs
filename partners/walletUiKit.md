@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Obvious - Embedded Wallet UI Kit
 
-Developers can now integrate Biconomy’s account abstraction based wallet in their apps in just 5 minutes and a few lines of code. Our partners at Obvious have built out a UI kit on our existing infrastructure that removes the need for developers to build an in-app wallet UI experience for the user. The developers can now use the Obvious Embed for a smooth in-app Smart Account experience.
+Developers can now integrate Biconomy’s account abstraction-based wallet in their apps in just 5 minutes and a few lines of code. Our partners at Obvious have built out a UI kit on our existing infrastructure that removes the need for developers to build an in-app wallet UI experience for the user. The developers can now use the Obvious Embed for a smooth in-app Smart Account experience.
 
 **What do dApps get by integrating with the Obvious Embed kit?**
 
