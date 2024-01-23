@@ -5,11 +5,11 @@ sidebar_position: 2
 
 # Social Login - Signers for your SA
 
-Every account generated on a blockchain has a logic that allows us to cryptographically sign transactions using our private keys. Authentication services like Particle, Web3Auth and wallet applications such as Metamask provide us with easier options to manage private keys and initiate transactions.
+Every account generated on a blockchain has a logic that allows us to cryptographically sign transactions using our private keys. Authentication services like Particle, Web3Auth, and wallet applications such as Metamask provide us with easier options to manage private keys and initiate transactions.
 
 As you might already know, there are two types of accounts i.e. Smart Accounts and Externally Owned Accounts (EOAs). A lot of web3 users have EOAs that they manage using their Metamask and other similar self-custodial wallet services.
 
-Similar to EOAs, Smart Accounts also have a signer vis-a-vis a validation logic which can be set to an ECDSA signature. These ECDSA signatures can be generated using an associated private key. Developers have the flexibility to choose a singer to manage these private keys for the user. Services like Web3Auth, Particle, etc provide creative and more user friendly ways like Passkeys, Social Login and Emails to use the said private keys which are secured using different security methods like MPC, DKG, etc.
+Similar to EOAs, Smart Accounts also have a signer vis-a-vis a validation logic which can be set to an ECDSA signature. These ECDSA signatures can be generated using an associated private key. Developers have the flexibility to choose a singer to manage these private keys for the user. Services like Web3Auth, Particle, etc provide creative and more user-friendly ways like Passkeys, Social Login, and Emails to use the said private keys which are secured using different security methods like MPC, DKG, etc.
 
 We've rounded up the best social login options out there, all in one spot for you. The Biconomy stack works smoothly with these logins, supporting easy integration. When developers pick wallets for their apps, they should think about things like security, cost, user experience, flexibility, privacy, and recoverability. Check out the table below to get a quick look at these factors.
 
