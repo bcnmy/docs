@@ -76,7 +76,7 @@ const config = {
         appId: "HQDCKSUST1",
 
         // Public API key: it is safe to commit it
-        apiKey: "962102bce87a77db829c0ec6d14c30da",
+        apiKey: "0fcf92733adc72670126f29f681b0a62",
 
         indexName: "biconomy",
 
