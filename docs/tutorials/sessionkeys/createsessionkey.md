@@ -24,8 +24,8 @@ Let's add our imports to this file and create an interface for our props.
 ```javascript
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE  } from "@biconomy-devx/modules";
-import { BiconomySmartAccountV2 } from "@biconomy-devx/account"
+import { SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE  } from "@biconomy/modules";
+import { BiconomySmartAccountV2 } from "@biconomy/account"
 import { defaultAbiCoder } from "ethers/lib/utils";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
