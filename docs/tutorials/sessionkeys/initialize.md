@@ -63,7 +63,7 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
 ```
 
 Lastly we're going to replace the default styles with some prewritten styles mentioned below. Similar to the smart contract section, we won't focus much on the CSS side of things but this will give you some basic layouts and center all of your content in the middle of the page.
