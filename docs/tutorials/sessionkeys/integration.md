@@ -135,7 +135,7 @@ This function takes care of the following:
 - Create a provider and signer using ethers after getting permission from user
 - Create an ownership module in this case as we are using our EOA we will be utilizing the ECDSA ownership module
 - We set provider in state
-- Initialize the BiconomySmartAccountV2 by usint the static create method available on the class.
+- Initialize the BiconomySmartAccountV2 by using the static create method available on the class.
 - Initialize the smart account and save the address and instance of smart account to state and finally set loading state back to false.
 
 Let's add some items to our component within the main tags:
@@ -202,7 +202,7 @@ export default function Home() {
       const provider = new ethers.providers.Web3Provider(ethereum)
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
-      const ownerShipModule = ECDSAOwnershipValidationModule.create({
+      const ownerShipModule = await ECDSAOwnershipValidationModule.create({
         signer: signer,
         moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
       })
