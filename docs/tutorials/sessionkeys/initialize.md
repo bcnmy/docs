@@ -30,7 +30,7 @@ Would you like to use ESLint?  Yes
 Would you like to use Tailwind CSS?  No
 Would you like to use `src/` directory? Yes
 Would you like to use App Router? (recommended)  No
-Would you like to customize the default import alias?  Yes
+Would you like to customize the default import alias?  No
 ```
 
 :::info

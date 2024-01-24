@@ -162,15 +162,15 @@ You have now integrated the SDK succesfully, in the next section we will set up 
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import { useState } from 'react';
-import { IBundler, Bundler } from '@biconomy-devx/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy-devx/account"
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy-devx/modules";
+import { IBundler, Bundler } from '@biconomy/bundler'
+import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
+import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 import { ethers  } from 'ethers'
-import { ChainId } from "@biconomy-devx/core-types"
+import { ChainId } from "@biconomy/core-types"
 import {
   IPaymaster,
   BiconomyPaymaster,
-} from '@biconomy-devx/paymaster'
+} from '@biconomy/paymaster'
 
 
 
