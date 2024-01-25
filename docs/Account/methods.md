@@ -11,7 +11,7 @@ The SDK provides the following API methods for a smart account.
 
 The `create()` method is used to create an instance of the Biconomy Smart Account V2. This method requires a smart account configuration object to be passed and returns the smart account API instance.
 
-This method creates the account on the chain specified in the config object.  To configure smart account on another chain one needs to instantiate another smart account API instance with configuration of that chain.
+This method creates the smart account based on the config object.  To configure smart account on another chain one needs to instantiate another smart account API instance with configuration of that chain.
 
 **Usage**
 
@@ -20,9 +20,8 @@ let provider = new ethers.providers.JsonRpcProvider("rpcUrl");
 let signer = new ethers.Wallet("private key", provider);
 
 
-const smartAccount = await BiconomySmartAccountV2.create({
+const smartAccount = await createSmartAccountClient({
   signer: signer,
-  chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
   bundlerUrl: "", // bundler URL can be obtained from the dashboard
   biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
 });
