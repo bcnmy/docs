@@ -9,6 +9,3 @@ slug: /
 Biconomy SDK is a full stack Account Abstraction solution written in Typescript. Acknowledging that, developers often require functionalities in addition to Account Abstraction for building user-friendly applications, some may seek alternative solutions to seamlessly integrate with Account Abstraction.
 
 Our aim is to assist everyone! Explore the following solutions, which can be used alongside Biconomy and built on the Biconomy Infrastructure, to optimize the benefits of Account Abstraction.
-
-We are here to help everyone! Here’s a few solutions that can be used along with Biconomy, and built on top of Biconomy Infrastructure, to be able to get the best of Account Abstraction!
-
