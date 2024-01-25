@@ -56,7 +56,7 @@ export default CreateSession;
 
 ```
 
-You can go ahead an import it into your index.tsx at this point as well and add it before the closing main tag like this:
+You can go ahead an import it into your `index.tsx` at this point as well and add it before the closing main tag like this:
 
 ```javascript
 {
@@ -78,8 +78,8 @@ Continuing with the session key component let's create our state variables:
 
 ```javascript
 const [isSessionKeyModuleEnabled, setIsSessionKeyModuleEnabled] =
-  useState < boolean > false;
-const [isSessionActive, setIsSessionActive] = useState < boolean > false;
+  useState <boolean>(false);
+const [isSessionActive, setIsSessionActive] = useState <boolean> (false);
 ```
 
 We're going to be tracking if the session key module is enabled and if there is an active session.
