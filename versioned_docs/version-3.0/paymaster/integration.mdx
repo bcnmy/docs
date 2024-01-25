@@ -1,0 +1,83 @@
+---
+sidebar_position: 2
+---
+
+# Integration
+
+To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
+
+## Installation
+
+First, install the required packages for initializing the Paymaster.
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+npm install @biconomy/paymaster
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+yarn add @biconomy/paymaster
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+pnpm add @biconomy/paymaster
+```
+
+</TabItem>
+</Tabs>
+
+## Integration 
+
+Set up a paymaster for the smart account by providing only the paymaster API key. The default mode used is `Sponsored` mode in this case.
+:::info
+
+[Click here](/dashboard/paymaster) to learn more about our dashboard and how to get your Paymaster api key.
+
+:::
+
+```typescript
+  import { BiconomySmartAccountV2 } from "@biconomy/account";
+
+  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+    {
+      signer: signer,
+      chainId: 80001
+      biconomyPaymasterApiKey: "paymaster api key",
+      bundlerUrl: "bundler url"
+    }
+  );
+```
+If you wish to pass "strictMode" to your Paymaster you need to create the instace.
+
+```typescript
+  import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
+  import { BiconomySmartAccountV2 } from "@biconomy/account";
+
+  const paymaster: IPaymaster = new BiconomyPaymaster({
+    //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
+    paymasterUrl: "",
+    strictMode: true
+  });
+
+  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+    {
+      signer: signer,
+      chainId: 80001
+      paymaster,
+      bundlerUrl: "bundler url"
+    }
+  );
+```
+
+You have now assigned the Paymaster to the smart account. See our [tutorials](/category/tutorials) for in depth integrations of the Smart Account and Paymaster.

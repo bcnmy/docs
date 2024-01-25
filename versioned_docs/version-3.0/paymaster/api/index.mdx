@@ -1,0 +1,25 @@
+---
+sidebar_position: 4
+title: APIs
+
+---
+
+The Biconomy Paymaster allows you to have a single paymaster URL generated on our dashboard, which can be used for gas sponsorship as well as enabling users to pay gas in ERC20 tokens. 
+Instead of keeping multiple paymaster URLs to differentiate the paymaster type, the API request body now includes a MODE parameter which will be sent to indicate whether the dApp wants sponsored transactions for its users or wants to enable ERC20 payments by users.
+
+You can get your Paymaster URL from the Biconomy [Dashboard](https://dashboard.biconomy.io/). 
+This is the same endpoint URL used for all requests. 
+All requests must follow the [JSON RPC](https://www.jsonrpc.org/specification) specifications.
+
+:::info
+This documentation is for using our Paymaster APIs directly. 
+If you are building with the Biconomy SDK you can follow the instructions on this [page](/Paymaster/methods).
+
+You can test these endpoints on our [Paymaster Explorer](/Paymaster/api/explorer)
+:::
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```

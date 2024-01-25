@@ -45,11 +45,14 @@ const config = {
           lastVersion: "current",
           versions: {
             current: {
-              label: "SDK V3 (latest)",
+              label: "SDK V4 (latest)",
+            },
+            "3.0": {
+              label: "SDK V3",
             },
             "1.0": {
-              label: "SDK V1",
-            },
+              label: "SDK V2",
+            }
           },
         },
         theme: {
