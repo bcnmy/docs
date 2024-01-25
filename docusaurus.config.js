@@ -113,8 +113,13 @@ const config = {
           {
             to: "/partners",
             position: "left",
-            label: "Preferred Partners",
+            label: "Add Ons",
             activeBaseRegex: `/partners/`,
+          },
+          {
+            href: "https://dashboard.biconomy.io/",
+            label: "Dashboard",
+            position: "right",
           },
           {
             href: "https://github.com/bcnmy/docs",

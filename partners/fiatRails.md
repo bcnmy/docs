@@ -1,7 +1,6 @@
 ---
 sidebar_label: "Fiat Rails"
-sidebar_position: 1
-slug: /
+sidebar_position: 2
 ---
 
 # Fiat Rails
