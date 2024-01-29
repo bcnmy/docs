@@ -6,7 +6,8 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transact
 
 # User Paid Transactions
 
-In this guide we will look at executing a user paid transaction.
+In this guide we will look at how to execute a transaction, where smart account has the native tokens to pay for the gas. Check the entire code in the [end](/account/transactions/userpaid#mint-nft-function).
+
 
 :::info
 This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/category/tutorials) for step by step setups.
@@ -14,79 +15,101 @@ This guide assumes you have already initialized the Biconomy SDK and just need t
 
 ## Imports
 
-These are the imports needed for the code snippets below:
+These are the imports needed for the code snippets below.
 
 ```javascript
-import { ethers } from "ethers";
-import abi from "some abi location";
+import { Hex, createWalletClient, encodeFunctionData, http, parseAbi} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { polygonMumbai } from "viem/chains";
+import { createSmartAccountClient } from "@biconomy/account";
 ```
 
-Additionally an Instance of the BiconomySmartAccount is needed as mentioned above.
-
-## Connect to Contract
-
-Connect to an instance of a contract, below is an example of using ethers JS to connect to an NFT contract.
+## Create smart account instance
 
 ```javascript
-const nftAddress = "0x0a7755bDfb86109D9D403005741b415765EAf1Bc";
-
-const contract = new ethers.Contract(nftAddress, abi, provider);
+const smartAccount = await createSmartAccountClient({
+    signer: client,
+    bundlerUrl: "BUNDLER_URL",
+  });
+const scwAddress = await smartAccount.getAccountAddress();
+console.log("SCW Address", scwAddress);
 ```
 
-## Build Useroperation
+## Create Transaction
 
-Using an instance of the smart account use the buildUserOp method to create a userOp.
+Create the transaction specifying the required fields such as to, address etc
 
 ```javascript
 // use the ethers populateTransaction method to create a raw transaction
-const minTx = await contract.populateTransaction.safeMint(address);
-console.log(minTx.data);
-const tx1 = {
-  to: nftAddress,
-  data: minTx.data,
-};
-let userOp = await smartAccount.buildUserOp([tx1]);
+const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+const nftData = encodeFunctionData({
+  abi: parsedAbi,
+  functionName: "safeMint",
+  args: [scwAddress as Hex],
+});
 ```
 
-## Send UserOperation
+## Send Transaction
 
-Send your userOp to our Bundler which will send the userOp to the entry point contract to handle executing it as a transaction on chain.
+Send your transaction to our Bundler which will send the internal userOp to the entry point contract to handle executing it as a transaction on chain.
 
 ```javascript
-const userOpResponse = await smartAccount.sendUserOp(userOp);
-console.log("userOpHash", userOpResponse);
-const { receipt } = await userOpResponse.wait(1);
-console.log("txHash", receipt.transactionHash);
+const { waitForTxHash } = await smartAccount.sendTransaction(
+    { to: nftAddress,
+      data: nftData}
+  );
+const { transactionHash } = await waitForTxHash();
+console.log("transactionHash", transactionHash);
 ```
 
 ## Mint NFT Function
 
-Here is a function putting all of this together:
-
 ```javascript
 
-const mintNFT = () => {
+import { Hex, createWalletClient, encodeFunctionData, http, parseAbi} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { polygonMumbai } from "viem/chains";
+import { createSmartAccountClient } from "@biconomy/account";
 
-const nftAddress = "0x0a7755bDfb86109D9D403005741b415765EAf1Bc"
+export const mintNft = async () => {
+  // ----- 1. Generate EOA from private key
+  const account = privateKeyToAccount("PRIVATE_KEY);
+  const client = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
+  const eoa = client.account.address;
+  console.log(`EOA address: ${eoa}`);
 
-const contract = new ethers.Contract(
-      nftAddress,
-      abi,
-      provider,
-    )
+  // ------ 2. Create biconomy smart account instance
+  const smartAccount = await createSmartAccountClient({
+    signer: client,
+    bundlerUrl: "BUNDLER_URL",
+  });
+  const scwAddress = await smartAccount.getAccountAddress();
+  console.log("SCW Address", scwAddress);
 
-const minTx = await contract.populateTransaction.safeMint(address);
-  console.log(minTx.data);
-  const tx1 = {
-    to: nftAddress,
-    data: minTx.data,
-  };
-  let userOp = await smartAccount.buildUserOp([tx1]);
-}
+  // ------ 3. Generate transaction data
+  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+  const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+  const nftData = encodeFunctionData({
+    abi: parsedAbi,
+    functionName: "safeMint",
+    args: [scwAddress as Hex],
+  });
 
-const userOpResponse = await smartAccount.sendUserOp(userOp);
-console.log("userOpHash", userOpResponse);
-const { receipt } = await userOpResponse.wait(1);
-console.log("txHash", receipt.transactionHash);
+  // ------ 4. Send transaction
+  const { waitForTxHash } = await smartAccount.sendTransaction(
+    {
+      to: nftAddress,
+      data: nftData,
+    }
+  );
+  const { transactionHash } = await waitForTxHash();
+  console.log("transactionHash", transactionHash);
+};
+
 
 ```

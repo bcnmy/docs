@@ -22,5 +22,3 @@ In the context of ERC 4337 transactions are called `userOperations` or `userOps`
   "paymasterAndData": "0x"
 }
 ```
-
-The following sections will show you how to build `userOps` and execute transactions in four different ways.
