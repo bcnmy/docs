@@ -75,10 +75,8 @@ createAccountAndMintNft();
 ```
 Upon successful completion, you should see the smart account address in the console.
 
+Smart accounts are designed with a pre-determined address known prior to deployment, making them counterfactual. Users transfers funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Additionally, the paymaster can be used for this to sponsor this transaction.
 
-:::info
-Smart accounts are designed with a pre-determined address known prior to deployment, making them counterfactual. The Smart Account (contract) is created automatically during the first transaction, with the gas needed for deployment included.
-:::
 
 :::caution
 Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
