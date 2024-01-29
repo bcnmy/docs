@@ -106,6 +106,32 @@ Specify PRIVATE_KEY, BUNDLER_URL and RPC_URL (for ethers) to create a smart acco
 
 </TabItem>
 
+<TabItem value="py" label="Alchemy ">
+
+```typescript
+  import { ethers } from "ethers";	
+  import { polygonMumbai } from "viem/chains";
+  import { createSmartAccountClient } from "@biconomy/account";
+  import { WalletClientSigner } from "@alchemy/aa-core";
+
+  const account = privateKeyToAccount("PRIVATE_KEY");
+  const client = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
+  const alchemySigner = new WalletClientSigner(client, "json-rpc"); 
+  const smartAccount = await createSmartAccountClient({
+    signer: alchemySigner,
+    bundlerUrl: config.bundlerUrl,
+    biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
+  });
+  const scwAddress = await smartAccount.getAccountAddress();
+  console.log("SCW Address", scwAddress);
+```
+
+</TabItem>
+
 </Tabs>
 
 In this doc, following values are used by default:

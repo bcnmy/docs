@@ -6,10 +6,9 @@ sidebar_position: 2
 
 The SDK provides the following API methods for a smart account.
 
-## BiconomySmartAccountV2
-### Create
+### createSmartAccountClient
 
-The `create()` method is used to create an instance of the Biconomy Smart Account V2. This method requires a smart account configuration object to be passed and returns the smart account API instance.
+This method is used to create an instance of the Biconomy Smart Account V2. This method requires a smart account configuration object to be passed and returns the smart account API instance.
 
 This method creates the smart account based on the config object.  To configure smart account on another chain one needs to instantiate another smart account API instance with configuration of that chain.
 
@@ -99,40 +98,51 @@ const index = smartAccount.index;
 **Returns**
 - index (`number`): A number indicating the index of current active smart account.
 
-## UserOp Methods
+## Transaction Methods
 
-### buildUserOp( )
-This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as This step also involves estimating gas for the userOp internally)
+### sendTransaction( )
+This method is used to Send a transaction to bundler for execution, It internally executes build and send UserOp.
 
 **Usage**
 
-For example, in the context of creating a userOp for an `addComment` transaction, an instance of the contract is created, then a basic transaction object is created that holds the necessary address and data from the transaction. Finally, a partial userOp is created using the Smart Account's `buildUserOp` method⁠. Now this can be signed and sent to the bundler.  
+```tsx
+  import { createClient } from "viem"
+  import { createSmartAccountClient } from "@biconomy/account"
+  import { createWalletClient, http } from "viem";
+  import { polygonMumbai } from "viem/chains";
 
+  const signer = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
 
-```jsx
-const contractAddress = "contract address";
-const provider = new ethers.providers.JsonRpcProvider("rpc url");
+  const smartWallet = await createSmartAccountClient({ signer, bundlerUrl }); // Retrieve bundler url from dasboard
+  const encodedCall = encodeFunctionData({
+    abi: parseAbi(["function safeMint(address to) public"]),
+    functionName: "safeMint",
+    args: ["0x..."],
+  });
 
-const blogContract = new ethers.Contract(
-  contractAddress,
-  abi, // contract abi
-  provider,
-);
+  const transaction = {
+    to: nftAddress,
+    data: encodedCall
+  }
 
-const createComment =
-  await blogContract.populateTransaction.addComment("comment");
+  const { waitForTxHash } = await smartWallet.sendTransaction(transaction);
+  const { transactionHash, userOperationReceipt } = await wait();
 
-const tx1 = {
-  to: contractAddress,
-  data: createComment.data,
-};
-
-const userOp = await smartAccount.buildUserOp([tx1]);
 ```
 
 **Parameters**
-- transactions (`Transaction[]`, required): The required argument is an array of transactions which will be executed in provided order. You can pass multiple transactions into a userOp if you would like to batch them together into one transaction.
-- buildUseropDto (`BuildUserOpOptions`): One can also pass these options to customize how a userOp is built.
+- manyOrOneTransactions (`Transaction | Transaction[]`, required): An array of transactions to be batched which will be executed in provided order. You can also pass a single transaction.
+  ```ts
+  Transaction: {
+    to: string;
+  } & ValueOrData
+  ```
+
+- buildUseropDto (`BuildUserOpOptions`, optional): One can also pass these options to customize how a userOp is built.
 
   ```ts
   type BuildUserOpOptions = {
@@ -236,7 +246,44 @@ const userOp = await smartAccount.buildUserOp([tx1]);
   
 
 **Returns**
-- partialUserOp (`Promise<Partial<UserOperation>>`): A Promise resolving to `partialUserOp` which can be further signed and sent to the bundler.
+- userOpResponse (`Promise<UserOpResponse>`): userOpResponse that you can use to track user operation.
+
+
+### buildUserOp( )
+This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as This step also involves estimating gas for the userOp internally)
+
+**Usage**
+
+For example, in the context of creating a userOp for an `addComment` transaction, an instance of the contract is created, then a basic transaction object is created that holds the necessary address and data from the transaction. Finally, a partial userOp is created using the Smart Account's `buildUserOp` method⁠. Now this can be signed and sent to the bundler.  
+
+
+```jsx
+const contractAddress = "contract address";
+const provider = new ethers.providers.JsonRpcProvider("rpc url");
+
+const blogContract = new ethers.Contract(
+  contractAddress,
+  abi, // contract abi
+  provider,
+);
+
+const createComment =
+  await blogContract.populateTransaction.addComment("comment");
+
+const tx1 = {
+  to: contractAddress,
+  data: createComment.data,
+};
+
+const userOp = await smartAccount.buildUserOp([tx1]);
+```
+
+**Parameters**
+- transactions (`Transaction[]`, required): The required argument is an array of transactions which will be executed in provided order. You can pass multiple transactions into a userOp if you would like to batch them together into one transaction.
+- buildUseropDto (`BuildUserOpOptions`): One can also pass these options to customize how a userOp is built.  
+
+**Returns**
+- partialUserOp (`Promise<Partial<UserOperationStruct>>`): A Promise resolving to `UserOperationStruct` which can be further signed and sent to the bundler.
 
 ### senduserOp( )
 
@@ -245,35 +292,16 @@ This method is used to submit a User Operation object to the User Operation pool
 **Usage**
 
 ```ts
+const userOp = await smartAccount.buildUserOp([transaction]);
 const userOpResponse = await smartAccount.sendUserOp(userOp);
 
-type UserOpResponse = {
-  userOpHash: string;
-  wait(_confirmations?: number): Promise<UserOpReceipt>;
-  waitForTxHash(): Promise<UserOpStatus>;
-};
-
 const { receipt } = await userOpResponse.wait(1);
-
-type UserOpReceipt = {
-  userOpHash: string;
-  entryPoint: string;
-  sender: string;
-  nonce: number;
-  paymaster: string;
-  actualGasCost: BigNumber;
-  actualGasUsed: BigNumber;
-  success: boolean;
-  reason: string;
-  logs: Array<ethers.providers.Log>;
-  receipt: ethers.providers.TransactionReceipt;
-};
 ```
 
 **Parameters**
-- userOp (`Partial<UserOperation>`, required): The `userOp` object includes essential fields like `sender`, `nonce`, `callData`, `callGasLimit` and `gas` related properties.
+- userOp (`Partial<UserOperationStruct>`, required): The `userOp` object includes essential fields like `sender`, `nonce`, `callData`, `callGasLimit` and `gas` related properties.
 
-- params (`SendUserOpParams`): This gets used when the active validation module is complex and requires additional information for signature generation. The `SendUserOpParams` object can contain fields such as `sessionID`, `sessionSigner`, `sessionValidationModule`, `additionalSessionData`, `batchSessionParams`, and `simulationType`. These parameters are used to customize the behavior of the `sendUserOp` method and are optional. 
+- params (`SendUserOpParams`, optional): This gets used when the active validation module is complex and requires additional information for signature generation. The `SendUserOpParams` object can contain fields such as `sessionID`, `sessionSigner`, `sessionValidationModule`, `additionalSessionData`, `batchSessionParams`, and `simulationType`. These parameters are used to customize the behavior of the `sendUserOp` method and are optional. 
   ```ts
   const userOpResponse = await moduleSmartAccount?.sendUserOp(userOp, {
     sessionSigner: sessionSigner,
@@ -288,6 +316,28 @@ Please note that `simulationType` allows for more debugging insights about `call
 
 **Returns**
 - userOpsResponse (`UserOpResponse`): The method returns an object of type `UserOpResponse` which has a `userOpHash` and two methods: `wait()` and `waitForTxHash()`.
+
+  ```ts
+  type UserOpResponse = {
+    userOpHash: string;
+    wait(_confirmations?: number): Promise<UserOpReceipt>;
+    waitForTxHash(): Promise<UserOpStatus>;
+  };
+
+  type UserOpReceipt = {
+    userOpHash: string;
+    entryPoint: string;
+    sender: string;
+    nonce: number;
+    paymaster: string;
+    actualGasCost: BigNumber;
+    actualGasUsed: BigNumber;
+    success: boolean;
+    reason: string;
+    logs: Array<ethers.providers.Log>;
+    receipt: ethers.providers.TransactionReceipt;
+  };
+  ```
 The `wait()` method resolves when the user operation is dispatched by the bundler on-chain and gets mined. The `waitForTxHash()` method returns a `UserOpStatus` object which includes the transaction hash and the receipt once added on-chain.
 
 
