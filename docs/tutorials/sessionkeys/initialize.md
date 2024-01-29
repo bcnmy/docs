@@ -42,7 +42,7 @@ You can follow the prompts to receive the scaffolding for your React application
 Install the following dependencies:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster @biconomy/modules ethers@5.7.2 react-toastify
+yarn add @biconomy/account @biconomy/modules ethers@5.7.2 react-toastify
 ```
 
 Additionaly to help with some polyfill errors we will need to update our `next.config.js` file which is located at the root of our project. Copy the code below and replace the current contents of the file:

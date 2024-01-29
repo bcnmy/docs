@@ -115,7 +115,7 @@ Integrate all elements to finalize your smart account:
 async function createSmartAccount() {
   let smartAccount = await createSmartAccountClient({
     signer: wallet
-    bundlerUrl: bundler, // The configured bundler instance
+    bundlerUrl, // The configured bundler instance
   });
   console.log(
     "Smart Account Address: ",
@@ -166,7 +166,7 @@ const bundlerUrl = "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-
 async function createSmartAccount() {
   let smartAccount = await createSmartAccountClient({
     signer: wallet
-    bundlerUrl: bundlerUrl, // The configured bundler instance
+    bundlerUrl, // The configured bundler instance
   });
   console.log(
     "Smart Account Address: ",
