@@ -3,12 +3,10 @@ sidebar_label: "Quickstart"
 sidebar_position: 2
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 # Quickstart: Smart Account ⚡️
 
-In this guide, we will create a smart account and mint an NFT.
+In this guide, we will create a smart account and mint an NFT. Checkout the full code in the end.
+
 :::info
 Please note that this tutorial assumes you have Node JS installed on your computer and have some working knowledge of Node. 🧠
 :::
@@ -194,6 +192,4 @@ If you are facing any error, do checkout the [troubleshooting](/troubleshooting/
 
 🎉 **Congratulations on completing the quickstart!**
 
-To dive deeper, check out more use cases in our Quick Explore guide or explore our Node.js guides for additional insights.
-
-Follow this guide for [the gasless transaction](/account/transactions/gasless).
+To dive deeper, check out more [use cases](/account/transactions) and follow this guide for [the gasless transaction](/account/transactions/gasless).
