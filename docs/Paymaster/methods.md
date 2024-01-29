@@ -9,7 +9,7 @@ Imports needed for these methods:
 
 ```ts
 import { IHybridPaymaster, PaymasterFeeQuote,
- PaymasterMode, SponsorUserOperationDto} from "@biconomy/paymaster";
+ PaymasterMode, SponsorUserOperationDto} from "@biconomy/account";
 
 const biconomyPaymaster =
   smartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
