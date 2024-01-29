@@ -73,7 +73,7 @@ export const createAccountAndMintNft = async () => {
 createAccountAndMintNft();
 
 ```
-Upon successful completion, you should see the smart account address in the console.
+Upon successful completion, you should see EOA and the smart account address in the console.
 
 Smart accounts are designed with a pre-determined address known prior to deployment, making them counterfactual. Users transfers funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Additionally, the paymaster can be used for this to sponsor this transaction.
 
@@ -112,7 +112,8 @@ try {
     }
   );
   const { transactionHash } = await transactionResponse.waitForTxHash();
-  console.log("transactionHash", transactionHash);
+  const userOpReceipt = await transactionResponse.wait();
+  console.log("transactionHash", transactionHash, userOpReceipt);
 } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Transaction Error:", error.message);
@@ -161,27 +162,32 @@ export const createAccountAndMintNft = async () => {
   const scwAddress = await smartAccount.getAccountAddress();
   console.log("SCW Address", scwAddress);
 
-  // ------ 3. Generate transaction data
-  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-  const parsedAbi = parseAbi(["function safeMint(address _to)"]);
-  const nftData = encodeFunctionData({
-    abi: parsedAbi,
-    functionName: "safeMint",
-    args: [scwAddress as Hex],
-  });
+  try {
+    const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+    const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+    const nftData = encodeFunctionData({
+      abi: parsedAbi,
+      functionName: "safeMint",
+      args: [scwAddress as Hex],
+    });
 
-  // ------ 4. Send transaction
-  const { waitForTxHash } = await smartAccount.sendTransaction(
-    {
-      to: nftAddress,
-      data: nftData,
+    // ------ 4. Send transaction
+    const transactionResponse = await smartAccount.sendTransaction(
+      {
+        to: nftAddress,
+        data: nftData,
+      }
+    );
+    const { transactionHash } = await transactionResponse.waitForTxHash();
+    const userOpReceipt = await transactionResponse.wait();
+    console.log("transactionHash", transactionHash, userOpReceipt);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Transaction Error:", error.message);
     }
-  );
-
-  const { transactionHash } = await waitForTxHash();
-  console.log("transactionHash", transactionHash);
-
+  }
 };
+
 createAccountAndMintNft();
 ```
 
