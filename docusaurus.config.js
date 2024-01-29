@@ -49,9 +49,6 @@ const config = {
             },
             "3.0": {
               label: "SDK V3",
-            },
-            "1.0": {
-              label: "SDK V2",
             }
           },
         },
