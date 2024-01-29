@@ -5,11 +5,13 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/integrat
 
 # Integration
 
-To use the full potential of the `Biconomy Smart Account` you will need a [bundler url](/Bundler/integration) and a [paymaster api key](/paymaster). Below is a basic installation and integration for smart accounts in your code.
+Smart Accounts are created deterministically using the [CREATE2](https://docs.openzeppelin.com/cli/2.7/deploying-with-create2) opcode, meaning the smart account address can be identified even before it is deployed. It will also maintain the same address across different chains. 
+
+To integrate `Biconomy Smart Account`, you'll need the [bundler url](/dashboard#bundler-url). If you also want to use the paymaster, you'll need [Paymaster api key](/paymaster).
 
 ## Installation
 
-First, install the required packages for initializing the Smart Account.
+First, install the following packages for initializing the Smart Account.
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -19,7 +21,7 @@ import TabItem from "@theme/TabItem";
 
 ```bash
 
-npm install @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/common @biconomy/core-types @biconomy/modules
+npm install @biconomy/account
 
 ```
 
@@ -28,7 +30,7 @@ npm install @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/co
 
 ```bash
 
-yarn add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/common @biconomy/core-types @biconomy/modules
+yarn add @biconomy/account
 
 ```
 
@@ -37,7 +39,7 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/commo
 
 ```bash
 
-pnpm add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/common @biconomy/core-types @biconomy/modules
+pnpm add @biconomy/account
 
 ```
 
@@ -46,27 +48,97 @@ pnpm add @biconomy/account @biconomy/bundler @biconomy/paymaster @biconomy/commo
 
 ## Integration
 
-Now you can simply create smart accounts like this.
+Specify PRIVATE_KEY, BUNDLER_URL and RPC_URL (for ethers) to create a smart account. 
+
+<Tabs>
+<TabItem value="js" label="Viem">
+
+```typescript
+  import { Hex, createWalletClient, http } from "viem";
+  import { privateKeyToAccount } from "viem/accounts";
+  import { polygonMumbai } from "viem/chains";
+  import { createSmartAccountClient } from "@biconomy/account";
+
+  // ----- 1. Generate EOA from private key
+  const account = privateKeyToAccount("PRIVATE_KEY"); 
+  const client = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
+  const eoa = client.account.address;
+  console.log(`EOA address: ${eoa}`);
+
+  // ------ 2. Create biconomy smart account instance
+  const smartAccount = await createSmartAccountClient({
+    signer: client,
+    bundlerUrl: "BUNDLER_URL",
+    biconomyPaymasterApiKey: "", // optional
+  });
+  const smartAccountAddress = await smartAccount.getAccountAddress();
+  console.log("Smart Account Address", smartAccountAddress);
+
+```
+
+</TabItem>
+<TabItem value="py" label="Ethers">
 
 ```typescript
   import { ethers } from "ethers";	
-  import { BiconomySmartAccountV2} from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy/account";
 
-  let provider = new ethers.providers.JsonRpcProvider("rpcUrl");
-  let signer = new ethers.Wallet("private key", provider);
+  let provider = new ethers.providers.JsonRpcProvider("RPC_URL");
+  let signer = new ethers.Wallet("PRIVATE_KEY", provider);
 
   const biconomySmartAccountConfig = {
     signer: signer,
-    chainId: 80001
-    biconomyPaymasterApiKey: "",
-    bundlerUrl: ""
+    bundlerUrl: "BUNDLER_URL",
+    biconomyPaymasterApiKey: "", // optional
   };
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const smartAccount = await createSmartAccountClient(
     biconomySmartAccountConfig
   );
+
+  const smartAccountAddress = await smartAccount.getAccountAddress();
+  console.log("Smart Account Address", smartAccountAddress);
 ```
-This smart account uses the following default values:
-- ECDSA Validation Module
-- default entry point address for the chainId
-- paymaster instance is created by the SDK
+
+</TabItem>
+
+<TabItem value="py" label="Alchemy ">
+
+```typescript
+  import { ethers } from "ethers";	
+  import { polygonMumbai } from "viem/chains";
+  import { createSmartAccountClient } from "@biconomy/account";
+  import { WalletClientSigner } from "@alchemy/aa-core";
+
+  const account = privateKeyToAccount("PRIVATE_KEY");
+  const client = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
+  const alchemySigner = new WalletClientSigner(client, "json-rpc"); 
+  const smartAccount = await createSmartAccountClient({
+    signer: alchemySigner,
+    bundlerUrl: config.bundlerUrl,
+    biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
+  });
+  const scwAddress = await smartAccount.getAccountAddress();
+  console.log("SCW Address", scwAddress);
+```
+
+</TabItem>
+
+</Tabs>
+
+In this doc, following values are used by default:
+- ECDSA Validation Module, other validation [modules](/modules) can be enabled based on the specific use case.
+- The default entry point [address](contracts.md) is used for the chainId.
+- An index with a value 0, but you can also specify a custom index value in the configuration to generate multiple smart accounts with the same signer.
+
+CREATE2 allows us to enable flows where users could even send funds to an undeployed wallet, which could then be used to pay for the gas for deployment.
+Smart account will be deployed with the first UserOp execution. 
+
