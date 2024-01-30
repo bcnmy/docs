@@ -8,7 +8,7 @@ sidebar_position: 2
 In this guide, we will create a smart account and mint an NFT. Checkout the full code in the end.
 
 :::info
-Please note that this tutorial assumes you have Node JS installed on your computer and have working knowledge of Node. 🧠
+Please note that this tutorial assumes you have Node JS installed and have working knowledge of Node. 🧠
 :::
 
 ## 1. Environment set up 🛠️
