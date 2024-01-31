@@ -35,8 +35,9 @@ interface props {
 }
 
 ```
+USDC Abi can be take [here](https://gist.github.com/Ankarrr/570cc90f26ef7fb6a2a387612db80ceb).
 
-Let's create the inital component:
+Next, let's create the inital component:
 
 ```javascript
 
