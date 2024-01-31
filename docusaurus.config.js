@@ -51,6 +51,7 @@ const config = {
               label: "SDK V3",
             }
           },
+          showLastUpdateTime: true
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),

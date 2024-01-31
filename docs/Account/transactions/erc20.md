@@ -61,6 +61,16 @@ Send your transaction to our Bundler which will send the internal userOp to the 
 We also specify the `paymasterServiceData` with the Paymaster mode set to sponsored while sending the transaction. 
 
 ```javascript
+const feeQuotesResponse: FeeQuotesOrDataResponse = await smartAccount.getTokenFees(transaction, {
+   paymasterServiceData: {
+     mode: PaymasterMode.ERC20,
+     tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+     preferredToken: "0xda5289fcaaf71d52a80a254da614a192b693e977"
+   }
+});
+
+const userSeletedFeeQuote = feeQuotesResponse.feeQuotes?.[0];
+
 const { waitForTxHash } = await smartAccount.sendTransaction(
     {
       to: nftAddress,
@@ -69,7 +79,7 @@ const { waitForTxHash } = await smartAccount.sendTransaction(
     {
       paymasterServiceData: {
         mode: PaymasterMode.ERC20,
-        preferredToken: "0xda5289fcaaf71d52a80a254da614a192b693e977",
+        feeQuote: userSeletedFeeQuote,
         spender: zeroAddress,
         maxApproval: true,
       },
@@ -118,6 +128,16 @@ export const mintNftPayERC20 = async () => {
   });
 
   // ------ 4. Send transaction
+  const feeQuotesResponse: FeeQuotesOrDataResponse = await smartAccount.getTokenFees(transaction, {
+   paymasterServiceData: {
+     mode: PaymasterMode.ERC20,
+     tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+     preferredToken: "0xda5289fcaaf71d52a80a254da614a192b693e977"
+   }
+});
+
+const userSeletedFeeQuote = feeQuotesResponse.feeQuotes?.[0];
+
   const { waitForTxHash } = await smartAccount.sendTransaction(
     {
       to: nftAddress,
@@ -126,7 +146,7 @@ export const mintNftPayERC20 = async () => {
     {
       paymasterServiceData: {
         mode: PaymasterMode.ERC20,
-        preferredToken: "0xda5289fcaaf71d52a80a254da614a192b693e977",
+        feeQuote: userSeletedFeeQuote,
         spender: zeroAddress,
         maxApproval: true,
       },
