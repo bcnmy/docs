@@ -22,22 +22,11 @@ We've added new imports to our existing setup for gasless NFT minting:
 ```typescript
 // Import necessary modules and configurations
 import { config } from "dotenv"; // dotenv for loading environment variables from a .env file
-import { IBundler, Bundler } from "@biconomy/bundler"; // Biconomy bundler for managing gasless transactions
 import {
-  DEFAULT_ENTRYPOINT_ADDRESS,
-  BiconomySmartAccountV2,
+  createSmartAccountClient,
+  PaymasterMode
 } from "@biconomy/account"; // Default entry point and smart account module from Biconomy
 import { Wallet, ethers, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
-import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-  PaymasterMode,
-} from "@biconomy/paymaster"; // Paymaster interface and Biconomy implementation
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules"; // Modules for ownership validation
 
 config(); // Load environment variables from .env file
 ```
@@ -101,29 +90,17 @@ const transaction = {
 - **Contract Address**: Where our NFT lives.
 - **Transaction**: The action we're preparing to execute.
 
-### Step 2: Construct the Partial UserOp
-
-```typescript
-// Build a partial User Operation (UserOp) with the transaction and set it to be sponsored
-let partialUserOp = await smartAccount.buildUserOp([transaction], {
-  paymasterServiceData: {
-    mode: PaymasterMode.SPONSORED,
-  },
-});
-```
-
-- **`buildUserOp`**: Prepares our UserOp with the required transaction details.
-- **`PaymasterMode.SPONSORED`**: Ensures our transaction is gasless!
-
-## 🌟 Execute the UserOp with Paymaster
+## 🌟 Send the transaction with Paymaster
 
 Time to mint that NFT! 🖼️
 
 ```typescript
 // Try to execute the UserOp and handle any errors
 try {
-  // Send the UserOp through the smart account
-  const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+  // Send the transaction through the smart account
+  const userOpResponse = await smartAccount.sendTransaction(transaction, {paymasterServiceData: {
+    mode: PaymasterMode.SPONSORED
+  }});
   // Wait for the transaction to complete and retrieve details
   const transactionDetails = await userOpResponse.wait();
   // Log the transaction details URL and the URL to view minted NFTs
@@ -137,7 +114,7 @@ try {
 }
 ```
 
-- **`sendUserOp`**: Sends our prepared UserOp.
+- **`sendTransaction`**: Sends our prepared transaction and converts it into a userOp behind the scenes.
 - **`wait`**: Awaits the transaction confirmation.
 - **Result**: Outputs links to view the transaction and the minted NFT.
 
@@ -171,17 +148,14 @@ async function mintNFT() {
     data: data,
   };
 
-  // Build a partial User Operation (UserOp) with the transaction and set it to be sponsored
-  let partialUserOp = await smartAccount.buildUserOp([transaction], {
-    paymasterServiceData: {
-      mode: PaymasterMode.SPONSORED,
-    },
-  });
-
   // Try to execute the UserOp and handle any errors
   try {
     // Send the UserOp through the smart account
-    const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+    const userOpResponse = await smartAccount.sendTransaction(transaction, {
+      paymasterServiceData: {
+        mode: PaymasterMode.SPONSORED,
+      },
+    });
     // Wait for the transaction to complete and retrieve details
     const transactionDetails = await userOpResponse.wait();
     // Log the transaction details URL and the URL to view minted NFTs
@@ -206,22 +180,11 @@ And that's it! You've successfully executed a gasless NFT minting transaction. �
 ```typescript
 // Import necessary modules and configurations
 import { config } from "dotenv"; // dotenv for loading environment variables from a .env file
-import { IBundler, Bundler } from "@biconomy/bundler"; // Biconomy bundler for managing gasless transactions
 import {
-  DEFAULT_ENTRYPOINT_ADDRESS,
-  BiconomySmartAccountV2,
+  createSmartAccountClient,
+  PaymasterMode
 } from "@biconomy/account"; // Default entry point and smart account module from Biconomy
 import { Wallet, ethers, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
-import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-  PaymasterMode,
-} from "@biconomy/paymaster"; // Paymaster interface and Biconomy implementation
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules"; // Modules for ownership validation
 
 config(); // Load environment variables from .env file
 
@@ -232,41 +195,13 @@ const provider = new providers.JsonRpcProvider(
 
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider); // Creating a wallet instance with a private key from environment variables
 
-// Configure the Biconomy Bundler
-const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44", // URL to the Biconomy bundler service
-
-  chainId: ChainId.POLYGON_MUMBAI, // Chain ID for Polygon Mumbai test network
-
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address for the bundler
-});
-
-// Configure the Paymaster
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a", // URL to the Biconomy paymaster service
-});
-
-// Function to create a module for ownership validation
-async function createModule() {
-  return await ECDSAOwnershipValidationModule.create({
-    signer: wallet, // The wallet acting as the signer
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE, // Address of the default ECDSA ownership validation module
-  });
-}
+const bundlerUrl = "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
 
 // Function to create a Biconomy Smart Account
 async function createSmartAccount() {
-  const module = await createModule(); // Create the validation module
-
-  let smartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI, // Chain ID for the Polygon Mumbai network
-    bundler: bundler, // The configured bundler instance
-    paymaster: paymaster, // The configured paymaster instance
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address
-    defaultValidationModule: module, // The default validation module
-    activeValidationModule: module, // The active validation module
+  let smartAccount = await createSmartAccountClient({
+    signer: wallet, // The configured wallet signer
+    bundlerUrl, // The configured bundler instance
   });
 
   console.log(
@@ -301,17 +236,14 @@ async function mintNFT() {
     data: data,
   };
 
-  // Build a partial User Operation (UserOp) with the transaction and set it to be sponsored
-  let partialUserOp = await smartAccount.buildUserOp([transaction], {
-    paymasterServiceData: {
-      mode: PaymasterMode.SPONSORED,
-    },
-  });
-
   // Try to execute the UserOp and handle any errors
   try {
     // Send the UserOp through the smart account
-    const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
+    const userOpResponse = await smartAccount.sendTransaction(transaction, {
+      paymasterServiceData: {
+        mode: PaymasterMode.SPONSORED,
+      },
+    });
     // Wait for the transaction to complete and retrieve details
     const transactionDetails = await userOpResponse.wait();
     // Log the transaction details URL and the URL to view minted NFTs

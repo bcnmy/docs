@@ -98,39 +98,20 @@ Checkout below for entire code snippet
 ```typescript
 import usdcAbi from "./usdcabi.json";
 import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
   SessionKeyManagerModule,
   DEFAULT_SESSION_KEY_MANAGER_MODULE,
 } from "@biconomy/modules";
 import { config } from "dotenv";
-import { IBundler, Bundler } from "@biconomy/bundler";
 import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
+  createSmartAccountClient,
 } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
 
 import { SessionFileStorage } from "./customSession";
 config();
 
 let smartAccount: BiconomySmartAccountV2;
 let address: string;
-const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-console.log({ ep: DEFAULT_ENTRYPOINT_ADDRESS });
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/HvwSf9p7Q.a898f606-37ed-48d7-b79a-cbe9b228ce43",
-});
 
 const provider = new providers.JsonRpcProvider(
   "https://rpc.ankr.com/polygon_mumbai",
@@ -138,17 +119,10 @@ const provider = new providers.JsonRpcProvider(
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
 async function createAccount() {
-  const module = await ECDSAOwnershipValidationModule.create({
+  let biconomySmartAccount = await createSmartAccountClient({
     signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-  let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
+    bundlerUrl,
+    biconomyPaymasterApiKey: paymasterApiKey,
   });
   address = await biconomySmartAccount.getAccountAddress();
   console.log(address);

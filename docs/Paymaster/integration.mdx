@@ -47,9 +47,9 @@ Set up a paymaster for the smart account by providing only the paymaster API key
 :::
 
 ```typescript
-  import { BiconomySmartAccountV2 } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy/account";
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const biconomySmartAccount = await createSmartAccountClient(
     {
       signer: signer,
       chainId: 80001
@@ -61,8 +61,7 @@ Set up a paymaster for the smart account by providing only the paymaster API key
 If you wish to pass "strictMode" to your Paymaster you need to create the instace.
 
 ```typescript
-  import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-  import { BiconomySmartAccountV2 } from "@biconomy/account";
+  import { createSmartAccountClient, IPaymaster, BiconomyPaymaster } from "@biconomy/account";
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
     //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
@@ -70,7 +69,7 @@ If you wish to pass "strictMode" to your Paymaster you need to create the instac
     strictMode: true
   });
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const biconomySmartAccount = await createSmartAccountClient(
     {
       signer: signer,
       chainId: 80001

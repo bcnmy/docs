@@ -141,12 +141,12 @@ const signer = new ethers.Wallet("[Private_Key]", provider);
 
 ```typescript
 import {
-  MultiChainValidationModule,
+  createMultiChainValidationModule,
   DEFAULT_MULTICHAIN_MODULE,
 } from "@biconomy/modules";
 
 // Notice this is chain agnostic so same instance can be used on instances of Smart account API on different chains
-const multiChainModule = await MultiChainValidationModule.create({
+const multiChainModule = await createMultiChainValidationModule({
   signer: signer,
   moduleAddress: DEFAULT_MULTICHAIN_MODULE,
 });
@@ -159,18 +159,16 @@ Check [Paymaster integration](/Paymaster/integration) and [Bundler integration](
 
 Here is how you can set up Smart Account instances accross multiple chains:
 ```ts
-import { BiconomySmartAccountV2 } from "@biconomy/account";
+import { createSmartAccountClient } from "@biconomy/account";
 
-let baseAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.BASE_GOERLI_TESTNET,
+let baseAccount = await createSmartAccountClient({
     biconomyPaymasterApiKey: "paymaster api key",
     bundlerUrl: "bundler url",
     defaultValidationModule: multiChainModule,
     activeValidationModule: multiChainModule
   });
 
-let polygonAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
+let polygonAccount = await createSmartAccountClient({
     biconomyPaymasterApiKey: "paymaster api key",
     bundlerUrl: "bundler url",
     defaultValidationModule: multiChainModule,

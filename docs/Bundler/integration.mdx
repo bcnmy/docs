@@ -54,7 +54,7 @@ Simply pass a bundler url as a parameter for the smart account.
 :::
 
 ```typescript
-  import { BiconomySmartAccountV2 } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy/account";
 
   const biconomySmartAccountConfig = {
       signer: signer,
@@ -62,7 +62,7 @@ Simply pass a bundler url as a parameter for the smart account.
       bundlerUrl: ""
   };
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const biconomySmartAccount = await createSmartAccountClient(
       biconomySmartAccountConfig
   );
 ```
@@ -74,12 +74,10 @@ Or you can create your own instance of the Bundler if you wish to pass more para
 - userOpWaitForTxHashMaxDurationIntervals
 
 ```typescript
-  import { Bundler } from "@biconomy/bundler";
-  import { BiconomySmartAccountV2 } from "@biconomy/account";
-  import { ChainId } from '@biconomy/core-types';
+  import { createSmartAccountClient, Bundler } from "@biconomy/account";
 
-  const userOpReceiptMaxDurationIntervals: { [key in ChainId]?: number } = {
-      [ChainId.POLYGON_MAINNET]: 60000,
+  const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
+      [80001]: 60000,
   }
 
   const bundler = new Bundler({
@@ -93,7 +91,7 @@ Or you can create your own instance of the Bundler if you wish to pass more para
       bundler
   };
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const biconomySmartAccount = await createSmartAccountClient(
       biconomySmartAccountConfig
   );
 ```
