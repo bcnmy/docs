@@ -5,10 +5,10 @@ sidebar_position: 2
 
 # Quickstart: Smart Account ⚡️
 
-In this guide, we will create a smart account and mint an NFT. Checkout the full code in the end.
+In this guide, we will create a smart account and mint an NFT. Check out the full code at the end.
 
 :::info
-Please note that this tutorial assumes you have Node JS installed and have working knowledge of Node. 🧠
+Please note that this tutorial assumes you have Node.js installed and have working knowledge of it. 🧠
 :::
 
 ## 1. Environment set up 🛠️
@@ -30,19 +30,16 @@ You should see the printed statement `Hello World!` in your terminal.
 
 All packages you need for this guide are already installed. Check out the `package.json` file if you want to explore the dependencies.
 
-<details>
-  <summary> Click to learn more about the packages </summary>
+> The **Account package** will help you with creating **Smart Account** and an interface with them to send transactions.
+The same package can be used to also import the paymaster and bundler.
 
-- The **Account package** will help you with creating **Smart Account** and an interface with them to send transactions.
-The same package can be used to import paymaster, bundler also.
+## 2. Create a smart account 🌟
 
-</details>
+The **Externally Owned Account (EOA)** corresponding to the private key will serve as the owner of the Smart Account we create. You can get the private key from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. 🔑
 
-## 2. Create smart account 🌟
+Copy the following code in `src/index.ts` and replace the `PRIVATE_KEY`.
 
-Copy the following code in the index file and replace the PRIVATE_KEY.
-
-**Externally Owned Account (EOA)** corresponding to the private key, will serve as the owner of the Smart Account we create. You can get the private key from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. 🔑
+> Be sure to never expose your private key publicly. If possible, store it using an environment variable.
 
 ```ts
 import { Hex, createWalletClient, encodeFunctionData, http, parseAbi, zeroAddress} from "viem";
@@ -73,13 +70,14 @@ export const createAccountAndMintNft = async () => {
 createAccountAndMintNft();
 
 ```
-Upon successful completion, you should see EOA and the smart account address in the console.
 
-Smart accounts are designed with a pre-determined address known prior to deployment, making them counterfactual. Users transfers funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Additionally, the paymaster can be used for this to sponsor this transaction.
+After updating the code, you should see EOA and the smart account address in the console.
+
+Smart accounts are designed with a pre-determined address known prior to deployment. Users transfer funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Additionally, the paymaster can be used for this to sponsor this transaction.
 
 
 :::caution
-Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
+Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/), paste in your smart account address, and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
 :::
 
 Once you have tokens available, follow the next steps.
@@ -89,10 +87,10 @@ Once you have tokens available, follow the next steps.
 Let's create your first transaction
 
 - `to`: The address towards which this interaction is directed.
-- `data`: For the mint function we will pass the nftData created using the encodeFunction.
-- `value`: For the mint function this filed won't be needed, based on the transaction you can pass the value.
+- `data`: For the mint function we will pass the `nftData` created using `encodeFunctionData`.
+- `value`: For the mint function this won't be needed. Depending on the transaction, you can pass the value.
 
-Add following code in the script above in the same function.
+Add the following code in the script above in the same function.
 
 ```typescript
 try {
@@ -104,7 +102,7 @@ try {
       args: [scwAddress as Hex],
   });
 
-    // ------ 4. Send transaction
+  // ------ 4. Send transaction
   const transactionResponse = await smartAccount.sendTransaction(
     {
       to: nftAddress,
@@ -121,7 +119,6 @@ try {
 }
 ```
 
-As per the code
 1. We create a transaction object.
 2. We send the `transaction` to our bundler.
 3. We save the response in a variable called `transactionResponse`.
@@ -130,7 +127,7 @@ As per the code
 _To wait for a specific number of network confirmations before getting the value, use `wait()` with a number argument.
 For instance, `transactionResponse.wait(5)` waits for 5 confirmations before returning the value._
 
-Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK!
+Check out the long transaction details available now in your console! You just created and executed your first UserOps using the Biconomy SDK!
 
 Well done! The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
@@ -192,8 +189,8 @@ createAccountAndMintNft();
 ```
 
 </details>
-If you are facing any error, do checkout the [troubleshooting](/troubleshooting/commonerrors) for common errors.
+If you are facing any error, check out [troubleshooting](/troubleshooting/commonerrors) for common errors.
 
 🎉 **Congratulations on completing the quickstart!**
 
-To dive deeper, check out more [use cases](/account/transactions) and follow this guide for [the gasless transaction](/account/transactions/gasless).
+To dive deeper, check out more [use cases](/account/transactions) and follow [this guide for gasless transactions](/account/transactions/gasless).
