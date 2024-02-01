@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Quickstart: Smart Account ⚡️
 
-In this guide, we will create a smart account and mint an NFT. Check out the full code at the end.
+In this guide, we will create a smart account and mint an NFT with Biconomy and Node.js. Check out the full code at the end.
 
 :::info
 Please note that this tutorial assumes you have Node.js installed and have working knowledge of it. 🧠
@@ -19,12 +19,41 @@ We will clone a preconfigured Node.js project to get started.
 git clone https://github.com/bcnmy/quickstart.git
 ```
 
-Install all dependencies. In this tutorial, we will use `yarn`.
+Install all dependencies using `yarn`, `npm`, or your package manager of choice.
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+npm install
+
+npm run dev
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
 
 ```bash
 yarn install
+
 yarn dev
 ```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+pnpm install
+
+pnpm dev
+```
+
+</TabItem>
+</Tabs>
+
 
 You should see the printed statement `Hello World!` in your terminal.
 
@@ -39,7 +68,7 @@ The **Externally Owned Account (EOA)** corresponding to the private key will ser
 
 Copy the following code in `src/index.ts` and replace the `PRIVATE_KEY`.
 
-> Be sure to never expose your private key publicly. If possible, store it using an environment variable.
+> Be sure to never publicly expose your private key publicly. If possible, store it using an environment variable.
 
 ```ts
 import { Hex, createWalletClient, encodeFunctionData, http, parseAbi, zeroAddress} from "viem";
@@ -127,7 +156,7 @@ try {
 _To wait for a specific number of network confirmations before getting the value, use `wait()` with a number argument.
 For instance, `transactionResponse.wait(5)` waits for 5 confirmations before returning the value._
 
-Check out the long transaction details available now in your console! You just created and executed your first UserOps using the Biconomy SDK!
+Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK!
 
 Well done! The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
