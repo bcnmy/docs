@@ -5,132 +5,141 @@ sidebar_position: 8
 
 # Web3Auth
 
-:::caution
+One way to utilize Social Logins is via Web3Auth. This section will illustrate you to create Biconomy Smart Accounts with the help of Web3Auth Signer. Web3Auth allows you to introduce familiar Web2 experiences, with the following code snippets you can unlock authentication with email to create a smart account as well as authentication with different social providers to create a Smart Account.
 
-The package @biconomy/web3-auth has been deprecated. It is highly recommended that if you integrate web3auth you should use their packages directly.
+:::tip
+
+Check out an end-to-end integration of Web3Auth with Biconomy on this [example app](https://aaweb3auth.vercel.app/) and [repo](https://github.com/bcnmy/biconomy_web3auth_example)!
 
 :::
-
-One way to utilize Social Logins is via Web3Auth. This section will give you code snippets for creating Biconomy Smart Accounts with Web3Auth. Web3Auth allows you to introduce familiar Web2 experiences, with the following code snippets you can unlock: authentication with email to create a smart account as well as authentication with different social providers to create a Smart Account
 
 ## Dependencies
 
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @biconomy/web3-auth ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @web3auth/modal @walletconnect/sign-client ethers@5.7.2
 ```
 
 ## Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
 import {
   BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
+  BiconomySmartAccountV2Config,
 } from "@biconomy/account";
-import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import SocialLogin from "@biconomy/web3-auth";
-import "@biconomy/web3-auth/dist/src/style.css";
+import {
+  IHybridPaymaster,
+  SponsorUserOperationDto,
+  PaymasterMode,
+} from "@biconomy/paymaster";
+import { ethers } from "ethers";
+import { Web3Auth } from "@web3auth/modal";
+import { CHAIN_NAMESPACES } from "@web3auth/base";
 ```
 
-:::info
-By installing this package you might get an error like
-"Module not found: Error: Can't resolve 'crypto'."
-These are polyfills errors that can be resolved by configuring the webpack properly. As mentioned [here](https://github.com/bcnmy/biconomy-client-sdk/issues/87#issuecomment-1329798362).
-:::
+### Initialising Web3Auth
 
-### SocialLogin Module Functions
-
-If you check the SocialLogin class you will find different methods which we've got to help you integrate social login
-
-1. `init()` - is required after initializing. It makes important calls and makes the web3auth ready for you.
-2. `showWallet()` - it will show the widget in your UI.
-3. `hideWallet()` - it will hide the wallet widget from the UI.
-4. `logout()` - Logs out of the wallet, also clears the cache.
-5. `getUserInfo()` - This method returns the object of email, name, profileImage, and idToken.
-6. `whitelistUrl()` - If you are deploying your site, you must whitelist your deployment URL. It returns signatures that you can pass to init functions. You can also pass the array of URLs to signatures. The signature in init is not required for localhost.
+You will have to get the client ID from the [Web3Auth dashboard](https://dashboard.web3auth.io/login). You can use the following code snippet to initialize the Web3Auth.
 
 Initialize the social login SDK
 
-```js
-// create an instance of SocialLogin
-const socialLogin = new SocialLogin();
-// init social login SDK, all params are optional
-await socialLogin.init();
+```typescript
+const chainConfig = {
+  chainNamespace: CHAIN_NAMESPACES.EIP155,
+  chainId: "0x13881",
+  rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
+  displayName: "Polygon Mumbai",
+  blockExplorer: "https://mumbai.polygonscan.com/",
+  ticker: "MATIC",
+  tickerName: "Polygon Matic",
+};
 
-// pops up the UI widget
-socialLogin.showWallet();
-```
-
-For whitelisting your domain, please use the following code snippet. When deploying on prod it is required to whitelist your domain. In init, you can pass the domain and signature.
-
-```js
-// get signature that corresponds to your website domains
-const signature1 = await socialLogin.whitelistUrl("https://yourdomain1.com");
-const signature2 = await socialLogin.whitelistUrl("https://yourdomain2.com");
-// pass the signatures, you can pass one or many signatures you want to whitelist
-await socialLogin.init({
-  whitelistUrls: {
-    "https://yourdomain1.com": signature1,
-    "https://yourdomain2.com": signature2,
+//Creating web3auth instance
+const web3auth = new Web3Auth({
+  clientId:
+    "BExrkk4gXp86e9VCrpxpjQYvmojRSKHstPRczQA10UQM94S5FtsZcxx4Cg5zk58F7W1cAGNVx1-NPJCTFIzqdbs", // Get your Client ID from the Web3Auth Dashboard https://dashboard.web3auth.io/
+  web3AuthNetwork: "sapphire_devnet", // Web3Auth Network
+  chainConfig,
+  // You can visit web3auth.io/docs for more configuration options
+  uiConfig: {
+    appName: "Biconomy X Web3Auth",
+    mode: "dark", // light, dark or auto
+    loginMethodsOrder: ["apple", "google", "twitter"],
+    logoLight: "https://web3auth.io/images/web3auth-logo.svg",
+    logoDark: "https://web3auth.io/images/web3auth-logo---Dark.svg",
+    defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
+    loginGridCol: 3,
+    primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
   },
 });
 ```
 
-- Access to web3Auth provider after the wallet is connected
+### Creating Web3Auth Signer
 
-```js
-if (!socialLogin?.provider) return;
-// create a provider from the social login provider that
-// will be used by the smart account package of the Biconomy SDK
-const provider = new ethers.providers.Web3Provider(socialLogin.provider);
-// get a list of accounts available with the provider
-const accounts = await provider.listAccounts();
-console.log("EOA address", accounts);
+```typescript
+await web3auth.initModal();
+const web3authProvider = await web3auth.connect();
+const ethersProvider = new ethers.providers.Web3Provider(
+  web3authProvider as any
+);
+const web3AuthSigner = ethersProvider.getSigner();
 ```
 
-## Setting Up Smart Account with Social Login
+### Creating Biconomy Smart Account
 
-## Initialize Smart Account
+```typescript
+const connect = async () => {
+  try {
+    const chainConfig = {
+      chainNamespace: CHAIN_NAMESPACES.EIP155,
+      chainId: "0x13881",
+      rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
+      displayName: "Polygon Mumbai",
+      blockExplorer: "https://mumbai.polygonscan.com/",
+      ticker: "MATIC",
+      tickerName: "Polygon Matic",
+    };
 
-```js
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-} from '@biconomy/paymaster'
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+    //Creating web3auth instance
+    const web3auth = new Web3Auth({
+      clientId:
+        "BExrkk4gXp86e9VCrpxpjQYvmojRSKHstPRczQA10UQM94S5FtsZcxx4Cg5zk58F7W1cAGNVx1-NPJCTFIzqdbs", // Get your Client ID from the Web3Auth Dashboard https://dashboard.web3auth.io/
+      web3AuthNetwork: "sapphire_devnet", // Web3Auth Network
+      chainConfig,
+      uiConfig: {
+        appName: "Biconomy X Web3Auth",
+        mode: "dark", // light, dark or auto
+        loginMethodsOrder: ["apple", "google", "twitter"],
+        logoLight: "https://web3auth.io/images/web3auth-logo.svg",
+        logoDark: "https://web3auth.io/images/web3auth-logo---Dark.svg",
+        defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
+        loginGridCol: 3,
+        primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
+      },
+    });
 
-const bundler: IBundler = new Bundler({
-    // get from biconomy dashboard https://dashboard.biconomy.io/
-    bundlerUrl: '',
-    chainId: ChainId.POLYGON_MUMBAI,// or any supported chain of your choice
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
+    await web3auth.initModal();
+    const web3authProvider = await web3auth.connect();
+    const ethersProvider = new ethers.providers.Web3Provider(
+      web3authProvider as any
+    );
+    const web3AuthSigner = ethersProvider.getSigner();
 
+    const biconomySmartAccountConfig: BiconomySmartAccountV2Config = {
+      signer: web3AuthSigner,
+      chainId: chainId,
+      biconomyPaymasterApiKey:
+        "-RObQRX9ei.fc6918eb-c582-4417-9d5a-0507b17cfe71",
+      bundlerUrl: `https://bundler.biconomy.io/api/v2/${chainId}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+    };
 
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: ''
-})
-
-const module = await ECDSAOwnershipValidationModule.create({
-    signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-  })
-
-
-let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module
-})
-
-
+    let biconomySmartAccount = await BiconomySmartAccountV2.create(
+      biconomySmartAccountConfig
+    );
+    const address = await biconomySmartAccount.getAccountAddress();
+  } catch (error) {
+    console.error(error);
+  }
+};
 ```
