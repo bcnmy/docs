@@ -8,9 +8,9 @@ The SDK provides the following API methods for a smart account.
 
 ### createSmartAccountClient
 
-This method is used to create an instance of the Biconomy Smart Account V2. This method requires a smart account configuration object to be passed and returns the smart account API instance.
+This method is used to create an instance of the Biconomy Smart Account. This method requires a smart account configuration object to be passed and returns the smart account API instance.
 
-This method creates the smart account based on the config object.  To configure smart account on another chain one needs to instantiate another smart account API instance with configuration of that chain.
+This method creates the smart account based on the config object.  To configure a smart account on another chain, you need to instantiate another smart account API instance with configuration of that chain.
 
 **Usage**
 
@@ -31,7 +31,7 @@ const smartAccount = await createSmartAccountClient({
 
 *required params are explicitly mentioned*
 
-- config (`object`, required): A `BiconomySmartAccountV2Config` object containing configuration options for creating the smart account.
+- config (`object`, required): A `BiconomySmartAccountConfig` object containing configuration options for creating the smart account.
   - signer(`Signer`, required) OR defaultValidationModule (`BaseValidationModule`, required): One either needs to pass the signer instance or the default validation module which gets used to detect address of the smart account. If not passed explictly, ECDSA module gets used as default.
   - chainId (`ChainId` enum, required): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
   - bundlerUrl (`string`, required) OR bundler (`IBundler`, required) : bundler url which will be internally used to create bundler instance or the bundler instance. Bundler instance can also be used if one wants to customise the bundler. Refer to bundler [integration](/bundler/integration) for more details on bundler.
@@ -43,7 +43,7 @@ const smartAccount = await createSmartAccountClient({
 
 **Returns**
 
-- `smartAccount` (`BiconomySmartAccountV2`): An instance of the Biconomy Smart Account V2.
+- `smartAccount` (`BiconomySmartAccount`): An instance of the Biconomy Smart Account.
 
 :::info
 Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on this is different as it was deployed by us on the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
@@ -72,7 +72,6 @@ This method is used to retrieve the nonce associated with the `smartAccount` ins
 **Usage**
 
 ```jsx
-
 const nonce = await smartAccount.getNonce();
 console.log(nonce.toNumber());
 
@@ -101,48 +100,47 @@ const index = smartAccount.index;
 ## Transaction Methods
 
 ### sendTransaction( )
-This method is used to Send a transaction to bundler for execution, It internally executes build and send UserOp.
+This method is used to Send a transaction to a bundler for execution. It internally executes a build and send UserOp.
 
 **Usage**
 
 ```tsx
-  import { createClient } from "viem"
-  import { createSmartAccountClient } from "@biconomy/account"
-  import { createWalletClient, http } from "viem";
-  import { polygonMumbai } from "viem/chains";
+import { createClient } from "viem"
+import { createSmartAccountClient } from "@biconomy/account"
+import { createWalletClient, http } from "viem";
+import { polygonMumbai } from "viem/chains";
 
-  const signer = createWalletClient({
-    account,
-    chain: polygonMumbai,
-    transport: http(),
-  });
+const signer = createWalletClient({
+  account,
+  chain: polygonMumbai,
+  transport: http(),
+});
 
-  const smartWallet = await createSmartAccountClient({ signer, bundlerUrl }); // Retrieve bundler url from dasboard
-  const encodedCall = encodeFunctionData({
-    abi: parseAbi(["function safeMint(address to) public"]),
-    functionName: "safeMint",
-    args: ["0x..."],
-  });
+const smartWallet = await createSmartAccountClient({ signer, bundlerUrl }); // Retrieve bundler url from dasboard
+const encodedCall = encodeFunctionData({
+  abi: parseAbi(["function safeMint(address to) public"]),
+  functionName: "safeMint",
+  args: ["0x..."],
+});
 
-  const transaction = {
-    to: nftAddress,
-    data: encodedCall
-  }
+const transaction = {
+  to: nftAddress,
+  data: encodedCall
+}
 
-  const { waitForTxHash } = await smartWallet.sendTransaction(transaction);
-  const { transactionHash, userOperationReceipt } = await wait();
-
+const { waitForTxHash } = await smartWallet.sendTransaction(transaction);
+const { transactionHash, userOperationReceipt } = await wait();
 ```
 
 **Parameters**
-- manyOrOneTransactions (`Transaction | Transaction[]`, required): An array of transactions to be batched which will be executed in provided order. You can also pass a single transaction.
+- manyOrOneTransactions (`Transaction | Transaction[]`, required): An array of transactions to be batched which will be executed in the provided order. You can also pass a single transaction.
   ```ts
   Transaction: {
     to: string;
   } & ValueOrData
   ```
 
-- buildUseropDto (`BuildUserOpOptions`, optional): One can also pass these options to customize how a userOp is built.
+- buildUseropDto (`BuildUserOpOptions`, optional): These options can be passed to customize how a userOp is built.
 
   ```ts
   type BuildUserOpOptions = {
@@ -172,7 +170,7 @@ This method is used to Send a transaction to bundler for execution, It internall
       }
       ```
 
-  2. skipBundlerGasEstimation (`boolean`): This parameter allows one to manage gas estimations more efficiently depending on the transactions. By default, it's set to true, which means if a paymaster is present, gas estimations are done on the paymaster side to facilitate gasless transactions.
+  2. skipBundlerGasEstimation (`boolean`): This parameter enables the management of gas estimations more efficiently depending on the transactions. By default, it's set to true, which means if a paymaster is present, gas estimations are done on the paymaster side to facilitate gasless transactions.
   <details>
     <summary> Click to view the `skipBundlerGasEstimation` usage </summary>
     1. Gasless Paymaster Flow (All Methods Gasless on Dashboard): If you are utilizing a gasless transaction with all methods set as gasless on the dashboard, you should pass the skipBundlerGasEstimation as true. This is typically the default behavior, emphasizing that the gas estimations are handled by the paymaster. 
@@ -199,7 +197,7 @@ This method is used to Send a transaction to bundler for execution, It internall
 
   </details>
   
-  3. params (`ModuleInfo`): One can use this param to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
+  3. params (`ModuleInfo`): This param can be used to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
 
       ```ts
       type ModuleInfo = {
@@ -210,7 +208,7 @@ This method is used to Send a transaction to bundler for execution, It internall
         batchSessionParams?: SessionParams[];
       }
       ```
-  4. nonceOptions(`NonceOptions`) : this can be used to execute multiple user operations in parallel for the same smart account.
+  4. nonceOptions(`NonceOptions`) : This can be used to execute multiple user operations in parallel for the same smart account.
 
       ```ts
       type NonceOptions = {
@@ -227,7 +225,7 @@ This method is used to Send a transaction to bundler for execution, It internall
 
     
     
-  5. forceEncodeForBatch (`boolean`): When transactions array is passed, by default Biconomy sdk encodes it for executeBatch() executor function and execute() function for single transaction. However, in some cases, there may be a preference to encode a single transaction for a batch, especially if the custom module only decodes for executeBatch. In such cases, set this flag to true; otherwise, it remains false by default.
+  5. forceEncodeForBatch (`boolean`): When a transactions array is passed, by default the Biconomy SDK encodes it for executeBatch() executor function and execute() function for single transaction. However, in some cases, there may be a preference to encode a single transaction for a batch, especially if the custom module only decodes for executeBatch. In such cases, set this flag to true; otherwise, it remains false by default.
 
   6. paymasterServiceData (`SponsorUserOperationDto`): The `paymasterServiceData` includes details about the kind of sponsorship and payment token in case mode is ERC20. It contains information about the paymaster service, which is used to calculate the `paymasterAndData` field in the user operation. Note that this is only applicable if you're using Biconomy paymaster.
 
@@ -252,11 +250,11 @@ This method is used to Send a transaction to bundler for execution, It internall
 
 
 ### buildUserOp( )
-This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as This step also involves estimating gas for the userOp internally)
+This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as this step also involves estimating gas for the userOp internally)
 
 **Usage**
 
-For example, in the context of creating a userOp for an `addComment` transaction, an instance of the contract is created, then a basic transaction object is created that holds the necessary address and data from the transaction. Finally, a partial userOp is created using the Smart Account's `buildUserOp` method⁠. Now this can be signed and sent to the bundler.  
+For example, in the context of creating a userOp for an `addComment` transaction, an instance of the contract is created. A basic transaction object is then created that holds the necessary address and data from the transaction. Finally, a partial userOp is created using the Smart Account's `buildUserOp` method⁠. Now this can be signed and sent to the bundler.  
 
 
 ```jsx

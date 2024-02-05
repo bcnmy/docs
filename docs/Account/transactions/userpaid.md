@@ -6,7 +6,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transact
 
 # User Paid Transactions
 
-In this guide we will look at how to execute a transaction, where smart account has the native tokens to pay for the gas. Check the entire code in the [end](/account/transactions/userpaid#mint-nft-function).
+In this guide we will look at how to execute a transaction, where a smart account has the native tokens to pay for the gas. Check the entire code in the [end](/account/transactions/userpaid#mint-nft-function).
 
 
 :::info
@@ -37,7 +37,7 @@ console.log("SCW Address", scwAddress);
 
 ## Create Transaction
 
-Create the transaction specifying the required fields such as to, address etc
+Create the transaction specifying the required fields such as to, address, etc
 
 ```javascript
 // use the ethers populateTransaction method to create a raw transaction
