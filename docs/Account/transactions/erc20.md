@@ -41,7 +41,7 @@ console.log("SCW Address", scwAddress);
 
 ## Create Transaction
 
-Create the transaction specifying the required fields such as to, address etc
+Create the transaction specifying the required fields such as to, address, etc
 
 ```javascript
 // use the ethers populateTransaction method to create a raw transaction
