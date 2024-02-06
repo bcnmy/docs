@@ -139,8 +139,7 @@ try {
     }
   );
   const { transactionHash } = await transactionResponse.waitForTxHash();
-  const userOpReceipt = await transactionResponse.wait();
-  console.log("transactionHash", transactionHash, userOpReceipt);
+  console.log("transactionHash", transactionHash);
 } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Transaction Error:", error.message);
@@ -188,32 +187,27 @@ export const createAccountAndMintNft = async () => {
   const scwAddress = await smartAccount.getAccountAddress();
   console.log("SCW Address", scwAddress);
 
-  try {
-    const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-    const parsedAbi = parseAbi(["function safeMint(address _to)"]);
-    const nftData = encodeFunctionData({
-      abi: parsedAbi,
-      functionName: "safeMint",
-      args: [scwAddress as Hex],
-    });
+  // ------ 3. Generate transaction data
+  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+  const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+  const nftData = encodeFunctionData({
+    abi: parsedAbi,
+    functionName: "safeMint",
+    args: [scwAddress as Hex],
+  });
 
-    // ------ 4. Send transaction
-    const transactionResponse = await smartAccount.sendTransaction(
-      {
-        to: nftAddress,
-        data: nftData,
-      }
-    );
-    const { transactionHash } = await transactionResponse.waitForTxHash();
-    const userOpReceipt = await transactionResponse.wait();
-    console.log("transactionHash", transactionHash, userOpReceipt);
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Transaction Error:", error.message);
+  // ------ 4. Send transaction
+  const { waitForTxHash } = await smartAccount.sendTransaction(
+    {
+      to: nftAddress,
+      data: nftData,
     }
-  }
-};
+  );
 
+  const { transactionHash } = await waitForTxHash();
+  console.log("transactionHash", transactionHash);
+
+};
 createAccountAndMintNft();
 ```
 

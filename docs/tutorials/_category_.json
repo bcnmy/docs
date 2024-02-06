@@ -1,8 +1,8 @@
 {
   "label": "Tutorials",
-  "position": 7,
+  "position": 2,
   "collapsible": true,
-  "collapsed": true,
+  "collapsed": false,
   "link": {
     "type": "generated-index",
     "description": "Tutorials for using the Biconomy SDK"

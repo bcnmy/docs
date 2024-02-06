@@ -150,7 +150,6 @@ const { transactionHash, userOperationReceipt } = await wait();
     nonceOptions?: NonceOptions; 
     forceEncodeForBatch?: boolean;
     paymasterServiceData?: SponsorUserOperationDto;
-    simulationType?: String;
   }
   ```
   Let's look at each of these params:
@@ -243,7 +242,6 @@ const { transactionHash, userOperationReceipt } = await wait();
       ```
       It also contains optional fields such as `webhookData` and `smartAccountInfo`.
   
-  7. simulationType (`string`): This allows for more debugging insights about `callData` on why an internal transaction fails. It is set to "validation" by default, but can be changed to "validation_and_execution" for more detailed tracing.
 
 **Returns**
 - userOpResponse (`Promise<UserOpResponse>`): userOpResponse that you can use to track user operation.

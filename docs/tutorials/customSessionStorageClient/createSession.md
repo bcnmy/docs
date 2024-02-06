@@ -38,10 +38,10 @@ The Session Key Manager module is responsible for overseeing the storage of sess
 - generate userop.signature for transaction that utilises session key
 
 ```typescript
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
-  sessionStorageClient: sessionFileStorage,
+  sessionStorageClient: sessionFileStorage
 });
 ```
 
@@ -98,16 +98,15 @@ const setSessiontrx = {
 transactionArray.push(setSessiontrx);
 ```
 
-Next we will build a userOp and use the smart account to send it to Bundler. Ensure that a paymaster is setup and the corresponding gas tank has sufficient funds to sponsor the transactions. Also enable the session validation module address in the policy section for the paymaster.
+Next we will send the transactions which will get wrapped in a user op and sent to the Bundler. Ensure that a paymaster is setup and the corresponding gas tank has sufficient funds to sponsor the transactions. Also enable the session validation module address in the policy section for the paymaster.
 
 ```typescript
-let partialUserOp = await smartAccount.buildUserOp(transactionArray, {
+let userOpResponse = await smartAccount.sendTransaction(transactionArray, {
   paymasterServiceData: {
     mode: PaymasterMode.SPONSORED,
   },
 });
 
-const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
 console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
 
 const transactionDetails = await userOpResponse.wait();
@@ -123,13 +122,12 @@ Checkout below for entire code snippet
 
 ```typescript
 import { defaultAbiCoder } from "ethers/lib/utils";
-import {
-  SessionKeyManagerModule,
-  DEFAULT_SESSION_KEY_MANAGER_MODULE,
-} from "@biconomy/modules";
 import { config } from "dotenv";
 import {
   createSmartAccountClient,
+  DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  createSessionKeyManagerModule,
+  BiconomySmartAccountV2
 } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
 import { SessionFileStorage } from "./customSession";
@@ -223,13 +221,11 @@ const createSession = async () => {
     }
 
     transactionArray.push(setSessiontrx);
-    let partialUserOp = await smartAccount.buildUserOp(transactionArray, {
+    let userOpResponse = await smartAccount.sendTransaction(transactionArray, {
       paymasterServiceData: {
         mode: PaymasterMode.SPONSORED,
       },
     });
-    console.log(partialUserOp);
-    const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
     console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
     const transactionDetails = await userOpResponse.wait();
     console.log("txHash", transactionDetails.receipt.transactionHash);

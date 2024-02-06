@@ -24,8 +24,7 @@ Let's add our imports to this file and create an interface for our props.
 ```javascript
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE  } from "@biconomy/modules";
-import { BiconomySmartAccountV2, createSmartAccountClient } from "@biconomy/account"
+import { BiconomySmartAccountV2, createSmartAccountClient, SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE, createSessionKeyManagerModule } from "@biconomy/account"
 import { defaultAbiCoder } from "ethers/lib/utils";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -143,7 +142,7 @@ Now let's set up the function for creating the session:
       window.localStorage.setItem("sessionPKey", sessionSigner.privateKey);
 
       // generate sessionModule
-      const sessionModule = await SessionKeyManagerModule.create({
+      const sessionModule = await createSessionKeyManagerModule({
         moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
         smartAccountAddress: address,
       });
@@ -226,7 +225,7 @@ Now just for the sake of this demo we will save the private key of the session t
 
 ```javascript
 // generate sessionModule
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
 });

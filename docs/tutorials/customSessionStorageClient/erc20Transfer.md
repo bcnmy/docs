@@ -25,7 +25,7 @@ Now we'll generate a session module using the Session Key Manager Module and the
 
 ```typescript
 // generate sessionModule
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
 });
@@ -67,22 +67,16 @@ const tx1 = {
 };
 ```
 
-Now we build the user op and send it for execution. Note the additional arguments you can add in the `buildUserOp` method such as overrides if needed, ability to skip bundler gas estimations, and most importantly params object that will contain information about the session signer and session validation module.
+Now we send the transaction to be wrapped in a user op and then execute it. Note the additional arguments you can add in the `sendTransaction` method such as overrides if needed, ability to skip bundler gas estimations, and most importantly params object that will contain information about the session signer and session validation module.
 
 ```typescript
-let userOp = await smartAccount.buildUserOp([tx1], {
+let userOp = await smartAccount.sendTransaction(tx1, {
   overrides: {},
   skipBundlerGasEstimation: false,
   params: {
     sessionSigner: sessionSigner,
     sessionValidationModule: erc20ModuleAddr,
   },
-});
-
-// send user op
-const userOpResponse = await smartAccount.sendUserOp(userOp, {
-  sessionSigner: sessionSigner,
-  sessionValidationModule: erc20ModuleAddr,
 });
 ```
 
@@ -97,13 +91,11 @@ Checkout below for entire code snippet
 
 ```typescript
 import usdcAbi from "./usdcabi.json";
-import {
-  SessionKeyManagerModule,
-  DEFAULT_SESSION_KEY_MANAGER_MODULE,
-} from "@biconomy/modules";
 import { config } from "dotenv";
 import {
   createSmartAccountClient,
+  DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  createSessionKeyManagerModule
 } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
 
@@ -187,7 +179,7 @@ const erc20Transfer = async (
 
     // build user op
     // const ifModuleEnabled = await smartAccount.isModuleEnabled("")
-    let userOp = await smartAccount.buildUserOp([tx1], {
+    let userOpResponse = await smartAccount.sendTransaction(tx1, {
       overrides: {
         // signature: "0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000456b395c4e107e0302553b90d1ef4a32e9000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000db3d753a1da5a6074a9f74f39a0a779d3300000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001800000000000000000000000000000000000000000000000000000000000000080000000000000000000000000bfe121a6dcf92c49f6c2ebd4f306ba0ba0ab6f1c000000000000000000000000da5289fcaaf71d52a80a254da614a192b693e97700000000000000000000000042138576848e839827585a3539305774d36b96020000000000000000000000000000000000000000000000000000000002faf08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041feefc797ef9e9d8a6a41266a85ddf5f85c8f2a3d2654b10b415d348b150dabe82d34002240162ed7f6b7ffbc40162b10e62c3e35175975e43659654697caebfe1c00000000000000000000000000000000000000000000000000000000000000"
         // callGasLimit: 2000000, // only if undeployed account
@@ -198,11 +190,6 @@ const erc20Transfer = async (
         sessionSigner: sessionSigner,
         sessionValidationModule: erc20ModuleAddr,
       },
-    });
-    // send user op
-    const userOpResponse = await smartAccount.sendUserOp(userOp, {
-      sessionSigner: sessionSigner,
-      sessionValidationModule: erc20ModuleAddr,
     });
     console.log("userOpHash", userOpResponse);
     const { receipt } = await userOpResponse.wait(1);
