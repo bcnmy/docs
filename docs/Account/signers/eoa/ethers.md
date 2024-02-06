@@ -46,7 +46,7 @@ const signer = new Wallet("<your_private_key>" || "", provider);
 
 ### Configuration Values
 
-Set up instances of Bundler, Paymaster, and ECDSA Module. Alternativedly you can also use the Multi chain Module this way.
+Set up instances of Bundler and Paymaster.
 
 ```typescript
 const bundler: IBundler = new Bundler({
@@ -67,7 +67,7 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 ```typescript
 async function createAccount() {
   const module = await ECDSAOwnershipValidationModule.create({
-    signer: wallet,
+    signer,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
   });
 
@@ -111,7 +111,7 @@ import { ChainId } from "@biconomy/core-types";
 
 ### Configuration Values
 
-Set up instances of Bundler, Paymaster. Alternativedly you can also use the Multi chain Module this way.
+Set up instances of Bundler and Paymaster.
 
 ```typescript
 const bundler: IBundler = new Bundler({
