@@ -16,7 +16,7 @@ This tutorial has a setup step in the previous section: [Environment Setup](envi
 ```typescript
 import {
   createSmartAccountClient,
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import { Wallet, providers, ethers } from "ethers";
 ```
 
@@ -40,7 +40,7 @@ import {
   PaymasterMode,
   SponsorUserOperationDto,
   createSmartAccountClient,
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 ```
 
 We'll need these to help us execute our gasless transaction. The first thing we want to do is get a paymaster api key.

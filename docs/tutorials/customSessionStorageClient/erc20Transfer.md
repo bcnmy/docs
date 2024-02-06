@@ -96,7 +96,7 @@ import {
   createSmartAccountClient,
   DEFAULT_SESSION_KEY_MANAGER_MODULE,
   createSessionKeyManagerModule
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import { Wallet, providers, ethers } from "ethers";
 
 import { SessionFileStorage } from "./customSession";

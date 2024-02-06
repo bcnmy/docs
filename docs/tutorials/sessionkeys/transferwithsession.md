@@ -21,7 +21,7 @@ The imports and props will be as follows:
 
 import React from "react";
 import { ethers } from "ethers";
-import { BiconomySmartAccountV2, SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE, createSessionKeyManagerModule } from "@biconomy/account"
+import { BiconomySmartAccountV2, SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE, createSessionKeyManagerModule } from "@biconomy-devx/account"
 import usdcAbi from "@/utils/usdcAbi.json"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

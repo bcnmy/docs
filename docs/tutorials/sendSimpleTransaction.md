@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem";
 
 ### Overview
 
-This tutorial demonstrates how to send a simple transaction using ethers.js/viem and the Biconomy Smart Account with the `@biconomy/account` SDK.
+This tutorial demonstrates how to send a simple transaction using ethers.js/viem and the Biconomy Smart Account with the `@biconomy-devx/account` SDK.
 
 ### Prerequisites
 
@@ -24,7 +24,7 @@ This tutorial demonstrates how to send a simple transaction using ethers.js/viem
 import { createWalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient} from "@biconomy-devx/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {
@@ -53,7 +53,7 @@ console.log("SCW Address", scwAddress);
 <TabItem value="ethers" label="ethers">
 ```typescript
 import {ethers} from "ethers";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient} from "@biconomy-devx/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {

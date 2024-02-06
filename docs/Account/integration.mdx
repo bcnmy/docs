@@ -21,7 +21,7 @@ import TabItem from "@theme/TabItem";
 
 ```bash
 
-npm install @biconomy/account
+npm install @biconomy-devx/account
 
 ```
 
@@ -30,7 +30,7 @@ npm install @biconomy/account
 
 ```bash
 
-yarn add @biconomy/account
+yarn add @biconomy-devx/account
 
 ```
 
@@ -39,7 +39,7 @@ yarn add @biconomy/account
 
 ```bash
 
-pnpm add @biconomy/account
+pnpm add @biconomy-devx/account
 
 ```
 
@@ -57,7 +57,7 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
   import { Hex, createWalletClient, http } from "viem";
   import { privateKeyToAccount } from "viem/accounts";
   import { polygonMumbai } from "viem/chains";
-  import { createSmartAccountClient } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy-devx/account";
 
   // ----- 1. Generate EOA from private key
   const account = privateKeyToAccount("PRIVATE_KEY"); 
@@ -85,7 +85,7 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
 
 ```typescript
   import { ethers } from "ethers";	
-  import { createSmartAccountClient } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy-devx/account";
 
   let provider = new ethers.providers.JsonRpcProvider("RPC_URL");
   let signer = new ethers.Wallet("PRIVATE_KEY", provider);
@@ -111,7 +111,7 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
 ```typescript
   import { ethers } from "ethers";	
   import { polygonMumbai } from "viem/chains";
-  import { createSmartAccountClient } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy-devx/account";
   import { WalletClientSigner } from "@alchemy/aa-core";
 
   const account = privateKeyToAccount("PRIVATE_KEY");
