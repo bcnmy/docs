@@ -48,11 +48,10 @@ The same package can be used to also import the paymaster and bundler.
 
 ## 2. Create a smart account 🌟
 
-Create an index.ts file with the following code.
 
 The **Externally Owned Account (EOA)** corresponding to the private key will serve as the owner of the Smart Account we create. You can get the private key from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. 🔑
 
-Copy the following code in `index.ts` and replace the `PRIVATE_KEY`.
+Create an index.ts file, copy the following code in it and replace the `PRIVATE_KEY`.
 
 > Be sure to never publicly expose your private key publicly. If possible, store it using an environment variable.
 
@@ -104,7 +103,7 @@ Smart accounts are designed with a pre-determined address known prior to deploym
 
 
 :::caution
-Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/), paste in your smart account address, and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
+Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network, head over to the [Polygon Faucet](https://faucet.polygon.technology/), paste in your smart account address, and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
 :::
 
 Once you have tokens available, follow the next steps.
