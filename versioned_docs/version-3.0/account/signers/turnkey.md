@@ -67,7 +67,7 @@ const connectedSigner = turnkeySigner.connect(provider) // Pass an ethers Provid
 
 ## Biconomy Configuration Values
 
-Set up instances of Bundler, Paymaster. Alternativedly you can also use the Multi chain Module this way.
+Set up instances of Bundler and Paymaster.
 
 ```typescript
 const bundler: IBundler = new Bundler({
