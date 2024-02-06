@@ -1,7 +1,7 @@
 ---
 sidebar_label: "Pay Gas with ERC20 Tokens"
 sidebar_position: 3
-custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transactions/erc20.md
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/tutorials/erc20.md
 ---
 
 # Pay gas with ERC20 Tokens
@@ -9,7 +9,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transact
 In this guide we will look at executing a transaction and allowing the user to pay for gas with an ERC20 token. This will be utilizing our token paymaster.
 
 :::info
-This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/category/tutorials) for step by step setups.
+This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/tutorials) for step by step setups.
 
 Before using these code snippets make sure to [set up a paymaster](/dashboard/paymaster).
 

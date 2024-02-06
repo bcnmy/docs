@@ -41,10 +41,10 @@ If the mode you choose in the request to the Paymaster URL is the sponsored mode
 
 Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/paymaster/supportedNetworks).
 
-Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/account/transactions)
+Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/tutorials)
 
 ## Bundler
 
 The [Bundler](/bundler) is a service that tracks userOps that exist in an alternative mem pool and as the name suggests, bundles them together to send to an Entry Point Contract for eventual execution onchain.
 
-This is the final piece of the flow where after constructing your userOp and then potentially signing it with data from a paymaster, you send the userOp on chain to be handled and executed as a transaction on the EVM. You can start using our Bundlers right now in your dApps. Each of our [tutorials](/category/tutorials) will walk you through how to use them in different scenarios.
+This is the final piece of the flow where after constructing your userOp and then potentially signing it with data from a paymaster, you send the userOp on chain to be handled and executed as a transaction on the EVM. You can start using our Bundlers right now in your dApps. Each of our [tutorials](/tutorials) will walk you through how to use them in different scenarios.

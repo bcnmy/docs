@@ -1,7 +1,7 @@
 ---
 sidebar_label: "Gasless Transactions"
 sidebar_position: 2
-custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transactions/gasless.md
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/tutorials/sendGasless.md
 ---
 
 # Gasless Transactions
@@ -9,7 +9,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transact
 In this guide we will look at executing a gasless transaction utilizing our sponsorship paymaster.
 
 :::info
-This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/category/tutorials) for step by step setups.
+This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/tutorials) for step by step setups.
 
 Before using these code snippets make sure to [set up a paymaster](/dashboard/paymaster) and [register any smart contracts](/dashboard/paymasterPolicies) for sponsorship.
 :::

@@ -1,7 +1,7 @@
 ---
 sidebar_label: "User Paid Transactions"
 sidebar_position: 4
-custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transactions/userpaid.md
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/tutorials/userpaid.md
 ---
 
 # User Paid Transactions
@@ -9,7 +9,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/transact
 In this guide we will look at executing a user paid transaction.
 
 :::info
-This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/category/tutorials) for step by step setups.
+This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/tutorials) for step by step setups.
 :::
 
 ## Imports

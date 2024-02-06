@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Create Smart Accounts with Ethers JS
 
-This section showcases two ways you can create Smart Accounts using Ethers JS. Using Private keys or using the Ethers Signer Object from a browser injected EOA. Note this is not a full implementation but a recipe to use and add to your existing projects. See our [tutorials](/category/tutorials) for full context on how this can be used.
+This section showcases two ways you can create Smart Accounts using Ethers JS. Using Private keys or using the Ethers Signer Object from a browser injected EOA. Note this is not a full implementation but a recipe to use and add to your existing projects. See our [tutorials](/tutorials) for full context on how this can be used.
 
 ## Using Private Keys
 
