@@ -15,7 +15,7 @@ import {
   SessionLeafNode,
   SessionSearchParam,
   SessionStatus,
-} from "@biconomy/modules/dist/src/interfaces/ISessionStorage";
+} from "@biconomy-devx/modules/dist/src/interfaces/ISessionStorage";
 ```
 
 We will need to implement all the interface methods.
@@ -30,7 +30,7 @@ import {
   SessionLeafNode,
   SessionSearchParam,
   SessionStatus,
-} from "@biconomy/modules/dist/src/interfaces/ISessionStorage";
+} from "@biconomy-devx/modules/dist/src/interfaces/ISessionStorage";
 
 export class SessionFileStorage implements ISessionStorage {
   private smartAccountAddress: string;
