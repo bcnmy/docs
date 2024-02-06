@@ -13,60 +13,46 @@ Please note that this tutorial assumes you have Node.js installed and have worki
 
 ## 1. Environment set up 🛠️
 
-We will clone a preconfigured Node.js project to get started. 
+We will create an npm project to get started. 
 
 ```bash
-git clone -b devx https://github.com/bcnmy/quickstart.git
+mkdir biconomy-sa
+cd biconomy-sa
+npm init -y
 ```
 
-Install all dependencies using `yarn`, `npm`, or your package manager of choice.
-
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
-<Tabs>
-<TabItem value="js" label="npm">
+Install biconomy sdk packages using npm.
 
 ```bash
-npm install
-
-npm run dev
+npm i @biconomy-devx/account
+npm i --save-dev @types/node tslib
 ```
 
-</TabItem>
-<TabItem value="py" label="yarn">
-
-```bash
-yarn install
-
-yarn dev
+Create the following tsconfig.json (TypeScript config):
+```typescript
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["./**/*.ts"]
+}
 ```
-
-</TabItem>
-<TabItem value="java" label="pnpm">
-
-```bash
-pnpm install
-
-pnpm dev
-```
-
-</TabItem>
-</Tabs>
-
-
-You should see the printed statement `Hello World!` in your terminal.
-
-All packages you need for this guide are already installed. Check out the `package.json` file if you want to explore the dependencies.
 
 > The **Account package** will help you with creating **Smart Account** and an interface with them to send transactions.
 The same package can be used to also import the paymaster and bundler.
 
 ## 2. Create a smart account 🌟
 
+Create an index.ts file with the following code.
+
 The **Externally Owned Account (EOA)** corresponding to the private key will serve as the owner of the Smart Account we create. You can get the private key from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. 🔑
 
-Copy the following code in `src/index.ts` and replace the `PRIVATE_KEY`.
+Copy the following code in `index.ts` and replace the `PRIVATE_KEY`.
 
 > Be sure to never publicly expose your private key publicly. If possible, store it using an environment variable.
 
@@ -99,8 +85,20 @@ export const createAccountAndMintNft = async () => {
 createAccountAndMintNft();
 
 ```
+Run it using following 
 
-After updating the code, you should see EOA and the smart account address in the console.
+```bash
+npx ts-node index.ts
+```
+
+
+You should see EOA and the smart account address in the console.
+
+```bash
+EOA address: 0x7d4EcAc73A5574447E0F38b8451DC9B29D8Fd083
+SCW Address 0x4dF23B78543F5c2F9CBCDF09956288B3e97bb9a4
+```
+
 
 Smart accounts are designed with a pre-determined address known prior to deployment. Users transfer funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Additionally, the paymaster can be used for this to sponsor this transaction.
 
