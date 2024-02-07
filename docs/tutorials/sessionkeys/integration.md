@@ -43,7 +43,7 @@ import { useState } from "react";
 import {
   createSmartAccountClient,
   BiconomySmartAccountV2
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import { ethers } from "ethers";
 ```
 
@@ -136,7 +136,7 @@ import { useState } from "react";
 import {
   createSmartAccountClient,
   BiconomySmartAccountV2
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import { ethers } from "ethers";
 
 export default function Home() {

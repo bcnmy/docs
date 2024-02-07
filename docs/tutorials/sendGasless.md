@@ -8,7 +8,7 @@ import TabItem from "@theme/TabItem";
 
 ### Overview
 
-This tutorial demonstrates how to send a simple transaction using ethers.js/viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key.
+This tutorial demonstrates how to send a simple transaction using ethers.js/viem and the Biconomy Smart Account with the `@biconomy-devx/account` SDK. The provided code assumes you have a Biconomy Paymaster API key.
 
 You can get your Biconomy Paymaster API key from the dashboard [here](https://dashboard.biconomy.io/).
 
@@ -27,7 +27,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 import { createWalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
-import { createSmartAccountClient, PaymasterMode } from "@biconomy/account";
+import { createSmartAccountClient, PaymasterMode } from "@biconomy-devx/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {
@@ -58,7 +58,7 @@ console.log("SCW Address", scwAddress);
 <TabItem value="ethers" label="ethers">
 ```typescript
 import {ethers} from "ethers";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient} from "@biconomy-devx/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {

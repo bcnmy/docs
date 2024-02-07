@@ -128,7 +128,7 @@ import {
   DEFAULT_SESSION_KEY_MANAGER_MODULE,
   createSessionKeyManagerModule,
   BiconomySmartAccountV2
-} from "@biconomy/account";
+} from "@biconomy-devx/account";
 import { Wallet, providers, ethers } from "ethers";
 import { SessionFileStorage } from "./customSession";
 

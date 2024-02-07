@@ -19,7 +19,7 @@ import TabItem from "@theme/TabItem";
 
 ```bash
 
-npm install @biconomy/bundler @biconomy/account
+npm install @biconomy/bundler @biconomy-devx/account
 
 ```
 
@@ -28,7 +28,7 @@ npm install @biconomy/bundler @biconomy/account
 
 ```bash
 
-yarn add @biconomy/bundler @biconomy/account
+yarn add @biconomy/bundler @biconomy-devx/account
 
 ```
 
@@ -37,7 +37,7 @@ yarn add @biconomy/bundler @biconomy/account
 
 ```bash
 
-pnpm add @biconomy/bundler @biconomy/account
+pnpm add @biconomy/bundler @biconomy-devx/account
 
 ```
 
@@ -54,7 +54,7 @@ Simply pass a bundler url as a parameter for the smart account.
 :::
 
 ```typescript
-  import { createSmartAccountClient } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy-devx/account";
 
   const biconomySmartAccountConfig = {
       signer: signer,
@@ -74,7 +74,7 @@ Or you can create your own instance of the Bundler if you wish to pass more para
 - userOpWaitForTxHashMaxDurationIntervals
 
 ```typescript
-  import { createSmartAccountClient, Bundler } from "@biconomy/account";
+  import { createSmartAccountClient, Bundler } from "@biconomy-devx/account";
 
   const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
       [80001]: 60000,

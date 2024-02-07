@@ -25,7 +25,7 @@ npm i --save-dev @types/node tslib
 Install biconomy sdk package using npm.
 
 ```bash
-npm i @biconomy/account
+npm i @biconomy-devx/account
 ```
 
 Create the following tsconfig.json (TypeScript config):
@@ -59,7 +59,7 @@ Create an index.ts file, copy the following code in it and replace the `PRIVATE_
 import { Hex, createWalletClient, encodeFunctionData, http, parseAbi, zeroAddress} from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient} from "@biconomy-devx/account";
 
 export const createAccountAndMintNft = async () => {
   // ----- 1. Generate EOA from private key
@@ -164,7 +164,7 @@ You can also view the latest transaction events on the [Polygon Mumbai Testnet E
 import { Hex, createWalletClient, encodeFunctionData, http, parseAbi, zeroAddress} from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient} from "@biconomy-devx/account";
 
 export const createAccountAndMintNft = async () => {
   // ----- 1. Generate EOA from private key

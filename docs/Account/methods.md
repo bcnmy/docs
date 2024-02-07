@@ -106,7 +106,7 @@ This method is used to Send a transaction to a bundler for execution. It interna
 
 ```tsx
 import { createClient } from "viem"
-import { createSmartAccountClient } from "@biconomy/account"
+import { createSmartAccountClient } from "@biconomy-devx/account"
 import { createWalletClient, http } from "viem";
 import { polygonMumbai } from "viem/chains";
 
