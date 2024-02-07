@@ -49,7 +49,7 @@ const config = {
             },
             "3.0": {
               label: "SDK V3",
-            }
+            },
           },
         },
         theme: {

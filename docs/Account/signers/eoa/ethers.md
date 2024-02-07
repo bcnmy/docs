@@ -20,64 +20,28 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-typ
 ### Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
+import { createSmartAccountClient } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
 ```
 
 ### Create a Signer using a Private Key:
 
 ```typescript
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc.ankr.com/polygon_mumbai"
 ); // or any other rpc provider link
 const signer = new Wallet("<your_private_key>" || "", provider);
 // we recommend using environment variables for your private keys!
-```
-
-### Configuration Values
-
-Set up instances of Bundler and Paymaster.
-
-```typescript
-const bundler: IBundler = new Bundler({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: "",
-});
 ```
 
 ### Create the Biconomy Smart Account
 
 ```typescript
 async function createAccount() {
-  const module = await ECDSAOwnershipValidationModule.create({
+  const biconomySmartAccount = await createSmartAccountClient({
     signer,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-
-  let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
+    bundlerUrl: "", // bundler URL can be obtained from the dashboard
+    biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
   });
   console.log("address: ", await biconomySmartAccount.getAccountAddress());
   return biconomySmartAccount;
@@ -93,38 +57,7 @@ createAccount();
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster ethers@5.7.2
-```
-
-### Imports
-
-```typescript
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-```
-
-### Configuration Values
-
-Set up instances of Bundler and Paymaster.
-
-```typescript
-const bundler: IBundler = new Bundler({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: "",
-});
+yarn add @biconomy/account ethers@5.7.2
 ```
 
 ### Create the Biconomy Smart Account
@@ -136,17 +69,10 @@ const connect = async () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
-    const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-      signer: signer,
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-    });
-    let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
-      paymaster: paymaster,
-      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: ownerShipModule,
-      activeValidationModule: ownerShipModule,
+    const biconomySmartAccount = await createSmartAccountClient({
+      signer,
+      bundlerUrl: "", // bundler URL can be obtained from the dashboard
+      biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
     });
     const address = await biconomySmartAccount.getAccountAddress();
     console.log(address);

@@ -1,6 +1,7 @@
 ---
 sidebar_label: "Send a simple transaction"
 sidebar_position: 1
+title: "Send a simple transaction"
 ---
 
 import Tabs from "@theme/Tabs";
@@ -18,48 +19,52 @@ This tutorial demonstrates how to send a simple transaction using ethers.js/viem
 - An address to send the transaction to (replace `0xaddress`)
 
 ### Step 1: Generate the config and Create Biconomy Smart Account
+
 <Tabs>
 <TabItem value="viem" label="viem">
+
 ```typescript
 import { createWalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient } from "@biconomy/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {
-  privateKey: 'your-private-key',
-  bundlerUrl: 'your-bundler-url', // Replace with the appropriate RPC URL
+  privateKey: "your-private-key",
+  bundlerUrl: "your-bundler-url", // Replace with the appropriate RPC URL
 };
 
 // Generate EOA from private key using ethers.js
-const account = privateKeyToAccount("PRIVATE_KEY");
-const client = createWalletClient({
-    account,
-    chain: polygonMumbai,
-    transport: http(),
+const account = privateKeyToAccount("0x" + config.privateKey);
+const signer = createWalletClient({
+  account,
+  chain: polygonMumbai,
+  transport: http(),
 });
 
 // Create Biconomy Smart Account instance
 const smartWallet = await createSmartAccountClient({
-    signer: client,
-    bundlerUrl: config.bundlerUrl
+  signer,
+  bundlerUrl: config.bundlerUrl,
 });
 
 const scwAddress = await smartWallet.getAccountAddress();
 console.log("SCW Address", scwAddress);
 ```
+
 </TabItem>
 <TabItem value="ethers" label="ethers">
+
 ```typescript
-import {ethers} from "ethers";
-import { createSmartAccountClient} from "@biconomy/account";
+import { ethers } from "ethers";
+import { createSmartAccountClient } from "@biconomy/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {
-  privateKey: 'your-private-key',
-  bundlerUrl: 'your-bundler-url', // Replace with the appropriate RPC URL
-  rpcUrl: 'rpc-url'
+  privateKey: "your-private-key",
+  bundlerUrl: "your-bundler-url", // Replace with the appropriate RPC URL
+  rpcUrl: "rpc-url",
 };
 
 // Generate EOA from private key using ethers.js
@@ -68,13 +73,14 @@ let signer = new ethers.Wallet(config.privateKey, provider);
 
 // Create Biconomy Smart Account instance
 const smartWallet = await createSmartAccountClient({
-    signer,
-    bundlerUrl: config.bundlerUrl,
+  signer,
+  bundlerUrl: config.bundlerUrl,
 });
 
 const scwAddress = await smartWallet.getAccountAddress();
 console.log("SCW Address", scwAddress);
 ```
+
 </TabItem>
 </Tabs>
 
@@ -83,10 +89,10 @@ Get your signer from either ethers.js or viem and create a Biconomy Smart Accoun
 ### Step 2: Generate Transaction Data
 
 ```typescript
-const toAddress = '0xaddress'; // Replace with the recipient's address
-const transactionData = '0x123'; // Replace with the actual transaction data
+const toAddress = "0xaddress"; // Replace with the recipient's address
+const transactionData = "0x123"; // Replace with the actual transaction data
 
-// Build the transaction 
+// Build the transaction
 const tx = {
   to: toAddress,
   data: transactionData,
@@ -107,3 +113,7 @@ console.log("Transaction Hash", transactionHash);
 Send the transaction using the Biconomy Smart Account and get the transaction hash. The transaction will be built into a User Operation and then sent to the Bundler.
 
 That's it! You've successfully sent a simple transaction using ethers.js/viem and the Biconomy Smart Account. Feel free to customize this example based on your specific use case.
+
+```
+
+```

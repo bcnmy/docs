@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/integrat
 
 # Integration
 
-Smart Accounts are created deterministically using the [CREATE2](https://docs.openzeppelin.com/cli/2.7/deploying-with-create2) opcode, meaning the smart account address can be identified even before it is deployed. It will also maintain the same address across different chains. 
+Smart Accounts are created deterministically using the [CREATE2](https://docs.openzeppelin.com/cli/2.7/deploying-with-create2) opcode, meaning the smart account address can be identified even before it is deployed. It will also maintain the same address across different chains.
 
 To integrate a `Biconomy Smart Account`, you'll need the [bundler url](/dashboard#bundler-url). If you also want to use the paymaster, you'll need [Paymaster api key](/paymaster).
 
@@ -48,7 +48,7 @@ pnpm add @biconomy/account
 
 ## Integration
 
-Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a smart account. 
+Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a smart account.
 
 <Tabs>
 <TabItem value="js" label="Viem">
@@ -60,7 +60,7 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
   import { createSmartAccountClient } from "@biconomy/account";
 
   // ----- 1. Generate EOA from private key
-  const account = privateKeyToAccount("PRIVATE_KEY"); 
+  const account = privateKeyToAccount("0x" + "PRIVATE_KEY);
   const client = createWalletClient({
     account,
     chain: polygonMumbai,
@@ -84,24 +84,22 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
 <TabItem value="py" label="Ethers">
 
 ```typescript
-  import { ethers } from "ethers";	
-  import { createSmartAccountClient } from "@biconomy/account";
+import { ethers } from "ethers";
+import { createSmartAccountClient } from "@biconomy/account";
 
-  let provider = new ethers.providers.JsonRpcProvider("RPC_URL");
-  let signer = new ethers.Wallet("PRIVATE_KEY", provider);
+let provider = new ethers.providers.JsonRpcProvider("RPC_URL");
+let signer = new ethers.Wallet("PRIVATE_KEY", provider);
 
-  const biconomySmartAccountConfig = {
-    signer: signer,
-    bundlerUrl: "BUNDLER_URL",
-    biconomyPaymasterApiKey: "", // optional
-  };
+const biconomySmartAccountConfig = {
+  signer: signer,
+  bundlerUrl: "BUNDLER_URL",
+  biconomyPaymasterApiKey: "", // optional
+};
 
-  const smartAccount = await createSmartAccountClient(
-    biconomySmartAccountConfig
-  );
+const smartAccount = await createSmartAccountClient(biconomySmartAccountConfig);
 
-  const smartAccountAddress = await smartAccount.getAccountAddress();
-  console.log("Smart Account Address", smartAccountAddress);
+const smartAccountAddress = await smartAccount.getAccountAddress();
+console.log("Smart Account Address", smartAccountAddress);
 ```
 
 </TabItem>
@@ -109,25 +107,25 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
 <TabItem value="Alchemy" label="Alchemy">
 
 ```typescript
-  import { ethers } from "ethers";	
-  import { polygonMumbai } from "viem/chains";
-  import { createSmartAccountClient } from "@biconomy/account";
-  import { WalletClientSigner } from "@alchemy/aa-core";
+import { ethers } from "ethers";
+import { polygonMumbai } from "viem/chains";
+import { createSmartAccountClient } from "@biconomy/account";
+import { WalletClientSigner } from "@alchemy/aa-core";
 
-  const account = privateKeyToAccount("PRIVATE_KEY");
-  const client = createWalletClient({
-    account,
-    chain: polygonMumbai,
-    transport: http(),
-  });
-  const alchemySigner = new WalletClientSigner(client, "json-rpc"); 
-  const smartAccount = await createSmartAccountClient({
-    signer: alchemySigner,
-    bundlerUrl: config.bundlerUrl,
-    biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
-  });
-  const scwAddress = await smartAccount.getAccountAddress();
-  console.log("SCW Address", scwAddress);
+const account = privateKeyToAccount("0x" + "PRIVATE_KEY);
+const client = createWalletClient({
+  account,
+  chain: polygonMumbai,
+  transport: http(),
+});
+const alchemySigner = new WalletClientSigner(client, "json-rpc");
+const smartAccount = await createSmartAccountClient({
+  signer: alchemySigner,
+  bundlerUrl: config.bundlerUrl,
+  biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
+});
+const scwAddress = await smartAccount.getAccountAddress();
+console.log("SCW Address", scwAddress);
 ```
 
 </TabItem>
@@ -141,5 +139,4 @@ In this doc, the following values are used by default:
 - An index with a value 0, but you can also specify a custom index value in the configuration to generate multiple smart accounts with the same signer.
 
 CREATE2 allows us to enable flows where users could even send funds to an undeployed wallet, which could then be used to pay for the gas for deployment.
-A smart account will be deployed with the first UserOp execution. 
-
+A smart account will be deployed with the first UserOp execution.

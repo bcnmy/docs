@@ -12,7 +12,7 @@ This section shows how to use Viem to create a Smart Account with Biconomy. If y
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add viem @alchemy/aa-core @biconomy/account @biconomy/bundler @biconomy/common @biconomy/modules @biconomy/paymaster
+yarn add viem @biconomy/account
 ```
 
 ## Imports
@@ -28,40 +28,7 @@ import {
 } from "viem";
 import { baseGoerli } from "viem/chains";
 import "viem/window";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
-import { ChainId } from "@biconomy/core-types";
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-  IHybridPaymaster,
-  SponsorUserOperationDto,
-  PaymasterMode,
-} from "@biconomy/paymaster";
-import { WalletClientSigner } from "@alchemy/aa-core";
-```
-
-## Create Bundler and Paymaster Instance
-
-To set up the smart account lets instances of our bundler and Paymaster set up. These opitonal values in creating the smart account will be helpful in accessing the full stack of Account Abstraction made available by the Biconomy SDK.
-
-```typescript
-const bundler: IBundler = new Bundler({
-  bundlerUrl: "",
-  chainId: ChainId.BASE_GOERLI_TESTNET,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: "",
-});
+import { createSmartAccountClient } from "@biconomy/account";
 ```
 
 ## Connect to Users EOA
@@ -75,7 +42,7 @@ const connect = async () => {
     method: "eth_requestAccounts",
   });
 
-  const client = createWalletClient({
+  const walletClient = createWalletClient({
     account,
     chain: baseGoerli,
     transport: custom(window.ethereum),
@@ -88,21 +55,12 @@ const connect = async () => {
 In the previous function we got the wallet Client - this should be saved in some sort of state variable depending on your frontend framework.
 
 ```typescript
-const createSmartAccount = async () => {
+const createSmartAccount = async (walletClient: WalletClient) => {
   if (!walletClient) return;
-  const signer = new WalletClientSigner(walletClient, "json-rpc");
-  const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-    signer: signer,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-
-  let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.BASE_GOERLI_TESTNET,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: ownerShipModule,
-    activeValidationModule: ownerShipModule,
+  const smartAccount = await createSmartAccountClient({
+    signer: walletClient,
+    bundlerUrl: "", // bundler URL can be obtained from the dashboard
+    biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
   });
 
   const address = await biconomySmartAccount.getAccountAddress();
@@ -111,31 +69,4 @@ const createSmartAccount = async () => {
 };
 ```
 
-## Create the Biconomy Smart Account with ECDSA default
-In the latest version of the SDK (3.1.2) we can easily create a smart account with ECDSA validation module without creating the instance, this will now require to pass signer directly to the smart account. 
-WalletClientSigner can now be passed.
-```typescript
-const createSmartAccount = async () => {
-  if (!walletClient) return;
-  const signer = new WalletClientSigner(walletClient, "json-rpc");
-  const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-    signer: signer,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-
-  let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.BASE_GOERLI_TESTNET,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: ownerShipModule,
-    activeValidationModule: ownerShipModule,
-  });
-
-  const address = await biconomySmartAccount.getAccountAddress();
-  setSaAddress(address);
-  setSmartAccount(biconomySmartAccount);
-};
-```
-
-You are now ready to get started using Viem with Biconomy. For a full code implementation check out [this example repo](https://github.com/bcnmy/biconomy_viem_example).
+You are now ready to get started using viem with Biconomy. For a full code implementation check out [this example repo](https://github.com/bcnmy/biconomy_viem_example).

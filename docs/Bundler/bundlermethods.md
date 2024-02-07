@@ -14,11 +14,11 @@ When using these methods you will need to create a `userOp`. The [accounts metho
 
 :::
 
-## sendUserOp
+## [sendUserOp](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#sendUserOp)
 
 Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](/account/methods#senduserop).
 
-## getUserOpReceipt
+## [getUserOpReceipt](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpReceipt)
 
 After using `sendUserOp` you will recieve a `userOpResponse` which contains a string clled `userOpHash`
 
@@ -46,7 +46,7 @@ type UserOpReceipt = {
 };
 ```
 
-## getUserOpByHash
+## [getUserOpByHash](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpByHash)
 
 After using `sendUserOp` you will recieve a `userOpResponse` which contains a string clled `userOpHash`
 
