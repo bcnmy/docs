@@ -28,10 +28,10 @@ const smartAccount = await createSmartAccountClient({
 
 _required params are explicitly mentioned_
 
-- config (`object`, required): A `BiconomySmartAccountConfig` object containing configuration options for creating the smart account.
+- config (`object`, required): A [BiconomySmartAccountConfig](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#biconomySmartAccountConfig) object containing configuration options for creating the smart account.
   - signer(`Signer`, required) OR defaultValidationModule (`BaseValidationModule`, required): One either needs to pass the signer instance or the default validation module which gets used to detect address of the smart account. If not passed explictly, ECDSA module gets used as default.
-  - chainId (`ChainId` enum, required): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
   - bundlerUrl (`string`, required) OR bundler (`IBundler`, required) : bundler url which will be internally used to create bundler instance or the bundler instance. Bundler instance can also be used if one wants to customise the bundler. Refer to bundler [integration](/bundler/integration) for more details on bundler.
+  - chainId (`ChainId` enum): The identifier for the blockchain network. (e.g., ChainId.POLYGON_MUMBAI).
   - biconomyPaymasterApiKey(`string`) OR paymaster (`IPaymaster`): one can either pass paymaster API key or custom paymaster instance to use the paymaster.
   - entryPointAddress (`string`): DEFAULT_ENTRY_POINT_ADDRESS will be used if not passed, otherwise the passed address will be used. On specific chains like Chiliz Mainnet it is a different address, so will need to be passed explicitly. Refer to below notes on this.
   - activeValidationModule (`BaseValidationModule`): The run-time validation module (must be one of enabled validation modules) to sign and validate next userOp.
