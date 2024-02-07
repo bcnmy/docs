@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Migrating to V4"
-sidebar_position: 7
+sidebar_position: 8
 title: Migrating to SDK V4
 ---
 
@@ -17,15 +17,15 @@ This guide provides instructions for migrating from v3 to v4. It outlines the ch
     ```typescript
     // V3 
     const transaction = {
-    to: to || "0x0000000000000000000000000000000000000000",
-    data: "0x",
-    value: ethers.utils.parseEther(amount.toString()),
+        to: to || "0x0000000000000000000000000000000000000000",
+        data: "0x",
+        value: ethers.utils.parseEther(amount.toString()),
     };
     // V4, users need to use the .toBigInt() method to make the value param compatible 
     const transaction = {
-    to: to || "0x0000000000000000000000000000000000000000",
-    data: "0x",
-    value: ethers.utils.parseEther(amount.toString()).toBigInt(),
+        to: to || "0x0000000000000000000000000000000000000000",
+        data: "0x",
+        value: ethers.utils.parseEther(amount.toString()).toBigInt(),
     };
     ```
 
@@ -37,9 +37,9 @@ This guide provides instructions for migrating from v3 to v4. It outlines the ch
     finalUserOp = await biconomySmartAccount.buildTokenPaymasterUserOp(
         partialUserOp,
         {
-        feeQuote: selectedFeeQuote,
-        spender: "0x",
-        maxApproval: false,
+            feeQuote: selectedFeeQuote,
+            spender: "0x",
+            maxApproval: false,
         }
     );
     // V4
@@ -47,9 +47,9 @@ This guide provides instructions for migrating from v3 to v4. It outlines the ch
     finalUserOp = await biconomySmartAccount.buildTokenPaymasterUserOp(
         partialUserOp,
         {
-        feeQuote: selectedFeeQuote,
-        spender: spender, // needs to be `0x${string}` 
-        maxApproval: false,
+            feeQuote: selectedFeeQuote,
+            spender: spender, // needs to be `0x${string}` 
+            maxApproval: false,
         }
     );
     ```
