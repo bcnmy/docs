@@ -8,7 +8,7 @@ sidebar_position: 2
 In this guide, we will create a smart account and mint an NFT with [Biconomy's SDK](https://github.com/bcnmy/biconomy-client-sdk) and Node.js.
 
 :::info
-Please note that this tutorial assumes you have Node.js installed and have working knowledge of it. 🧠
+For a detailed exploration of the SDK's inner workings, delve into our more granular [API documentation](https://bcnmy.github.io/biconomy-client-sdk/#md:biconomy-sdk), where you'll find comprehensive descriptions for the features we offer.
 :::
 
 ## 1. Setup 🛠️
@@ -163,14 +163,21 @@ You can also view the latest transaction events on the [Polygon Mumbai Testnet E
   <summary>View Complete Code</summary>
 
 ```typescript
-import { Hex, createWalletClient, encodeFunctionData, http, parseAbi, zeroAddress} from "viem";
+import {
+  Hex,
+  createWalletClient,
+  encodeFunctionData,
+  http,
+  parseAbi,
+  zeroAddress,
+} from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { polygonMumbai } from "viem/chains";
-import { createSmartAccountClient} from "@biconomy/account";
+import { createSmartAccountClient } from "@biconomy/account";
 
 export const createAccountAndMintNft = async () => {
   // ----- 1. Generate EOA from private key
-  const account = privateKeyToAccount("0x" + "PRIVATE_KEY);
+  const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
   const client = createWalletClient({
     account,
     chain: polygonMumbai,
@@ -182,7 +189,8 @@ export const createAccountAndMintNft = async () => {
   // ------ 2. Create biconomy smart account instance
   const smartAccount = await createSmartAccountClient({
     signer: client,
-    bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+    bundlerUrl:
+      "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   });
   const scwAddress = await smartAccount.getAccountAddress();
   console.log("SCW Address", scwAddress);
@@ -197,16 +205,13 @@ export const createAccountAndMintNft = async () => {
   });
 
   // ------ 4. Send transaction
-  const { waitForTxHash } = await smartAccount.sendTransaction(
-    {
-      to: nftAddress,
-      data: nftData,
-    }
-  );
+  const { waitForTxHash } = await smartAccount.sendTransaction({
+    to: nftAddress,
+    data: nftData,
+  });
 
   const { transactionHash } = await waitForTxHash();
   console.log("transactionHash", transactionHash);
-
 };
 createAccountAndMintNft();
 ```

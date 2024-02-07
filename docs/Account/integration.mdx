@@ -54,30 +54,29 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
 <TabItem value="js" label="Viem">
 
 ```typescript
-  import { Hex, createWalletClient, http } from "viem";
-  import { privateKeyToAccount } from "viem/accounts";
-  import { polygonMumbai } from "viem/chains";
-  import { createSmartAccountClient } from "@biconomy/account";
+import { Hex, createWalletClient, http } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { polygonMumbai } from "viem/chains";
+import { createSmartAccountClient } from "@biconomy/account";
 
-  // ----- 1. Generate EOA from private key
-  const account = privateKeyToAccount("0x" + "PRIVATE_KEY);
-  const client = createWalletClient({
-    account,
-    chain: polygonMumbai,
-    transport: http(),
-  });
-  const eoa = client.account.address;
-  console.log(`EOA address: ${eoa}`);
+// ----- 1. Generate EOA from private key
+const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
+const client = createWalletClient({
+  account,
+  chain: polygonMumbai,
+  transport: http(),
+});
+const eoa = client.account.address;
+console.log(`EOA address: ${eoa}`);
 
-  // ------ 2. Create biconomy smart account instance
-  const smartAccount = await createSmartAccountClient({
-    signer: client,
-    bundlerUrl: "BUNDLER_URL",
-    biconomyPaymasterApiKey: "", // optional
-  });
-  const smartAccountAddress = await smartAccount.getAccountAddress();
-  console.log("Smart Account Address", smartAccountAddress);
-
+// ------ 2. Create biconomy smart account instance
+const smartAccount = await createSmartAccountClient({
+  signer: client,
+  bundlerUrl: "BUNDLER_URL",
+  biconomyPaymasterApiKey: "", // optional
+});
+const smartAccountAddress = await smartAccount.getAccountAddress();
+console.log("Smart Account Address", smartAccountAddress);
 ```
 
 </TabItem>
@@ -112,7 +111,7 @@ import { polygonMumbai } from "viem/chains";
 import { createSmartAccountClient } from "@biconomy/account";
 import { WalletClientSigner } from "@alchemy/aa-core";
 
-const account = privateKeyToAccount("0x" + "PRIVATE_KEY);
+const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
 const client = createWalletClient({
   account,
   chain: polygonMumbai,
