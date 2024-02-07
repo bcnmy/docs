@@ -13,24 +13,18 @@ Please note that this tutorial assumes you have Node.js installed and have worki
 
 ## 1. Setup 🛠️
 
-Let's create a [Typescript](https://www.typescriptlang.org) project using npm to get started.
+Let's create a [Typescript](https://www.typescriptlang.org) project using npm to get started. Let's start by adding some tooling:
 
 ```bash
-mkdir biconomy-sa && cd biconomy-sa && npm init -y
+mkdir biconomy-sa && cd biconomy-sa && npm init -y && npm i --save-dev @types/node tslib
 ```
 
-**Install biconomy's account package using npm:**
+**🎉 Then add biconomy's account package: 🎉**
 
 ```
 
   npm i @biconomy/account
 
-```
-
-And install some helper dev dependencies...
-
-```bash
-npm i --save-dev @types/node tslib
 ```
 
 Create the following tsconfig.json (TypeScript config):
@@ -161,11 +155,9 @@ try {
 _To wait for a specific number of network confirmations before getting the value, use `wait()` with a number argument.
 For instance, `transactionResponse.wait(5)` waits for 5 confirmations before returning the value._
 
-Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK!
+Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK. The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
 You can also view the latest transaction events on the [Polygon Mumbai Testnet Explorer](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e#events).
-
-Well done! The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
 <details>
   <summary>View Complete Code</summary>
