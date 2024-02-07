@@ -84,7 +84,8 @@ export const createAccountAndMintNft = async () => {
 createAccountAndMintNft();
 
 ```
-Run it using following 
+
+Next, run the following command: 
 
 ```bash
 npx ts-node index.ts
@@ -116,16 +117,16 @@ Let's create your first transaction
 - `data`: For the mint function we will pass the `nftData` created using `encodeFunctionData`.
 - `value`: For the mint function this won't be needed. Depending on the transaction, you can pass the value.
 
-Add the following code in the script above in the same function.
+Add the following code in the script above at the bottom of the `createAccountAndMintNft` function.
 
 ```typescript
 try {
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-    const parsedAbi = parseAbi(["function safeMint(address _to)"]);
-    const nftData = encodeFunctionData({
-      abi: parsedAbi,
-      functionName: "safeMint",
-      args: [scwAddress as Hex],
+  const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+  const nftData = encodeFunctionData({
+    abi: parsedAbi,
+    functionName: "safeMint",
+    args: [scwAddress as Hex],
   });
 
   // ------ 4. Send transaction
@@ -146,13 +147,15 @@ try {
 
 1. We create a transaction object.
 2. We send the `transaction` to our bundler.
-3. We save the response in a variable called `transactionResponse`.
+3. We store the response in a variable called `transactionResponse`.
 4. We retrieve the transaction detail by calling `userOpResponse.waitForTxHash()`.
 
 _To wait for a specific number of network confirmations before getting the value, use `wait()` with a number argument.
 For instance, `transactionResponse.wait(5)` waits for 5 confirmations before returning the value._
 
 Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK!
+
+You can also view the latest transaction events on the [Polygon Mumbai Testnet Explorer](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e#events).
 
 Well done! The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
@@ -209,7 +212,7 @@ createAccountAndMintNft();
 ```
 
 </details>
-If you are facing any error, check out [troubleshooting](/troubleshooting/commonerrors) for common errors.
+If you run into any errors, check out [troubleshooting](/troubleshooting/commonerrors) for common errors.
 
 🎉 **Congratulations on completing the quickstart!**
 
