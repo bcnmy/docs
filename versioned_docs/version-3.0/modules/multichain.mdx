@@ -9,7 +9,7 @@ import TabItem from "@theme/TabItem";
 
 # Multichain Validation
 
-This module acts as an extension of the [ECDSA Module](/Modules/ecdsa). The added benefit of this module is you now have the ability to sign once and authorize any number of userOps across multiple blockchain networks.
+This module acts as an extension of the [ECDSA Module](/stack/modules/ecdsa). The added benefit of this module is you now have the ability to sign once and authorize any number of userOps across multiple blockchain networks.
 
 ### What is the Multichain Validation Module? 🤔
 
@@ -151,8 +151,8 @@ const multiChainModule = await MultiChainValidationModule.create({
 });
 ```
 
-Once initialized it can be passed to the smart account [create method](/Account/methods#create) to create instances of the smart account.
-Check [Paymaster integration](/Paymaster/integration) and [Bundler integration](/Bundler/integration) sections to create instances of them.
+Once initialized it can be passed to the smart account [create method](/stack/account/methods#create) to create instances of the smart account.
+Check [Paymaster integration](/stack/paymaster/integration) and [Bundler integration](/stack/bundler/integration) sections to create instances of them.
 
 Here is how you can set up Smart Account instances accross multiple chains:
 

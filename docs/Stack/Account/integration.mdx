@@ -7,7 +7,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Account/integrat
 
 Smart Accounts are created deterministically using the [CREATE2](https://docs.openzeppelin.com/cli/2.7/deploying-with-create2) opcode, meaning the smart account address can be identified even before it is deployed. It will also maintain the same address across different chains.
 
-To integrate a `Biconomy Smart Account`, you'll need the [bundler url](/dashboard#bundler-url). If you also want to use the paymaster, you'll need [Paymaster api key](/paymaster).
+To integrate a `Biconomy Smart Account`, you'll need the [bundler url](/dashboard#bundler-url). If you also want to use the paymaster, you'll need [Paymaster api key](/stack/paymaster).
 
 ## Installation
 
@@ -135,7 +135,7 @@ console.log("SA Address", saAddress);
 
 In this doc, the following values are used by default:
 
-- ECDSA Validation Module. Other validation [modules](/modules) can be enabled based on the specific use case.
+- ECDSA Validation Module. Other validation [modules](/stack/modules) can be enabled based on the specific use case.
 - The default entry point [address](contracts.md) is used for the chainId.
 - An index with a value 0, but you can also specify a custom index value in the configuration to generate multiple smart accounts with the same signer.
 

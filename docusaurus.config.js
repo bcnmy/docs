@@ -143,15 +143,15 @@ const config = {
               },
               {
                 label: "Smart Accounts",
-                to: "/account",
+                to: "/stack/account",
               },
               {
                 label: "Paymaster",
-                to: "/paymaster",
+                to: "/stack/paymaster",
               },
               {
                 label: "Bundler",
-                to: "/bundler",
+                to: "/stack/bundler",
               },
             ],
           },

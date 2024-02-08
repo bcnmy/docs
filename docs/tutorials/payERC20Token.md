@@ -90,7 +90,6 @@ const { wait } = await smartWallet.sendTransaction(transaction, {
     mode: PaymasterMode.ERC20,
     feeQuote: userSelectedFeeQuote,
     spender: feeQuotesResponse.tokenPaymasterAddress,
-    maxApproval: true,
   },
 });
 
