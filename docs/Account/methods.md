@@ -14,7 +14,7 @@ This method creates the smart account based on the config object. To configure a
 **Usage**
 
 ```jsx
-let provider = new ethers.JsonRpcProvider("rpcUrl")();
+let provider = new ethers.JsonRpcProvider("rpcUrl");
 let signer = new ethers.Wallet("private key", provider);
 
 const smartAccount = await createSmartAccountClient({
@@ -251,7 +251,7 @@ For example, in the context of creating a userOp for an `addComment` transaction
 
 ```jsx
 const contractAddress = "contract address";
-const provider = new ethers.JsonRpcProvider("rpc url")();
+const provider = new ethers.JsonRpcProvider("rpc url");
 
 const blogContract = new ethers.Contract(
   contractAddress,
