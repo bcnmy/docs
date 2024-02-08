@@ -14,13 +14,14 @@ This method creates the smart account based on the config object. To configure a
 **Usage**
 
 ```jsx
-let provider = new ethers.providers.JsonRpcProvider("rpcUrl");
+let provider = new new ethers.JsonRpcProvider("rpcUrl")();
 let signer = new ethers.Wallet("private key", provider);
 
 const smartAccount = await createSmartAccountClient({
   signer,
-  bundlerUrl: "", // bundler URL can be obtained from the dashboard
-  biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
 });
 ```
 
@@ -108,7 +109,7 @@ This method is used to Send a transaction to a bundler for execution. It interna
 
 ```tsx
 import { createClient } from "viem";
-import { createSmartAccountClient } from "@biconomy/account";
+import { createSmartAccountClient, PaymasterMode } from "@biconomy/account";
 import { createWalletClient, http } from "viem";
 import { polygonMumbai } from "viem/chains";
 
@@ -250,7 +251,7 @@ For example, in the context of creating a userOp for an `addComment` transaction
 
 ```jsx
 const contractAddress = "contract address";
-const provider = new ethers.providers.JsonRpcProvider("rpc url");
+const provider = new new ethers.JsonRpcProvider("rpc url")();
 
 const blogContract = new ethers.Contract(
   contractAddress,

@@ -13,10 +13,11 @@ This module acts as an extension of the [ECDSA Module](/Modules/ecdsa). The adde
 
 ### What is the Multichain Validation Module? 🤔
 
-This module allows **Externally Owned Accounts (EOAs)** to authorize and sign user operations (UserOps) for Biconomy Smart Accounts on Multiple chains with a single ECDSA signature. 
+This module allows **Externally Owned Accounts (EOAs)** to authorize and sign user operations (UserOps) for Biconomy Smart Accounts on Multiple chains with a single ECDSA signature.
 
 **Benefits**
-- Significantly improves UX for deploying and setting up Smart Accounts on several chains 
+
+- Significantly improves UX for deploying and setting up Smart Accounts on several chains
 - Significantly reduces user friction for multichain operations.
 
 :::tip
@@ -37,7 +38,7 @@ Enables use cases which require several actions to be authorized for several cha
 1. Multichain intent for example exit all my native tokens for USDC
 2. Allows a dApp to require just one signature from their user to configure & deploy smart accounts on multiple chains and delegate certain actions with permission via session keys on all those chains
 3. Cross-chain state sync actions e.g transfer ownership of a smart account, change ENS, similar actions on a protocol that are deployed on multiple chains
-4. Onboard a user on x chains by deploying their smart account and some action like registering in a raffle 
+4. Onboard a user on x chains by deploying their smart account and some action like registering in a raffle
 
 ### How does it work? 🤔
 
@@ -47,7 +48,6 @@ Enables use cases which require several actions to be authorized for several cha
 4. Instead of signing individual hashes, the user signs the Merkle Root.
 
 Now this signed Merkle Root serves as on-chain evidence, proving any userOp within the tree is authorized. With this, Users can authorize any number of userOps with just one signature over the Merkle Tree Root.
-
 
 ## Smart Contract Deep Dive 🛠️
 
@@ -85,15 +85,14 @@ function validateUserOp(UserOperation calldata userOp, bytes32 userOpHash) exter
 
 All the other methods are inherited from [ECDSAOwnershipRegistryModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/EcdsaOwnershipRegistryModule.sol)
 
-
 #### References
 
 1. **[Source code](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/modules/MultichainECDSAValidator.sol)**
 
 2. **[Merkle Trees](https://www.simplilearn.com/tutorials/blockchain-tutorial/merkle-tree-in-blockchain)**
 
+## How to Guide - Biconomy SDK 📘
 
-## How to Guide - Biconomy SDK 📘 
 Integrate the Multichain Validation Module into Biconomy Smart Accounts using the SDK.
 
 ### Setup and Installation
@@ -152,66 +151,90 @@ const multiChainModule = await MultiChainValidationModule.create({
 });
 ```
 
-
 Once initialized it can be passed to the smart account [create method](/Account/methods#create) to create instances of the smart account.
 Check [Paymaster integration](/Paymaster/integration) and [Bundler integration](/Bundler/integration) sections to create instances of them.
 
-
 Here is how you can set up Smart Account instances accross multiple chains:
+
 ```ts
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 let baseAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.BASE_GOERLI_TESTNET,
-    biconomyPaymasterApiKey: "paymaster api key",
-    bundlerUrl: "bundler url",
-    defaultValidationModule: multiChainModule,
-    activeValidationModule: multiChainModule
-  });
+  chainId: ChainId.BASE_GOERLI_TESTNET,
+  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
+  bundlerUrl: "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  defaultValidationModule: multiChainModule,
+  activeValidationModule: multiChainModule,
+});
 
 let polygonAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    biconomyPaymasterApiKey: "paymaster api key",
-    bundlerUrl: "bundler url",
-    defaultValidationModule: multiChainModule,
-    activeValidationModule: multiChainModule
-  });
+  chainId: ChainId.POLYGON_MUMBAI,
+  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
+  bundlerUrl: "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  defaultValidationModule: multiChainModule,
+  activeValidationModule: multiChainModule,
+});
 ```
 
 ### Signing and Sending Multichain userOps
 
 ```typescript
-  // This could be swap action, mint nft, transfer ownership, enable different module as such (check use cases above) which you intend to do on multiple chains
-  // You can also batch with providing just array of transactions
-  // If the smart account is not deployed it would be deployed as part of this transaction. No additional action needed in below payload 
-  const transaction = {
-    to: <DESTINATION_CONTRACT_ADDRESS>, 
-    data: <DESTINATION_CONTRACT_METHOD_ENCODED_DATA>,
-  };
+// This could be swap action, mint nft, transfer ownership, enable different module as such (check use cases above) which you intend to do on multiple chains
+// You can also batch with providing just array of transactions
+// If the smart account is not deployed it would be deployed as part of this transaction. No additional action needed in below payload
+import { encodeFunctionData, parseAbi } from "viem";
 
-  // Build partial userOp for chain1
-  let partialUserOp1 = await baseAccount.buildUserOp([transaction], { 
-    // Assuming Sponsorship Paymaster is to be used otherwise leave as it's optional
-    paymasterServiceData: {
+// Example of creating the callData for the transaction
+// This could be swap action, mint NFT, transfer ownershi p, enable different module as such (check use cases above) which you intend to do on multiple chains
+// You can also batch with providing just array of transactions
+// If the smart account is not deployed it would be deployed as part of this transaction. No additional action needed in below payload
+
+const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+
+const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+const mintNFTCallData = encodeFunctionData({
+  abi: parsedAbi,
+  functionName: "safeMint",
+  args: [await polygonAccount.getAddress()],
+});
+
+const transaction = {
+  to: nftAddress,
+  data: mintNFTCallData,
+};
+
+// Build partial userOp for chain1
+let partialUserOp1 = await baseAccount.buildUserOp([transaction], {
+  // Assuming Sponsorship Paymaster is to be used otherwise leave as it's optional
+  paymasterServiceData: {
     mode: PaymasterMode.SPONSORED,
-  }});
+  },
+});
 
-  // Build partial userOp for chain2
-  let partialUserOp2 = await polygonAccount.buildUserOp([transaction], { 
-    // Assuming Sponsorship Paymaster is to be used otherwise leave as it's optional
-    paymasterServiceData: {
+// Build partial userOp for chain2
+let partialUserOp2 = await polygonAccount.buildUserOp([transaction], {
+  // Assuming Sponsorship Paymaster is to be used otherwise leave as it's optional
+  paymasterServiceData: {
     mode: PaymasterMode.SPONSORED,
-  }});
+  },
+});
 
-  // Use multichain module to sign once for all ops
-  const returnedOps = await multiChainModule.signUserOps([{userOp: partialUserOp1, chainId: ChainId.BASE_GOERLI_TESTNET}, {userOp: partialUserOp2, chainId: ChainId.POLYGON_MUMBAI}]);
+// Use multichain module to sign once for all ops
+const returnedOps = await multiChainModule.signUserOps([
+  { userOp: partialUserOp1, chainId: ChainId.BASE_GOERLI_TESTNET },
+  { userOp: partialUserOp2, chainId: ChainId.POLYGON_MUMBAI },
+]);
 
-  const userOpResponse1 = await baseAccount.sendSignedUserOp(returnedOps[0] as any);
-  // You can also just wait for transaction hash by waitForTxHash()
-  const transactionDetails1 = await userOpResponse1.wait();
+const userOpResponse1 = await baseAccount.sendSignedUserOp(
+  returnedOps[0] as any
+);
+// You can also just wait for transaction hash by waitForTxHash()
+const transactionDetails1 = await userOpResponse1.wait();
 
-  const userOpResponse2 = await polygonAccount.sendSignedUserOp(returnedOps[1] as any);
-  const transactionDetails2 = await userOpResponse2.wait();
+const userOpResponse2 = await polygonAccount.sendSignedUserOp(
+  returnedOps[1] as any
+);
+const transactionDetails2 = await userOpResponse2.wait();
 ```
 
 :::info
@@ -219,6 +242,7 @@ When the Smart Account isn't yet deployed, setting **multiChainModule** as the d
 :::
 
 ## Conclusion
+
 It makes it easier for dApps to deploy and set up Smart Accounts across multiple chains or issue session keys with different permissions for each chain, reducing user difficulties.
 
 > Multichain module allows us to use session keys and setup sessions on multiple chains with single wallet signature.

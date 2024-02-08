@@ -86,8 +86,8 @@ export const createAccountAndMintNft = async () => {
     signer: client,
     bundlerUrl,
   });
-  const scwAddress = await smartAccount.getAccountAddress();
-  console.log("SCW Address", scwAddress);
+  const saAddress = await smartAccount.getAccountAddress();
+  console.log("SA Address", saAddress);
 };
 createAccountAndMintNft();
 ```
@@ -102,7 +102,7 @@ You should see EOA and the smart account address in the console.
 
 ```bash
 EOA address: 0x7d4EcAc73A5574447E0F38b8451DC9B29D8Fd083
-SCW Address 0x4dF23B78543F5c2F9CBCDF09956288B3e97bb9a4
+SA Address 0x4dF23B78543F5c2F9CBCDF09956288B3e97bb9a4
 ```
 
 Smart accounts are designed with a pre-determined address known prior to deployment. Users transfer funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Alternatively the paymaster could be used to sponsor this transaction.
@@ -130,7 +130,7 @@ try {
   const nftData = encodeFunctionData({
     abi: parsedAbi,
     functionName: "safeMint",
-    args: [scwAddress as Hex],
+    args: [saAddress as Hex],
   });
 
   // ------ 4. Send transaction
@@ -192,8 +192,8 @@ export const createAccountAndMintNft = async () => {
     bundlerUrl:
       "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   });
-  const scwAddress = await smartAccount.getAccountAddress();
-  console.log("SCW Address", scwAddress);
+  const saAddress = await smartAccount.getAccountAddress();
+  console.log("SA Address", saAddress);
 
   // ------ 3. Generate transaction data
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
@@ -201,7 +201,7 @@ export const createAccountAndMintNft = async () => {
   const nftData = encodeFunctionData({
     abi: parsedAbi,
     functionName: "safeMint",
-    args: [scwAddress as Hex],
+    args: [saAddress as Hex],
   });
 
   // ------ 4. Send transaction

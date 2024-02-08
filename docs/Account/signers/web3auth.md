@@ -95,7 +95,8 @@ import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 
 const smartAccount = await createSmartAccountClient({
   signer: wallet as LightSigner,
-  bundlerUrl: "", // bundler URL can be obtained from the dashboard
-  biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
 });
 ```
