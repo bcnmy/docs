@@ -86,7 +86,7 @@ console.log("Smart Account Address", smartAccountAddress);
 import { ethers } from "ethers";
 import { createSmartAccountClient } from "@biconomy/account";
 
-let provider = new new ethers.JsonRpcProvider("RPC_URL")();
+let provider = new ethers.JsonRpcProvider("RPC_URL")();
 let signer = new ethers.Wallet("PRIVATE_KEY", provider);
 
 const biconomySmartAccountConfig = {
