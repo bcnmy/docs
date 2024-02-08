@@ -42,3 +42,19 @@ img {
   border-radius: 4px;
   cursor: pointer;
 }
+
+.cta-button {
+  margin: 0 auto;
+  padding: 4px 8px;
+  font-size: 32px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--ifm-color-primary);
+  color: white;
+  text-decoration: none;
+}
+.cta-button > a {
+  color: white;
+  text-decoration: none;
+}

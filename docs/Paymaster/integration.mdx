@@ -53,8 +53,9 @@ Set up a paymaster for the smart account by providing only the paymaster API key
     {
       signer: signer,
       chainId: 80001
-      biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-      bundlerUrl: "bundler url"
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
     }
   );
 ```
@@ -75,8 +76,8 @@ If you wish to pass "strictMode" to your Paymaster you need to create the instac
       signer: signer,
       chainId: 80001
       paymaster,
-      bundlerUrl: "bundler url"
-    }
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"    }
   );
 ```
 
