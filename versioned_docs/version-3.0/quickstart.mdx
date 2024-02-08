@@ -136,7 +136,7 @@ Update your import from the Account package to also include `BiconomySmartAccoun
 
 ```typescript
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc.ankr.com/polygon_mumbai"
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
@@ -175,7 +175,7 @@ async function initializeSmartAccount() {
   console.log("EOA Owner Address:", wallet.address);
   console.log(
     "Smart Account Address:",
-    await biconomyAccount.getAccountAddress(),
+    await biconomyAccount.getAccountAddress()
   );
 
   return biconomyAccount;
@@ -204,7 +204,7 @@ Once you have tokens available, it is time to start constructing our first userO
 
 Let's create your first **user operation (userOp)** for the transaction. Here are the details it needs:
 
-- `to`: The address towards which this interaction is directed. (Feel free to change to your own or send me more test tokens 😉)
+- `to`: Smart Contract your Smart Account will interact with. (Feel free to change to your own or send me more test tokens 😉)
 - `data`: We are defaulting to `0x` as no specific data is needed for native transfers.
 - `value`: We need to indicate the amount we want to transfer and format it correctly using the `parseEther` utility function.
 
@@ -253,7 +253,7 @@ async function submitUserOp() {
 
     console.log("See your transaction details here:");
     console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -300,7 +300,7 @@ const bundler: IBundler = new Bundler({
 });
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc.ankr.com/polygon_mumbai"
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
@@ -322,7 +322,7 @@ async function initializeSmartAccount() {
   console.log("EOA Owner Address:", wallet.address);
   console.log(
     "Smart Account Address:",
-    await biconomyAccount.getAccountAddress(),
+    await biconomyAccount.getAccountAddress()
   );
 
   return biconomyAccount;
@@ -364,7 +364,7 @@ async function submitUserOp() {
 
     console.log("See your transaction details here:");
     console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
