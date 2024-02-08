@@ -65,7 +65,6 @@ With the config completed we can now access the Wagmi hooks in our other compone
 
 ```typescript
 import { useConnect, useAccount, useDisconnect, useWalletClient } from "wagmi";
-import { WalletClientSigner } from "@alchemy/aa-core";
 import {
   createSmartAccountClient,
   createECDSAOwnershipValidationModule,
@@ -81,14 +80,7 @@ import { useState } from "react";
 
 To set up the smart account lets instances of our bundler and Paymaster set up. These opitonal values in creating the smart account will be helpful in accessing the full stack of Account Abstraction made available by the Biconomy SDK.
 
-```typescript
-const bundler: IBundler = await createBundler({ bundlerUrl: "" });
-const paymaster: IPaymaster = await createPaymaster({ paymasterUrl: "" });
-```
-
 ## Connect to Users EOA and Create Smart account
-
-Once connected to the users EOA we can access the wallet client and use Alchemy's `WalletClientSigner` to create a signer to pass over to our SDK.
 
 ```typescript
 const { connect, connectors, error, isLoading, pendingConnector } =
@@ -97,9 +89,6 @@ const { address, isConnected } = useAccount();
 const { disconnect } = useDisconnect();
 const { data: walletClient } = useWalletClient();
 const [smartAccountAddress, setSmartAccountAddress] = useState();
-
-const bundler: IBundler = await createBundler({ bundlerUrl: "" });
-const paymaster: IPaymaster = await createPaymaster({ paymasterUrl: "" });
 
 const createSmartAccount = async () => {
   if (!walletClient) return;
