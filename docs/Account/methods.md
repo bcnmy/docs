@@ -149,7 +149,6 @@ const { transactionHash, userOperationReceipt } = await wait();
   ```ts
   type BuildUserOpOptions = {
     overrides?: Overrides;
-    skipBundlerGasEstimation?: boolean;
     params?: ModuleInfo;
     nonceOptions?: NonceOptions;
     forceEncodeForBatch?: boolean;
@@ -175,34 +174,22 @@ const { transactionHash, userOperationReceipt } = await wait();
      };
      ```
 
-  2. skipBundlerGasEstimation (`boolean`): This parameter enables the management of gas estimations more efficiently depending on the transactions. By default, it's set to true, which means if a paymaster is present, gas estimations are done on the paymaster side to facilitate gasless transactions.
-  <details>
-    <summary> Click to view the `skipBundlerGasEstimation` usage </summary>
-  3. Gasless Paymaster Flow (All Methods Gasless on Dashboard): If you are utilizing a gasless transaction with all methods set as gasless on the dashboard, you should pass the skipBundlerGasEstimation as true. This is typically the default behavior, emphasizing that the gas estimations are handled by the paymaster.
-     Here's how you can configure it:
+  2. Gasless Paymaster Flow (All Methods Gasless on Dashboard): Here's how you can configure it:
 
   ```typescript
   let partialUserOp = await biconomySmartAccount.buildUserOp([transaction], {
     paymasterServiceData: {
       mode: PaymasterMode.SPONSORED,
     },
-    // No need to explicitly set skipBundlerGasEstimation: true, as it's true by default for paymaster flow
   });
   ```
 
-  2. Mixed or Non-Gasless Transactions: In scenarios where you have mixed transactions (some are gasless and some are not) or all transactions are not gasless, it's more efficient to estimate gas using the bundler first. After building the user operation, you should then call getPaymasterAndData to finalize the gas parameters. Set skipBundlerGasEstimation as false to ensure the bundler handles the initial gas estimations:
-     // When not all methods are gasless or you want to use bundler estimations
+  2. Mixed or Non-Gasless Transactions: In scenarios where you have mixed transactions (some are gasless and some are not) or all transactions are not gasless, it's more efficient to estimate gas using the bundler first. After building the user operation, you should then call getPaymasterAndData to finalize the gas parameters.
 
   ```typescript
-  let userOp = await biconomySmartAccount.buildUserOp([transaction], {
-    skipBundlerGasEstimation: false, // Explicitly set to false to use bundler for initial gas estimations
-  });
+  let userOp = await biconomySmartAccount.buildUserOp([transaction]);
   // ...After building user operation, proceed to get Paymaster and Data as needed
   ```
-
-  By configuring skipBundlerGasEstimation appropriately, you ensure that your transactions are processed efficiently and in accordance with the intended gas handling approach, whether through a gasless paymaster flow or via bundler estimations.
-
-  </details>
 
   3. params (`ModuleInfo`): This param can be used to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
 
@@ -241,9 +228,7 @@ const { transactionHash, userOperationReceipt } = await wait();
        mode: PaymasterMode;
        calculateGasLimits?: boolean; //this flag defaults to true, signifying the paymaster will undertake gas limit calculations to ensure efficient operation execution
        expiryDuration?: number;
-       webhookData?: {
-         [key: string]: any;
-       };
+       webhookData?: Record<string, any>;
        smartAccountInfo?: SmartAccountData;
        feeTokenAddress?: string;
      };
