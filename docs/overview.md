@@ -5,48 +5,8 @@ slug: /
 
 # Overview
 
-### The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp, wallet, or appchain.
-
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
-<Tabs>
-<TabItem value="js" label="npm">
-
-```bash
-npm install @biconomy-devx/account
-```
-
-</TabItem>
-<TabItem value="py" label="yarn">
-
-```bash
-yarn add @biconomy-devx/account
-```
-
-</TabItem>
-<TabItem value="java" label="pnpm">
-
-```bash
-pnpm add @biconomy-devx/account
-```
-
-</TabItem>
-</Tabs>
-
-```ts
-import { createSmartAccountClient } from "@biconomy/account";
-
-const smartAccount = await createSmartAccountClient({
-  signer: viemWalletOrEthersSigner,
-  bundlerUrl: "https://dashboard.biconomy.io", // <-- Get this from here
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
-});
-
-const smartAccountAddress = await smartAccount.getAccountAddress();
-```
-
-### Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers.
+The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp, wallet, or appchain.
+Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers.
 
 ![FullStakAA](./images/overview/fullstackaa.png)
 
