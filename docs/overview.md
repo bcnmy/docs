@@ -21,20 +21,20 @@ Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a 
         >Easily implement account abstraction in your app.</p>
       </div>
     </a>
-    <div className="overview-section" style={{ width: "360px", border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
-      <a href="/paymaster" className="overview-section-link">
+    <a href="/paymaster" className="overview-section-link">
+      <div className="overview-section" style={{ width: "360px", border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
         <h2 style={{marginBottom: "5px"}}>Paymaster</h2>
-      </a>
-      <p style={{ color: '#717179', fontSize: '14px'}}>Enable sponsored or gasless transactions.</p>
-    </div>
+        <p style={{ color: '#717179', fontSize: '14px'}}>Enable sponsored or gasless transactions.</p>
+      </div>
+    </a>
   </div>
   <div style={{ display: "flex" }}>
-    <div className="overview-section" style={{  width: "360px", border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
-      <a href="/bundler" className="overview-section-link">
-      <h2 style={{marginBottom: "5px"}}>Bundler</h2>
-      </a>
-      <p style={{ color: '#717179', fontSize: '14px'}}>Bundle and submit transactions.</p>
-    </div>
+    <a href="/bundler" className="overview-section-link">
+      <div className="overview-section" style={{  width: "360px", border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
+        <h2 style={{marginBottom: "5px"}}>Bundler</h2>
+        <p style={{ color: '#717179', fontSize: '14px'}}>Bundle and submit transactions.</p>
+      </div>
+    </a>
   </div>
 </div>
 
