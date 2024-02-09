@@ -40,7 +40,7 @@ const signer = new Wallet("<your_private_key>" || "", provider);
 async function createAccount() {
   const biconomySmartAccount = await createSmartAccountClient({
     signer,
-    bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+    bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
     biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
   });
   console.log("address: ", await biconomySmartAccount.getAccountAddress());
@@ -71,7 +71,7 @@ const connect = async () => {
     const signer = provider.getSigner();
     const biconomySmartAccount = await createSmartAccountClient({
       signer,
-      bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
       biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
     });
     const address = await biconomySmartAccount.getAccountAddress();

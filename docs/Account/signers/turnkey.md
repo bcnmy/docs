@@ -66,7 +66,7 @@ const connect = async () => {
   try {
     const smartAccount = await createSmartAccountClient({
       signer: connectedSigner as LightSigner,
-      bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
       biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
     });
 

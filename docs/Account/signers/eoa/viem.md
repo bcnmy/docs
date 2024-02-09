@@ -59,7 +59,7 @@ const createSmartAccount = async (walletClient: WalletClient) => {
   if (!walletClient) return;
   const smartAccount = await createSmartAccountClient({
     signer: walletClient,
-    bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+    bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
     biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
   });
 

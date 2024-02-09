@@ -22,7 +22,7 @@ let signer = new ethers.Wallet("private key", provider);
 const smartAccount = await BiconomySmartAccountV2.create({
   signer: signer,
   chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
 });
 ```

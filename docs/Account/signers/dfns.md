@@ -70,7 +70,7 @@ Remember to get your API keys from the DFNS dashboard and follow their [getting 
 const createAccount = async (): Promise<BiconomySmartAccountV2> =>
   createSmartAccountClient({
     signer: mumbaiWallet as LightSigner,
-    bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+    bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
     biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
   });
 ```

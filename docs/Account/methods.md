@@ -19,7 +19,7 @@ let signer = new ethers.Wallet("private key", provider);
 
 const smartAccount = await createSmartAccountClient({
   signer,
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
 });
 ```

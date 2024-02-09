@@ -59,7 +59,7 @@ import { createSmartAccountClient } from "@biconomy/account";
 
 const biconomySmartAccountConfig = {
   signer: signer,
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
 };
 
@@ -83,7 +83,7 @@ const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
 };
 
 const bundler = await createBundler({
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   userOpReceiptMaxDurationIntervals,
 });
 

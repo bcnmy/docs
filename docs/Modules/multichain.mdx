@@ -161,14 +161,14 @@ import { createSmartAccountClient, PaymasterMode } from "@biconomy/account";
 
 let baseAccount = await createSmartAccountClient({
   biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   defaultValidationModule: multiChainModule,
   activeValidationModule: multiChainModule,
 });
 
 let polygonAccount = await createSmartAccountClient({
   biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   defaultValidationModule: multiChainModule,
   activeValidationModule: multiChainModule,
 });

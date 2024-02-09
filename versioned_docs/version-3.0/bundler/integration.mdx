@@ -85,7 +85,7 @@ const userOpReceiptMaxDurationIntervals: { [key in ChainId]?: number } = {
 };
 
 const bundler = new Bundler({
-  bundlerUrl: "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   chainId: 80001,
   userOpReceiptMaxDurationIntervals,
 });
