@@ -113,7 +113,3 @@ console.log("Transaction Hash", transactionHash);
 Send the transaction using the Biconomy Smart Account and get the transaction hash. The transaction will be built into a User Operation and then sent to the Bundler.
 
 That's it! You've successfully sent a simple transaction using ethers.js/viem and the Biconomy Smart Account. Feel free to customize this example based on your specific use case.
-
-```
-
-```

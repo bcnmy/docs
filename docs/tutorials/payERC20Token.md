@@ -107,7 +107,3 @@ const {
 Send the transaction using the Biconomy Smart Account, specifying ERC-20 token payment details. Wait for the transaction to be mined and get the transaction hash.
 
 That's it! You've successfully performed a transaction with ERC-20 token payment using the Biconomy Smart Account. Feel free to customize this example based on your specific use case.
-
-```
-
-```
