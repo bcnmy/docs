@@ -10,7 +10,7 @@ Biconomy Smart Accounts are flexible in allowing you to use any signer from an E
 const biconomyAccount = await createSmartAccountClient({
   signer: {}, // viem wallet or ethers signer object
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 });
 ```
 

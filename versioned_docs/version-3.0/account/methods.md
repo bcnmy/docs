@@ -23,7 +23,7 @@ const smartAccount = await BiconomySmartAccountV2.create({
   signer: signer,
   chainId: ChainId.POLYGON_MUMBAI, // Specify the desired chain (e.g., Polygon Mumbai)
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 });
 ```
 

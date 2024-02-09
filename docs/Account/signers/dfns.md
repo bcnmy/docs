@@ -71,7 +71,7 @@ const createAccount = async (): Promise<BiconomySmartAccountV2> =>
   createSmartAccountClient({
     signer: mumbaiWallet as LightSigner,
     bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-    biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
+    biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
   });
 ```
 

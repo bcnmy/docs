@@ -96,7 +96,7 @@ const createSmartAccount = async () => {
   const biconomySmartAccount = await createSmartAccountClient({
     signer: walletClient,
     bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-    biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
+    biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
   });
   console.log({ biconomySmartAccount });
   const saAddress = await biconomySmartAccount.getAccountAddress();

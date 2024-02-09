@@ -73,7 +73,7 @@ console.log(`EOA address: ${eoa}`);
 const smartAccount = await createSmartAccountClient({
   signer: client,
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 });
 const smartAccountAddress = await smartAccount.getAccountAddress();
 console.log("Smart Account Address", smartAccountAddress);
@@ -92,7 +92,7 @@ let signer = new ethers.Wallet("PRIVATE_KEY", provider);
 const biconomySmartAccountConfig = {
   signer: signer,
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster", // <-- Read about this here
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 };
 
 const smartAccount = await createSmartAccountClient(biconomySmartAccountConfig);
