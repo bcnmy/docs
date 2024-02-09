@@ -44,7 +44,7 @@ pnpm add @biconomy/modules
 ## Integration
 
 ```typescript
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
 });

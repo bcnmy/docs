@@ -86,116 +86,25 @@ await embeddedWallet.switchChain(80001);
 
 ```
 
-Next, initialize instances of a Biconomy `bundler` and `paymaster` for the user, following the code snippet below. You'll need to pass in your bundler and paymaster URLs that you previously configured in the `Biconomy Dashboard`.
-
-```tsx
-
-import { IBundler, Bundler } from '@biconomy/bundler';
-import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster';
-import { ChainId } from "@biconomy/core-types";
-
-...
-
-// Initialize your bundler
-const bundler: IBundler = new Bundler({
-    bundlerUrl: 'your-bundler-url-from-the-biconomy-dashboard',
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your desired network
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
-});
-
-// Initialize your paymaster
-const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: 'your-paymaster-url-from-the-biconomy-dashboard',
-});
-
-```
-
 Then, initialize a validation module for the user's smart account, by passing an ethers signer from the user's embedded wallet to Biconomy's `ECDSAOwnershipValidationModule`. This allows the user to authorize actions from their Biconomy smart account by signing messages with their Privy embedded wallet.
 
 ```tsx
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
-
-...
+import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 
 // Get an ethers provider and signer for the user's embedded wallet
 const provider = await embeddedWallet.getEthersProvider();
 const signer = provider.getSigner();
 
-// Initialize Biconomy's validation module with the ethers signer
-const validationModule = await ECDSAOwnershipValidationModule.create({
-    signer: signer,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE // This is a Biconomy constant
-});
-```
-
-Lastly, using the user's paymaster, bundler, and validation module instances from above, initialize the user's smart account using Biconomy's `BiconomySmartAccountV2.create` method:
-
-```tsx
-
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/account";
-
-...
-
-const smartAccount = await BiconomySmartAccountV2.create({
-    provider: provider, // This can be any ethers JsonRpcProvider connected to your app's network
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your target network
-    bundler: bundler, // Use the `bundler` we initialized above
-    paymaster: paymaster, // Use the `paymaster` we initialized above
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
-    defaultValidationModule: validationModule, // Use the `validationModule` we initialized above
-    activeValidationModule: validationModule // Use the `validationModule` we initialized above
+const smartAccount = await createSmartAccountClient({
+  signer: signer as LightSigner,
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 });
 
+const address = await smartAccount.getAccountAddress();
 ```
 
 <details>
-<summary>Want to see this code end-to-end?</summary>
-
-```tsx
-import { useWallets } from '@privy-io/react-auth';
-import { IBundler, Bundler } from '@biconomy/bundler';
-import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster';
-import { ChainId } from "@biconomy/core-types";
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/account";
-
-...
-
-// Find the embedded wallet and switch it to your target network
-const {wallets} = useWallets();
-const embeddedWallet = wallets.find((wallet) => (wallet.walletClientType === 'privy'));
-await embeddedWallet.switchChain(80001);
-
-// Initialize your bundler and paymaster
-const bundler: IBundler = new Bundler({
-    bundlerUrl: 'your-bundler-url-from-the-biconomy-dashboard',
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your desired network
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
-});
-const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: 'your-paymaster-url-from-the-biconomy-dashboard',
-});
-
-// Initialize your validation module
-const provider = await embeddedWallet.getEthersProvider();
-const signer = provider.getSigner();
-const validationModule = await ECDSAOwnershipValidationModule.create({
-    signer: signer,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE // This is a Biconomy constant
-});
-
-// Initialize your smart account
-const smartAccount = await BiconomySmartAccountV2.create({
-    provider: provider,
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: validationModule,
-    activeValidationModule: validationModule
-});
-```
-
 Note: if your app uses React, you can store the user's Biconomy smartAccount in a React context that wraps your application. This allows you to easily access the smart account from your app's pages and components. You can see an example of this in Privy's [example app](https://github.com/privy-io/biconomy-example).
 
 </details>
