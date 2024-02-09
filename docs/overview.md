@@ -5,9 +5,40 @@ slug: /
 
 # Overview
 
-The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp, wallet, or appchain.
+The Biconomy SDK is an Account Abstraction toolkit that enables a simple UX for your dApp, wallet, or appchain.
 
 Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers.
+
+<!-- ![FullStakAA](./images/overview/fullstackaa.png) -->
+
+<div style={{ paddingBottom: '30px' }}>
+  <div style={{ display: "flex", flexWrap: "wrap", marginBottom: '10px' }}>
+    <a href="/account" className="overview-section-link">
+      <div className="overview-section" style={{ width: "360px", marginRight: '10px', border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
+        <h2 style={{marginBottom: "5px"}}>Smart Accounts</h2>
+        <p
+          style={{ color: '#717179', fontSize: '14px'}}
+        >Easily implement account abstraction in your app.</p>
+      </div>
+    </a>
+    <div className="overview-section" style={{ width: "360px", border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
+      <a href="/paymaster" className="overview-section-link">
+        <h2 style={{marginBottom: "5px"}}>Paymaster</h2>
+      </a>
+      <p style={{ color: '#717179', fontSize: '14px'}}>Enable sponsored or gasless transactions.</p>
+    </div>
+  </div>
+  <div style={{ display: "flex" }}>
+    <div className="overview-section" style={{  width: "360px", border: '2px solid #ddd', borderRadius: '8px', padding: '10px'}}>
+      <a href="/bundler" className="overview-section-link">
+      <h2 style={{marginBottom: "5px"}}>Bundler</h2>
+      </a>
+      <p style={{ color: '#717179', fontSize: '14px'}}>Bundle and submit transactions.</p>
+    </div>
+  </div>
+</div>
+
+Biconomy also offers the ability to build custom [Modular smart accounts](/modules). Users can install validation modules that authorize actions or execution modules that define custom logic, avoiding full account redeployment to add features.
 
 ![FullStakAA](./images/overview/fullstackaa.png)
 
