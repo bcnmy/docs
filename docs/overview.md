@@ -5,6 +5,39 @@ slug: /
 
 # Overview
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/modules
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/modules
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/modules
+
+```
+
+</TabItem>
+</Tabs>
+
 The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp, wallet, or appchain.
 Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers.
 
