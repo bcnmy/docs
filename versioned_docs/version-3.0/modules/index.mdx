@@ -1,8 +1,8 @@
 ---
 slug: /modules
 sidebar_position: 6
-
 ---
+
 # Modules
 
 Modular smart accounts (MSA) offer more flexibility than 'static' accounts. Static accounts often need a developer for changes and involve complex proxy upgrades. In contrast, with MSA the functionalities are moved to external contracts called `modules` to increase the speed of feature development. MSA lets users install or uninstall these modules, avoiding the need for entire account redeployment.
@@ -14,9 +14,9 @@ Biconomy MSA (Modular Smart Account) has two types of modules:
 
 **Standardizing Modularity for Smart Accounts**
 
-*ERC 6900* is the first proposal that aims to standardize modularity for Smart Accounts, introduced by Alchemy in April 2023. It provides standards for how plugins (modules) should be written as well as how compliant accounts should add, update, remove, and inspect plugins.
+_ERC 6900_ is the first proposal that aims to standardize modularity for Smart Accounts, introduced by Alchemy in April 2023. It provides standards for how plugins (modules) should be written as well as how compliant accounts should add, update, remove, and inspect plugins.
 
-Similarly, *ERC 7579* enables developers to standardize these modules with minimal impact on the implementation logic of the account. It was developed by Rhinestone, Biconomy, ZeroDev, and OKX and presented in December 2023. This proposal outlines the minimally required interfaces and behavior for smart accounts and modules to ensure interoperability across implementations.
+Similarly, _ERC 7579_ enables developers to standardize these modules with minimal impact on the implementation logic of the account. It was developed by Rhinestone, Biconomy, ZeroDev, and OKX and presented in December 2023. This proposal outlines the minimally required interfaces and behavior for smart accounts and modules to ensure interoperability across implementations.
 
 ERC 7579 is less opinionated and allows developers to experiment and innovate, making their own trade-offs around complexity and security. In contrast, ERC 6900 is more prescriptive due to an extensive description of all the aspects of compliant account behavior.
 
@@ -31,12 +31,14 @@ Modules can be enabled using the following methods:
 - A new module can be enabled via a userOp transaction on a smart account by specifying the module address and moduleSetupData. Internally, it calls [setupAndEnableModule](https://github.com/bcnmy/scw-contracts/blob/develop/contracts/smart-account/base/ModuleManager.sol#L196) method on Module Manager. It can be set as an active validation module to be used for the next transactions.
 
 ```jsx
-const isEnabled = await smartAccount.isModuleEnabled(module_address)
-if ( !isEnabled ) {
-    const enableModuleTrx = await smartAccount.getEnableModuleData(module_address);
-    transactionArray.push( enableModuleTrx );
+const isEnabled = await smartAccount.isModuleEnabled(module_address);
+if (!isEnabled) {
+  const enableModuleTrx = await smartAccount.getEnableModuleData(
+    module_address
+  );
+  transactionArray.push(enableModuleTrx);
 }
-smartAccount = smartAccount.setActiveValidationModule( module )
+smartAccount = smartAccount.setActiveValidationModule(module);
 ```
 
 As per the code, the initial step is to verify whether the module is already enabled. If the module is not enabled, a transaction can be performed to enable it.
@@ -49,7 +51,7 @@ The module passed during the deployment acts as the default validation module. T
 
 ![validationModule.png](../images/modules/validationModule.png)
 
-The validation Module is a module that extends the abstract contract **BaseAuthorizationModule**** - which implements the **IBaseAuthorizationModule** interface. This interface requires the implementation of the following methods:
+The validation Module is a module that extends the abstract contract **BaseAuthorizationModule\*\*** - which implements the **IBaseAuthorizationModule** interface. This interface requires the implementation of the following methods:
 
 - `validateUserOp`: this method validates userOperation. It expects userOp callData to execute method calls of the Smart account and userOp signature being the ABI-encoded signature and module address.
 - `isValidSignature`: this method validates an EIP-1271 signature.
@@ -75,14 +77,14 @@ Developers have the flexibility to create a custom validation module according t
 **Key Imports and Their Roles**
 
 1. `BaseAuthorizationModule`
-    - **Core Structure**: Forms the foundation of your custom module.
-    - **Link to Interfaces**: Connects to IAuthorizationModule and ISignatureValidator
+   - **Core Structure**: Forms the foundation of your custom module.
+   - **Link to Interfaces**: Connects to IAuthorizationModule and ISignatureValidator
 2. `IAuthorizationModule`
-    - **Operation Validation**: Manages validation of user operations (userOp)
-    - **Method Implementation**: Defines methods for operation validation your module must implement.
+   - **Operation Validation**: Manages validation of user operations (userOp)
+   - **Method Implementation**: Defines methods for operation validation your module must implement.
 3. `ISignatureValidator`
-    - **Signature Security & Standardization**: Focuses on signature validation and adheres to the ERC-1271 standard for smart contract-based signature
-    - **isValidSignature Method**: Essential for verifying signatures and ensuring security.
+   - **Signature Security & Standardization**: Focuses on signature validation and adheres to the ERC-1271 standard for smart contract-based signature
+   - **isValidSignature Method**: Essential for verifying signatures and ensuring security.
 
 :::note
 

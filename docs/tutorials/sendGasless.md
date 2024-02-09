@@ -1,6 +1,7 @@
 ---
 sidebar_label: "Send a gasless transaction"
 sidebar_position: 3
+title: "Send a gasless transaction"
 ---
 
 import Tabs from "@theme/Tabs";
@@ -21,8 +22,10 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 - An address to send the transaction to (replace `0xaddress`)
 
 ### Step 1: Generate the config and Create Biconomy Smart Account
+
 <Tabs>
 <TabItem value="viem" label="viem">
+
 ```typescript
 import { createWalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
@@ -31,57 +34,60 @@ import { createSmartAccountClient, PaymasterMode } from "@biconomy/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {
-  privateKey: 'your-private-key',
-  biconomyPaymasterApiKey: 'your-biconomy-api-key',
-  bundlerUrl: 'your-bundler-url', // Replace with the appropriate RPC URL
+  privateKey: "your-private-key",
+  biconomyPaymasterApiKey: "your-biconomy-api-key",
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
 };
 
 // Generate EOA from private key using ethers.js
-const account = privateKeyToAccount("PRIVATE_KEY");
+const account = privateKeyToAccount("0x" + config.privateKey);
 const client = createWalletClient({
-    account,
-    chain: polygonMumbai,
-    transport: http(),
+  account,
+  chain: polygonMumbai,
+  transport: http(),
 });
 
 // Create Biconomy Smart Account instance
 const smartWallet = await createSmartAccountClient({
-    signer: client,
-    biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
-    bundlerUrl: config.bundlerUrl
+  signer: client,
+  biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
+  bundlerUrl: config.bundlerUrl,
 });
 
-const scwAddress = await smartWallet.getAccountAddress();
-console.log("SCW Address", scwAddress);
+const saAddress = await smartWallet.getAccountAddress();
+console.log("SA Address", saAddress);
 ```
+
 </TabItem>
 <TabItem value="ethers" label="ethers">
+
 ```typescript
-import {ethers} from "ethers";
-import { createSmartAccountClient} from "@biconomy/account";
+import { ethers } from "ethers";
+import { createSmartAccountClient } from "@biconomy/account";
 
 // Your configuration with private key and Biconomy API key
 const config = {
-  privateKey: 'your-private-key',
-  biconomyPaymasterApiKey: 'your-biconomy-api-key',
-  bundlerUrl: 'your-bundler-url', // Replace with the appropriate RPC URL
-  rpcUrl: 'rpc-url'
+  privateKey: "your-private-key",
+  biconomyPaymasterApiKey: "your-biconomy-api-key",
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  rpcUrl: "rpc-url",
 };
 
 // Generate EOA from private key using ethers.js
-let provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
+let provider = new ethers.JsonRpcProvider(config.rpcUrl)();
 let signer = new ethers.Wallet(config.privateKey, provider);
 
 // Create Biconomy Smart Account instance
 const smartWallet = await createSmartAccountClient({
-    signer,
-    biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
-    bundlerUrl: config.bundlerUrl
+  signer,
+  biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
+  bundlerUrl: config.bundlerUrl,
 });
 
-const scwAddress = await smartWallet.getAccountAddress();
-console.log("SCW Address", scwAddress);
+const saAddress = await smartWallet.getAccountAddress();
+console.log("SA Address", saAddress);
 ```
+
 </TabItem>
 </Tabs>
 
@@ -90,10 +96,10 @@ Get your signer from either ethers.js or viem and create a Biconomy Smart Accoun
 ### Step 2: Generate Transaction Data
 
 ```typescript
-const toAddress = '0xaddress'; // Replace with the recipient's address
-const transactionData = '0x123'; // Replace with the actual transaction data
+const toAddress = "0xaddress"; // Replace with the recipient's address
+const transactionData = "0x123"; // Replace with the actual transaction data
 
-// Build the transaction 
+// Build the transaction
 const tx = {
   to: toAddress,
   data: transactionData,
@@ -106,7 +112,9 @@ Specify the recipient's address and transaction data to build the simple transac
 
 ```typescript
 // Send the transaction and get the transaction hash
-const userOpResponse = await smartWallet.sendTransaction(tx, {paymasterServiceData: PaymasterMode.SPONSORED});
+const userOpResponse = await smartWallet.sendTransaction(tx, {
+  paymasterServiceData: PaymasterMode.SPONSORED,
+});
 const { transactionHash } = await userOpResponse.waitForTxHash();
 console.log("Transaction Hash", transactionHash);
 ```

@@ -44,7 +44,8 @@ pnpm add @biconomy/bundler @biconomy/account
 </TabItem>
 </Tabs>
 
-## Integration 
+## Integration
+
 Simply pass a bundler url as a parameter for the smart account.
 
 :::info
@@ -54,46 +55,42 @@ Simply pass a bundler url as a parameter for the smart account.
 :::
 
 ```typescript
-  import { createSmartAccountClient } from "@biconomy/account";
+import { createSmartAccountClient } from "@biconomy/account";
 
-  const biconomySmartAccountConfig = {
-      signer: signer,
-      chainId: 80001,
-      bundlerUrl: ""
-  };
+const biconomySmartAccountConfig = {
+  signer: signer,
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
+};
 
-  const biconomySmartAccount = await createSmartAccountClient(
-      biconomySmartAccountConfig
-  );
+const biconomySmartAccount = await createSmartAccountClient(
+  biconomySmartAccountConfig
+);
 ```
 
 Or you can create your own instance of the Bundler if you wish to pass more params to it like:
+
 - userOpReceiptIntervals
 - userOpWaitForTxHashIntervals
 - userOpReceiptMaxDurationIntervals
 - userOpWaitForTxHashMaxDurationIntervals
 
 ```typescript
-  import { createSmartAccountClient, Bundler } from "@biconomy/account";
+import { createSmartAccountClient, createBundler } from "@biconomy/account";
 
-  const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
-      [80001]: 60000,
-  }
+const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
+  [80001]: 60000,
+};
 
-  const bundler = new Bundler({
-    bundlerUrl: "bundler url",
-    chainId: 80001,
-    userOpReceiptMaxDurationIntervals
-  });
+const bundler = await createBundler({
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  userOpReceiptMaxDurationIntervals,
+});
 
-  const biconomySmartAccountConfig = {
-      signer: signer,
-      bundler
-  };
-
-  const biconomySmartAccount = await createSmartAccountClient(
-      biconomySmartAccountConfig
-  );
+const biconomySmartAccount = await createSmartAccountClient({
+  signer,
+  bundler,
+});
 ```
 
 Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Bundler.

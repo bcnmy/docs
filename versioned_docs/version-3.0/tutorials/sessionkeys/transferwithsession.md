@@ -18,37 +18,36 @@ Let's Create a new component called `ERC20Transfer.tsx` and place it in the comp
 The imports and props will be as follows:
 
 ```javascript
-
 import React from "react";
 import { ethers } from "ethers";
-import { SessionKeyManagerModule } from "@biconomy-devx/modules";
-import { BiconomySmartAccountV2 } from "@biconomy-devx/account"
-import { DEFAULT_SESSION_KEY_MANAGER_MODULE  } from "@biconomy-devx/modules";
-import usdcAbi from "@/utils/usdcAbi.json"
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { SessionKeyManagerModule } from "@biconomy/modules";
+import { BiconomySmartAccountV2 } from "@biconomy/account";
+import { DEFAULT_SESSION_KEY_MANAGER_MODULE } from "@biconomy/modules";
+import usdcAbi from "@/utils/usdcAbi.json";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface props {
   smartAccount: BiconomySmartAccountV2;
   provider: ethers.providers.Provider;
   address: string;
 }
-
 ```
+
 USDC Abi can be take [here](https://gist.github.com/Ankarrr/570cc90f26ef7fb6a2a387612db80ceb).
 
 Next, let's create the inital component:
 
 ```javascript
-
-const ERC20Transfer: React.FC<props> = ({ smartAccount, provider, address}) => {
-  return(
-    <button>Transfer 1 USDC</button>
-  )
-}
+const ERC20Transfer: React.FC<props> = ({
+  smartAccount,
+  provider,
+  address,
+}) => {
+  return <button>Transfer 1 USDC</button>;
+};
 
 export default ERC20Transfer;
-
 ```
 
 This is going to be a basic button that simply transfers 1 USDC to a recipient. You can go ahead and import this component now into your Create Session component. It should look like this at the bottom of your Create Session component:
@@ -233,7 +232,7 @@ const tokenContract = new ethers.Contract(
   // polygon mumbai usdc address
   "0xdA5289fCAAF71d52a80A254da614a192b693e977",
   usdcAbi,
-  provider,
+  provider
 );
 let decimals = 18;
 
@@ -249,7 +248,7 @@ We now create an instance of the contract. Note that USDC does not have 18 decim
 ```javascript
 const { data } = await tokenContract.populateTransaction.transfer(
   "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
-  ethers.utils.parseUnits("1".toString(), decimals),
+  ethers.utils.parseUnits("1".toString(), decimals)
 );
 ```
 
@@ -304,7 +303,7 @@ toast.success(
     draggable: true,
     progress: undefined,
     theme: "dark",
-  },
+  }
 );
 ```
 

@@ -46,15 +46,15 @@ pnpm add @biconomy/modules
 Integration is the same as using the Session Key Manager Module with the additional step of starting a session router module.
 
 ```typescript
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
 });
 
-const sessionRouterModule = await BatchedSessionRouterModule.create({
+const sessionRouterModule = await createBatchedSessionRouterModule({
   moduleAddress: routerModuleAddr,
   sessionKeyManagerModule: sessionModule,
-  smartAccountAddress: scwAddress,
+  smartAccountAddress: saAddress,
 });
 ```
 

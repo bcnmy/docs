@@ -18,24 +18,14 @@ Check out an end-to-end integration of Magic with Biconomy on this [example app]
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster magic-sdk ethers@5.7.2
+yarn add @biconomy/account magic-sdk ethers@5.7.2
 ```
 
 ## Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
+import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
 import { Magic } from "magic-sdk";
 ```
 
@@ -55,24 +45,6 @@ export const magic = new Magic("YOUR_API_KEY", {
 });
 ```
 
-## Biconomy Configuration Values
-
-Set up instances of Bundler and Paymaster.
-
-```typescript
-const bundler: IBundler = new Bundler({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: "",
-});
-```
-
 ## Create the Biconomy Smart Account
 
 ```typescript
@@ -81,24 +53,16 @@ const connect = async () => {
     await magic.wallet.connectWithUI();
     const web3Provider = new ethers.providers.Web3Provider(
       magic.rpcProvider,
-      "any",
+      "any"
     );
 
-    const module = await ECDSAOwnershipValidationModule.create({
-      signer: web3Provider.getSigner(),
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+    const smartAccount = await createSmartAccountClient({
+      signer: web3Provider.getSigner() as LightSigner,
+      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+      biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
     });
 
-    let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
-      paymaster: paymaster,
-      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: module,
-      activeValidationModule: module,
-    });
-
-    const address = await biconomySmartAccount.getAccountAddress();
+    const address = await smartAccount.getAccountAddress();
   } catch (error) {
     console.error(error);
   }

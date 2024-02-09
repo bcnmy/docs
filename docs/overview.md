@@ -6,7 +6,6 @@ slug: /
 # Overview
 
 The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp, wallet, or appchain.
-
 Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers.
 
 ![FullStakAA](./images/overview/fullstackaa.png)
