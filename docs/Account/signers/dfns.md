@@ -22,17 +22,7 @@ The first thing we need to do is generate a DFNS wallet. Let's take a look at th
 ## Imports
 
 ```typescript
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import { Bundler } from "@biconomy/bundler";
-import { ChainId } from "@biconomy/core-types";
-import {
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  ECDSAOwnershipValidationModule,
-} from "@biconomy/modules";
-import { BiconomyPaymaster, PaymasterMode } from "@biconomy/paymaster";
+import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 import { DfnsWallet } from "@dfns/lib-ethersjs5";
 import { DfnsApiClient } from "@dfns/sdk";
 import { AsymmetricKeySigner } from "@dfns/sdk-keysigner";
@@ -77,31 +67,12 @@ Remember to get your API keys from the DFNS dashboard and follow their [getting 
 ## Create Smart Account
 
 ```typescript
-const bundler = new Bundler({
-  bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster = new BiconomyPaymaster({
-  paymasterUrl: "",
-});
-
-const createAccount = async (): Promise<BiconomySmartAccountV2> => {
-  const module = await ECDSAOwnershipValidationModule.create({
-    signer: mumbaiWallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+const createAccount = async (): Promise<BiconomySmartAccountV2> =>
+  createSmartAccountClient({
+    signer: mumbaiWallet as LightSigner,
+    bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+    biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
   });
-
-  return BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
-  });
-};
 ```
 
 You can get all paymaster and bundler URLs from your [Biconomy Dashboard](https://dashboard.biconomy.io/) for this step.

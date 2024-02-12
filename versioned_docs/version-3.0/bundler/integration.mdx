@@ -1,0 +1,103 @@
+---
+sidebar_position: 2
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integration.mdx
+---
+
+# Integration
+
+This guide soley focuses on the code to integrate the Bundler. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
+
+## Installation
+
+First, install the required packages for initializing the Bundler and Smart Account.
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm install @biconomy/bundler @biconomy/account
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add @biconomy/bundler @biconomy/account
+
+```
+
+</TabItem>
+<TabItem value="java" label="pnpm">
+
+```bash
+
+pnpm add @biconomy/bundler @biconomy/account
+
+```
+
+</TabItem>
+</Tabs>
+
+## Integration
+
+Simply pass a bundler url as a parameter for the smart account.
+
+:::info
+
+[Click here](/dashboard) to learn more about our dashboard and how to get your own bundler url.
+
+:::
+
+```typescript
+import { BiconomySmartAccountV2 } from "@biconomy/account";
+
+const biconomySmartAccountConfig = {
+  signer: signer,
+  chainId: 80001,
+  bundlerUrl: "",
+};
+
+const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  biconomySmartAccountConfig
+);
+```
+
+Or you can create your own instance of the Bundler if you wish to pass more params to it like:
+
+- userOpReceiptIntervals
+- userOpWaitForTxHashIntervals
+- userOpReceiptMaxDurationIntervals
+- userOpWaitForTxHashMaxDurationIntervals
+
+```typescript
+import { Bundler } from "@biconomy/bundler";
+import { BiconomySmartAccountV2 } from "@biconomy/account";
+import { ChainId } from "@biconomy/core-types";
+
+const userOpReceiptMaxDurationIntervals: { [key in ChainId]?: number } = {
+  [ChainId.POLYGON_MAINNET]: 60000,
+};
+
+const bundler = new Bundler({
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  chainId: 80001,
+  userOpReceiptMaxDurationIntervals,
+});
+
+const biconomySmartAccountConfig = {
+  signer: signer,
+  bundler,
+};
+
+const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  biconomySmartAccountConfig
+);
+```
+
+Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Bundler.

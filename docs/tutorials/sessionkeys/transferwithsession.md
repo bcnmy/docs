@@ -21,9 +21,7 @@ The imports and props will be as follows:
 
 import React from "react";
 import { ethers } from "ethers";
-import { SessionKeyManagerModule } from "@biconomy-devx/modules";
-import { BiconomySmartAccountV2 } from "@biconomy-devx/account"
-import { DEFAULT_SESSION_KEY_MANAGER_MODULE  } from "@biconomy-devx/modules";
+import { BiconomySmartAccountV2, SessionKeyManagerModule, DEFAULT_SESSION_KEY_MANAGER_MODULE, createSessionKeyManagerModule } from "@biconomy/account"
 import usdcAbi from "@/utils/usdcAbi.json"
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,9 +33,8 @@ interface props {
 }
 
 ```
-USDC Abi can be take [here](https://gist.github.com/Ankarrr/570cc90f26ef7fb6a2a387612db80ceb).
 
-Next, let's create the inital component:
+Let's create the inital component:
 
 ```javascript
 
@@ -99,7 +96,7 @@ Let's create the function now to handle the transfer:
       console.log("sessionSigner", sessionSigner);
 
       // generate sessionModule
-      const sessionModule = await SessionKeyManagerModule.create({
+      const sessionModule = await createSessionKeyManagerModule({
         moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
         smartAccountAddress: address,
       });
@@ -133,24 +130,12 @@ Let's create the function now to handle the transfer:
         value: "0",
       };
 
-      // build user op
-      let userOp = await smartAccount.buildUserOp([tx1], {
-        overrides: {
-          // signature: "0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000456b395c4e107e0302553b90d1ef4a32e9000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000db3d753a1da5a6074a9f74f39a0a779d3300000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001800000000000000000000000000000000000000000000000000000000000000080000000000000000000000000bfe121a6dcf92c49f6c2ebd4f306ba0ba0ab6f1c000000000000000000000000da5289fcaaf71d52a80a254da614a192b693e97700000000000000000000000042138576848e839827585a3539305774d36b96020000000000000000000000000000000000000000000000000000000002faf08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041feefc797ef9e9d8a6a41266a85ddf5f85c8f2a3d2654b10b415d348b150dabe82d34002240162ed7f6b7ffbc40162b10e62c3e35175975e43659654697caebfe1c00000000000000000000000000000000000000000000000000000000000000"
-          // callGasLimit: 2000000, // only if undeployed account
-          // verificationGasLimit: 700000
-        },
-        skipBundlerGasEstimation: false,
+      // This will build the tx into a user op and send it.
+      let userOpResponse = await smartAccount.sendTransaction(tx1, {
         params: {
           sessionSigner: sessionSigner,
           sessionValidationModule: erc20ModuleAddr,
         },
-      });
-
-      // send user op
-      const userOpResponse = await smartAccount.sendUserOp(userOp, {
-        sessionSigner: sessionSigner,
-        sessionValidationModule: erc20ModuleAddr,
       });
 
       console.log("userOpHash", userOpResponse);
@@ -217,7 +202,7 @@ We specify the erc20 module address and get the private key we stored in local s
 
 ```javascript
 // generate sessionModule
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
 });
@@ -263,24 +248,12 @@ const tx1 = {
   value: "0",
 };
 
-// build user op
-let userOp = await smartAccount.buildUserOp([tx1], {
-  overrides: {
-    // signature: "0x0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000456b395c4e107e0302553b90d1ef4a32e9000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000db3d753a1da5a6074a9f74f39a0a779d3300000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000016000000000000000000000000000000000000000000000000000000000000001800000000000000000000000000000000000000000000000000000000000000080000000000000000000000000bfe121a6dcf92c49f6c2ebd4f306ba0ba0ab6f1c000000000000000000000000da5289fcaaf71d52a80a254da614a192b693e97700000000000000000000000042138576848e839827585a3539305774d36b96020000000000000000000000000000000000000000000000000000000002faf08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000041feefc797ef9e9d8a6a41266a85ddf5f85c8f2a3d2654b10b415d348b150dabe82d34002240162ed7f6b7ffbc40162b10e62c3e35175975e43659654697caebfe1c00000000000000000000000000000000000000000000000000000000000000"
-    // callGasLimit: 2000000, // only if undeployed account
-    // verificationGasLimit: 700000
-  },
-  skipBundlerGasEstimation: false,
+// This will build the tx into a user op and send it.
+let userOpResponse = await smartAccount.sendTransaction(tx1, {
   params: {
     sessionSigner: sessionSigner,
     sessionValidationModule: erc20ModuleAddr,
   },
-});
-
-// send user op
-const userOpResponse = await smartAccount.sendUserOp(userOp, {
-  sessionSigner: sessionSigner,
-  sessionValidationModule: erc20ModuleAddr,
 });
 ```
 

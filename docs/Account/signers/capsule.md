@@ -14,24 +14,14 @@ Read below to learn how to configure your app to create smart accounts for all y
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @usecapsule/web-sdk ethers@5.7.2
+yarn add @biconomy/account @usecapsule/web-sdk ethers@5.7.2
 ```
 
 ## Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
+import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
 ```
 
 ## Capsule Configuration
@@ -53,44 +43,18 @@ const provider = new ethers.JsonRpcProvider(CHAIN_PROVIDER, CHAIN);
 const ethersSigner = new CapsuleEthersSigner(capsule, provider);
 ```
 
-## Biconomy Configuration Values
-
-Set up instances of Bundler, Paymaster. Alternativedly you can also use the Multi chain Module this way.
-
-```typescript
-const bundler: IBundler = new Bundler({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: "",
-});
-```
-
 ## Create the Biconomy Smart Account
 
 ```typescript
 const connect = async () => {
   try {
-    const module = await ECDSAOwnershipValidationModule.create({
-      signer: ethersSigner, // signer value we got from capsule
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+    const smartAccount = await createSmartAccountClient({
+      signer: ethersSigner as LightSigner,
+      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+      biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
     });
 
-    let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
-      paymaster: paymaster,
-      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: module,
-      activeValidationModule: module,
-    });
-
-    const address = await biconomySmartAccount.getAccountAddress();
+    const address = await smartAccount.getAccountAddress();
   } catch (error) {
     console.error(error);
   }

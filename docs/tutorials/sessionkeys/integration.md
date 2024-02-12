@@ -40,18 +40,11 @@ Lets update the imports that we will need for this to work:
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { useState } from "react";
-import { IBundler, Bundler } from "@biconomy/bundler";
 import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
+  createSmartAccountClient,
+  BiconomySmartAccountV2
 } from "@biconomy/account";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
 import { ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
 ```
 
 In the Home component add the following state variables:
@@ -69,24 +62,11 @@ const [provider, setProvider] = useState<ethers.providers.Provider | null>(
 
 We're going to track the address, smartAccount, and provider as well as a loading state for this component and save them into state so they can be used in child components.
 
-Lets also set up an instance of the Bundler and Paymaster:
+Lets also get the bundlerUrl and paymasterApiKey from the dashboard.
 
 ```javascript
-
-  const bundler: IBundler = new Bundler({
-    //https://dashboard.biconomy.io/ get future bundler urls from your dashboard
-    bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-    chainId: ChainId.POLYGON_MUMBAI,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
-
-
-
-  const paymaster: IPaymaster = new BiconomyPaymaster({
-    //https://dashboard.biconomy.io/ get future paymaster urls from your dashboard
-    paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/bN77UefF7.145fff89-e5e1-40ec-be11-7549878eb08f"
-  })
-
+  const bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  const paymasterApiKey = "paymasterApiKey";
 ```
 
 We will need the bundler however the paymaster is optional in this case. If you want to sponsor transactions later or allow users to pay for gas in erc20 tokens make sure to set this up but for the purposes of this tutorial we will not be sponsoring any transactions. The paymaster URL here will only work for tutorial contracts.
@@ -105,19 +85,12 @@ const connect = async () => {
     setLoading(true);
     const provider = new ethers.providers.Web3Provider(ethereum);
     await provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner();
-    const ownerShipModule = ECDSAOwnershipValidationModule.create({
-      signer: signer,
-      moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-    });
     setProvider(provider);
-    let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
-      bundler: bundler,
-      paymaster: paymaster,
-      entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-      defaultValidationModule: ownerShipModule,
-      activeValidationModule: ownerShipModule,
+    const signer = provider.getSigner();
+    let biconomySmartAccount = await createSmartAccountClient({
+      signer,
+      bundlerUrl,
+      biconomyPaymasterApiKey: paymasterApiKey,
     });
     setAddress(await biconomySmartAccount.getAccountAddress());
     setSmartAccount(biconomySmartAccount);
@@ -133,9 +106,8 @@ This function takes care of the following:
 - Get the Ethereum object injected by a wallet from the window
 - Set loading state to true
 - Create a provider and signer using ethers after getting permission from user
-- Create an ownership module in this case as we are using our EOA we will be utilizing the ECDSA ownership module
 - We set provider in state
-- Initialize the BiconomySmartAccountV2 by using the static create method available on the class.
+- Initialize the BiconomySmartAccountV2 by using the createSmartAccountClient method
 - Initialize the smart account and save the address and instance of smart account to state and finally set loading state back to false.
 
 Let's add some items to our component within the main tags:
@@ -158,21 +130,14 @@ You have now integrated the SDK succesfully, in the next section we will set up 
 <summary> Expand for Code </summary>
 
 ```javascript
-
-import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
-import { useState } from 'react';
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
-import { ethers  } from 'ethers'
-import { ChainId } from "@biconomy/core-types"
+import Head from "next/head";
+import styles from "@/styles/Home.module.css";
+import { useState } from "react";
 import {
-  IPaymaster,
-  BiconomyPaymaster,
-} from '@biconomy/paymaster'
-
-
+  createSmartAccountClient,
+  BiconomySmartAccountV2
+} from "@biconomy/account";
+import { ethers } from "ethers";
 
 export default function Home() {
   const [address, setAddress] = useState<string>("")
@@ -180,19 +145,8 @@ export default function Home() {
   const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2 | null>(null);
   const [provider, setProvider] = useState<ethers.providers.Provider | null>(null)
 
-  const bundler: IBundler = new Bundler({
-    //https://dashboard.biconomy.io/
-    bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-    chainId: ChainId.POLYGON_MUMBAI,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
-
-
-
-  const paymaster: IPaymaster = new BiconomyPaymaster({
-    //https://dashboard.biconomy.io/
-    paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/bN77UefF7.145fff89-e5e1-40ec-be11-7549878eb08f"
-  })
+  const bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  const paymasterApiKey = "paymasterApiKey";
 
   const connect = async () => {
     // @ts-ignore
@@ -202,20 +156,13 @@ export default function Home() {
       const provider = new ethers.providers.Web3Provider(ethereum)
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
-      const ownerShipModule = await ECDSAOwnershipValidationModule.create({
-        signer: signer,
-        moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-      })
       setProvider(provider)
-      let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        chainId: ChainId.POLYGON_MUMBAI,
-        bundler: bundler,
-        paymaster: paymaster,
-        entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-        defaultValidationModule: ownerShipModule,
-        activeValidationModule: ownerShipModule
+      let biconomySmartAccount = await createSmartAccountClient({
+        signer,
+        bundlerUrl,
+        biconomyPaymasterApiKey: paymasterApiKey,
       })
-      setAddress( await biconomySmartAccount.getAccountAddress())
+      setAddress(await biconomySmartAccount.getAccountAddress())
       setSmartAccount(biconomySmartAccount)
       setLoading(false)
     } catch (error) {
@@ -239,8 +186,6 @@ export default function Home() {
     </>
   )
 }
-
-
 ```
 
 </details>

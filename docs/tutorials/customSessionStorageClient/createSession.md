@@ -38,10 +38,10 @@ The Session Key Manager module is responsible for overseeing the storage of sess
 - generate userop.signature for transaction that utilises session key
 
 ```typescript
-const sessionModule = await SessionKeyManagerModule.create({
+const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
   smartAccountAddress: address,
-  sessionStorageClient: sessionFileStorage,
+  sessionStorageClient: sessionFileStorage
 });
 ```
 
@@ -98,16 +98,15 @@ const setSessiontrx = {
 transactionArray.push(setSessiontrx);
 ```
 
-Next we will build a userOp and use the smart account to send it to Bundler. Ensure that a paymaster is setup and the corresponding gas tank has sufficient funds to sponsor the transactions. Also enable the session validation module address in the policy section for the paymaster.
+Next we will send the transactions which will get wrapped in a user op and sent to the Bundler. Ensure that a paymaster is setup and the corresponding gas tank has sufficient funds to sponsor the transactions. Also enable the session validation module address in the policy section for the paymaster.
 
 ```typescript
-let partialUserOp = await smartAccount.buildUserOp(transactionArray, {
+let userOpResponse = await smartAccount.sendTransaction(transactionArray, {
   paymasterServiceData: {
     mode: PaymasterMode.SPONSORED,
   },
 });
 
-const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
 console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
 
 const transactionDetails = await userOpResponse.wait();
@@ -123,25 +122,14 @@ Checkout below for entire code snippet
 
 ```typescript
 import { defaultAbiCoder } from "ethers/lib/utils";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  SessionKeyManagerModule,
-  DEFAULT_SESSION_KEY_MANAGER_MODULE,
-} from "@biconomy/modules";
 import { config } from "dotenv";
-import { IBundler, Bundler } from "@biconomy/bundler";
 import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
+  createSmartAccountClient,
+  DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  createSessionKeyManagerModule,
+  BiconomySmartAccountV2
 } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-  PaymasterMode,
-} from "@biconomy/paymaster";
 import { SessionFileStorage } from "./customSession";
 
 let smartAccount: BiconomySmartAccountV2;
@@ -149,37 +137,16 @@ let address: string;
 
 config();
 
-const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-
-console.log({ ep: DEFAULT_ENTRYPOINT_ADDRESS });
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/HvwSf9p7Q.a898f606-37ed-48d7-b79a-cbe9b228ce43",
-});
-
 const provider = new providers.JsonRpcProvider(
   "https://rpc.ankr.com/polygon_mumbai",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
 async function createAccount() {
-  const module = await ECDSAOwnershipValidationModule.create({
+  let biconomySmartAccount = await createSmartAccountClient({
     signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-  let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    paymaster: paymaster,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
+    bundlerUrl,
+    biconomyPaymasterApiKey: paymasterApiKey,
   });
   address = await biconomySmartAccount.getAccountAddress();
   console.log(address);
@@ -254,13 +221,11 @@ const createSession = async () => {
     }
 
     transactionArray.push(setSessiontrx);
-    let partialUserOp = await smartAccount.buildUserOp(transactionArray, {
+    let userOpResponse = await smartAccount.sendTransaction(transactionArray, {
       paymasterServiceData: {
         mode: PaymasterMode.SPONSORED,
       },
     });
-    console.log(partialUserOp);
-    const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
     console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
     const transactionDetails = await userOpResponse.wait();
     console.log("txHash", transactionDetails.receipt.transactionHash);

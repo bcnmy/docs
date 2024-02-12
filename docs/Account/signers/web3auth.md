@@ -24,14 +24,8 @@ yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-typ
 ## Imports
 
 ```typescript
-import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-import { IBundler, Bundler } from "@biconomy/bundler";
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
+import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
 import SocialLogin from "@biconomy/web3-auth";
 import "@biconomy/web3-auth/dist/src/style.css";
 ```
@@ -96,41 +90,12 @@ console.log("EOA address", accounts);
 
 ## Initialize Smart Account
 
-```js
-import { IBundler, Bundler } from '@biconomy/bundler'
-import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
-import {
-  IPaymaster,
-  BiconomyPaymaster,
-} from '@biconomy/paymaster'
-import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
+```ts
+import { createSmartAccountClient, LightSigner } from "@biconomy/account";
 
-const bundler: IBundler = new Bundler({
-    // get from biconomy dashboard https://dashboard.biconomy.io/
-    bundlerUrl: '',
-    chainId: ChainId.POLYGON_MUMBAI,// or any supported chain of your choice
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-  })
-
-
-const paymaster: IPaymaster = new BiconomyPaymaster({
-  // get from biconomy dashboard https://dashboard.biconomy.io/
-  paymasterUrl: ''
-})
-
-const module = await ECDSAOwnershipValidationModule.create({
-    signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE
-  })
-
-
-let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module
-})
-
-
+const smartAccount = await createSmartAccountClient({
+  signer: wallet as LightSigner,
+  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
+});
 ```

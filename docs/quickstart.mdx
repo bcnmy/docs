@@ -3,382 +3,222 @@ sidebar_label: "Quickstart"
 sidebar_position: 2
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+# Quickstart ⚡️
 
-# Quickstart: Smart Account Native Transfer ⚡️
-
-In this guide, we will create a basic Node.js script using **TypeScript** with an implementation of the **Smart Account Package** from the Biconomy SDK. You will learn how to create a **Smart Account** and perform **user operations** by sending a native transfer of tokens.
+In this guide, we will create a smart account and mint an NFT with [Biconomy's SDK](https://github.com/bcnmy/biconomy-client-sdk) and Node.js.
 
 :::info
-Please note that this tutorial assumes you have Node JS installed on your computer and have some working knowledge of Node. 🧠
+For a detailed exploration of the SDK's inner workings, delve into our more granular [API documentation](https://bcnmy.github.io/biconomy-client-sdk/#md:biconomy-sdk).
 :::
 
-## Environment set up 🛠️
+## 1. Setup 🛠️
 
-We will clone a preconfigured Node.js project with TypeScript support to get started. Follow these steps to clone the repository to your local machine using your preferred command line interface:
-
-1. Open your command line interface, Terminal, Command Prompt, or PowerShell.
-2. Navigate to the desired directory where you would like to clone the repository.
-3. Execute the following command to clone the repository from the provided [GitHub link](https://github.com/bcnmy/quickstart)
-
-<Tabs>
-<TabItem value="http" label="HTTP">
+Let's create a [Typescript](https://www.typescriptlang.org) project using npm to get started. Let's start by adding some tooling:
 
 ```bash
-git clone https://github.com/bcnmy/quickstart.git
+mkdir biconomy-sa && cd biconomy-sa && npm init -y && npm i --save-dev @types/node tslib
 ```
 
-</TabItem>
-<TabItem value="ssh" label="SSH">
+**🎉 Then add biconomy's account package: 🎉**
+
+```
+
+  npm i @biconomy/account
+
+```
+
+Create the following tsconfig.json (TypeScript config):
 
 ```bash
-git clone git@github.com:bcnmy/quickstart.git
-```
-
-</TabItem>
-
-</Tabs>
-
-Once you have the repository on your local machine, install all dependencies using your preferred package manager. In this tutorial, we will use `yarn`.
-
-<Tabs>
-<TabItem value="yarn" label="Yarn">
-
-```bash
-yarn install
-yarn dev
-```
-
-</TabItem>
-<TabItem value="npm" label="Npm">
-
-```bash
-npm install
-npm run dev
-```
-
-</TabItem>
-
-</Tabs>
-
-After running these two commands you should see the printed statement `Hello World!` in your terminal.
-Any changes made to the `index.ts` file in the src directory should now automatically run in your terminal upon saving.
-
-All packages you need for this guide are configured and installed for you. Check out the `package.json` file if you want to explore the dependencies.
-
-<details>
-  <summary> Click to learn more about the packages </summary>
-
-- The **Account package** will help you with creating **Smart Account** and an interface with them to create transactions.
-- The **Bundler package** allows you to interact with our bundler or any other bundler of your choice.
-- The **Paymaster package** can be used with our paymaster or any other of your choice, similar to the bundler package.
-- The **Core Types package** will give us Enums for the proper ChainId we may want to use.
-- The **Modules package** provides access to the different modules that are published for the biconomy SDK.
-- The **Common package** is needed by our accounts package as another dependency.
-- Finally, with `version 5.7.2` of the `ethers` package, we can set our EOA as the account owner.
-
-</details>
-
-Let’s first set up a `.env` file in the root of our project, this will need a **Private Key** of any **Externally Owned Account (EOA)** you would like to serve as the owner of the Smart Account we create. This is a private key you can get from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. Each of these wallets will include step-by-step guides on how to export the Private key. 🔑
-
-```bash
-PRIVATE_KEY = "<your_private_key>"
-```
-
-Let’s give our script the ability to access this environment variable. Delete the console log inside of `src/index.ts` and replace it with the code below. All of our work for the remainder of the tutorial will be in this file.
-
-```typescript
-import { config } from "dotenv";
-
-config();
-```
-
-Now our code is configured to access the environment variable as needed.
-
-## Initialization 🌟
-
-Start by importing necessary packages for the bundler:
-
-```typescript
-import { IBundler, Bundler } from "@biconomy/bundler";
-import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
-import { ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-```
-
-IBundler is the typing for the Bundler class that we will create a new instance of.
-
-### **Initial Configuration**
-
-```typescript
-const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
-```
-
-- Now we have created an instance of our **Bundler** with the following:
-  - A bundler URL which you can retrieve from the Biconomy Dashboard
-  - Chain ID, in this case, we’re using Polygon Mumbai
-  - Default entry point address imported from the Account package
-
-```typescript
-import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-```
-
-Update your import from the Account package to also include `BiconomySmartAccountV2` which is the class we will be using to instantiate our smart account.
-
-```typescript
-const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
-);
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
-```
-
-- Our provider is configured with Ankr's public RPC endpoint; alternatives like Infura or Alchemy are also viable.
-- Following this, we initiate a wallet instance linked to our Private Key.
-
-Before proceeding, we need to integrate the ECDSA module for our Smart Account. For details on modules, visit [Biconomy's page](https://www.biconomy.io/post/making-biconomy-smart-accounts-modular).
-We start by importing the ECDSA module:
-
-```typescript
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
-```
-
-Now let's initialize the module and pass it to our Account Creation Config:
-
-```typescript
-async function initializeSmartAccount() {
-  const module = await ECDSAOwnershipValidationModule.create({
-    signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
-  });
-
-  let biconomyAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
-  });
-
-  // Log the EOA owner's address and the Smart Account address
-  console.log("EOA Owner Address:", wallet.address);
-  console.log(
-    "Smart Account Address:",
-    await biconomyAccount.getAccountAddress(),
-  );
-
-  return biconomyAccount;
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./lib",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["./**/*.ts"]
 }
 ```
 
-The `initializeSmartAccount()` function initiates the creation of a new Smart Account using the `BiconomySmartAccount` class.
-This setup process involves configuring the account with predefined settings. Upon successful initialization, the function logs:
+> The **Account package** will help you with creating **Smart Account** and an interface with them to send transactions.
+> The same package can be used to also import the paymaster and bundler.
 
-1. The owner of the Smart Account, identified as an Externally Owned Account (EOA).
-2. The unique address of the newly created Smart Account.
+## 2. Create a Smart Account 🌟
 
-These steps prepare the Smart Account for use and make its details easily accessible.
+The **Externally Owned Account (EOA)** corresponding to the private key will serve as the owner of the Smart Account we create. You can get the private key from wallets like MetaMask, TrustWallet, Coinbase Wallet, etc. 🔑
 
-:::info
-Smart accounts are designed with a pre-determined address known prior to deployment, making them counterfactual. The Smart Account (contract) is created automatically during the first transaction, with the gas needed for deployment included.
-:::
+Create an index.ts file, copy the following code in it and replace the `PRIVATE_KEY`.
+
+> Be sure to never publicly expose your private key publicly.
+
+```ts
+import {
+  Hex,
+  createWalletClient,
+  encodeFunctionData,
+  http,
+  parseAbi,
+  zeroAddress,
+} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { polygonMumbai } from "viem/chains";
+import { createSmartAccountClient } from "@biconomy/account";
+
+const bundlerUrl =
+  "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"; // Found at https://dashboard.biconomy.io
+
+export const createAccountAndMintNft = async () => {
+  // ----- 1. Generate EOA from private key
+  const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
+  const client = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
+  const eoa = client.account.address;
+  console.log(`EOA address: ${eoa}`);
+
+  // ------ 2. Create biconomy smart account instance
+  const smartAccount = await createSmartAccountClient({
+    signer: client,
+    bundlerUrl,
+  });
+  const saAddress = await smartAccount.getAccountAddress();
+  console.log("SA Address", saAddress);
+};
+createAccountAndMintNft();
+```
+
+Next, run the following command:
+
+```bash
+npx ts-node index.ts
+```
+
+You should see EOA and the smart account address in the console.
+
+```bash
+EOA address: 0x7d4EcAc73A5574447E0F38b8451DC9B29D8Fd083
+SA Address 0x4dF23B78543F5c2F9CBCDF09956288B3e97bb9a4
+```
+
+Smart accounts are designed with a pre-determined address known prior to deployment. Users transfer funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Alternatively the paymaster could be used to sponsor this transaction.
 
 :::caution
-Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
+Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network, head over to the [Polygon Faucet](https://faucet.polygon.technology/), paste in your smart account address, and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
 :::
 
-Once you have tokens available, it is time to start constructing our first userOps for a native transfer.
+Once you have tokens available, follow the next steps.
 
-## Build you first userOp (Transaction) 🧱
+## 3. Execute your first transaction 🚀
 
-Let's create your first **user operation (userOp)** for the transaction. Here are the details it needs:
+Let's create your first transaction
 
-- `to`: The address towards which this interaction is directed. (Feel free to change to your own or send me more test tokens 😉)
-- `data`: We are defaulting to `0x` as no specific data is needed for native transfers.
-- `value`: We need to indicate the amount we want to transfer and format it correctly using the `parseEther` utility function.
+- `to`: Smart Contract your Smart Account will interact with.
+- `data`: For the mint function we will pass the `nftData` created using `encodeFunctionData`.
+- `value`: For the mint function this won't be needed. Depending on the transaction, you can pass the value.
 
-Now we'll build the userOp. You can log the partial userOp if you want. We'll add `0x` to the `paymasterAndData` value to make it a regular transaction where the end user pays for the gas.
+Add the following code in the script above at the bottom of the `createAccountAndMintNft` function.
 
 ```typescript
-async function buildUserOp(smartAccount: BiconomySmartAccountV2) {
-  try {
-    const transaction = {
-      to: "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD",
-      data: "0x",
-      value: ethers.utils.parseEther("0.01"),
-    };
+try {
+  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+  const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+  const nftData = encodeFunctionData({
+    abi: parsedAbi,
+    functionName: "safeMint",
+    args: [saAddress as Hex],
+  });
 
-    const userOp = await smartAccount.buildUserOp([transaction]);
-    userOp.paymasterAndData = "0x";
-    return userOp;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error building user operation:", error.message);
-    }
+  // ------ 4. Send transaction
+  const transactionResponse = await smartAccount.sendTransaction({
+    to: nftAddress,
+    data: nftData,
+  });
+  const { transactionHash } = await transactionResponse.waitForTxHash();
+  console.log("transactionHash", transactionHash);
+} catch (error: unknown) {
+  if (error instanceof Error) {
+    console.error("Transaction Error:", error.message);
   }
 }
 ```
 
-## Execute your first userOp 🚀
-
-With our `buildUserOp` function set to create user operations, we'll now use it inside the `submitUserOp` function.
-
-```typescript
-async function submitUserOp() {
-  try {
-    // Initialize your Smart Account
-    const smartAccount = await initializeSmartAccount();
-
-    // Build the user operation
-    const userOp = await buildUserOp(smartAccount);
-    if (!userOp) {
-      console.error("Error: Could not create the user operation.");
-      return;
-    }
-
-    // Send the user operation and wait for the transaction to complete
-    const userOpResponse = await smartAccount.sendUserOp(userOp);
-    const transactionDetails = await userOpResponse.wait();
-
-    console.log("See your transaction details here:");
-    console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
-    );
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Transaction Error:", error.message);
-    }
-  }
-}
-```
-
-1. We send the `userOp` to our bundler.
-2. We save the response in a variable called `userOpResponse`.
-3. We retrieve the transaction detail by calling `userOpResponse.wait()`.
+1. We create a transaction object.
+2. We send the `transaction` to our bundler.
+3. We store the response in a variable called `transactionResponse`.
+4. We retrieve the transaction detail by calling `userOpResponse.waitForTxHash()`.
 
 _To wait for a specific number of network confirmations before getting the value, use `wait()` with a number argument.
-For instance, `userOpResponse.wait(5)` waits for 5 confirmations before returning the value._
+For instance, `transactionResponse.wait(5)` waits for 5 confirmations before returning the value._
 
-Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK!
+Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK. The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
-Well done! The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
+You can also view the latest transaction events on the [Polygon Mumbai Testnet Explorer](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e#events).
 
 <details>
   <summary>View Complete Code</summary>
 
 ```typescript
-import { config } from "dotenv";
-import { IBundler, Bundler } from "@biconomy/bundler";
 import {
-  BiconomySmartAccountV2,
-  DEFAULT_ENTRYPOINT_ADDRESS,
-} from "@biconomy/account";
-import { ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
-import {
-  ECDSAOwnershipValidationModule,
-  DEFAULT_ECDSA_OWNERSHIP_MODULE,
-} from "@biconomy/modules";
-config();
+  Hex,
+  createWalletClient,
+  encodeFunctionData,
+  http,
+  parseAbi,
+  zeroAddress,
+} from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { polygonMumbai } from "viem/chains";
+import { createSmartAccountClient } from "@biconomy/account";
 
-const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
-  entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-});
+export const createAccountAndMintNft = async () => {
+  // ----- 1. Generate EOA from private key
+  const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
+  const client = createWalletClient({
+    account,
+    chain: polygonMumbai,
+    transport: http(),
+  });
+  const eoa = client.account.address;
+  console.log(`EOA address: ${eoa}`);
 
-const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
-);
-const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
+  // ------ 2. Create biconomy smart account instance
+  const smartAccount = await createSmartAccountClient({
+    signer: client,
+    bundlerUrl:
+      "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  });
+  const saAddress = await smartAccount.getAccountAddress();
+  console.log("SA Address", saAddress);
 
-async function initializeSmartAccount() {
-  const module = await ECDSAOwnershipValidationModule.create({
-    signer: wallet,
-    moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
+  // ------ 3. Generate transaction data
+  const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
+  const parsedAbi = parseAbi(["function safeMint(address _to)"]);
+  const nftData = encodeFunctionData({
+    abi: parsedAbi,
+    functionName: "safeMint",
+    args: [saAddress as Hex],
   });
 
-  let biconomyAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
-    bundler: bundler,
-    entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
-    defaultValidationModule: module,
-    activeValidationModule: module,
+  // ------ 4. Send transaction
+  const { waitForTxHash } = await smartAccount.sendTransaction({
+    to: nftAddress,
+    data: nftData,
   });
 
-  // Log the EOA owner's address and the Smart Account address
-  console.log("EOA Owner Address:", wallet.address);
-  console.log(
-    "Smart Account Address:",
-    await biconomyAccount.getAccountAddress(),
-  );
-
-  return biconomyAccount;
-}
-
-async function buildUserOp(smartAccount: BiconomySmartAccountV2) {
-  try {
-    const transaction = {
-      to: "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD",
-      data: "0x",
-      value: ethers.utils.parseEther("0.0001"),
-    };
-
-    const userOp = await smartAccount.buildUserOp([transaction]);
-    userOp.paymasterAndData = "0x";
-    return userOp;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Error building user operation:", error.message);
-    }
-  }
-}
-
-async function submitUserOp() {
-  try {
-    // Initialize your Smart Account
-    const smartAccount = await initializeSmartAccount();
-
-    // Build the user operation
-    const userOp = await buildUserOp(smartAccount);
-    if (!userOp) {
-      console.error("Error: Could not create the user operation.");
-      return;
-    }
-
-    // Send the user operation and wait for the transaction to complete
-    const userOpResponse = await smartAccount.sendUserOp(userOp);
-    const transactionDetails = await userOpResponse.wait();
-
-    console.log("See your transaction details here:");
-    console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
-    );
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Transaction Error:", error.message);
-    }
-  }
-}
-
-submitUserOp();
+  const { transactionHash } = await waitForTxHash();
+  console.log("transactionHash", transactionHash);
+};
+createAccountAndMintNft();
 ```
 
 </details>
-If you are facing any error, do checkout the [troubleshooting](/troubleshooting/commonerrors) for common errors.
+If you run into any errors, check out [troubleshooting](/troubleshooting/commonerrors) for common errors.
 
 🎉 **Congratulations on completing the quickstart!**
 
-To dive deeper, check out more use cases in our Quick Explore guide or explore our Node.js guides for additional insights.
+To dive deeper, check out more [use cases](/tutorials) and follow [this guide for gasless transactions](/tutorials/sendGasless).

@@ -37,7 +37,7 @@ pnpm add @biconomy/paymaster
 </TabItem>
 </Tabs>
 
-## Integration 
+## Integration
 
 Set up a paymaster for the smart account by providing only the paymaster API key. The default mode used is `Sponsored` mode in this case.
 :::info
@@ -47,22 +47,23 @@ Set up a paymaster for the smart account by providing only the paymaster API key
 :::
 
 ```typescript
-  import { BiconomySmartAccountV2 } from "@biconomy/account";
+  import { createSmartAccountClient } from "@biconomy/account";
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const biconomySmartAccount = await createSmartAccountClient(
     {
       signer: signer,
       chainId: 80001
-      biconomyPaymasterApiKey: "paymaster api key",
-      bundlerUrl: "bundler url"
+  bundlerUrl:
+    "https://docs.biconomy.io/dashboard#bundler-url", // <-- Read about this here
+  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
     }
   );
 ```
+
 If you wish to pass "strictMode" to your Paymaster you need to create the instace.
 
 ```typescript
-  import { IPaymaster, BiconomyPaymaster } from "@biconomy/paymaster";
-  import { BiconomySmartAccountV2 } from "@biconomy/account";
+  import { createSmartAccountClient, IPaymaster, BiconomyPaymaster } from "@biconomy/account";
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
     //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
@@ -70,14 +71,14 @@ If you wish to pass "strictMode" to your Paymaster you need to create the instac
     strictMode: true
   });
 
-  const biconomySmartAccount = await BiconomySmartAccountV2.create(
+  const biconomySmartAccount = await createSmartAccountClient(
     {
       signer: signer,
       chainId: 80001
       paymaster,
-      bundlerUrl: "bundler url"
-    }
+  bundlerUrl:
+    "https://bundler.biconomy.io/api/v2/{chain-id-here}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"    }
   );
 ```
 
-You have now assigned the Paymaster to the smart account. See our [tutorials](/category/tutorials) for in depth integrations of the Smart Account and Paymaster.
+You have now assigned the Paymaster to the smart account. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Paymaster.
