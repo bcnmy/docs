@@ -1,4 +1,8 @@
-# Custom Validation Module
+---
+sidebar_label: "Custom Validation Module"
+sidebar_position: 8
+title: Custom Validation Module
+---
 
 In this tutorial, we will look at how to create your own validation module.
 

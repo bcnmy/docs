@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Migrating to V4"
-sidebar_position: 8
+sidebar_position: 9
 title: Migrating to SDK V4
 ---
 
@@ -10,7 +10,7 @@ This guide provides instructions for migrating from v3 to v4. It outlines the ch
 
 1. Update dependencies: Install the latest V4 version of  `@biconomy/account` package. All transaction functionalities are now accessible by simply importing the account package without the need for any other Biconomy package.
 
-2. `BiconomyPaymaster` is now named `Paymaster` and should be imported from `@biconomy/account` instead of `@biconomy/paymaster`.
+2. `BiconomyPaymaster` is now named `Paymaster` and could be imported from `@biconomy/account` instead of `@biconomy/paymaster`.
 
 3. The `value` type in transaction can be bigInt, number, 0xstring or string. So, if you are using ethers.parseEther or any ethers parse function, will need to change to the following.
 
