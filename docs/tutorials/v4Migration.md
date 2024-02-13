@@ -29,7 +29,7 @@ This guide provides instructions for migrating from v3 to v4. It outlines the ch
     };
     ```
 
-4. When using `buildTokenPaymasterUserOp` method, the spendor cannot be undefined. The BiconomyTokenPaymasterRequest `spender` type has changed from string to `0x${string}`, users need to convert spender to `0x${string}` like following.
+4. When using `buildTokenPaymasterUserOp` method, the spender cannot be undefined. The BiconomyTokenPaymasterRequest `spender` type has changed from string to `0x${string}`, users need to convert spender to `0x${string}` like following.
 
     ```typescript
     // V3
