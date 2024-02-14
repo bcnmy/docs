@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Wallet UI Kit"
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Obvious - Embedded Wallet UI Kit

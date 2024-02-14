@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Cross-chain Swaps"
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Cross-chain Swap API-s
