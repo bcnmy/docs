@@ -3,6 +3,7 @@
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+import 'dotenv/config';
 
 const redirectsList = require("./redirects.js").redirectLinks;
 
@@ -33,7 +34,11 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
-
+  customFields: {
+    // Put your custom environment here
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    PAYMASTER_TOKENS_GOOGLE_SHEET_ID: process.env.PAYMASTER_TOKENS_GOOGLE_SHEET_ID
+  },
   presets: [
     [
       "classic",

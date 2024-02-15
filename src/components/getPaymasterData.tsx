@@ -1,8 +1,10 @@
-const API_KEY = '';
 import React, { useEffect, useState } from 'react';
-
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export default function GoogleSheetsDataPage() {
+  const {
+    siteConfig: {customFields},
+  } = useDocusaurusContext();
   const [dataLoaded, setDataLoaded] = useState(false);
   const [fetchedData, setFetchedData] = useState({});
 
@@ -10,7 +12,7 @@ export default function GoogleSheetsDataPage() {
     const fetchDataFromGoogleSheet = async () => {
       let fetchedData = {};
       const response = await fetch(
-        `https://content-sheets.googleapis.com/v4/spreadsheets/1V4mZ9fYJ4KJom3NEgdWy6ZEHr7xouh_zB-8ILaKhqHo?includeGridData=true&key=${API_KEY}`,
+        `https://content-sheets.googleapis.com/v4/spreadsheets/${customFields.PAYMASTER_TOKENS_GOOGLE_SHEET_ID}?includeGridData=true&key=${customFields.GOOGLE_API_KEY}`,
       );
 
       if (!response.ok) {
