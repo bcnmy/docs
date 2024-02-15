@@ -1,16 +1,5 @@
-
-import 'stream-browserify';
-import 'stream-http';
-import "https-browserify";
-import "querystring-es3";
-import "os-browserify/browser";
-import "path-browserify";
-import "crypto-browserify"
-import "browserify-zlib";
-import "process/browser"
 import {google} from 'googleapis';
-
-const API_KEY= 'AIzaSyC2VUDR-zCiXnQ0CXmI64c_L67CxgZiE9o';
+const API_KEY= '';
 import React, { useEffect, useState } from 'react';
 const sheets = google.sheets({ version: 'v4', auth: API_KEY });
 console.log(sheets);
