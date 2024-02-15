@@ -16,7 +16,7 @@ The [Biconomy Smart Account](/account) is an ERC 4337-compliant solution that wo
 
 Smart Accounts are governed by code instead of ECDSA, which allows for other types of signature algorithms to be used with the Smart Account. Additionally, the smart accounts package allows you to quickly and easily build and execute User Operations or userOps. These are pseudo-transaction objects that eventually execute as a transaction on the EVM.
 
-Biconomy Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account. Check out different ways you can create a Biconomy Smart Account [here](/account/signers).
+Biconomy Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account. Check out different ways you can create a Biconomy Smart Account [here](/Account/signers).
 
 Smart Accounts are further enhanced by validation modules that allow you to execute arbitrary logic before validating a userOp. This allows you, as a developer, to build modules that allow for session keys, multi-chain validation modules, passkeys, and more.
 
@@ -38,7 +38,7 @@ If the mode you choose in the request to the Paymaster URL is the sponsored mode
 
 ![Erc20](./images/overview/erc20gas.png)
 
-Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/paymaster/supportedNetworks).
+Switching the mode of your Paymster to ERC20 allows you to unlock an experience where users can pay gas in any of our supported ERC20 tokens on different networks. Check out the latest supported tokens [here](/Paymaster/supportedNetworks).
 
 Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/tutorials)
 

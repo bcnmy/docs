@@ -213,6 +213,12 @@ const config = {
         // ... other options
       },
     ],
+    [
+      "@docusaurus/plugin-google-tag-manager",
+      {
+        containerId: 'GTM-58745M9M',
+      },
+    ],
   ],
 };
 
