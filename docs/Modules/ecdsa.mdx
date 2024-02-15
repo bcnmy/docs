@@ -73,6 +73,14 @@ const saModuleAddress = await smartAccount.activeValidationModule.getAddress();
 console.log(saModuleAddress === defaultValidationModule.moduleAddress); // true
 ```
 
+:::info
+The Smart Account's address is counterfactually generated based on the signer's public key, which is the owner's address used in the ECDSA Module. This feature allows for the pre-calculation of the account address before deployment.
+:::
+
+:::warning
+To deploy the same Smart Account (with the same address) on different chains, it's crucial to use the same module address, the same initialization data (here, the owner's EOA address) for the ECDSA Module here and the index. This ensures consistency in the account's address across various blockchains.
+:::
+
 ## Smart Contract Deep Dive 🛠️
 
 This section dives into the `EcdsaOwnershipRegistryModule` for Biconomy Smart Accounts, focusing on key functionalities and security aspects.
