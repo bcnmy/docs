@@ -67,7 +67,7 @@ export default function GoogleSheetsDataPage() {
       {dataLoaded ? (
         Object.keys(fetchedData).map(sheetTitle => (
           <div key={sheetTitle}>
-            <h2>{sheetTitle}</h2>
+            <h3>{sheetTitle}</h3>
             <table>
               <thead>
                 <tr>
