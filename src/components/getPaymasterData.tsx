@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export default function GoogleSheetsDataPage() {
@@ -7,9 +7,24 @@ export default function GoogleSheetsDataPage() {
   } = useDocusaurusContext();
   const [dataLoaded, setDataLoaded] = useState(false);
   const [fetchedData, setFetchedData] = useState({});
+  const cacheExpirationTime = 7 * 24 * 60 * 60; // 7 days in seconds
 
   useEffect(() => {
     const fetchDataFromGoogleSheet = async () => {
+      try {
+        const storedData = localStorage.getItem('fetchedData');
+        const storedTimestamp = localStorage.getItem('fetchedDataTimestamp');
+        
+        if (
+          storedData &&
+          storedTimestamp &&
+          Date.now() - Number(storedTimestamp) < cacheExpirationTime * 1000 
+        ) {
+          setFetchedData(JSON.parse(storedData));    
+          setDataLoaded(true);
+          return;      
+        }
+
       let fetchedData = {};
       const response = await fetch(
         `https://content-sheets.googleapis.com/v4/spreadsheets/${customFields.PAYMASTER_TOKENS_GOOGLE_SHEET_ID}?includeGridData=true&key=${customFields.GOOGLE_API_KEY}`,
@@ -46,20 +61,23 @@ export default function GoogleSheetsDataPage() {
               }
             });
           }
-          console.log('-----------------');
         });
       } else {
         console.log('No sheets found.');
       }
 
+      localStorage.setItem('fetchedData', JSON.stringify(fetchedData));
+      localStorage.setItem('fetchedDataTimestamp', String(Date.now())); // Convert to string
       setFetchedData(fetchedData);
-      console.log('-----------------');
       setDataLoaded(true);
+     
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle errors gracefully (e.g., display an error message)
+    }
     };
     fetchDataFromGoogleSheet();
   }, []);
-
-  console.log(fetchedData)
 
   return (
     <div>
