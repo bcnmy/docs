@@ -18,7 +18,7 @@ Check out an end-to-end integration of Web3Auth with Biconomy on this [example a
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account
+yarn add @biconomy/account @web3auth/modal @walletconnect/sign-client ethers@5.7.2
 ```
 
 ## Imports
