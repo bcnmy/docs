@@ -18,21 +18,17 @@ Check out an end-to-end integration of Web3Auth with Biconomy on this [example a
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @web3auth/modal @walletconnect/sign-client ethers@5.7.2
+yarn add @biconomy/account
 ```
 
 ## Imports
 
 ```typescript
 import {
+  createSmartAccountClient,
   BiconomySmartAccountV2,
-  BiconomySmartAccountV2Config,
-} from "@biconomy/account";
-import {
-  IHybridPaymaster,
-  SponsorUserOperationDto,
   PaymasterMode,
-} from "@biconomy/paymaster";
+} from "@biconomy/account";
 import { ethers } from "ethers";
 import { Web3Auth } from "@web3auth/modal";
 import { CHAIN_NAMESPACES } from "@web3auth/base";
@@ -126,18 +122,19 @@ const connect = async () => {
     );
     const web3AuthSigner = ethersProvider.getSigner();
 
-    const biconomySmartAccountConfig: BiconomySmartAccountV2Config = {
-      signer: web3AuthSigner,
-      chainId: chainId,
-      biconomyPaymasterApiKey:
-        "-RObQRX9ei.fc6918eb-c582-4417-9d5a-0507b17cfe71",
-      bundlerUrl: `https://bundler.biconomy.io/api/v2/${chainId}/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44`,
+    const config = {
+      biconomyPaymasterApiKey: "", // <-- Get your paymaster API key from https://dashboard.biconomy.io/paymaster
+      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
     };
 
-    let biconomySmartAccount = await BiconomySmartAccountV2.create(
-      biconomySmartAccountConfig
-    );
-    const address = await biconomySmartAccount.getAccountAddress();
+    const smartWallet = await createSmartAccountClient({
+      signer: web3AuthSigner,
+      biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
+      bundlerUrl: config.bundlerUrl,
+      rpcUrl: "",
+    });
+
+    const address = await smartWallet.getAccountAddress();
   } catch (error) {
     console.error(error);
   }
