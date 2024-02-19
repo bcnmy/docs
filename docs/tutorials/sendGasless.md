@@ -113,7 +113,7 @@ Specify the recipient's address and transaction data to build the simple transac
 ```typescript
 // Send the transaction and get the transaction hash
 const userOpResponse = await smartWallet.sendTransaction(tx, {
-  paymasterServiceData: PaymasterMode.SPONSORED,
+  paymasterServiceData: {mode: PaymasterMode.SPONSORED},
 });
 const { transactionHash } = await userOpResponse.waitForTxHash();
 console.log("Transaction Hash", transactionHash);
