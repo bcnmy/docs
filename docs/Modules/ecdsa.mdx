@@ -38,6 +38,57 @@ One of the most popular modules, it bridges the ease of traditional web logins w
 2. **dApp Interaction**: Simplifies the process of logging into dApps using Ethereum messages thanks to EIP-1271 support.
 3. **Ownership Management**: Mirrors traditional ownership systems, providing a familiar framework within a more advanced blockchain setting.
 
+## SDK Guide 📘
+
+### Initializing ECDSA Module 🌟
+
+There is no need to do anything in order to use ECDSAOwnershipValidationModule, this module is set by default on every smart account.
+
+**Usage**
+
+```ts
+import {
+  createECDSAOwnershipValidationModule,
+  createSmartAccountClient,
+} from "@biconomy/accounts";
+
+const ecdsaModuleConfig = { signer };
+
+const defaultValidationModule = await createECDSAOwnershipValidationModule(
+  ecdsaModuleConfig
+);
+
+// Signer for smart account taken from the module
+const smartAccount = await createSmartAccountClient({
+  bundlerUrl,
+  defaultValidationModule, // Alternatively this can be ommitted, as it is the default validation module used when accounts are created
+});
+
+const saModuleAddress = await smartAccount.activeValidationModule.getAddress();
+console.log(saModuleAddress === defaultValidationModule.moduleAddress); // true
+```
+
+**Parameters**
+
+_required params are explicitly mentioned_
+
+- signer(`Signer`, required): Pass the signer instance into the validation module which gets used to detect owner of the smart account.
+- entryPointAddress(`Hex`): Defaults to `"0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"`
+- moduleAddress(`Hex`): Defaults to `"0x0000001c5b32F37F5beA87BDD5374eB2aC54eA8e"`
+- version(ModuleVersion): Defaults to `"V1_0_0"`
+
+**Returns**
+
+- `ecdsaOwnershipValidationModule` (`ECDSAOwnershipValidationModule`): An instance of the Biconomy ECDSA ownership validation module.
+
+:::info
+The Smart Account's address is counterfactually generated based on the signer's public key, which is the owner's address used in the ECDSA Module. This feature allows for the pre-calculation of the account address before deployment.
+:::
+
+:::warning
+To deploy the same Smart Account (with the same address) on different chains, it's crucial to use the same module address, the same initialization data (here, the owner's EOA address) for the ECDSA Module here and the index. This ensures consistency in the account's address across various blockchains.
+:::
+
 ## Smart Contract Deep Dive 🛠️
 
 This section dives into the `EcdsaOwnershipRegistryModule` for Biconomy Smart Accounts, focusing on key functionalities and security aspects.
@@ -127,12 +178,3 @@ The `EcdsaOwnershipRegistryModule` interacts with Smart Accounts primarily throu
 - **Initialization and Ownership**: During deployment, Smart Accounts use `init` method to invoke `initForSmartAccount` on modules, setting initial ownership and configurations.
 - **User Operation Validation**: When a Smart Account attempts to perform an operation, `validateUserOp` is invoked to ensure the action is authorized by the registered owner.
 - **Signature Verification**: The module uses `_verifySignature` to verify any signatures associated with transactions initiated by the Smart Account.
-
-## SDK Guide 📘 
-
-Integrate the ECDSA Validation Module into Biconomy Smart Accounts using the SDK.
-
-### Initializing ECDSA Module 🌟
-
-There is no need to do anything in order to use ECDSAOwnershipValidationModule, this module is set by default on every smart account.
-
