@@ -251,14 +251,12 @@ const { transactionHash, userOperationReceipt } = await wait();
   type UserOpReceipt = {
     userOpHash: string;
     entryPoint: string;
-    sender: string;
-    nonce: number;
     paymaster: string;
-    actualGasCost: BigNumber;
-    actualGasUsed: BigNumber;
-    success: boolean; // check for this flag to be true for successful transaction execution
+    actualGasCost: Hex;
+    actualGasUsed: Hex;
+    success: "true" | "false"; // check for this flag to be true for successful call data execution
     reason: string;
-    logs: Array<ethers.providers.Log>;
+    logs: Array<any>;
     receipt: any;
   };
   ```
