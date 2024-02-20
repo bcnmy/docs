@@ -239,7 +239,31 @@ const { transactionHash, userOperationReceipt } = await wait();
 
 **Returns**
 
-- userOpResponse (`Promise<UserOpResponse>`): userOpResponse that you can use to track user operation.
+- userOpResponse (`Promise<UserOpResponse>`): The method returns an object of type `UserOpResponse` which has a `userOpHash` and two methods: `wait()` and `waitForTxHash()`.
+
+  ```ts
+  type UserOpResponse = {
+    userOpHash: string;
+    wait(_confirmations?: number): Promise<UserOpReceipt>;
+    waitForTxHash(): Promise<UserOpStatus>;
+  };
+
+  type UserOpReceipt = {
+    userOpHash: string;
+    entryPoint: string;
+    sender: string;
+    nonce: number;
+    paymaster: string;
+    actualGasCost: BigNumber;
+    actualGasUsed: BigNumber;
+    success: boolean; // check for this flag to be true for successful transaction execution
+    reason: string;
+    logs: Array<ethers.providers.Log>;
+    receipt: any;
+  };
+  ```
+
+  The `wait()` method resolves when the user operation is dispatched by the bundler on-chain and gets mined. The `waitForTxHash()` method returns a `UserOpStatus` object which includes the transaction hash and the receipt once added on-chain.
 
 ### buildUserOp( )
 
