@@ -212,6 +212,12 @@ export const createAccountAndMintNft = async () => {
 
   const { transactionHash } = await waitForTxHash();
   console.log("transactionHash", transactionHash);
+
+  const userOpReceipt  = await userOpResponse.wait();
+  if(userOpReceipt.success == 'true') { 
+    console.log("UserOp receipt", userOpReceipt)
+    console.log("Transaction receipt", userOpReceipt.receipt)
+  }
 };
 createAccountAndMintNft();
 ```

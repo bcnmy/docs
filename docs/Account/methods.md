@@ -262,7 +262,18 @@ const { transactionHash, userOperationReceipt } = await wait();
   ```
 
   The `wait()` method resolves when the user operation is dispatched by the bundler on-chain and gets mined. The `waitForTxHash()` method returns a `UserOpStatus` object which includes the transaction hash and the receipt once added on-chain.
+  ```ts
+    const { transactionHash } = await userOpResponse.waitForTxHash();
+    console.log("transaction Hash", transactionHash);
 
+    const userOpReceipt  = await userOpResponse.wait();
+    
+    if(userOpReceipt.success == 'true') { // indicates that the transaction was successful without any revert
+      console.log("UserOp receipt", userOpReceipt)
+      console.log("actual transaction receipt", userOpReceipt.receipt)
+    }
+  
+  ```
 ### buildUserOp( )
 
 This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as this step also involves estimating gas for the userOp internally)
