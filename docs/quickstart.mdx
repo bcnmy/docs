@@ -140,6 +140,11 @@ try {
   });
   const { transactionHash } = await transactionResponse.waitForTxHash();
   console.log("transactionHash", transactionHash);
+  const userOpReceipt  = await userOpResponse.wait();
+  if(userOpReceipt.success == 'true') { 
+    console.log("UserOp receipt", userOpReceipt)
+    console.log("Transaction receipt", userOpReceipt.receipt)
+  }
 } catch (error: unknown) {
   if (error instanceof Error) {
     console.error("Transaction Error:", error.message);
