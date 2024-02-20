@@ -87,6 +87,7 @@ const smartAccount = await createSmartAccountClient({
   signer,
   bundlerUrl: "", // get from biconomy dashboard https://dashboard.biconomy.io/
   biconomyPaymasterApiKey: "", // Biconomy Paymaster API Key can also be obtained from dashboard
+  rpcUrl: "" // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
 });
 
 ```

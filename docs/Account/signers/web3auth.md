@@ -131,7 +131,7 @@ const connect = async () => {
       signer: web3AuthSigner,
       biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
       bundlerUrl: config.bundlerUrl,
-      rpcUrl: "",
+      rpcUrl: "" // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
     });
 
     const address = await smartWallet.getAccountAddress();

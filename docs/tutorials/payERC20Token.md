@@ -71,6 +71,11 @@ const {
   userOpHash,
   success,
 } = await wait();
+
+if(success == 'true') { 
+  console.log("UserOp receipt", receipt)
+  console.log("Transaction receipt", receipt.receipt)
+}
 ```
 
 </TabItem>
@@ -99,6 +104,11 @@ const {
   userOpHash,
   success,
 } = await wait();
+
+if(success == 'true') { 
+  console.log("UserOp receipt", receipt)
+  console.log("Transaction receipt", receipt.receipt)
+}
 ```
 
 </TabItem>

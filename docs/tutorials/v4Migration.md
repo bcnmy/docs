@@ -72,6 +72,17 @@ This guide provides instructions for migrating from v3 to v4. It outlines the ch
    });
    ```
 
+6. Pass rpcUrl while creating the smart account for signers that are not a viem wallet or ethers.
+
+   ```ts
+    const smartAccount = await createSmartAccountClient({
+      signer,
+      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+      biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
+      rpcUrl: "" // Recommended for signers that are not a viem wallet or an ethers signer. It's advised to pass RPC url in case of custom signers such as privy, dynamic etc. If rpcUrl is not provided then a default public rpc will be used - which will likely be heavily throttled and can often silently fail
+    });
+   ```
+
 Thoroughly test your application with the new SDK version to ensure that all functionalities work as expected. Pay close attention to any areas of your application that interact with the SDK.
 
 ## Additional recommendations

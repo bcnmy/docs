@@ -108,6 +108,12 @@ Specify the recipient's address and transaction data to build the simple transac
 const userOpResponse = await smartWallet.sendTransaction(tx);
 const { transactionHash } = await userOpResponse.waitForTxHash();
 console.log("Transaction Hash", transactionHash);
+
+const userOpReceipt  = await userOpResponse.wait();
+if(userOpReceipt.success == 'true') { 
+  console.log("UserOp receipt", userOpReceipt)
+  console.log("Transaction receipt", userOpReceipt.receipt)
+}
 ```
 
 Send the transaction using the Biconomy Smart Account and get the transaction hash. The transaction will be built into a User Operation and then sent to the Bundler.

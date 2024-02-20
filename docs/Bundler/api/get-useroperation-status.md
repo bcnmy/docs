@@ -134,10 +134,7 @@ If transaction is confirmed:
             "from": "0x125Ad1988Cf1Ec8c2Dd7357621ad825603768365",
             "contractAddress": null,
             "transactionIndex": 4,
-            "gasUsed": {
-                "_hex": "0x0b4e61",
-                "_isBigNumber": true
-            },
+            "gasUsed": "0x0b4e61",
             "logsBloom": "0x000000000000000000000000000000000000001000000000000000000000000000090000000000002002000100400000001000000000000000000200000000000000000300002000000000280100000000000000000000000000000000000000000000000a0000000000000000000800000000200800000000000010008800000000080000000000000000000000000200000000000040000000000000000000000000000000000000400000000000000000000000000000000002000000200000000002000008001001000000000000004008040400000000004000800020000000000000000000000000000010000000000000000004000000000000000000",
             "blockHash": "0xad86d2037e714aaea8126e32dfb5c12575d5a89698300ff43d413ddf7990d842",
             "transactionHash": "0xd6460eae405ea5a03ace5026bd78b27fd5f6ebd255b6ef7320b13188d99084ac",
@@ -201,14 +198,8 @@ If transaction is confirmed:
             ],
             "blockNumber": 139280938,
             "confirmations": 1,
-            "cumulativeGasUsed": {
-                "_hex": "0x140267",
-                "_isBigNumber": true
-            },
-            "effectiveGasPrice": {
-                "_hex": "0x05f5e100",
-                "_isBigNumber": true
-            },
+            "cumulativeGasUsed": "0x140267",
+            "effectiveGasPrice": "0x05f5e100",
             "status": 1,
             "type": 2,
             "byzantium": true
