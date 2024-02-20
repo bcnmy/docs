@@ -112,7 +112,7 @@ console.log("Transaction Hash", transactionHash);
 const userOpReceipt  = await userOpResponse.wait();
 if(userOpReceipt.success == 'true') { 
   console.log("UserOp receipt", userOpReceipt)
-  console.log("actual transaction receipt", userOpReceipt.receipt)
+  console.log("Transaction receipt", userOpReceipt.receipt)
 }
 ```
 
