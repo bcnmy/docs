@@ -281,6 +281,6 @@ toast.success(
 );
 ```
 
-Finaly to give the user a succesful feedback we provide them with a link to the transaction once it has been executed.
+Finally to give the user a succesful feedback we provide them with a link to the transaction once it has been executed.
 
 Running this code should now allow you to sign in using your EOA, create a session, and then send USDC without the need to sign any further transactions!
