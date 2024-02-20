@@ -51,14 +51,8 @@ Body
     "callGasLimit": 77217,
     "verificationGasLimit": 86895,
     "preVerificationGas": 772931,
-    "validUntil": {
-      "type": "BigNumber",
-      "hex": "0xffffffffffff"
-    },
-    "validAfter": {
-      "type": "BigNumber",
-      "hex": "0x00"
-    },
+    "validUntil": "0xffffffffffff",
+    "validAfter": "0x00",
     "maxPriorityFeePerGas": "0",
     "maxFeePerGas": "100000000"
   }
