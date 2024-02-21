@@ -61,9 +61,8 @@ You can check out the list of supported networks under the [paymaster](/Paymaste
     
 **How can I use any custom paymaster?**
     
-It totally depends on how the `paymasterAndData` is parsed in the paymaster. Only restriction is that it should first encode the paymaster address after that encoding can be anything till the time decoding is consistent. Bundler does not care about the paymasterAndData.
+It completely depends on how the `paymasterAndData` is parsed in the paymaster. The only restriction is that it should first encode the paymaster address after that encoding can be anything till the time decoding is consistent. Bundler does not care about the paymasterAndData.
     
-
 **Can I fund the gasTank programmatically?**
     
 You can programmatically deposit funds using the paymasterContract `depositFor` function by passing the `amount` and `paymasterId` which is the EOA address. For instance, you can invoke the following [function](https://polygonscan.com/address/0x00000f79b7faf42eebadba19acc07cd08af44789#writeContract#F3) on the Polygon chain.
