@@ -55,9 +55,9 @@ To sign the userOp, first calculate the userOpHash and then sign it using the sa
     
 Yes, Biconomy's bundler seamlessly integrates with other smart account providers. As long as the user operation remains valid and complies with ERC 4337 specifications, the integration is possible.
 
-**Which ERC20 tokens are supported by the biconomy paymaster? How to add support for a custom ERC20 token?**
+**Which ERC20 tokens are supported by the biconomy paymaster? How can I add support for a custom ERC20 token?**
     
-you can check out the list of supported networks under [paymaster](/Paymaster/supportedNetworks) and [bundler](/Bundler/supportedNetworks) section. you can reach out to us here for custom token requirement.
+You can check out the list of supported networks under the [paymaster](/Paymaster/supportedNetworks) and [bundler](/Bundler/supportedNetworks) sections. You can reach out to us here for custom token requirements.
     
 **How can I use any custom paymaster?**
     
