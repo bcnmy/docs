@@ -39,9 +39,8 @@ Explore services such as Web3Auth, Particle Network, Magic.link, or Lit Protocol
     
 **How do I enable session keys for users?**
     
-Utilise the session key validation [module](https://docs.biconomy.io/Modules/sessionvalidationmodule) 
+Utilize the session key validation [module](https://docs.biconomy.io/Modules/sessionvalidationmodule) 
     
-
 ## Bundler & Paymaster
 
 **Is the bundler url same for all chains?**
