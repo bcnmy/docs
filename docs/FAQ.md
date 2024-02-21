@@ -67,6 +67,6 @@ It completely depends on how the `paymasterAndData` is parsed in the paymaster. 
     
 You can programmatically deposit funds using the paymasterContract `depositFor` function by passing the `amount` and `paymasterId` which is the EOA address. For instance, you can invoke the following [function](https://polygonscan.com/address/0x00000f79b7faf42eebadba19acc07cd08af44789#writeContract#F3) on the Polygon chain.
     
-**Are there APIs to create our own dashboard?**
+**Are there APIs to create my own dashboard?**
     
-yes, you can utilise the dashboard APIs to create a paymaster, change policies and even get the transactions data.
+Yes, you can utilize the dashboard APIs to create a paymaster, change policies, and even get the transaction's data.
