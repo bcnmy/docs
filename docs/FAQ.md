@@ -51,9 +51,9 @@ yes, bundler url is same for all testnets. For mainnet you can reach out to us.
     
 To sign the userOp, first calculate the userOpHash and then sign it using the same signer, account was created. you can find more details [here](https://hackmd.io/@xWzOEjWIRIKP22EKSdIgEg/Hk5SGcK-o).
     
-**Can I just use Biconomy’s bundler and other smart account implementation?**
+**Can I just use Biconomy’s bundler with another smart account implementation?**
     
-Yes, Biconomy's bundler seamlessly integrates with other smart account providers. As long as the user operation remains valid and complies with ERC 4337 specifications, integration is possible.
+Yes, Biconomy's bundler seamlessly integrates with other smart account providers. As long as the user operation remains valid and complies with ERC 4337 specifications, the integration is possible.
 
 **Which ERC20 tokens are supported by the biconomy paymaster? How to add support for a custom ERC20 token?**
     
