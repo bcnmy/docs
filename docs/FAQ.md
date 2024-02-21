@@ -7,19 +7,19 @@ sidebar_position: 13
 
 **Will I get the same smart account address on all chains?**
 
-yes, you will get the same address on all chains as long as the owner address is the same.
+Yes, you will get the same address on all chains as long as the owner's address is the same.
     
-**How can I create another smart account using same EOA on the same chain?**
+**How can I create another smart account using the same EOA on the same chain?**
     
 you can pass the `index` in the config while creating the account as mentioned in the createSmartAccountClient [method](https://docs.biconomy.io/Account/methods#createsmartaccountclient). First smart account gets created with index 0 by default. 
     
-**Where can I find more examples for SDK integration?**
+**Where can I find more examples of SDK integrations?**
     
 https://github.com/bcnmy/sdk-examples
     
-**How to increase the timeout in the waitForTransactionHash function**
+**How can I increase the timeout in the waitForTransactionHash function?**
     
-Initialise the bundler with updated configuration, to increase the timeout (milliseconds).
+Initialize the bundler with updated configuration, to increase the timeout (milliseconds).
 
 ```jsx
 import { createSmartAccountClient, createBundler } from "@biconomy/account";
