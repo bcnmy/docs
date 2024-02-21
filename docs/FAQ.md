@@ -43,13 +43,13 @@ Utilize the session key validation [module](https://docs.biconomy.io/Modules/ses
     
 ## Bundler & Paymaster
 
-**Is the bundler url same for all chains?**
+**Is the bundler URL the same for all chains?**
     
-yes, bundler url is same for all testnets. For mainnet you can reach out to us.
+Yes, the bundler URL is same for all testnets. For mainnet you can reach out to us.
     
-**How to sign userOp manually?**
+**How can I sign the userOp manually?**
     
-To sign the userOp, first calculate the userOpHash and then sign it using the same signer, account was created. you can find more details [here](https://hackmd.io/@xWzOEjWIRIKP22EKSdIgEg/Hk5SGcK-o).
+To sign the userOp manually, first, calculate the userOpHash and then sign it using the same signer, the account is then created. you can find more details [here](https://hackmd.io/@xWzOEjWIRIKP22EKSdIgEg/Hk5SGcK-o).
     
 **Can I just use Biconomy’s bundler with another smart account implementation?**
     
