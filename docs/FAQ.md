@@ -65,7 +65,7 @@ Yes, you can. It completely depends on how the `paymasterAndData` is parsed in t
     
 **Can I fund the gasTank programmatically?**
     
-You can programmatically deposit funds using the paymasterContract `depositFor` function by passing the `amount` and `paymasterId` which is the EOA address. For instance, you can invoke the following [function](https://polygonscan.com/address/0x00000f79b7faf42eebadba19acc07cd08af44789#writeContract#F3) on the Polygon chain.
+You can programmatically deposit funds using the paymasterContract `depositFor` function by passing the `amount` and `paymasterId` which is the EOA address. For instance, you can invoke the following [function](https://polygonscan.com/address/0x00000f79b7faf42eebadba19acc07cd08af44789#writeContract#F3) on the Polygon chain. Check out [this](https://gist.github.com/arcticfloyd1984/819b24d3d19adf039c7eefe6ae98836c) script for the same.
     
 **Are there APIs to create my own dashboard?**
     
