@@ -59,9 +59,9 @@ Yes, Biconomy's bundler seamlessly integrates with other smart account providers
     
 You can check out the list of supported networks under the [paymaster](/Paymaster/supportedNetworks) and [bundler](/Bundler/supportedNetworks) sections. You can reach out to us here for custom token requirements.
     
-**How can I use any custom paymaster?**
+**Can I use other paymaster with Biconomy SDK?**
     
-It completely depends on how the `paymasterAndData` is parsed in the paymaster. The only restriction is that it should first encode the paymaster address after that encoding can be anything till the time decoding is consistent. Bundler does not care about the paymasterAndData.
+Yes, you can. It completely depends on how the `paymasterAndData` is parsed in the paymaster. The only restriction is that it should first encode the paymaster address after that encoding can be anything till the time decoding is consistent. Bundler does not care about the paymasterAndData.
     
 **Can I fund the gasTank programmatically?**
     
