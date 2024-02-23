@@ -39,7 +39,7 @@ Explore services such as Web3Auth, Particle Network, Magic.link, or Lit Protocol
     
 **How do I enable session keys for users?**
     
-Utilize the session key validation [module](https://docs.biconomy.io/Modules/sessionvalidationmodule) 
+Utilize the session key validation [module](https://docs.biconomy.io/Modules/sessionvalidationmodule).
     
 ## Bundler & Paymaster
 
@@ -49,7 +49,7 @@ Yes, for testnets same [bundler URL](/dashboard#bundler-url) can be used, just c
     
 **How can I sign the userOp manually?**
     
-To sign the userOp manually, first, calculate the userOpHash and then sign it using the same signer, the account is then created. you can find more details [here](https://hackmd.io/@xWzOEjWIRIKP22EKSdIgEg/Hk5SGcK-o).
+To sign the userOp manually, first calculate the userOpHash and then sign it using the same signer, the account is created with. you can find more details [here](https://hackmd.io/@xWzOEjWIRIKP22EKSdIgEg/Hk5SGcK-o).
     
 **Can I just use Biconomy’s bundler with another smart account implementation?**
     
@@ -69,4 +69,4 @@ You can programmatically deposit funds using the paymasterContract `depositFor` 
     
 **Are there APIs to create my own dashboard?**
     
-Yes, you can utilize the dashboard APIs to create a paymaster, change policies, and even get the transaction's data.
+Yes, you can utilize the [dashboard APIs](/dashboard/apis) to create a paymaster, change policies, and even get the transaction's data.
