@@ -45,7 +45,7 @@ Utilize the session key validation [module](https://docs.biconomy.io/Modules/ses
 
 **Is the bundler URL the same for all chains?**
     
-Yes, the bundler URL is same for all testnets. For mainnet you can reach out to us.
+Yes, for testnets same [bundler URL](/dashboard#bundler-url) can be used, just change the chainId. For mainnet you can reach out to [us](https://t.me/rhicsanchez).
     
 **How can I sign the userOp manually?**
     
