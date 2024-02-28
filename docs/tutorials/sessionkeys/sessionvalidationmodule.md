@@ -8,7 +8,7 @@ sidebar_position: 2
 Diving into the **Session Validation Module**, we explore its significance and interaction with the **Session Key Manager Module** via SDK.
 
 :::note
-Understanding the **Session Validation Modules** is crucial for leveraging **session keys** effectively in blockchain applications, particularly for tasks like managing ERC20 token transfers.
+Understanding the **Session Validation Modules** is crucial for leveraging **session keys** effectively in blockchain applications.
 :::
 
 ## The Purpose of Session Validation Modules
@@ -16,107 +16,56 @@ Understanding the **Session Validation Modules** is crucial for leveraging **ses
 At the core, a Session Validation Module is a smart contract designed to authenticate whether a user's operation complies with the permissions set within a session key. It functions to validate user operations based on pre-defined session key permissions.
 
 :::info
-**Key Functionality**: We'll dissect a deployed contract that validates permissions for ERC20 token transfers, enabling dApps to execute transactions without user signatures every time.
-Check the contract [here](https://mumbai.polygonscan.com/address/0x000000D50C68705bd6897B2d17c7de32FB519fDA#code).
+**Key Functionality**: We'll dissect a deployed contract that validates permissions any type of smart contract logic, enabling dApps to execute transactions without user signatures every time.
+Check the contract [here](https://mumbai.polygonscan.com/address/0x000006bC2eCdAe38113929293d241Cf252D91861#code).
 :::
 
 ## Breaking Down the Contract
 
-The smart contract we focus on is structured to validate user operations (userOps) for ERC20 transfers using session key signatures. It's tailored for standard ERC20 tokens and can interact with any contract implementing the method `(address, uint256)` interface.
+The smart contract we focus on is structured to validate user operations (userOps) for any smart contract using session key signatures. It's not tailored for a specific type of smart contract, we can declare rules and permissions for any contract method.
 
 :::warning
 **Technical Deep Dive**: The following contract breakdown is technical in nature, aimed at developers with a solid understanding of smart contract functionalities.
 :::
 
-```javascript
+```typescript
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.17;
-import "./ISessionValidationModule.sol";
+pragma solidity ^0.8.23;
 import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "./ISessionValidationModule.sol";
 
 /**
- * @title ERC20 Session Validation Module for Biconomy Smart Accounts.
- * @dev Validates userOps for ERC20 transfers and approvals using a session key signature.
+ * @title ABI Session Validation Module for Biconomy Smart Accounts.
+ * @dev Validates userOps for any contract / method / params.
+ * The _sessionKeyData layout:
+ * Offset (in bytes)    | Length (in bytes) | Contents
+ * 0x0                  | 0x14              | Session key (address)
+ * 0x14                 | 0x14              | Permitted destination contract (address)
+ * 0x28                 | 0x4               | Permitted selector (bytes4)
+ * 0x2c                 | 0x10              | Permitted value limit (uint128)
+ * 0x3c                 | 0x2               | Rules list length (uint16)
+ * 0x3e + 0x23*N        | 0x23              | Rule #N
+ *
+ * Rule layout:
+ * Offset (in bytes)    | Length (in bytes) | Contents
+ * 0x0                  | 0x2               | Offset (uint16)
+ * 0x2                  | 0x1               | Condition (uint8)
+ * 0x3                  | 0x20              | Value (bytes32)
+ *
+ * Condition is a uint8, and can be one of the following:
+ * 0: EQUAL
+ * 1: LESS_THAN_OR_EQUAL
+ * 2: LESS_THAN
+ * 3: GREATER_THAN_OR_EQUAL
+ * 4: GREATER_THAN
+ * 5: NOT_EQUAL
+ *
+ * Inspired by https://github.com/zerodevapp/kernel/blob/main/src/validator/SessionKeyValidator.sol
  */
-contract ERC20SessionValidationModule is ISessionValidationModule {
+contract ABISessionValidationModule is ISessionValidationModule {
+    uint256 private constant RULE_LENGTH = 35;
+    uint256 private constant SELECTOR_LENGTH = 4;
 
-    function validateSessionParams(
-        address destinationContract,
-        uint256 callValue,
-        bytes calldata _funcCallData,
-        bytes calldata _sessionKeyData,
-    ) external virtual override returns (address) {
-
-        // Decode the session key data
-        (address sessionKey, address token, address recipient, uint256 maxAmount) =
-            abi.decode(_sessionKeyData, (address, address, address, uint256));
-
-        // Validate the contract and call value
-        require(destinationContract == token, "Invalid Token");
-        require(callValue == 0, "Non Zero Value");
-
-        // Check recipient and amount
-        (address recipientCalled, uint256 amount) =
-            abi.decode(_funcCallData[4:], (address, uint256));
-        require(recipient == recipientCalled, "Wrong Recipient");
-        require(amount <= maxAmount, "Max Amount Exceeded");
-        return sessionKey;
-    }
-
-    /**
-     * @dev Validates if the UserOperation matches the SessionKey permissions.
-     */
-    function validateSessionUserOp(
-        UserOperation calldata _op,
-        bytes32 _userOpHash,
-        bytes calldata _sessionKeyData,
-        bytes calldata _sessionKeySignature
-    ) external pure override returns (bool) {
-
-        // Ensure correct operation and signature
-        require(
-            bytes4(_op.callData[0:4]) == EXECUTE_OPTIMIZED_SELECTOR ||
-            bytes4(_op.callData[0:4]) == EXECUTE_SELECTOR,
-            "Invalid Selector"
-        );
-
-        // Decode session key data
-        (address sessionKey, address token, address recipient, uint256 maxAmount) =
-            abi.decode(_sessionKeyData, (address, address, address, uint256));
-
-        // Validate token and call value
-        (address tokenAddr, uint256 callValue, ) =
-            abi.decode(_op.callData[4:], (address, uint256, bytes));
-        require(tokenAddr == token, "Wrong Token");
-        require(callValue == 0, "Non Zero Value");
-
-        // Validate recipient and amount
-        bytes calldata data;
-        uint256 offset = uint256(bytes32(_op.callData[4 + 64:4 + 96]));
-        uint256 length = uint256(bytes32(_op.callData[4 + offset:4 + offset + 32]));
-        data = _op.callData[4 + offset + 32:4 + offset + 32 + length];
-        require(address(bytes20(data[16:36])) == recipient, "Wrong Recipient");
-        require(uint256(bytes32(data[36:68])) <= maxAmount, "Max Amount Exceeded");
-
-        // Verify signature
-        return ECDSA.recover(ECDSA.toEthSignedMessageHash(_userOpHash), _sessionKeySignature) == sessionKey;
-    }
-}
-```
-
-The contract, extending the `ISessionValidationModule` interface, contains essential functions like `validateSessionUserOp` and `validateSessionParams`, each serving distinct roles in operation validation.
-
-## Solidity Contract Breakdown
-
-Here's the Solidity contract in question:
-
-### Function Analysis: `validateSessionUserOp`
-
-:::note
-This function is essential for **validating user operations** against **session key permissions** and ensuring they are correctly signed.
-:::
-
-```javascript
     /**
      * @dev validates if the _op (UserOperation) matches the SessionKey permissions
      * and that _op has been signed by this SessionKey
@@ -133,71 +82,50 @@ This function is essential for **validating user operations** against **session 
         bytes calldata _sessionKeyData,
         bytes calldata _sessionKeySignature
     ) external pure override returns (bool) {
+        bytes calldata callData = _op.callData;
+
         require(
-            bytes4(_op.callData[0:4]) == EXECUTE_OPTIMIZED_SELECTOR ||
-                bytes4(_op.callData[0:4]) == EXECUTE_SELECTOR,
-            "ERC20SV Invalid Selector"
+            bytes4(callData[0:4]) == EXECUTE_OPTIMIZED_SELECTOR ||
+                bytes4(callData[0:4]) == EXECUTE_SELECTOR,
+            "ABISV Not Execute Selector"
         );
 
-        (
-            address sessionKey,
-            address token,
-            address recipient,
-            uint256 maxAmount
-        ) = abi.decode(_sessionKeyData, (address, address, address, uint256));
-
-        {
-            // we expect _op.callData to be `SmartAccount.execute(to, value, calldata)` calldata
-            (address tokenAddr, uint256 callValue, ) = abi.decode(
-                _op.callData[4:], // skip selector
-                (address, uint256, bytes)
-            );
-            if (tokenAddr != token) {
-                revert("ERC20SV Wrong Token");
-            }
-            if (callValue != 0) {
-                revert("ERC20SV Non Zero Value");
-            }
-        }
-        // working with userOp.callData
-        // check if the call is to the allowed recepient and amount is not more than allowed
+        uint160 destContract;
+        uint256 callValue;
         bytes calldata data;
-        {
-            uint256 offset = uint256(bytes32(_op.callData[4 + 64:4 + 96]));
-            uint256 length = uint256(
-                bytes32(_op.callData[4 + offset:4 + offset + 32])
-            );
-            //we expect data to be the `IERC20.transfer(address, uint256)` calldata
-            data = _op.callData[4 + offset + 32:4 + offset + 32 + length];
+        assembly {
+            //offset of the first 32-byte arg is 0x4
+            destContract := calldataload(add(callData.offset, SELECTOR_LENGTH))
+            //offset of the second 32-byte arg is 0x24 = 0x4 (SELECTOR_LENGTH) + 0x20 (first 32-byte arg)
+            callValue := calldataload(add(callData.offset, 0x24))
+
+            //we get the data offset from the calldata itself, so no assumptions are made about the data layout
+            let dataOffset := add(
+                add(callData.offset, 0x04),
+                //offset of the bytes arg is stored after selector and two first 32-byte args
+                // 0x4+0x20+0x20=0x44
+                calldataload(add(callData.offset, 0x44))
+            )
+
+            let length := calldataload(dataOffset)
+            //data itself starts after the length which is another 32bytes word, so we add 0x20
+            data.offset := add(dataOffset, 0x20)
+            data.length := length
         }
-        if (address(bytes20(data[16:36])) != recipient) {
-            revert("ERC20SV Wrong Recipient");
-        }
-        if (uint256(bytes32(data[36:68])) > maxAmount) {
-            revert("ERC20SV Max Amount Exceeded");
-        }
+
         return
+            _validateSessionParams(
+                address(destContract),
+                callValue,
+                data,
+                _sessionKeyData
+            ) ==
             ECDSA.recover(
                 ECDSA.toEthSignedMessageHash(_userOpHash),
                 _sessionKeySignature
-            ) == sessionKey;
+            );
     }
-```
 
-**Execution Steps:**
-
-1. **Match Function Selectors:** Verifies the user operation aligns with specific function selectors.
-2. **Decode Session Key Data:** Extracts essential details like session key, token, recipient, and maximum transaction amount.
-3. **Verify Operation Details:** Checks the operation's token address and call value, and confirms recipient and amount limits.
-4. **Signature Validation:** Utilizes ECDSA to confirm the operation's signature matches the session key.
-
-## Function Analysis: `validateSessionParams`
-
-:::note
-This function plays a vital role in **batch session validation**, ensuring each operation aligns with the set session key permissions. It's key for processing multiple operations efficiently.
-:::
-
-```javascript
     /**
      * @dev validates that the call (destinationContract, callValue, funcCallData)
      * complies with the Session Key permissions represented by sessionKeyData
@@ -205,41 +133,381 @@ This function plays a vital role in **batch session validation**, ensuring each 
      * @param callValue value to be sent with the call
      * @param _funcCallData the data for the call. is parsed inside the SVM
      * @param _sessionKeyData SessionKey data, that describes sessionKey permissions
+     * param _callSpecificData additional data, specific to the call, not used here
+     * @return sessionKey address of the sessionKey that signed the userOp
+     * for example to store a list of allowed tokens or receivers
      */
     function validateSessionParams(
         address destinationContract,
         uint256 callValue,
         bytes calldata _funcCallData,
         bytes calldata _sessionKeyData,
-        bytes calldata /*_callSpecificData*/
-    ) external virtual override returns (address) {
-        (
-            address sessionKey,
-            address token,
-            address recipient,
-            uint256 maxAmount
-        ) = abi.decode(_sessionKeyData, (address, address, address, uint256));
+        bytes memory /*_callSpecificData*/
+    ) external pure virtual override returns (address) {
+        return
+            _validateSessionParams(
+                destinationContract,
+                callValue,
+                _funcCallData,
+                _sessionKeyData
+            );
+    }
 
-        require(destinationContract == token, "ERC20SV Invalid Token");
-        require(callValue == 0, "ERC20SV Non Zero Value");
-
-        (address recipientCalled, uint256 amount) = abi.decode(
-            _funcCallData[4:],
-            (address, uint256)
+    /**
+     * @dev validates that the call (destinationContract, callValue, funcCallData)
+     * complies with the Session Key permissions represented by sessionKeyData
+     * @param destinationContract address of the contract to be called
+     * @param callValue value to be sent with the call
+     * @param _funcCallData the data for the call. is parsed inside the SVM
+     * @param _sessionKeyData SessionKey data, that describes sessionKey permissions
+     * @return sessionKey address of the sessionKey that signed the userOp
+     * for example to store a list of allowed tokens or receivers
+     */
+    function _validateSessionParams(
+        address destinationContract,
+        uint256 callValue,
+        bytes calldata _funcCallData,
+        bytes calldata _sessionKeyData
+    ) internal pure virtual returns (address) {
+        // every address is 20bytes
+        address sessionKey = address(bytes20(_sessionKeyData[0:20]));
+        address permittedDestinationContract = address(
+            bytes20(_sessionKeyData[20:40])
+        );
+        // every selector is 4bytes
+        bytes4 permittedSelector = bytes4(_sessionKeyData[40:44]);
+        // value limit is encoded as uint128 which is 16 bytes length
+        uint256 permittedValueLimit = uint256(
+            uint128(bytes16(_sessionKeyData[44:60]))
+        );
+        // rules list length is encoded as uint16 which is 2 bytes length
+        uint256 rulesListLength = uint256(
+            uint16(bytes2(_sessionKeyData[60:62]))
         );
 
-        require(recipient == recipientCalled, "ERC20SV Wrong Recipient");
-        require(amount <= maxAmount, "ERC20SV Max Amount Exceeded");
+        if (destinationContract != permittedDestinationContract) {
+            revert("ABISV Destination Forbidden");
+        }
+
+        if (bytes4(_funcCallData[0:4]) != permittedSelector) {
+            revert("ABISV Selector Forbidden");
+        }
+
+        if (callValue > permittedValueLimit) {
+            revert("ABISV Permitted Value Exceeded");
+        }
+
+        // avoided explicit check that (_sessionKeyData.length - 62) is the multiple of RULE_LENGTH
+        // also avoided calculating the rules list length from the rules list itself
+        // both to save on gas
+        // there is a test case that demonstrates that if the incorrect rules list length is provided
+        // the validation will fail
+        if (
+            !_checkRulesForPermission(
+                _funcCallData,
+                rulesListLength,
+                bytes(_sessionKeyData[62:]) //the rest of the _sessionKeyData is the rules list
+            )
+        ) {
+            revert("ABISV Arg Rule Violated");
+        }
+
+        return sessionKey;
+    }
+
+    /**
+     * @dev checks if the calldata matches the permission
+     * @param data the data for the call. is parsed inside the SVM
+     * @param rulesListLength the length of the rules list
+     * @param rules the rules list
+     * @return true if the calldata matches the permission, false otherwise
+     */
+    function _checkRulesForPermission(
+        bytes calldata data,
+        uint256 rulesListLength,
+        bytes calldata rules
+    ) internal pure returns (bool) {
+        for (uint256 i; i < rulesListLength; ++i) {
+            (uint256 offset, uint256 condition, bytes32 value) = _parseRule(
+                rules,
+                i
+            );
+
+            // get the 32bytes word to verify against reference value from the actual calldata of the userOp
+            bytes32 param = bytes32(
+                data[SELECTOR_LENGTH + offset:SELECTOR_LENGTH + offset + 32]
+            );
+
+            bool rulePassed;
+            assembly ("memory-safe") {
+                switch condition
+                case 0 {
+                    // Condition.EQUAL
+                    rulePassed := eq(param, value)
+                }
+                case 1 {
+                    // Condition.LESS_THAN_OR_EQUAL
+                    rulePassed := or(lt(param, value), eq(param, value))
+                }
+                case 2 {
+                    // Condition.LESS_THAN
+                    rulePassed := lt(param, value)
+                }
+                case 3 {
+                    // Condition.GREATER_THAN_OR_EQUAL
+                    rulePassed := or(gt(param, value), eq(param, value))
+                }
+                case 4 {
+                    // Condition.GREATER_THAN
+                    rulePassed := gt(param, value)
+                }
+                case 5 {
+                    // Condition.NOT_EQUAL
+                    rulePassed := iszero(eq(param, value))
+                }
+            }
+
+            if (!rulePassed) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @dev Parses a rule with a given index from the rules list
+     * @param rules the rules list as a bytes array
+     * @param index the index of the rule to be parsed
+     * @return offset - the offset of the parameter in the calldata (multiplier of 32)
+     * @return condition - the condition to be checked
+     * @return value - the reference value to be checked against
+     */
+    function _parseRule(
+        bytes calldata rules,
+        uint256 index
+    ) internal pure returns (uint256 offset, uint256 condition, bytes32 value) {
+        // offset length is 2 bytes
+        offset = uint256(
+            uint16(bytes2(rules[index * RULE_LENGTH:index * RULE_LENGTH + 2]))
+        );
+        // condition length is 1 byte
+        condition = uint256(
+            uint8(
+                bytes1(rules[index * RULE_LENGTH + 2:index * RULE_LENGTH + 3])
+            )
+        );
+        // value length is 32 bytes
+        value = bytes32(
+            rules[index * RULE_LENGTH + 3:index * RULE_LENGTH + RULE_LENGTH]
+        );
+    }
+}
+```
+
+The contract, extending the `ISessionValidationModule` interface, contains essential functions like `validateSessionUserOp` and `validateSessionParams`, each serving distinct roles in operation validation.
+
+## Solidity Contract Breakdown
+
+Here's the Solidity contract in question:
+
+### Function Analysis: `validateSessionUserOp`
+
+:::note
+This function is essential for **validating user operations** against **session key permissions** and ensuring they are correctly signed.
+:::
+
+```typescript
+    /**
+     * @dev validates if the _op (UserOperation) matches the SessionKey permissions
+     * and that _op has been signed by this SessionKey
+     * Please mind the decimals of your exact token when setting maxAmount
+     * @param _op User Operation to be validated.
+     * @param _userOpHash Hash of the User Operation to be validated.
+     * @param _sessionKeyData SessionKey data, that describes sessionKey permissions
+     * @param _sessionKeySignature Signature over the the _userOpHash.
+     * @return true if the _op is valid, false otherwise.
+     */
+    function validateSessionUserOp(
+        UserOperation calldata _op,
+        bytes32 _userOpHash,
+        bytes calldata _sessionKeyData,
+        bytes calldata _sessionKeySignature
+    ) external pure override returns (bool) {
+        bytes calldata callData = _op.callData;
+
+        require(
+            bytes4(callData[0:4]) == EXECUTE_OPTIMIZED_SELECTOR ||
+                bytes4(callData[0:4]) == EXECUTE_SELECTOR,
+            "ABISV Not Execute Selector"
+        );
+
+        uint160 destContract;
+        uint256 callValue;
+        bytes calldata data;
+        assembly {
+            //offset of the first 32-byte arg is 0x4
+            destContract := calldataload(add(callData.offset, SELECTOR_LENGTH))
+            //offset of the second 32-byte arg is 0x24 = 0x4 (SELECTOR_LENGTH) + 0x20 (first 32-byte arg)
+            callValue := calldataload(add(callData.offset, 0x24))
+
+            //we get the data offset from the calldata itself, so no assumptions are made about the data layout
+            let dataOffset := add(
+                add(callData.offset, 0x04),
+                //offset of the bytes arg is stored after selector and two first 32-byte args
+                // 0x4+0x20+0x20=0x44
+                calldataload(add(callData.offset, 0x44))
+            )
+
+            let length := calldataload(dataOffset)
+            //data itself starts after the length which is another 32bytes word, so we add 0x20
+            data.offset := add(dataOffset, 0x20)
+            data.length := length
+        }
+
+        return
+            _validateSessionParams(
+                address(destContract),
+                callValue,
+                data,
+                _sessionKeyData
+            ) ==
+            ECDSA.recover(
+                ECDSA.toEthSignedMessageHash(_userOpHash),
+                _sessionKeySignature
+            );
+    }
+```
+
+**Execution Steps:**
+
+1. **Match Function Selectors:** 
+This step ensures that the user operation corresponds to specific function selectors, indicating the type of operation being performed.
+In this method, it checks whether the first four bytes of the call data match predefined selectors (EXECUTE_OPTIMIZED_SELECTOR or EXECUTE_SELECTOR).
+
+2. **Decode Session Key Data:** 
+Here, the essential details from the session key data are extracted to understand the permissions and constraints associated with the user operation.
+This includes retrieving information such as the destination contract, call value, and additional data from the call data provided in the user operation.
+
+3. **Verify Operation Details:** 
+This step validates the details of the user operation against the permissions specified by the session key.
+It checks whether the call data aligns with the permissions specified in the session key data.
+Additionally, it ensures that any constraints or limits imposed by the session key, such as maximum transaction amounts or permitted recipients, are respected.
+
+4. **Signature Validation:** In this final step, the method confirms the authenticity of the operation by verifying its signature against the session key.
+ECDSA (Elliptic Curve Digital Signature Algorithm) is used to validate that the provided signature matches the session key.
+If the signature verification is successful, it indicates that the operation has been correctly signed by the session key.
+
+## Function Analysis: `validateSessionParams`
+
+```typescript
+     /**
+     * @dev validates that the call (destinationContract, callValue, funcCallData)
+     * complies with the Session Key permissions represented by sessionKeyData
+     * @param destinationContract address of the contract to be called
+     * @param callValue value to be sent with the call
+     * @param _funcCallData the data for the call. is parsed inside the SVM
+     * @param _sessionKeyData SessionKey data, that describes sessionKey permissions
+     * param _callSpecificData additional data, specific to the call, not used here
+     * @return sessionKey address of the sessionKey that signed the userOp
+     * for example to store a list of allowed tokens or receivers
+     */
+    function validateSessionParams(
+        address destinationContract,
+        uint256 callValue,
+        bytes calldata _funcCallData,
+        bytes calldata _sessionKeyData,
+        bytes memory /*_callSpecificData*/
+    ) external pure virtual override returns (address) {
+        return
+            _validateSessionParams(
+                destinationContract,
+                callValue,
+                _funcCallData,
+                _sessionKeyData
+            );
+    }
+
+    /**
+     * @dev validates that the call (destinationContract, callValue, funcCallData)
+     * complies with the Session Key permissions represented by sessionKeyData
+     * @param destinationContract address of the contract to be called
+     * @param callValue value to be sent with the call
+     * @param _funcCallData the data for the call. is parsed inside the SVM
+     * @param _sessionKeyData SessionKey data, that describes sessionKey permissions
+     * @return sessionKey address of the sessionKey that signed the userOp
+     * for example to store a list of allowed tokens or receivers
+     */
+    function _validateSessionParams(
+        address destinationContract,
+        uint256 callValue,
+        bytes calldata _funcCallData,
+        bytes calldata _sessionKeyData
+    ) internal pure virtual returns (address) {
+        // every address is 20bytes
+        address sessionKey = address(bytes20(_sessionKeyData[0:20]));
+        address permittedDestinationContract = address(
+            bytes20(_sessionKeyData[20:40])
+        );
+        // every selector is 4bytes
+        bytes4 permittedSelector = bytes4(_sessionKeyData[40:44]);
+        // value limit is encoded as uint128 which is 16 bytes length
+        uint256 permittedValueLimit = uint256(
+            uint128(bytes16(_sessionKeyData[44:60]))
+        );
+        // rules list length is encoded as uint16 which is 2 bytes length
+        uint256 rulesListLength = uint256(
+            uint16(bytes2(_sessionKeyData[60:62]))
+        );
+
+        if (destinationContract != permittedDestinationContract) {
+            revert("ABISV Destination Forbidden");
+        }
+
+        if (bytes4(_funcCallData[0:4]) != permittedSelector) {
+            revert("ABISV Selector Forbidden");
+        }
+
+        if (callValue > permittedValueLimit) {
+            revert("ABISV Permitted Value Exceeded");
+        }
+
+        // avoided explicit check that (_sessionKeyData.length - 62) is the multiple of RULE_LENGTH
+        // also avoided calculating the rules list length from the rules list itself
+        // both to save on gas
+        // there is a test case that demonstrates that if the incorrect rules list length is provided
+        // the validation will fail
+        if (
+            !_checkRulesForPermission(
+                _funcCallData,
+                rulesListLength,
+                bytes(_sessionKeyData[62:]) //the rest of the _sessionKeyData is the rules list
+            )
+        ) {
+            revert("ABISV Arg Rule Violated");
+        }
+
         return sessionKey;
     }
 ```
 
 **Operational Flow:**
 
-1. **Decode Session Key Data:** Extracts session key, token address, recipient address, and maximum token amount.
-2. **Validation Checks:** Ensures the destination contract and call value are as required.
-3. **Recipient and Amount Verification:** Compares recipient and transaction amount against session key data.
-4. **Return Session Key:** If all checks pass, returns the session key address.
+The method internally calls **_validateSessionParams** to perform the validation against the session key permissions.
+It passes the necessary parameters to **_validateSessionParams**  and returns the result.
+
+**_validateSessionParams** validates the parameters of the call against the permissions defined by the session key.
+
+**Execution flow in **_validateSessionParams****
+
+- Extracts essential details from _sessionKeyData, such as session key, permitted destination contract, selector, value limit, and rules list length.
+- Checks if the destinationContract matches the permitted destination contract, if the function selector in _funcCallData matches the permitted selector, and if the callValue exceeds the permitted value limit.
+- Calls **_checkRulesForPermission** to verify if the call data complies with the permission rules.
+
+**Execution flow in **_checkRulesForPermission****
+
+- Iterates through the rules list.
+- Parses each rule to determine the offset, condition, and value.
+- Verifies if the call data satisfies each rule condition.
 
 Both `validateSessionUserOp` and `validateSessionParams` are integral to our dApp's security framework, ensuring strict adherence to permissions and enhancing transaction integrity.
 
