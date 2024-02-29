@@ -332,7 +332,10 @@ const sessionTxData = await sessionModule.createSessionData([
 ]);
 ```
 
-Now we create the session data itself. We specify how long this should be valid until or how long it is valid after. This should be a unix timestamp to represent the time. Passing 0 on both makes this session never expire, do not do this in production. Next we pass the module address, session key address, and pass the session key data we just created.
+Next, we create the data for the transaction that enables the sesson. For every session we need to specify how long it should be valid until and/or how long it is valid after. This should be a unix timestamp to represent the time. Passing 0 on both makes this session never expire, do not do this in production. Next we pass: 
+- The Session Validation Module address that is going to validate userOps that leverage this session
+- Session key address, that should sign the userOp 
+- And the session key data we just created.
 
 ```typescript
 // tx to set session key
