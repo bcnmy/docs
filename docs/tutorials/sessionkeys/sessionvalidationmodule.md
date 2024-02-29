@@ -507,7 +507,7 @@ It passes the necessary parameters to **_validateSessionParams**  and returns th
 
 - Iterates through the rules list.
 - Parses each rule to determine the offset, condition, and value.
-- Verifies if the call data satisfies each rule condition.
+- Verifies if the call data arguments satisfy conditions defined by the rules.
 
 Both `validateSessionUserOp` and `validateSessionParams` are integral to our dApp's security framework, ensuring strict adherence to permissions and enhancing transaction integrity.
 
