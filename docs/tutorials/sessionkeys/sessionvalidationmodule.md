@@ -495,7 +495,7 @@ If the signature verification is successful, it indicates that the operation has
 The method internally calls **_validateSessionParams** to perform the validation against the session key permissions.
 It passes the necessary parameters to **_validateSessionParams**  and returns the result.
 
-**_validateSessionParams** validates the parameters of the call against the permissions defined by the session key.
+**_validateSessionParams** validates the parameters of the call against the permissions defined for the session key.
 
 **Execution flow in **_validateSessionParams****
 
@@ -508,6 +508,37 @@ It passes the necessary parameters to **_validateSessionParams**  and returns th
 - Iterates through the rules list.
 - Parses each rule to determine the offset, condition, and value.
 - Verifies if the call data satisfies each rule condition.
+
+## Rules
+
+Rules define permissions for the args of an allowed method.
+With Rules you can precisely define what should be the args of the transaction that is allowed for a given Session.
+Every Rule works with a single static arg or a 32 bytes chunk of the dynamic arg.
+
+Since the ABI Encoding translates every static param into a 32bytes word, even the shorter ones (like `address` or `uint8`), every Rule defines a desired relation (`Condition`) between n-th 32bytes word of the `calldata` and a reference Value (that is obviously a 32bytes word as well).
+
+So, when dApp is creating a `_sessionKeyData` to enable a session, it should convert every shorter static arg to a 32bytes word to match how it will be actually ABI encoded in the `userOp.callData`.
+
+For the dynamic args, like `bytes`, every 32bytes word of the `calldata` such as offset of the bytes arg, length of the bytes arg, and n-th 32bytes word of the bytes arg can be controlled by a dedicated Rule.
+
+# Offset 
+The offset in the ABI SVM contract helps locate the relevant data within the function call data, it serves as a reference point from which to start reading or extracting specific information required for validation.
+When processing function call data, particularly in low-level languages like Solidity assembly, it's necessary to locate where specific parameters or arguments are stored.
+The offset is used to calculate the starting position within the calldata where the desired data resides.
+Suppose we have a function call with multiple arguments passed as calldata. Each argument occupies a certain number of bytes, and the offset helps determine where each argument begins within the calldata.
+
+# Condition
+The condition is used to determine how we are checking the actual reference value, the condition can be of many types:
+ * 0: EQUAL
+ * 1: LESS_THAN_OR_EQUAL
+ * 2: LESS_THAN
+ * 3: GREATER_THAN_OR_EQUAL
+ * 4: GREATER_THAN
+ * 5: NOT_EQUAL
+In our example the condition is 0, this means we check that the receiver of the NFT is EQUAL to what we set it to be.
+
+# Value
+This the the value that we are checking the condition for and that we are getting from the calldata using the offset.
 
 Both `validateSessionUserOp` and `validateSessionParams` are integral to our dApp's security framework, ensuring strict adherence to permissions and enhancing transaction integrity.
 
