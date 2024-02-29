@@ -381,7 +381,7 @@ This function is essential for **validating user operations** against **session 
 **Execution Steps:**
 
 1. **Match Function Selectors:** 
-This step ensures that the user operation corresponds to specific function selectors, indicating the type of operation being performed.
+This step ensures that the calldata of a given user operation calls the function with the allowed selectors only.
 In this method, it checks whether the first four bytes of the call data match predefined selectors (EXECUTE_OPTIMIZED_SELECTOR or EXECUTE_SELECTOR).
 
 2. **Decode Session Key Data:** 
@@ -492,22 +492,22 @@ If the signature verification is successful, it indicates that the operation has
 
 **Operational Flow:**
 
-The method internally calls **_validateSessionParams** to perform the validation against the session key permissions.
+The method internally calls **_validateSessionParams** to perform the validation against the session permissions.
 It passes the necessary parameters to **_validateSessionParams**  and returns the result.
 
 **_validateSessionParams** validates the parameters of the call against the permissions defined for the session key.
 
 **Execution flow in **_validateSessionParams****
 
-- Extracts essential details from _sessionKeyData, such as session key, permitted destination contract, selector, value limit, and rules list length.
-- Checks if the destinationContract matches the permitted destination contract, if the function selector in _funcCallData matches the permitted selector, and if the callValue exceeds the permitted value limit.
+- Extracts essential details from _sessionKeyData, such as session key address, permitted destination contract, permitted method selector, value limit, and rules list length.
+- Checks if the destinationContract matches the permitted destination contract, if the function selector in _funcCallData matches the permitted selector, and if the callValue does not exceed the permitted value limit.
 - Calls **_checkRulesForPermission** to verify if the call data complies with the permission rules.
 
 **Execution flow in **_checkRulesForPermission****
 
-- Iterates through the rules list.
+- Iterates through the list of rules.
 - Parses each rule to determine the offset, condition, and value.
-- Verifies if the call data satisfies each rule condition.
+- Verifies if the call data arguments satisfy conditions defined by the rules.
 
 ## Rules
 
