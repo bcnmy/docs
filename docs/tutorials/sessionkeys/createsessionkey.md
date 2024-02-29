@@ -299,7 +299,7 @@ const sessionKeyData = await getABISVMSessionKeyData(sessionKeyEOA, {
     destContract: nftAddress, // destination contract to call
     functionSelector: functionSelector, // function selector allowed
     valueLimit: parseEther("0"), // no native value is sent 
-    // In rules, we make sure that referenceValue is equal to recipient
+    // This rule ensures that the address we are going to mint NFT to should be equal the reference address (receiver var).
     rules: [
       {
         offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
