@@ -505,7 +505,7 @@ It passes the necessary parameters to **_validateSessionParams**  and returns th
 
 **Execution flow in **_checkRulesForPermission****
 
-- Iterates through the rules list.
+- Iterates through the list of rules.
 - Parses each rule to determine the offset, condition, and value.
 - Verifies if the call data arguments satisfy conditions defined by the rules.
 
