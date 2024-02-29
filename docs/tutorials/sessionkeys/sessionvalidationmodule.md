@@ -499,7 +499,7 @@ It passes the necessary parameters to **_validateSessionParams**  and returns th
 
 **Execution flow in **_validateSessionParams****
 
-- Extracts essential details from _sessionKeyData, such as session key, permitted destination contract, selector, value limit, and rules list length.
+- Extracts essential details from _sessionKeyData, such as session key address, permitted destination contract, permitted method selector, value limit, and rules list length.
 - Checks if the destinationContract matches the permitted destination contract, if the function selector in _funcCallData matches the permitted selector, and if the callValue exceeds the permitted value limit.
 - Calls **_checkRulesForPermission** to verify if the call data complies with the permission rules.
 
