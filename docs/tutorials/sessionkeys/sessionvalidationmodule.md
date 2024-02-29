@@ -381,7 +381,7 @@ This function is essential for **validating user operations** against **session 
 **Execution Steps:**
 
 1. **Match Function Selectors:** 
-This step ensures that the user operation corresponds to specific function selectors, indicating the type of operation being performed.
+This step ensures that the calldata of a given user operation calls the function with the allowed selectors only.
 In this method, it checks whether the first four bytes of the call data match predefined selectors (EXECUTE_OPTIMIZED_SELECTOR or EXECUTE_SELECTOR).
 
 2. **Decode Session Key Data:** 
