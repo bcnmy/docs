@@ -492,7 +492,7 @@ If the signature verification is successful, it indicates that the operation has
 
 **Operational Flow:**
 
-The method internally calls **_validateSessionParams** to perform the validation against the session key permissions.
+The method internally calls **_validateSessionParams** to perform the validation against the session permissions.
 It passes the necessary parameters to **_validateSessionParams**  and returns the result.
 
 **_validateSessionParams** validates the parameters of the call against the permissions defined by the session key.
