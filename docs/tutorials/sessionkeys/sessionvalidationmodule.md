@@ -525,7 +525,21 @@ For the dynamic args, like `bytes`, every 32bytes word of the `calldata` such as
 The offset in the ABI SVM contract helps locate the relevant data within the function call data, it serves as a reference point from which to start reading or extracting specific information required for validation.
 When processing function call data, particularly in low-level languages like Solidity assembly, it's necessary to locate where specific parameters or arguments are stored.
 The offset is used to calculate the starting position within the calldata where the desired data resides.
-Suppose we have a function call with multiple arguments passed as calldata. Each argument occupies a certain number of bytes, and the offset helps determine where each argument begins within the calldata.
+Suppose we have a function call with multiple arguments passed as calldata. Each argument occupies a certain number of bytes, and the offset helps determine where each argument begins within the calldata. 
+
+**Using the offset to Extract Data:**
+In the contract, the offset is used to calculate the position within the calldata where specific parameters or arguments are located. Since every arg is a 32-bytes word, offsets are always multiplier of 32 (or of 0x20 in hex).
+
+Let's see how the offset is applied to extract the to and value arguments of a transfer(address to, uint256 value) method:
+
+Extracting to Argument:
+The to argument is the first parameter of the transfer function, representing the recipient address. Every calldata starts with the 4-bytes method selector. However, the ABI SVM is adding the selector length itself, so for the first argument the offset will always be 0 (0x00);
+
+Extracting value Argument:
+The value argument is the second parameter of the transfer function, representing the amount of tokens to be transferred. To extract this argument, the offset for the value parameter would be calculated based on its position in the function calldata. Despite to is a 20-bytes address, in the solidity abi encoding it is always appended with zeroes to a 32-bytes word. So the offset for the second 32-bytes argument (which is value in our case) will be 32 (or 0x20 in hex).
+
+If you need to deal with dynamic-length arguments, such as bytes, please refer to this document https://docs.soliditylang.org/en/v0.8.24/abi-spec.html#function-selector-and-argument-encoding
+to learn more about how dynamic arguments are represented in the calldata and which offsets should be used to access them.
 
 # Condition
 The condition is used to determine how we are checking the actual reference value, the condition can be of many types:
@@ -538,7 +552,7 @@ The condition is used to determine how we are checking the actual reference valu
 In our example the condition is 0, this means we check that the receiver of the NFT is EQUAL to what we set it to be.
 
 # Value
-This the the value that we are checking the condition for and that we are getting from the calldata using the offset.
+This is the reference value. The actual arg value is decoded from the userOp.callData using the Offset. Then it is compared to the reference value using the Condition.
 
 Both `validateSessionUserOp` and `validateSessionParams` are integral to our dApp's security framework, ensuring strict adherence to permissions and enhancing transaction integrity.
 
