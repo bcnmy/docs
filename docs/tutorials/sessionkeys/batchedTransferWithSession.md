@@ -191,7 +191,7 @@ return(
   )
 ```
 
-Expand the code below to see the entire code:
+Congrats! you have successfully integrated the batched session router module. Expand the code below to see the entire code:
 <details>
 
 ```typescript
