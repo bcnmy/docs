@@ -289,7 +289,7 @@ toast.success(
 );
 ```
 
-Expand the code below to see the entire code:
+Congrats! you have successfully integrated the session module. Expand the code below to see the entire code:
 <details>
 ```typescript
 import React from "react";
