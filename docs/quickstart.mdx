@@ -134,11 +134,11 @@ try {
   });
 
   // ------ 4. Send transaction
-  const transactionResponse = await smartAccount.sendTransaction({
+  const userOpResponse = await smartAccount.sendTransaction({
     to: nftAddress,
     data: nftData,
   });
-  const { transactionHash } = await transactionResponse.waitForTxHash();
+  const { transactionHash } = await userOpResponse.waitForTxHash();
   console.log("transactionHash", transactionHash);
   const userOpReceipt  = await userOpResponse.wait();
   if(userOpReceipt.success == 'true') { 
