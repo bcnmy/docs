@@ -183,7 +183,7 @@ Let's create the function now to handle the transfer:
 
 ```
 
-Now simply add this method to the onClick event ofour button 
+Add this method to the onClick event of the button.
 
 ```
 return(
@@ -191,7 +191,7 @@ return(
   )
 ```
 
-Expand the code below to see the entire code:
+Congrats! you have successfully integrated the batched session router module. Expand the code below to see the entire code:
 <details>
 
 ```typescript
