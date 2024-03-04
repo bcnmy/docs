@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Transfer ERC20 With Session"
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Transfer ERC20 With Session

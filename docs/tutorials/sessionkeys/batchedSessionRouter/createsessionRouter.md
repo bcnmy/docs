@@ -5,6 +5,8 @@ sidebar_position: 6
 
 # Create Session Router
 
+If you wish to know more about Batched Session Validation Module go [here](/Modules/BatchedSession).
+
 :::info
 One crucial aspect to grasp about the session module is its limitation on sending batches of various user operations. Specifically, it does not support sending multiple ERC20 Transfers with different recipients within the same batch, nor does it allow combining an ERC20 transfer with an NFT Mint operation. To overcome this constraint, we rely on the Batched Session Router Module.
 :::

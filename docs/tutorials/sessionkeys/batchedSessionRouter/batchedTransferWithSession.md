@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Batch ERC20 Transfer with Session Router"
-sidebar_position: 6
+sidebar_position: 8
 ---
 
 # Batch ERC20 Transfer with Session Router
