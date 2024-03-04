@@ -183,7 +183,7 @@ Let's create the function now to handle the transfer:
 
 ```
 
-Now simply add this method to the onClick event ofour button 
+Add this method to the onClick event of the button.
 
 ```
 return(
