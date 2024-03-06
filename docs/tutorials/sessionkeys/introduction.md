@@ -44,7 +44,7 @@ Throughout this tutorial series, we'll explore:
 - **Frontend Initialization:** Setting up the frontend using Next JS.
 - **SDK Integration:** Integrating Biconomy SDK for smart account management.
 - **Session Key Management:** Creating and managing session keys.
-- **ERC20 Transfer Execution:** Using session keys for ERC20 token transfers.
+- **NFT Mint:** Using session keys for NFT Minting with ABI SVM.
 
 Ready to get started? Let's head over to the **Session Validation Module** in the next section! 🌟
 
