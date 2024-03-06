@@ -218,8 +218,6 @@ const { transactionHash, userOperationReceipt } = await wait();
 
   6. stateOverrideSet(`StateOverrideSet`): for overriding the blockchain state during simulations or gas estimation.
 
-  7. useEmptyDeployCallData(`boolean`): set to true if the tx is being used only to deploy the smartContract, so "0x" is set as the userOp.callData
-
 
 **Returns**
 
