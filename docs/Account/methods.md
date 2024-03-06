@@ -216,9 +216,9 @@ const { transactionHash, userOperationReceipt } = await wait();
       - `validation_and_execution` checks if user op is valid and if user op execution will succeed.
     
 
-  6. stateOverrideSet(`StateOverrideSet`): 
+  6. stateOverrideSet(`StateOverrideSet`): for overriding the blockchain state during simulations or gas estimation.
 
-  7. useEmptyDeployCallData(`boolean`): 
+  7. useEmptyDeployCallData(`boolean`): set to true if the tx is being used only to deploy the smartContract, so "0x" is set as the userOp.callData
 
 
 **Returns**
