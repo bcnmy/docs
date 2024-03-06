@@ -99,6 +99,13 @@ const index = smartAccount.index;
 
 - index (`number`): A number indicating the index of current active smart account.
 
+
+### [deploy()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#deploy)
+
+### [getBalances()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#getBalances)
+
+### [getSupportedTokens()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#getSupportedTokens)
+
 ## Transaction Methods
 
 ### sendTransaction( )
@@ -149,62 +156,21 @@ const { transactionHash, userOperationReceipt } = await wait();
 
   ```ts
   type BuildUserOpOptions = {
-    overrides?: Overrides;
-    params?: ModuleInfo;
-    nonceOptions?: NonceOptions;
     forceEncodeForBatch?: boolean;
-    paymasterServiceData?: SponsorUserOperationDto;
+    nonceOptions?: NonceOptions;
+    params?: ModuleInfo;
+    paymasterServiceData?: PaymasterUserOperationDto;
+    simulationType?: SimulationType;
+    stateOverrideSet?: StateOverrideSet;
+    useEmptyDeployCallData?: boolean;
   };
   ```
 
   Let's look at each of these params:
 
-  1. overrides (`Overrides`): one can override any of the values of the userOp when it is being constructed.
+  1. forceEncodeForBatch (`boolean`): When a transactions array is passed, by default the Biconomy SDK encodes it for executeBatch() executor function and execute() function for single transaction. However, in some cases, there may be a preference to encode a single transaction for a batch, especially if the custom module only decodes for executeBatch. In such cases, set this flag to true; otherwise, it remains false by default.
 
-     ```ts
-     type BigNumberish = BigNumber | Bytes | bigint | string | number;
-
-     type Overrides = {
-       callGasLimit?: BigNumberish;
-       verificationGasLimit?: BigNumberish;
-       preVerificationGas?: BigNumberish;
-       maxFeePerGas?: BigNumberish;
-       maxPriorityFeePerGas?: BigNumberish;
-       paymasterData?: string;
-       signature?: string;
-     };
-     ```
-
-  2. Gasless Paymaster Flow (All Methods Gasless on Dashboard): Here's how you can configure it:
-
-  ```typescript
-  let partialUserOp = await biconomySmartAccount.buildUserOp([transaction], {
-    paymasterServiceData: {
-      mode: PaymasterMode.SPONSORED,
-    },
-  });
-  ```
-
-  2. Mixed or Non-Gasless Transactions: In scenarios where you have mixed transactions (some are gasless and some are not) or all transactions are not gasless, it's more efficient to estimate gas using the bundler first. After building the user operation, you should then call getPaymasterAndData to finalize the gas parameters.
-
-  ```typescript
-  let userOp = await biconomySmartAccount.buildUserOp([transaction]);
-  // ...After building user operation, proceed to get Paymaster and Data as needed
-  ```
-
-  3. params (`ModuleInfo`): This param can be used to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
-
-     ```ts
-     type ModuleInfo = {
-       sessionID?: string;
-       sessionSigner?: Signer;
-       sessionValidationModule?: string;
-       additionalSessionData?: string;
-       batchSessionParams?: SessionParams[];
-     };
-     ```
-
-  4. nonceOptions(`NonceOptions`) : This can be used to execute multiple user operations in parallel for the same smart account.
+  2. nonceOptions(`NonceOptions`) : This can be used to execute multiple user operations in parallel for the same smart account.
 
      ```ts
      type NonceOptions = {
@@ -220,12 +186,22 @@ const { transactionHash, userOperationReceipt } = await wait();
 
      nonceKey can be initialised at any arbitrary number and incremented as one builds user operations to be sent in parallel. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be used if you know the order in which you are sending the userOps.
 
-  5. forceEncodeForBatch (`boolean`): When a transactions array is passed, by default the Biconomy SDK encodes it for executeBatch() executor function and execute() function for single transaction. However, in some cases, there may be a preference to encode a single transaction for a batch, especially if the custom module only decodes for executeBatch. In such cases, set this flag to true; otherwise, it remains false by default.
-
-  6. paymasterServiceData (`SponsorUserOperationDto`): The `paymasterServiceData` includes details about the kind of sponsorship and payment token in case mode is ERC20. It contains information about the paymaster service, which is used to calculate the `paymasterAndData` field in the user operation. Note that this is only applicable if you're using Biconomy paymaster.
+  3. params (`ModuleInfo`): This param can be used to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
 
      ```ts
-     type SponsorUserOperationDto = {
+     type ModuleInfo = {
+       sessionID?: string;
+       sessionSigner?: Signer;
+       sessionValidationModule?: string;
+       additionalSessionData?: string;
+       batchSessionParams?: SessionParams[];
+     };
+     ```
+
+  4. paymasterServiceData (`PaymasterUserOperationDto`): The `paymasterServiceData` includes details about the kind of sponsorship and payment token in case mode is ERC20. It contains information about the paymaster service, which is used to calculate the `paymasterAndData` field in the user operation. Note that this is only applicable if you're using Biconomy paymaster.
+
+     ```ts
+     type PaymasterUserOperationDto = {
        mode: PaymasterMode;
        calculateGasLimits?: boolean; //this flag defaults to true, signifying the paymaster will undertake gas limit calculations to ensure efficient operation execution
        expiryDuration?: number;
@@ -235,7 +211,13 @@ const { transactionHash, userOperationReceipt } = await wait();
      };
      ```
 
-     It also contains optional fields such as `webhookData` and `smartAccountInfo`.
+  5. simulationType(`SimulationType`, enum): The simulationType flag can be of 2 ways:
+      - `validation` which will only simulate the validation phase, checks if user op is valid but does not check if execution will succeed. By default this flag is set to validation.
+      - `validation_and_execution` checks if user op is valid and if user op execution will succeed.
+    
+
+  6. stateOverrideSet(`StateOverrideSet`): for overriding the blockchain state during simulations or gas estimation.
+
 
 **Returns**
 
