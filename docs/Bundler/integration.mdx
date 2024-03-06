@@ -5,7 +5,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integrat
 
 # Integration
 
-This guide soley focuses on the code to integrate the Bundler. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
+This guide solely focuses on the code to integrate the Bundler. To see how this interacts with other packages in the sdk you can view the [Smart Accounts Integration page](/Account/integration).
 
 ## Installation
 
@@ -19,7 +19,7 @@ import TabItem from "@theme/TabItem";
 
 ```bash
 
-npm install @biconomy/bundler @biconomy/account
+npm install @biconomy/bundler
 
 ```
 
@@ -28,7 +28,7 @@ npm install @biconomy/bundler @biconomy/account
 
 ```bash
 
-yarn add @biconomy/bundler @biconomy/account
+yarn add @biconomy/bundler
 
 ```
 
@@ -37,7 +37,7 @@ yarn add @biconomy/bundler @biconomy/account
 
 ```bash
 
-pnpm add @biconomy/bundler @biconomy/account
+pnpm add @biconomy/bundler
 
 ```
 
@@ -46,34 +46,19 @@ pnpm add @biconomy/bundler @biconomy/account
 
 ## Integration
 
-Simply pass a bundler url as a parameter for the smart account.
-
 :::info
 
 [Click here](/dashboard) to learn more about our dashboard and how to get your own bundler url.
-
 :::
 
-```typescript
-import { createSmartAccountClient } from "@biconomy/account";
 
-const biconomySmartAccountConfig = {
-  signer: signer,
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
-};
-
-const biconomySmartAccount = await createSmartAccountClient(
-  biconomySmartAccountConfig
-);
-```
-
-Or you can create your own instance of the Bundler if you wish to pass more params to it like:
+To create a bundler instance pass the bundler url, with other optional params.
 
 - userOpReceiptIntervals
 - userOpWaitForTxHashIntervals
 - userOpReceiptMaxDurationIntervals
 - userOpWaitForTxHashMaxDurationIntervals
+
 
 ```typescript
 import { createSmartAccountClient, createBundler } from "@biconomy/account";
@@ -87,10 +72,15 @@ const bundler = await createBundler({
   userOpReceiptMaxDurationIntervals,
 });
 
-const biconomySmartAccount = await createSmartAccountClient({
-  signer,
-  bundler,
-});
+const userOpGasResponse: UserOpGasResponse =  await bundler.estimateUserOpGas(userOp);
+// Update gas values based on the userOp gas response
+const userOpResponse: UserOpGasResponse = await bundler.sendUserOp(userOp)
+
 ```
+
+To estimate gas for the userOp.
+
+To send a userOperation.
+
 
 Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Bundler.

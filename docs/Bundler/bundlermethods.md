@@ -4,9 +4,7 @@ sidebar_position: 3
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integration.mdx
 ---
 
-# Bundler Methods
-
-Following are the methods that can be called on bundler instance
+# Methods
 
 :::note
 
@@ -14,76 +12,134 @@ When using these methods you will need to create a `userOp`. The [accounts metho
 
 :::
 
-## [sendUserOp](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#sendUserOp)
+## estimateUserOpGas
+This method is used to estimate gas for the userOp.
 
-Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](/Account/methods#senduserop).
+**Usage**
+```ts
+const userOpGasResponse: UserOpGasResponse = await bundler.estimateUserOpGas(userOp);
+```
+**Parameters**
 
-## [getUserOpReceipt](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpReceipt)
+- userOp(`UserOperation`, required): userOperation to calculate gas for.
 
-After using `sendUserOp` you will recieve a `userOpResponse` which contains a string clled `userOpHash`
+**returns**
+
+- userOpGasResponse(`Promise<UserOpGasResponse>`): It returns an object containing the following gas values.
+
+  ```ts
+  type UserOpGasResponse = {
+    preVerificationGas: string;
+    verificationGasLimit: string;
+    callGasLimit: string;
+    maxPriorityFeePerGas: string;
+    maxFeePerGas: string;
+  };
+  ```
+
+
+## sendUserOp
+
+This method is used to execute the userOperation.
+
+**Usage**
+```ts
+const userOpResponse: UserOpResponse = await bundler.sendUserOp(userOp);
+```
+**Parameters**
+
+- userOp(`UserOperation`, required): userOperation to send.
+
+**returns**
+
+- userOpResponse(`Promise<UserOpResponse>`): It returns an object containing the userOpHash and wait method.
+
+  ```ts
+  type UserOpResponse = {
+    userOpHash: string;
+    wait(_confirmations?: number): Promise<UserOpReceipt>;
+  };
+  ```
+
+## getUserOpReceipt
+
+After using `sendUserOp` you will receive a `userOpResponse` which contains a string called `userOpHash`
 
 Using this `userOpHash` you can fetch the `userOpReceipt` which verifies that your `userOp` was handled on chain as a transaction.
 
-```ts
-const userOpReceipt = await getUserOpReceipt("0x....");
-```
-
-The full UserOpReceipt object type is shown below:
+**Usage**
 
 ```ts
-type UserOpReceipt = {
-  userOpHash: string;
-  entryPoint: string;
-  sender: string;
-  nonce: number;
-  paymaster: string;
-  actualGasCost: BigNumber;
-  actualGasUsed: BigNumber;
-  success: boolean;
-  reason: string;
-  logs: Array<ethers.providers.Log>;
-  receipt: ethers.providers.TransactionReceipt;
-};
+const userOpReceipt = await bundler.getUserOpReceipt("0x....");
 ```
 
-## [getUserOpByHash](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpByHash)
+**Parameters**
 
-After using `sendUserOp` you will recieve a `userOpResponse` which contains a string clled `userOpHash`
+- userOpHash(`string`, required): user operation hash.
 
-Using this `userOpHash` you can fetch the original `userOp` that was created with this hash.
+**returns**
+
+- userOpReceipt(`UserOpReceipt`): The full UserOpReceipt object type is shown below:
+
+  ```ts
+  type UserOpReceipt = {
+    userOpHash: string;
+    entryPoint: string;
+    sender: string;
+    nonce: number;
+    paymaster: string;
+    actualGasCost: BigNumber;
+    actualGasUsed: BigNumber;
+    success: boolean;
+    reason: string;
+    logs: Array<ethers.providers.Log>;
+    receipt: ethers.providers.TransactionReceipt;
+  };
+  ```
+
+## getUserOpByHash
+
+Using the `userOpHash` you can fetch the original `userOp` that was created with this hash.
+
+**Usage**
 
 ```ts
-const userOp = await getUserOpByHash("0x...");
+const userOp = await bundler.getUserOpByHash("0x...");
 ```
 
-The userOperation will contain the followin values:
+**Parameters**
 
-```ts
-type BytesLike = Bytes | string;
-type BigNumberish = BigNumber | Bytes | bigint | string | number;
+- userOpHash(`string`, required): user operation hash.
 
-type UserOperation = {
-  sender: string;
-  nonce: BigNumberish;
-  initCode: BytesLike;
-  callData: BytesLike;
-  callGasLimit: BigNumberish;
-  verificationGasLimit: BigNumberish;
-  preVerificationGas: BigNumberish;
-  maxFeePerGas: BigNumberish;
-  maxPriorityFeePerGas: BigNumberish;
-  paymasterAndData: BytesLike;
-  signature: BytesLike;
-};
-```
+**returns**
+- userOp(`Promise<UserOperation>`) : The userOperation will contain the following values:
 
-Additionally this response will contain the following:
+  ```ts
+  type BytesLike = Bytes | string;
+  type BigNumberish = BigNumber | Bytes | bigint | string | number;
 
-```ts
-type UserOpByHashResponse = UserOperation & {
-  transactionHash: string;
-  blockNumber: number;
-  blockHash: string;
-  entryPoint: string;
-};
-```
+  type UserOperation = {
+    sender: string;
+    nonce: BigNumberish;
+    initCode: BytesLike;
+    callData: BytesLike;
+    callGasLimit: BigNumberish;
+    verificationGasLimit: BigNumberish;
+    preVerificationGas: BigNumberish;
+    maxFeePerGas: BigNumberish;
+    maxPriorityFeePerGas: BigNumberish;
+    paymasterAndData: BytesLike;
+    signature: BytesLike;
+  };
+  ```
+
+  Additionally this response will contain the following:
+
+  ```ts
+  type UserOpByHashResponse = UserOperation & {
+    transactionHash: string;
+    blockNumber: number;
+    blockHash: string;
+    entryPoint: string;
+  };
+  ```
