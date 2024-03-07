@@ -7,7 +7,7 @@ export default function GoogleSheetsDataPage() {
   } = useDocusaurusContext();
   const [dataLoaded, setDataLoaded] = useState(false);
   const [fetchedData, setFetchedData] = useState({});
-  const cacheExpirationTime = 7 * 24 * 60 * 60; // 7 days in seconds
+  const cacheExpirationTime = 24 * 60 * 60; // 1 day in seconds
 
   useEffect(() => {
     const fetchDataFromGoogleSheet = async () => {
