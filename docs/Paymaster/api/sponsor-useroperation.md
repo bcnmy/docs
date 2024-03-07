@@ -83,7 +83,7 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
                 "webhookData": {},
                 "smartAccountInfo": {
                     "name": "BICONOMY",
-                    "version": "1.0.0"
+                    "version": "2.0.0"
                 }
             }
         }

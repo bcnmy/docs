@@ -57,7 +57,7 @@ Params Array for ERC20 paymaster requests
                 "webhookData": {},
                 "smartAccountInfo": {
                     "name": "BICONOMY" | "INFINITSM",
-                    "version": "1.0.0"
+                    "version": "2.0.0" // pass version as 1.0.0 in case of INFINITSM
                 }
             }
         }
