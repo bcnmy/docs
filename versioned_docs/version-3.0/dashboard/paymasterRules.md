@@ -1,15 +1,15 @@
 ---
-sidebar_label: "Paymaster Policies"
+sidebar_label: "Paymaster Rules"
 sidebar_position: 3
 ---
 
-# Paymaster Policies
+# Paymaster Rules
 
 Before using a Paymaster to sponsor a transaction you will need to register your smart contracts and white list the methods that will be called in your dApp.
 
 ## Register a Smart Contract
 
-Navigate to the Paymaster you have created, then click policies and contract. If this is the first time you are adding a smart contract the page will look like this:
+Navigate to the Paymaster you have created, then click rules and contract. If this is the first time you are adding a smart contract the page will look like this:
 
 ![new contract](../images/contracts/new_contract.png)
 

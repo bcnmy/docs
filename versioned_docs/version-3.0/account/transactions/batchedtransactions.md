@@ -11,7 +11,7 @@ This guide is an extension of our Gasless transaction guide with the addition of
 :::info
 This guide assumes you have already initialized the Biconomy SDK and just need to understand how to execute a user paid transaction. See our [tutorials](/tutorials) for step by step setups.
 
-Before using these code snippets make sure to [set up a paymaster](/dashboard/paymaster) and [register any smart contracts](/dashboard/paymasterPolicies) for sponsorship.
+Before using these code snippets make sure to [set up a paymaster](/dashboard/paymaster) and [register any smart contracts](/dashboard/paymasterRules) for sponsorship.
 :::
 
 ## Imports
