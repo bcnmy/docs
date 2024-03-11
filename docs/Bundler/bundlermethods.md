@@ -6,13 +6,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integrat
 
 # Methods
 
-:::note
-
-When using these methods you will need to create a `userOp`. The [accounts methods](/Account/methods) will help you in creating these for the paymaster methods below.
-
-:::
-
-## estimateUserOpGas
+## [estimateUserOpGas](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#estimateUserOpGas)
 This method is used to estimate gas for the userOp.
 
 **Usage**
@@ -38,7 +32,7 @@ const userOpGasResponse: UserOpGasResponse = await bundler.estimateUserOpGas(use
   ```
 
 
-## sendUserOp
+## [sendUserOp](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#sendUserOp)
 
 This method is used to execute the userOperation.
 
@@ -61,7 +55,7 @@ const userOpResponse: UserOpResponse = await bundler.sendUserOp(userOp);
   };
   ```
 
-## getUserOpReceipt
+## [getUserOpReceipt](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpReceipt)
 
 After using `sendUserOp` you will receive a `userOpResponse` which contains a string called `userOpHash`
 
@@ -97,7 +91,7 @@ const userOpReceipt = await bundler.getUserOpReceipt("0x....");
   };
   ```
 
-## getUserOpByHash
+## [getUserOpByHash](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpByHash)
 
 Using the `userOpHash` you can fetch the original `userOp` that was created with this hash.
 

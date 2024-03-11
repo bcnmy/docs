@@ -51,23 +51,17 @@ pnpm add @biconomy/bundler
 [Click here](/dashboard) to learn more about our dashboard and how to get your own bundler url.
 :::
 
-
 To create a bundler instance pass the bundler url, with other optional params.
-
-- userOpReceiptIntervals
-- userOpWaitForTxHashIntervals
-- userOpReceiptMaxDurationIntervals
-- userOpWaitForTxHashMaxDurationIntervals
 
 
 ```typescript
-import { createSmartAccountClient, createBundler } from "@biconomy/account";
+import { create } from "@biconomy/bundler";
 
 const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
   [80001]: 60000,
 };
 
-const bundler = await createBundler({
+const bundler = await create({
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   userOpReceiptMaxDurationIntervals,
 });
@@ -78,9 +72,15 @@ const userOpResponse: UserOpGasResponse = await bundler.sendUserOp(userOp)
 
 ```
 
-To estimate gas for the userOp.
+**Parameters**
+- bundlerUrl(`string`, required): bundler url from the dashboard
+- userOpReceiptIntervals(`object`, optional): 
+- userOpWaitForTxHashIntervals(`object`, optional): 
+- userOpReceiptMaxDurationIntervals(`object`, optional): 
+- userOpWaitForTxHashMaxDurationIntervals(`object`, optional): 
 
-To send a userOperation.
 
+**returns**
+- [bundler](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html)(`Promise<Bundler>`): bundler instance
 
-Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with our Smart Accounts. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Bundler.
+Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with Smart Accounts. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Bundler.
