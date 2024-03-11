@@ -1,4 +1,3 @@
-git rebase --continue---
 sidebar_label: "Batch ERC20 Transfer with Session Router"
 sidebar_position: 8
 ---
