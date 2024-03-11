@@ -9,7 +9,7 @@ Before using a Paymaster to sponsor a transaction you will need to register your
 
 ## Register a Smart Contract
 
-Navigate to the Paymaster you have created, then click rules and contract. If this is the first time you are adding a smart contract the page will look like this:
+Navigate to the Paymaster you have created, then click `Rules` and `Contract`. If this is the first time you are adding a smart contract the page will look like this:
 
 ![new contract](../images/contracts/new_contract.png)
 
