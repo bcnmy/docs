@@ -5,24 +5,25 @@ sidebar_position: 4
 
 # Add a global limit
 
-Navigate to the Paymaster you have created, then click rules and spending. If this is the first time you are adding a limit the page will look like this:
+Navigate to the Paymaster you have created, then click `Rules` and `Spending`. 
+If this is the first time you are adding a limit the page will look like this:
 
 ![new limit](../images/limits/new_limit.png)
 
-Click on Add limit button inside Global Limit card and the new global limit modal will appear.
+Click on `Add limit ` inside the Global Limit card and the new global limit modal will appear.
 Inside the modal you will be presented with the option of choosing:
 
 - Threshold type (Gas Spend | Number of user operations)
-- Threshhold value
+- Threshold value
 - Cycle duration (minimum 1 hour, maximum 23 hours)
 
-After clicking Create button the limit will be created.
+After clicking `Create` the limit will be created.
 
 ![add global limit](../images/limits/global_limit_modal.png)
 
 ## Add a user limit
 
-Click on Add limit button inside User Limit card and the new user limit modal will appear.
-Both the global and the user limit modals are very simiar and offer same options.
+Click on `Add limit` inside User Limit card and the new user limit modal will appear.
+Both the global and the user limit modals are very similar and offer the same options.
 
 ![add user limit](../images/limits/user_limit_modal.png)
