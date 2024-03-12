@@ -133,7 +133,7 @@ When creating your DApp, you will receive an "apiKey" as part of the registratio
 
 Alternatively, if you already have a DApp registered, you can find the "apiKey" in the list API of the DApp.
 
-#### 3. Create a Smart Contract:
+#### 3. Whitelist a Smart Contract:
 
 > **_POST Request_**
 
