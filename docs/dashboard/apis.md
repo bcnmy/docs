@@ -473,3 +473,381 @@ Responses
     "message": "Smart contract not found"
 }
 ```
+
+#### 8. Add spending limit rule to a paymaster
+
+> **_POST Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Body
+
+| Param      | Type   | Description                                  | Required |
+|------------|--------|----------------------------------------------| -------- |
+| name       | string | Unique Policy name                           | Required |
+| policyType | string | Pass "PAYMASTER_SA_LIMIT" for spending limit | Required |
+| policyData | object | Described below                              | Required |
+
+Policy Data
+
+| Param      | Type  | Description                                                              | Required |
+|------------|-------|--------------------------------------------------------------------------| -------- |
+| type       | string | "PAYMASTER"(Global limit) / "SMART_ACCOUNT" (Individual User Limit)      | Required |
+| cycleDuration | object | eg. {value:3, unit: "hour"}, {value:2, unit: "day"}                      | Required |
+| threshold | number | Limit Value                                                              | Required |
+| thresholdType | type  | "COUNT" (Number of Userops) / "NATIVE_ASSET" (Gas Spend in native token) | Required |
+
+Responses
+
+> **_200 OK_**
+
+```javascript
+{
+    "statusCode": 200,
+    "message": "Paymaster Policy created successfully",
+    "data": {
+            "_id": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "name": "paymaster limit",
+            "policyType": "PAYMASTER_SA_LIMIT",
+            "organisationId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "paymasterId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "createdBy": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "chainId": 84532,
+            "active": true,
+            "policyData": {
+            "type": "PAYMASTER",
+                "startTimeInEpoch": 1709053430301,
+                "durationInMs": 10800000,
+                "cycleDuration": {
+                "value": 3,
+                    "unit": "hour"
+                },
+            "threshold": 10,
+                "thresholdType": "COUNT"
+            }
+       }     
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+
+#### 9. Add a webhook rule to the paymaster
+
+> **_POST Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Body
+
+| Param      | Type   | Description                     | Required |
+|------------|--------|---------------------------------| -------- |
+| name       | string | Unique Policy name              | Required |
+| policyType | string | Pass "WEBHOOK" for webhook rule | Required |
+| policyData | object | Described below                 | Required |
+
+Policy Data
+
+| Param        | Type  | Description                                                                     | Required |
+|--------------|-------|---------------------------------------------------------------------------------| -------- |
+| url          | string | Webhook URL which will be sent a POST request with the webhook data, and userOp | Required |
+
+Responses
+
+> **_200 OK_**
+
+```javascript
+{
+    "statusCode": 200,
+    "message": "Paymaster Policy created successfully",
+    "data": {
+            "_id": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "name": "webhook rule",
+            "policyType": "WEBHOOK",
+            "organisationId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "paymasterId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "createdBy": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "chainId": 84532,
+            "active": true,
+            "policyData": {
+                "url": "https://www.google.com"
+             },
+       }     
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+
+
+#### 10. Add a "Wallet Deployment Only" rule to the paymaster
+
+> **_POST Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Body
+
+| Param      | Type   | Description              | Required |
+|------------|--------|--------------------------| -------- |
+| name       | string | Unique Policy name       | Required |
+| policyType | string | Pass "WALLET_DEPLOYMENT" | Required |
+| policyData | object | Pass empty object ({})   | Required |
+
+Responses
+
+> **_200 OK_**
+
+```javascript
+{
+    "statusCode": 200,
+    "message": "Paymaster Policy created successfully",
+    "data": {
+            "_id": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "name": "wallet deployment rule",
+            "policyType": "WALLET_DEPLOYMENT",
+            "organisationId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "paymasterId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "createdBy": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+            "chainId": 84532,
+            "active": true,
+            "policyData": {
+                "operator": "walletDeployment"
+             },
+       }     
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+
+
+
+#### 11. Get all rules for a paymaster (spending limit, webhook, wallet deployment, whitelisted contracts)
+
+> **_GET Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Responses
+
+> **_200 OK_**
+
+```json
+{
+  "statusCode": 200,
+  "message": "Paymaster Policies found!",
+  "data": [
+    {
+      "_id": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "name": "paymaster spending limit",
+      "policyType": "PAYMASTER_SA_LIMIT",
+      "organisationId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "paymasterId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "createdBy": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "chainId": 84532,
+      "active": true,
+      "policyData": {
+        "type": "PAYMASTER",
+        "startTimeInEpoch": 1709053430301,
+        "durationInMs": 10800000,
+        "cycleDuration": {
+          "value": 3,
+          "unit": "hour"
+        },
+        "threshold": 10,
+        "thresholdType": "COUNT"
+      }
+    },
+    {
+      "_id": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "name": "wallet deployment rule",
+      "policyType": "WALLET_DEPLOYMENT",
+      "organisationId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "paymasterId": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "createdBy": "xxxxx-xxxx-xxxx-xxxx-xxxxx",
+      "chainId": 84532,
+      "active": true,
+      "policyData": {
+        "operator": "walletDeployment"
+      }
+    }
+  ]
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+        "message": "Auth token and API key is required in the headers"
+}
+```
+
+#### 12. Update spending limit rule for a paymaster
+
+> **_PATCH Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/limit/:policyId
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Body
+
+| Param      | Type   | Description                  | Required |
+|------------|--------|------------------------------| -------- |
+| name       | string | New Policy name              |  |
+| cycleDuration | string | updated cycle duration       |  |
+| threshold | number | New spending limit threshold |  |
+| thresholdType | string | New spending limit type      |  |
+
+Responses
+
+> **_200 OK_**
+
+```javascript
+{
+    "statusCode": 200,
+    "message": "Paymaster Limit updated"
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+
+#### 12. Pause a paymaster rule
+> **_PATCH Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/deactivate/:policyId
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Responses
+
+> **_200 OK_**
+
+```javascript
+{
+    "statusCode": 200,
+    "message": "aymaster Policy Deactivated!"
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+
+#### 13. Unpause a paymaster rule
+> **_PATCH Request_**
+
+URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/activate/:policyId
+
+Parameters
+
+Header
+
+| Param     | Type   | Description                        | Required |
+| --------- | ------ | ---------------------------------- | -------- |
+| authToken | string | Token unique to every user account | Required |
+| apiKey    | string | API Key Associated with dApp       | Required |
+
+Responses
+
+> **_200 OK_**
+
+```javascript
+{
+    "statusCode": 200,
+    "message": "aymaster Policy Activated!"
+}
+```
+
+> **_401 Unauthorized_**
+
+```javascript
+{
+    "statusCode": 401,
+    "message": "Auth token and API key is required in the headers"
+}
+```
+
