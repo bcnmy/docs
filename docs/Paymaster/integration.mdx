@@ -60,14 +60,13 @@ Set up a paymaster for the smart account by providing only the paymaster API key
   );
 ```
 
-If you wish to pass "strictMode" to your Paymaster you need to create the instace.
+If you wish to pass "strictMode" to your Paymaster you need to create the instance.
 
 ```typescript
-  import { createSmartAccountClient, IPaymaster, BiconomyPaymaster } from "@biconomy/account";
+  import { createSmartAccountClient, IPaymaster, createPaymaster } from "@biconomy/account";
 
-  const paymaster: IPaymaster = new BiconomyPaymaster({
-    //https://dashboard.biconomy.io/ get paymaster urls from your dashboard
-    paymasterUrl: "",
+  const paymaster: IPaymaster = await createPaymaster({
+    paymasterUrl: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
     strictMode: true
   });
 
