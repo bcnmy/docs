@@ -3,7 +3,10 @@ sidebar_label: "Spending Limits"
 sidebar_position: 4
 ---
 
-# Add a global limit
+# Spending limits
+This feature allows you to set limits to the gas usage. You can define global limits or per-user quotas, specifying either transaction count or total gas consumption.
+
+## Add a global limit
 
 Navigate to the Paymaster you have created, then click Rules and Spending. 
 If this is the first time you are adding a limit the page will look like this:
