@@ -29,7 +29,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "DApp list fetched",
@@ -50,7 +50,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -82,7 +82,7 @@ Body
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "DApp registered successfully",
@@ -98,7 +98,7 @@ Body
 
 Paymaster Name Already Exists
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "paymaster_name_exists"
@@ -109,7 +109,7 @@ Paymaster Name Already Exists
 
 Chain Id not supported
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "Chain ID not supported"
@@ -118,7 +118,7 @@ Chain Id not supported
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token is required in the headers"
@@ -161,7 +161,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Smart contract registered successfully"
@@ -172,7 +172,7 @@ Responses
 
 Smart Contract Already Exists
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "Smart contract address already exists"
@@ -181,7 +181,7 @@ Smart Contract Already Exists
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -205,7 +205,7 @@ Header
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Smart contract list fetched",
@@ -227,7 +227,7 @@ Header
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -260,7 +260,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Smart contract updated",
@@ -283,7 +283,7 @@ Responses
 
 Whitelisted methods must be an array
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "whitelistedMethods must be an array"
@@ -292,7 +292,7 @@ Whitelisted methods must be an array
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -303,7 +303,7 @@ Whitelisted methods must be an array
 
 Usually, this occurs when incorrect apiKey is used or the address is not added
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "Smart contract not found"
@@ -331,7 +331,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
         "message": "Funding message sent",
@@ -343,7 +343,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -380,7 +380,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
         "message": "Paymaster updated successfully",
@@ -397,7 +397,7 @@ Responses
 
 This happens, when there is a signature mismatch, either because an older message is used to generate the signature, or EOA address mentioned in the request body, is not the address which signed the message.
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "Invalid signature"
@@ -406,7 +406,7 @@ This happens, when there is a signature mismatch, either because an older messag
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -417,7 +417,7 @@ This happens, when there is a signature mismatch, either because an older messag
 
 Usually, this occurs when incorrect apiKey or authToken is used
 
-```javascript
+```json
 {
     "statusCode": 404,
     "message": "User not found"
@@ -449,7 +449,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Smart contract deleted"
@@ -458,7 +458,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -467,7 +467,7 @@ Responses
 
 > **_404 Not Found_**
 
-```javascript
+```json
 {
     "statusCode": 400,
     "message": "Smart contract not found"
@@ -499,18 +499,17 @@ Body
 
 Policy Data
 
-| Param      | Type  | Description                                                              | Required |
-|------------|-------|--------------------------------------------------------------------------| -------- |
-| type       | string | "PAYMASTER"(Global limit) / "SMART_ACCOUNT" (Individual User Limit)      | Required |
-| cycleDuration | object | eg. {value:3, unit: "hour"}, {value:2, unit: "day"}                      | Required |
-| threshold | number | Limit Value                                                              | Required |
-| thresholdType | type  | "COUNT" (Number of Userops) / "NATIVE_ASSET" (Gas Spend in native token) | Required |
-
+| Param      | Type  | Description                                                                                                             | Required |
+|------------|-------|-------------------------------------------------------------------------------------------------------------------------| -------- |
+| type       | string | "PAYMASTER"(Global limit) / "SMART_ACCOUNT" (Individual User Limit)                                                     | Required |
+| cycleDuration | object | eg. `{value:3, unit: "hour"}`, `{value:2, unit: "day"}`. <br/> Currently only supported time units are "hour" and "day" | Required |
+| threshold | number | Limit Value                                                                                                             | Required |
+| thresholdType | type  | "COUNT" (Number of Userops) / "NATIVE_ASSET" (Gas Spend in native token, in eth)                                        | Required |
 Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Paymaster Policy created successfully",
@@ -531,7 +530,7 @@ Responses
                 "value": 3,
                     "unit": "hour"
                 },
-            "threshold": 10,
+                "threshold": 10,
                 "thresholdType": "COUNT"
             }
        }     
@@ -540,7 +539,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -580,7 +579,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Paymaster Policy created successfully",
@@ -602,7 +601,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -610,7 +609,7 @@ Responses
 ```
 
 
-#### 10. Add a "Wallet Deployment Only" rule to the paymaster
+#### 10. Add a "Wallet Deployment" rule to the paymaster
 
 > **_POST Request_**
 
@@ -627,17 +626,17 @@ Header
 
 Body
 
-| Param      | Type   | Description              | Required |
-|------------|--------|--------------------------| -------- |
-| name       | string | Unique Policy name       | Required |
+| Param      | Type   | Description             | Required |
+|------------|--------|-------------------------| -------- |
+| name       | string | Unique Policy name      | Required |
 | policyType | string | Pass "WALLET_DEPLOYMENT" | Required |
-| policyData | object | Pass empty object ({})   | Required |
+| policyData | object | Pass empty object (`{}`)  | Required |
 
 Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Paymaster Policy created successfully",
@@ -659,7 +658,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -732,7 +731,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
         "message": "Auth token and API key is required in the headers"
@@ -767,7 +766,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "Paymaster Limit updated"
@@ -776,7 +775,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -801,16 +800,16 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
-    "message": "aymaster Policy Deactivated!"
+    "message": "Paymaster Policy Deactivated!"
 }
 ```
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
@@ -835,7 +834,7 @@ Responses
 
 > **_200 OK_**
 
-```javascript
+```json
 {
     "statusCode": 200,
     "message": "aymaster Policy Activated!"
@@ -844,7 +843,7 @@ Responses
 
 > **_401 Unauthorized_**
 
-```javascript
+```json
 {
     "statusCode": 401,
     "message": "Auth token and API key is required in the headers"
