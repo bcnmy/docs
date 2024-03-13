@@ -130,7 +130,7 @@ async function getFeeQuotesOrData (userOp: any) {
 }
 ```
 
-- **Max approval:** Max approval will append the transaction once to the userOp. One time max approval will make future userOps cheaper, given you will not need to batch the approval every time you send a transaction. You can also see the the supported tokens list [here](/bundler/supportedNetworks) to reduce API call.
+- **Max approval:** Max approval will append the transaction once to the userOp. One time max approval will make future userOps cheaper, given you will not need to batch the approval every time you send a transaction. You can also see the the supported tokens list [here](/Bundler/supportedNetworks) to reduce API call.
 
 Checkout [this](https://github.com/bcnmy/biconomy-client-sdk/blob/main/packages/paymaster/src/BiconomyPaymaster.ts#L73C9-L73C38) for approval callData creation and [this](https://github.com/bcnmy/biconomy-client-sdk/blob/main/packages/account/src/BiconomySmartAccountV2.ts#L1170) for callData update.
 
