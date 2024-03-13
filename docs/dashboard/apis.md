@@ -846,7 +846,7 @@ Responses
 ```json
 {
     "statusCode": 200,
-    "message": "aymaster Policy Activated!"
+    "message": "Paymaster Policy Activated!"
 }
 ```
 
