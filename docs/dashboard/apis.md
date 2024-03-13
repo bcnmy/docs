@@ -773,6 +773,15 @@ Responses
 }
 ```
 
+On a successful update, the cycle of the spending limit will be reset and the new limit will be applied from the time of the update.
+
+```json
+{
+    "statusCode": 200,
+    "message": "Paymaster Limit updated"
+}
+```
+
 > **_401 Unauthorized_**
 
 ```json
