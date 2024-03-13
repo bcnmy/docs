@@ -1,9 +1,9 @@
 ---
-sidebar_label: "Paymaster sponsored"
+sidebar_label: "Paymaster ERC20"
 ---
 
-# Paymaster sponsored
-This tutorial represents the API integration flow where paymaster is used to sponsor the transactions.
+# Paymaster ERC20
+This tutorial represents the API integration flow where ERC20 tokens in smart wallet are used to sponsor the transactions. paymaster will cover the gas fees and equivalent ERC20 tokens will be deducted from user's smart account.
 
 ## Pre-requisites:
 
@@ -73,7 +73,68 @@ async function getGasEstimations (userOp: any) {
 ```
 If you are facing any error in this step, make sure your smart account wallet has sufficient funds and the nonce is correct.
 
-## 2. Get paymaster data:
+## 2. Token approval
+For ERC20 tokens, get the FeeQuotes for the tokens and when using the API directly, you will also need to append token approval transaction in the userOp callData. You can either go for the limited or max approval for token depending on the use case.
+
+- **Limited approval:** first, call `pm_getFeeQuoteOrData` API to get the fee quotes for all the tokens. Select the token in which user prefers to pay the gasFees. Create the callData for token approval and update the userOp callData. 
+
+```ts
+async function getFeeQuotesOrData (userOp: any) {
+    
+    const url="paymaster url"
+    
+    const requestData = {
+        jsonrpc: '2.0',
+        method: 'pm_getFeeQuoteOrData',
+        id: 1,
+        params: [
+          {
+            sender: userOp.sender,
+            nonce: userOp.nonce,
+            initCode: userOp.initCode,
+            callData: userOp.callData,
+            signature: userOp.signature,
+            preVerificationGas: Number(userOp.preVerificationGas).toString(),
+            verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
+            callGasLimit: Number(userOp.callGasLimit).toString(),
+            maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
+            maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
+            paymasterAndData: "0x"
+          },
+          {
+            mode: 'ERC20',
+            tokenInfo: {
+                tokenList: ["", ""],
+                preferredToken: "",
+            },
+            expiryDuration: 300,
+            calculateGasLimits: true,
+          },
+        ],
+    };
+    try{
+        const response = await axios.post(url, requestData);
+        console.log('Response:', response.data);
+        const feeQuotesResponse: Array<any> = response.data.result.feeQuotes
+        const selectedFeeQuote = feeQuotesResponse[i];
+        // select the preferred token
+        const maxGasFee = selectedFeeQuote.maxGasFee;
+        const selectedToken = selectedFeeQuote.tokenAddress;
+        // update call Data
+        
+    } catch (error) {
+      console.error(error);
+        return error;
+    }
+    
+}
+```
+
+- **Max approval:** Max approval will append the transaction once to the userOp. One time max approval will make future userOps cheaper, given you will not need to batch the approval every time you send a transaction. You can also see the the supported tokens list [here](/bundler/supportedNetworks) to reduce API call.
+
+Checkout [this](https://github.com/bcnmy/biconomy-client-sdk/blob/main/packages/paymaster/src/BiconomyPaymaster.ts#L73C9-L73C38) for approval callData creation and [this](https://github.com/bcnmy/biconomy-client-sdk/blob/main/packages/account/src/BiconomySmartAccountV2.ts#L1170) for callData update.
+
+## 3. Get paymaster data:
 Get the paymaster url from the dashboard.
 
 ```ts
@@ -100,14 +161,11 @@ async function getPaymasterData (userOp: any) {
             paymasterAndData: "0x"
           },
           {
-            mode: 'SPONSORED',
-            sponsorshipInfo: {
-              webhookData: {},
-              smartAccountInfo: {
-                name: 'BICONOMY',
-                version: '2.0.0',
-              },
-            },
+            mode: 'ERC20',
+            tokenInfo: {
+                preferredToken : "address1",
+                tokenList: ["address1", "address2"],
+            }
             expiryDuration: 300,
             calculateGasLimits: true,
           },
@@ -131,7 +189,7 @@ async function getPaymasterData (userOp: any) {
 }
 ```
 
-## 3. Sign userOperation
+## 4. Sign userOperation
 To sign the userOp, calculate the userOpHash and then sign it using the same signer, account was created. you can find more details here. Follow this tutorial to learn about signing the userOp.
 
 ```ts
@@ -151,7 +209,7 @@ async function signUserOp (userOp: any) {
 
 ```
 
-## 4. Send UserOperation: 
+## 5. Send UserOperation: 
 eth_sendUserOperation sends a user operation to the given network.
 
 ```ts

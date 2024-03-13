@@ -104,7 +104,7 @@ async function sendUserOp(userOp: any) {
     const requestData = {
         jsonrpc: '2.0',
         method: 'eth_sendUserOperation',
-        id: getTimestampInSeconds(),
+        id: 555,
         params: [
           {
             sender: userOp.sender,
