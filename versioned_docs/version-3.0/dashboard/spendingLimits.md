@@ -3,9 +3,13 @@ sidebar_label: "Spending Limits"
 sidebar_position: 4
 ---
 
-# Add a global limit
+# Spending limits
 
-Navigate to the Paymaster you have created, then click `Rules` and `Spending`. 
+This feature allows you to set limits to the gas usage. You can define global limits or per-user quotas, specifying either transaction count or total gas consumption.
+
+## Add a global limit
+
+Navigate to the Paymaster you have created, then click `Rules` and `Spending`.
 If this is the first time you are adding a limit the page will look like this:
 
 ![new limit](../images/limits/new_limit.png)
@@ -18,6 +22,9 @@ Inside the modal you will be presented with the option of choosing:
 - Cycle duration (minimum 1 hour, maximum 23 hours)
 
 After clicking `Create` the limit will be created.
+
+Please note that whenever limit policy is edited (duration / threshold / threshold type), cycle is reset, and the new cycle starts from the moment of edit.
+Pausing/Activating a limit will not reset the cycle.
 
 ![add global limit](../images/limits/global_limit_modal.png)
 
