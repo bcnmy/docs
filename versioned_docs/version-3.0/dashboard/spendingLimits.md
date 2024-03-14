@@ -23,7 +23,7 @@ Inside the modal you will be presented with the option of choosing:
 
 After clicking `Create` the limit will be created.
 
-Please note that whenever limit policy is edited (duration / threshold / threshold type), cycle is reset, and the new cycle starts from the moment of edit.
+Please note that whenever the limit policy is edited (duration/ threshold/ threshold type), the cycle is reset, and the new cycle starts from the moment of edit.
 Pausing/Activating a limit will not reset the cycle.
 
 ![add global limit](../images/limits/global_limit_modal.png)
