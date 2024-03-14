@@ -7,7 +7,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integrat
 # Methods
 
 ## [estimateUserOpGas](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#estimateUserOpGas)
-This method is used to estimate gas for the userOp.
+This method is used to estimate gas for the userOp. It returns estimates for PreVerificationGas, VerificationGas, and CallGasLimit for a given UserOperation. It requires passing a semi-valid/ dummy signature in userOp (e.g. a signature of the correct length and format). 
 
 **Usage**
 ```ts
@@ -15,7 +15,8 @@ const userOpGasResponse: UserOpGasResponse = await bundler.estimateUserOpGas(use
 ```
 **Parameters**
 
-- userOp(`UserOperation`, required): userOperation to calculate gas for.
+- userOp(`UserOperationStruct`, required): userOperation to calculate gas for.
+- stateOverrideSet(`StateOverrideSet`): optional state override set for estimating gas for a userOperation under different blockchain states.
 
 **returns**
 
@@ -43,15 +44,19 @@ const userOpResponse: UserOpResponse = await bundler.sendUserOp(userOp);
 **Parameters**
 
 - userOp(`UserOperation`, required): userOperation to send.
+- simulationParam(`SimulationType`): The simulationType enum can be of two types:
+    - `validation` which will only simulate the validation phase, checks if user op is valid but does not check if execution will succeed. By default this flag is set to validation.
+    - `validation_and_execution` checks if user op is valid and if user op execution will succeed.
 
 **returns**
 
-- userOpResponse(`Promise<UserOpResponse>`): It returns an object containing the userOpHash and wait method.
+- userOpResponse(`Promise<UserOpResponse>`): It returns an object containing the userOpHash and other methods.`wait()` method waits for the receipt until the transaction is mined. `waitForTxHash()` returns transactionHash identifier (not userOpHash) and you can later watch for receipt on your own.
 
   ```ts
   type UserOpResponse = {
     userOpHash: string;
     wait(_confirmations?: number): Promise<UserOpReceipt>;
+    waitForTxHash(): Promise<UserOpStatus>;
   };
   ```
 
@@ -73,21 +78,19 @@ const userOpReceipt = await bundler.getUserOpReceipt("0x....");
 
 **returns**
 
-- userOpReceipt(`UserOpReceipt`): The full UserOpReceipt object type is shown below:
+- userOpReceipt(`Promise<UserOpReceipt>`): The full UserOpReceipt object type is shown below:
 
   ```ts
   type UserOpReceipt = {
-    userOpHash: string;
+    actualGasCost: Hex;
+    actualGasUsed: Hex;
     entryPoint: string;
-    sender: string;
-    nonce: number;
+    logs: any[];
     paymaster: string;
-    actualGasCost: BigNumber;
-    actualGasUsed: BigNumber;
-    success: boolean;
     reason: string;
-    logs: Array<ethers.providers.Log>;
-    receipt: ethers.providers.TransactionReceipt;
+    receipt: UserOperationReceipt["receipt"];
+    success: "true" | "false";
+    userOpHash: string;
   };
   ```
 
@@ -106,34 +109,29 @@ const userOp = await bundler.getUserOpByHash("0x...");
 - userOpHash(`string`, required): user operation hash.
 
 **returns**
-- userOp(`Promise<UserOperation>`) : The userOperation will contain the following values:
+- userOp(`Promise<UserOpByHashResponse>`) : The userOperation will contain the following values:
 
   ```ts
   type BytesLike = Bytes | string;
-  type BigNumberish = BigNumber | Bytes | bigint | string | number;
 
-  type UserOperation = {
-    sender: string;
-    nonce: BigNumberish;
-    initCode: BytesLike;
+  type UserOpByHashResponse = UserOperationStruct & {
+      transactionHash: string;
+      blockNumber: number;
+      blockHash: string;
+      entryPoint: string;
+    };
+    
+  type UserOperationStruct = {
     callData: BytesLike;
-    callGasLimit: BigNumberish;
-    verificationGasLimit: BigNumberish;
-    preVerificationGas: BigNumberish;
-    maxFeePerGas: BigNumberish;
-    maxPriorityFeePerGas: BigNumberish;
+    callGasLimit?: number | bigint | `0x${string}`;
+    initCode: BytesLike;
+    maxFeePerGas?: number | bigint | `0x${string}`;
+    maxPriorityFeePerGas?: number | bigint | `0x${string}`;
+    nonce: number | bigint | `0x${string}`;
     paymasterAndData: BytesLike;
+    preVerificationGas?: number | bigint | `0x${string}`;
+    sender: string;
     signature: BytesLike;
-  };
-  ```
-
-  Additionally this response will contain the following:
-
-  ```ts
-  type UserOpByHashResponse = UserOperation & {
-    transactionHash: string;
-    blockNumber: number;
-    blockHash: string;
-    entryPoint: string;
+    verificationGasLimit?: number | bigint | `0x${string}`;
   };
   ```
