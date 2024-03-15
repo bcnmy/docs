@@ -53,14 +53,7 @@ async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promi
     {
       "method": "eth_estimateUserOperationGas",
       "params": [
-        {
-          "sender": partialUserOp.sender,
-          "nonce":Number(partialUserOp.nonce).toString() ,
-          "initCode":"0x" ,
-          "callData":partialUserOp.callData ,
-          "signature":partialUserOp.signature ,
-          "paymasterAndData":partialUserOp.paymasterAndData
-        },
+        partialUserOp,
         "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
       ],
       "id": Date.now(),
@@ -68,7 +61,6 @@ async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promi
     }
     
     const response = await axios.post(url, data);
-    console.log('Response:', response.data);
     const { callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas} = response.data.result
     return { ...partialUserOp, callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas } as UserOperation;
 }
@@ -81,7 +73,6 @@ To sign the userOp, calculate the userOpHash and then sign it using the same sig
 ```ts
 async function signUserOp (userOp: UserOperation) {
     const userOpHash = getUserOpHash(userOp); // It's defined in the full code in the end.
-    console.log("userOpHash", userOpHash)
 
     const moduleSig = await signer.signMessage(ethers.utils.arrayify(userOpHash));
     const signatureWithModuleAddress = ethers.utils.defaultAbiCoder.encode(
@@ -130,7 +121,7 @@ async function getUserOpReceipt(userOpHash: string) {
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_getUserOperationReceipt',
-    id: 4545,
+    id: Date.now(),
     params: [userOpHash],
   };
 
@@ -166,21 +157,13 @@ type UserOperation = {
 }
 
 async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promise<UserOperation> {
-    console.log((await signer.getAddress()))
     const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
     
     const data =
     {
       "method": "eth_estimateUserOperationGas",
       "params": [
-        {
-          "sender": partialUserOp.sender,
-          "nonce":Number(partialUserOp.nonce).toString() ,
-          "initCode":"0x" ,
-          "callData":partialUserOp.callData ,
-          "signature":partialUserOp.signature ,
-          "paymasterAndData":partialUserOp.paymasterAndData
-        },
+        partialUserOp,
         "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
       ],
       "id": Date.now(),
@@ -188,13 +171,11 @@ async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promi
     }
     
     const response = await axios.post(url, data);
-    console.log('Response:', response.data);
     const { callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas} = response.data.result
     return { ...partialUserOp, callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas } as UserOperation;
 
 }
 function getUserOpHash(useOpMinusSignature: UserOperation): string {
-    console.log("useOpMinusSignature", useOpMinusSignature)
     const packedData = ethers.utils.defaultAbiCoder.encode(
         [
           "address","uint256","bytes32","bytes32","uint256","uint256","uint256","uint256","uint256","bytes32",
@@ -224,7 +205,6 @@ function getUserOpHash(useOpMinusSignature: UserOperation): string {
 
 async function signUserOp (userOp: UserOperation): Promise<UserOperation> {
     const userOpHash = getUserOpHash(userOp);
-    console.log("userOpHash", userOpHash)
 
     const moduleSig = await signer.signMessage(ethers.utils.arrayify(userOpHash));
     const signatureWithModuleAddress = ethers.utils.defaultAbiCoder.encode(
@@ -262,7 +242,7 @@ async function getUserOpReceipt(userOpHash: string) {
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_getUserOperationReceipt',
-    id: 4545,
+    id: Date.now(),
     params: [userOpHash],
   };
 
@@ -295,7 +275,7 @@ async function executePartialUserOp() {
     
   }
   catch (error) {
-        console.log(error)
+        console.error(error)
    }
 }
 

@@ -55,7 +55,6 @@ async function getGasFeeValues (userOp: Partial<UserOperation>) : Promise<UserOp
       params: [],
       id: Date.now()
     });
-    console.log('Response:', data);
     const { maxPriorityFeePerGas, maxFeePerGas } = data.result;
     return { ...userOp, maxPriorityFeePerGas, maxFeePerGas, callGasLimit: 5000000, verificationGasLimit: 5000000, preVerificationGas: 5000000 } as UserOperation;
 }
@@ -74,7 +73,7 @@ async function getFeeQuotesOrData (userOp: UserOperation) {
   const requestData = {
       jsonrpc: '2.0',
       method: 'pm_getFeeQuoteOrData',
-      id: 1,
+      id: Date.now(),
       params: [
         {
           ...userOp,
@@ -98,7 +97,6 @@ async function getFeeQuotesOrData (userOp: UserOperation) {
   };
   try{
       const response = await axios.post(url, requestData);
-      console.log('Response:', response.data);
       const feeQuotesResponse: Array<any> = response.data.result.feeQuotes
       const selectedFeeQuote = feeQuotesResponse[i];
       // select the preferred token
@@ -156,7 +154,6 @@ To sign the userOp, calculate the userOpHash and then sign it using the same sig
 
 async function signUserOp (userOp: UserOperation) {
   const userOpHash = getUserOpHash(userOp);
-  console.log("userOpHash", userOpHash)
 
   const moduleSig = await signer.signMessage(ethers.utils.arrayify(userOpHash));
   const signatureWithModuleAddress = ethers.utils.defaultAbiCoder.encode(
@@ -173,7 +170,6 @@ eth_sendUserOperation sends a user operation to the given network.
 
 ```ts
 async function sendUserOp(userOp: UserOperation) {
-  console.log(userOp)
   const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
   
   const requestData = {
@@ -210,7 +206,7 @@ async function getUserOpReceipt(userOpHash: string) {
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_getUserOperationReceipt',
-    id: 4545,
+    id: Date.now(),
     params: [userOpHash],
   };
 
@@ -254,7 +250,6 @@ async function getGasFeeValues (userOp: Partial<UserOperation>) : Promise<UserOp
     params: [],
     id: Date.now()
   });
-  console.log('Response:', data);
   const { maxPriorityFeePerGas, maxFeePerGas } = data.result;
   return { ...userOp, maxPriorityFeePerGas, maxFeePerGas, callGasLimit: 5000000, verificationGasLimit: 5000000, preVerificationGas: 5000000 } as UserOperation;
 }
@@ -266,7 +261,7 @@ async function getFeeQuotesOrData (userOp: UserOperation) {
     const requestData = {
         jsonrpc: '2.0',
         method: 'pm_getFeeQuoteOrData',
-        id: 1,
+        id: Date.now(),
         params: [
           {
             ...userOp,
@@ -329,7 +324,6 @@ return { ...userOp, paymasterAndData, preVerificationGas, verificationGasLimit, 
 }
 
 function getUserOpHash(useOpMinusSignature: UserOperation) {
-    console.log("useOpMinusSignature", useOpMinusSignature)
     const packedData = ethers.utils.defaultAbiCoder.encode(
     [
       "address","uint256","bytes32","bytes32","uint256","uint256","uint256","uint256","uint256","bytes32",
@@ -359,7 +353,6 @@ function getUserOpHash(useOpMinusSignature: UserOperation) {
 
 async function signUserOp (userOp: UserOperation) {
   const userOpHash = getUserOpHash(userOp);
-  console.log("userOpHash", userOpHash)
 
   const moduleSig = await signer.signMessage(ethers.utils.arrayify(userOpHash));
   const signatureWithModuleAddress = ethers.utils.defaultAbiCoder.encode(
@@ -371,7 +364,6 @@ async function signUserOp (userOp: UserOperation) {
 }
 
 async function sendUserOp(userOp: UserOperation) {
-  console.log(userOp)
   const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
   
   const requestData = {
@@ -401,7 +393,7 @@ async function getUserOpReceipt(userOpHash: string) {
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_getUserOperationReceipt',
-    id: 4545,
+    id: Date.now(),
     params: [userOpHash],
   };
 
