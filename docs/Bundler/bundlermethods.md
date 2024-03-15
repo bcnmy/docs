@@ -4,86 +4,134 @@ sidebar_position: 3
 custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integration.mdx
 ---
 
-# Bundler Methods
+# Methods
 
-Following are the methods that can be called on bundler instance
+## [estimateUserOpGas](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#estimateUserOpGas)
+This method is used to estimate gas for the userOp. It returns estimates for preVerificationGas, verificationGasLimit, and callGasLimit for a given UserOperation. It requires passing a semi-valid/ dummy signature in userOp (e.g. a signature of the correct length and format). 
 
-:::note
+**Usage**
+```ts
+const userOpGasResponse: UserOpGasResponse = await bundler.estimateUserOpGas(userOp);
+```
+**Parameters**
 
-When using these methods you will need to create a `userOp`. The [accounts methods](/Account/methods) will help you in creating these for the paymaster methods below.
+- userOp(`UserOperationStruct`, required): userOperation to calculate gas for.
+- stateOverrideSet(`StateOverrideSet`): optional state override set for estimating gas for a userOperation under different blockchain states.
 
-:::
+**returns**
+
+- userOpGasResponse(`Promise<UserOpGasResponse>`): It returns an object containing the following gas values.
+
+  ```ts
+  type UserOpGasResponse = {
+    preVerificationGas: string;
+    verificationGasLimit: string;
+    callGasLimit: string;
+    maxPriorityFeePerGas: string;
+    maxFeePerGas: string;
+  };
+  ```
+
 
 ## [sendUserOp](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#sendUserOp)
 
-Although the Bundler has the sendUserOp method for sending a userOp to be mined on chain this is not something you would need to call yourself as it would be done when sending the userOp from the smart account. For a full rundown of this process [click here](/Account/methods#senduserop).
+This method is used to execute the userOperation.
+
+**Usage**
+```ts
+const userOpResponse: UserOpResponse = await bundler.sendUserOp(userOp);
+```
+**Parameters**
+
+- userOp(`UserOperation`, required): userOperation to send.
+- simulationParam(`SimulationType`): The simulationType enum can be of two types:
+    - `validation` which will only simulate the validation phase, checks if user op is valid but does not check if execution will succeed. By default this flag is set to validation.
+    - `validation_and_execution` checks if user op is valid and if user op execution will succeed.
+
+**returns**
+
+- userOpResponse(`Promise<UserOpResponse>`): It returns an object containing the userOpHash and other methods.`wait()` method waits for the receipt until the transaction is mined. `waitForTxHash()` returns transactionHash identifier (not userOpHash) and you can later watch for receipt on your own.
+
+  ```ts
+  type UserOpResponse = {
+    userOpHash: string;
+    wait(_confirmations?: number): Promise<UserOpReceipt>;
+    waitForTxHash(): Promise<UserOpStatus>;
+  };
+  ```
 
 ## [getUserOpReceipt](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpReceipt)
 
-After using `sendUserOp` you will recieve a `userOpResponse` which contains a string clled `userOpHash`
+After using `sendUserOp` you will receive a `userOpResponse` which contains a string called `userOpHash`
 
 Using this `userOpHash` you can fetch the `userOpReceipt` which verifies that your `userOp` was handled on chain as a transaction.
 
-```ts
-const userOpReceipt = await getUserOpReceipt("0x....");
-```
-
-The full UserOpReceipt object type is shown below:
+**Usage**
 
 ```ts
-type UserOpReceipt = {
-  userOpHash: string;
-  entryPoint: string;
-  sender: string;
-  nonce: number;
-  paymaster: string;
-  actualGasCost: BigNumber;
-  actualGasUsed: BigNumber;
-  success: boolean;
-  reason: string;
-  logs: Array<ethers.providers.Log>;
-  receipt: ethers.providers.TransactionReceipt;
-};
+const userOpReceipt = await bundler.getUserOpReceipt("0x....");
 ```
+
+**Parameters**
+
+- userOpHash(`string`, required): user operation hash.
+
+**returns**
+
+- userOpReceipt(`Promise<UserOpReceipt>`): The full UserOpReceipt object type is shown below:
+
+  ```ts
+  type UserOpReceipt = {
+    actualGasCost: Hex;
+    actualGasUsed: Hex;
+    entryPoint: string;
+    logs: any[];
+    paymaster: string;
+    reason: string;
+    receipt: UserOperationReceipt["receipt"];
+    success: "true" | "false";
+    userOpHash: string;
+  };
+  ```
 
 ## [getUserOpByHash](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#getUserOpByHash)
 
-After using `sendUserOp` you will recieve a `userOpResponse` which contains a string clled `userOpHash`
+Using the `userOpHash` you can fetch the original `userOp` that was created with this hash.
 
-Using this `userOpHash` you can fetch the original `userOp` that was created with this hash.
-
-```ts
-const userOp = await getUserOpByHash("0x...");
-```
-
-The userOperation will contain the followin values:
+**Usage**
 
 ```ts
-type BytesLike = Bytes | string;
-type BigNumberish = BigNumber | Bytes | bigint | string | number;
-
-type UserOperation = {
-  sender: string;
-  nonce: BigNumberish;
-  initCode: BytesLike;
-  callData: BytesLike;
-  callGasLimit: BigNumberish;
-  verificationGasLimit: BigNumberish;
-  preVerificationGas: BigNumberish;
-  maxFeePerGas: BigNumberish;
-  maxPriorityFeePerGas: BigNumberish;
-  paymasterAndData: BytesLike;
-  signature: BytesLike;
-};
+const userOp = await bundler.getUserOpByHash("0x...");
 ```
 
-Additionally this response will contain the following:
+**Parameters**
 
-```ts
-type UserOpByHashResponse = UserOperation & {
-  transactionHash: string;
-  blockNumber: number;
-  blockHash: string;
-  entryPoint: string;
-};
-```
+- userOpHash(`string`, required): user operation hash.
+
+**returns**
+- userOp(`Promise<UserOpByHashResponse>`) : The userOperation will contain the following values:
+
+  ```ts
+  type BytesLike = Bytes | string;
+
+  type UserOpByHashResponse = UserOperationStruct & {
+      transactionHash: string;
+      blockNumber: number;
+      blockHash: string;
+      entryPoint: string;
+    };
+    
+  type UserOperationStruct = {
+    callData: BytesLike;
+    callGasLimit?: number | bigint | `0x${string}`;
+    initCode: BytesLike;
+    maxFeePerGas?: number | bigint | `0x${string}`;
+    maxPriorityFeePerGas?: number | bigint | `0x${string}`;
+    nonce: number | bigint | `0x${string}`;
+    paymasterAndData: BytesLike;
+    preVerificationGas?: number | bigint | `0x${string}`;
+    sender: string;
+    signature: BytesLike;
+    verificationGasLimit?: number | bigint | `0x${string}`;
+  };
+  ```
