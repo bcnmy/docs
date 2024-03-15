@@ -20,16 +20,16 @@ This tutorial represents the API integration flow where smart contract wallet ha
 ```ts
 type UserOperation = {
   sender: string;
-  nonce: BigNumberish;
-  initCode: BytesLike;
-  callData: BytesLike;
-  callGasLimit: BigNumberish;
-  verificationGasLimit: BigNumberish;
-  preVerificationGas: BigNumberish;
-  maxFeePerGas: BigNumberish;
-  maxPriorityFeePerGas: BigNumberish;
-  paymasterAndData: BytesLike;
-  signature: BytesLike;
+  nonce: string;
+  initCode: string;
+  callData: string;
+  callGasLimit: string;
+  verificationGasLimit: string;
+  preVerificationGas: string;
+  maxFeePerGas: string;
+  maxPriorityFeePerGas: string;
+  paymasterAndData: string;
+  signature: string;
 }
 
 let partialUserOp: Partial<UserOperation> = {
@@ -62,7 +62,7 @@ async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promi
     
     const response = await axios.post(url, data);
     const { callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas} = response.data.result
-    return { ...partialUserOp, callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas } as UserOperation;
+    return { ...partialUserOp, callGasLimit: callGasLimit.toString(), verificationGasLimit: verificationGasLimit.toString(), preVerificationGas: preVerificationGas.toString(), maxPriorityFeePerGas, maxFeePerGas } as UserOperation;
 }
 ```
 If you are facing any AA** error, please refer to [common errors](/troubleshooting/commonerrors.md). Also, make sure your smart account wallet has sufficient funds to sponsor the transaction even to estimate gas.
@@ -96,16 +96,8 @@ async function sendUserOp(userOp: UserOperation) {
         method: 'eth_sendUserOperation',
         id: Date.now(),
         params: [
-            {
-                ...userOp,
-                preVerificationGas: Number(userOp.preVerificationGas).toString(),
-                verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
-                callGasLimit: Number(userOp.callGasLimit).toString(),
-                maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
-                maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
-                paymasterAndData: "0x"
-            },
-            "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
+          userOp,
+          "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
         ],
     };
     const response = await axios.post(url, requestData);
@@ -137,23 +129,23 @@ If you are facing errors while integration, do checkout the [common errors](/tro
 ```ts
 import { ethers } from "ethers";
 import axios from 'axios';
-import { BigNumberish, BytesLike } from "ethers";
+import { string, string } from "ethers";
 
 let provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai" );
 let signer = new ethers.Wallet("private key", provider);
 
 type UserOperation = {
   sender: string;
-  nonce: BigNumberish;
-  initCode: BytesLike;
-  callData: BytesLike;
-  callGasLimit: BigNumberish;
-  verificationGasLimit: BigNumberish;
-  preVerificationGas: BigNumberish;
-  maxFeePerGas: BigNumberish;
-  maxPriorityFeePerGas: BigNumberish;
-  paymasterAndData: BytesLike;
-  signature: BytesLike;
+  nonce: string;
+  initCode: string;
+  callData: string;
+  callGasLimit: string;
+  verificationGasLimit: string;
+  preVerificationGas: string;
+  maxFeePerGas: string;
+  maxPriorityFeePerGas: string;
+  paymasterAndData: string;
+  signature: string;
 }
 
 async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promise<UserOperation> {
@@ -172,7 +164,7 @@ async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promi
     
     const response = await axios.post(url, data);
     const { callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas} = response.data.result
-    return { ...partialUserOp, callGasLimit, verificationGasLimit, preVerificationGas, maxPriorityFeePerGas, maxFeePerGas } as UserOperation;
+    return { ...partialUserOp, callGasLimit: callGasLimit.toString(), verificationGasLimit: verificationGasLimit.toString(), preVerificationGas: preVerificationGas.toString(), maxPriorityFeePerGas, maxFeePerGas } as UserOperation;
 
 }
 function getUserOpHash(useOpMinusSignature: UserOperation): string {
@@ -221,15 +213,7 @@ async function sendUserOp(userOp: UserOperation) {
     method: 'eth_sendUserOperation',
     id: Date.now(),
     params: [
-        {
-            ...userOp,
-            preVerificationGas: Number(userOp.preVerificationGas).toString(),
-            verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
-            callGasLimit: Number(userOp.callGasLimit).toString(),
-            maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
-            maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
-            paymasterAndData: "0x"
-        },
+        userOp,
         "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
     ],
 };
@@ -271,7 +255,7 @@ async function executePartialUserOp() {
     const userOpHash = await sendUserOp(userOp);
     console.log("userOpHash", userOpHash)
     // // Step 4: Get UserOpReceipt
-    const reciept = await getUserOpReceipt(userOpHash);
+    const receipt = await getUserOpReceipt(userOpHash);
     
   }
   catch (error) {

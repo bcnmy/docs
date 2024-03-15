@@ -20,16 +20,16 @@ This tutorial represents the API integration flow where ERC20 tokens in smart wa
 ```ts
 type UserOperation = {
   sender: string;
-  nonce: BigNumberish;
-  initCode: BytesLike;
-  callData: BytesLike;
-  callGasLimit: BigNumberish;
-  verificationGasLimit: BigNumberish;
-  preVerificationGas: BigNumberish;
-  maxFeePerGas: BigNumberish;
-  maxPriorityFeePerGas: BigNumberish;
-  paymasterAndData: BytesLike;
-  signature: BytesLike;
+  nonce: string;
+  initCode: string;
+  callData: string;
+  callGasLimit: string;
+  verificationGasLimit: string;
+  preVerificationGas: string;
+  maxFeePerGas: string;
+  maxPriorityFeePerGas: string;
+  paymasterAndData: string;
+  signature: string;
 }
 
 let partialUserOp : Partial<UserOperation>  = {
@@ -56,7 +56,7 @@ async function getGasFeeValues (userOp: Partial<UserOperation>) : Promise<UserOp
       id: Date.now()
     });
     const { maxPriorityFeePerGas, maxFeePerGas } = data.result;
-    return { ...userOp, maxPriorityFeePerGas, maxFeePerGas, callGasLimit: 5000000, verificationGasLimit: 5000000, preVerificationGas: 5000000 } as UserOperation;
+    return { ...userOp, maxPriorityFeePerGas, maxFeePerGas, callGasLimit: "5000000", verificationGasLimit: "5000000", preVerificationGas: "5000000" } as UserOperation;
 }
 ```
 
@@ -75,15 +75,7 @@ async function getFeeQuotesOrData (userOp: UserOperation) {
       method: 'pm_getFeeQuoteOrData',
       id: Date.now(),
       params: [
-        {
-          ...userOp,
-          preVerificationGas: Number(userOp.preVerificationGas).toString(),
-          verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
-          callGasLimit: Number(userOp.callGasLimit).toString(),
-          maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
-          maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
-          paymasterAndData: "0x"
-        },
+        userOp,
         {
           mode: 'ERC20',
           tokenInfo: {
@@ -120,14 +112,14 @@ Checkout [this](https://github.com/bcnmy/biconomy-client-sdk/blob/main/packages/
 Get the paymaster url from the dashboard.
 
 ```ts
-async function getPaymasterData (userOp: UserOperation) {
+async function getPaymasterAndData (userOp: UserOperation) {
   const PAYMASTER_URL="paymaster url"
   const requestData = {
     jsonrpc: '2.0',
     method: 'pm_sponsorUserOperation',
     id: Date.now(),
     params: [
-      { ...userOp, preVerificationGas: userOp.preVerificationGas.toString(), verificationGasLimit: userOp.verificationGasLimit.toString(), callGasLimit: userOp.callGasLimit.toString(), maxFeePerGas: userOp.maxFeePerGas.toString(), maxPriorityFeePerGas: userOp.maxPriorityFeePerGas.toString(), paymasterAndData: "0x" },
+      userOp,
       {
         mode: 'ERC20',
         tokenInfo: {
@@ -142,7 +134,7 @@ async function getPaymasterData (userOp: UserOperation) {
   
   const { data } = await axios.post(PAYMASTER_URL, requestData);
   const { paymasterAndData, preVerificationGas, verificationGasLimit, callGasLimit } = data.result;
-  return { ...userOp, paymasterAndData, preVerificationGas, verificationGasLimit, callGasLimit };
+  return { ...userOp, paymasterAndData, preVerificationGas: preVerificationGas.toString(), verificationGasLimit: verificationGasLimit.toString(), callGasLimit: callGasLimit.toString() };
 
 }
 ```
@@ -177,15 +169,7 @@ async function sendUserOp(userOp: UserOperation) {
       method: 'eth_sendUserOperation',
       id: Date.now(),
       params: [
-        {
-          ...userOp,
-          preVerificationGas: Number(userOp.preVerificationGas).toString(),
-          verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
-          callGasLimit: Number(userOp.callGasLimit).toString(),
-          maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
-          maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
-          paymasterAndData: userOp.signature 
-        },
+        userOp,
         "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
       ],
   };
@@ -222,23 +206,23 @@ If you are facing errors while integration, do checkout the [common errors](/tro
 ```ts
 import { ethers, utils } from "ethers";
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { BigNumberish, BytesLike } from "ethers";
+import { string, string } from "ethers";
 
 let provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai" );
 let signer = new ethers.Wallet("private key", provider);
 
 type UserOperation = {
   sender: string;
-  nonce: BigNumberish;
-  initCode: BytesLike;
-  callData: BytesLike;
-  callGasLimit: BigNumberish;
-  verificationGasLimit: BigNumberish;
-  preVerificationGas: BigNumberish;
-  maxFeePerGas: BigNumberish;
-  maxPriorityFeePerGas: BigNumberish;
-  paymasterAndData: BytesLike;
-  signature: BytesLike;
+  nonce: string;
+  initCode: string;
+  callData: string;
+  callGasLimit: string;
+  verificationGasLimit: string;
+  preVerificationGas: string;
+  maxFeePerGas: string;
+  maxPriorityFeePerGas: string;
+  paymasterAndData: string;
+  signature: string;
 }
 
 async function getGasFeeValues (userOp: Partial<UserOperation>) : Promise<UserOperation>  {
@@ -263,15 +247,7 @@ async function getFeeQuotesOrData (userOp: UserOperation) {
         method: 'pm_getFeeQuoteOrData',
         id: Date.now(),
         params: [
-          {
-            ...userOp,
-            preVerificationGas: Number(userOp.preVerificationGas).toString(),
-            verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
-            callGasLimit: Number(userOp.callGasLimit).toString(),
-            maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
-            maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
-            paymasterAndData: "0x"
-          },
+          userOp,
           {
             mode: 'ERC20',
             tokenInfo: {
@@ -297,7 +273,7 @@ async function getFeeQuotesOrData (userOp: UserOperation) {
     } 
 }
 
-async function getPaymasterData (userOp: UserOperation) {
+async function getPaymasterAndData (userOp: UserOperation) {
   const PAYMASTER_URL="paymaster url"
   const requestData = {
     jsonrpc: '2.0',
@@ -319,7 +295,7 @@ async function getPaymasterData (userOp: UserOperation) {
 
 const { data } = await axios.post(PAYMASTER_URL, requestData);
 const { paymasterAndData, preVerificationGas, verificationGasLimit, callGasLimit } = data.result;
-return { ...userOp, paymasterAndData, preVerificationGas, verificationGasLimit, callGasLimit };
+return { ...userOp, paymasterAndData, preVerificationGas: preVerificationGas.toString(), verificationGasLimit: verificationGasLimit.toString(), callGasLimit: callGasLimit.toString() };
 
 }
 
@@ -371,15 +347,7 @@ async function sendUserOp(userOp: UserOperation) {
     method: 'eth_sendUserOperation',
     id: Date.now(),
     params: [
-      {
-        ...userOp,
-        preVerificationGas: Number(userOp.preVerificationGas).toString(),
-        verificationGasLimit: Number(userOp.verificationGasLimit).toString(),
-        callGasLimit: Number(userOp.callGasLimit).toString(),
-        maxFeePerGas: Number(userOp.maxFeePerGas).toString(),
-        maxPriorityFeePerGas: Number(userOp.maxPriorityFeePerGas).toString(),
-        paymasterAndData: userOp.signature 
-      },
+      userOp,
       "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789"
     ],
   };
@@ -420,7 +388,7 @@ async function executePartialUserOp() {
   await getFeeQuotesOrData(userOp)
 
   // Step 3 Get paymaster data
-  userOp = await getPaymasterData(userOp)
+  userOp = await getPaymasterAndData(userOp)
 
   // Step 4 sign user op
   userOp = await signUserOp(userOp)
@@ -429,7 +397,7 @@ async function executePartialUserOp() {
   const userOpHash = await sendUserOp(userOp);
 
   // Step 6: Get UserOpReceipt
-  const reciept = await getUserOpReceipt(userOpHash);
+  const receipt = await getUserOpReceipt(userOpHash);
     
   }
   catch (error) {
