@@ -7,7 +7,7 @@ custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/Bundler/integrat
 # Methods
 
 ## [estimateUserOpGas](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#estimateUserOpGas)
-This method is used to estimate gas for the userOp. It returns estimates for PreVerificationGas, VerificationGas, and CallGasLimit for a given UserOperation. It requires passing a semi-valid/ dummy signature in userOp (e.g. a signature of the correct length and format). 
+This method is used to estimate gas for the userOp. It returns estimates for preVerificationGas, verificationGasLimit, and callGasLimit for a given UserOperation. It requires passing a semi-valid/ dummy signature in userOp (e.g. a signature of the correct length and format). 
 
 **Usage**
 ```ts
