@@ -16,5 +16,5 @@ following:
   bundler URL from dashboard.
 - Set up a Gas tank with at least 1-2 testnet Matic tokens.
 - Whitelisting the increment count method of the counter smart contract under
-  [Paymaster Policies](https://docs.biconomy.io/docs/dashboard/paymasterPolicies)
+  [Paymaster Rules](https://docs.biconomy.io/docs/dashboard/paymasterRules)
   on dashboard

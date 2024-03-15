@@ -17,7 +17,7 @@ following:
 - Set up a Gas tank with some Base Goerli Eth. We recommend around .02 Eth to
   start.
 - Whitelist the `safeMint` method of the NFT smart contract under
-  [Paymaster Policies](https://docs.biconomy.io/docs/dashboard/paymasterPolicies)
+  [Paymaster Rules](https://docs.biconomy.io/docs/dashboard/paymasterRules)
   on the dashboard.
 
 :::info Missing any of the above steps causes a lot of
