@@ -64,7 +64,7 @@ async function getGasFeeValues (userOp: Partial<UserOperation>) : Promise<UserOp
 ## 2. Token approval
 In order to sponsor transactions using ERC20 tokens in smart account, first get the FeeQuotes for the tokens. Append the token approval transaction to the userOp callData. You can either go for the limited or max approval for token depending on the use case.
 
-- **Limited approval:** In this case only the required token approval will be batched to the userOp. Call `pm_getFeeQuoteOrData` API to get the max fee quotes for all the tokens. Select the token in which user prefers to pay for the transaction fees. Create the callData for token approval and update the userOp callData. 
+- **Limited approval:** In this case, approval will be batched for the amount that is required to cover the transaction fees. Call `pm_getFeeQuoteOrData` API to get the max fee quotes for all the tokens. Select the token in which user prefers to pay for the transaction fees. Create the callData for token approval and update the userOp callData. 
 
 ```ts
 async function getFeeQuotesOrData (userOp: UserOperation) {
