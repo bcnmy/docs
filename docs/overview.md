@@ -10,13 +10,13 @@ Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a 
 
 ## [Smart Accounts Platform](/account)
 
-The Biconomy Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Smart Accounts are governed by code, allowing other types of signature algorithms to be used with the Smart Account.
-
-Biconomy Smart Accounts are signer agnostic, which means you can use any authorization package as long as a signer is passed to our SDK during Smart Account creation. Explore different methods for creating Smart Accounts [here](/Account/signers).
+The Biconomy Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Biconomy Smart Accounts are signer agnostic, which means you can use any authorization package as long as a signer is passed to our SDK during Smart Account creation. Explore different methods for creating Smart Accounts [here](/Account/signers).
 
 ### [Modules](/modules)
 
-Smart Accounts are further enhanced by validation modules that allow you to execute arbitrary logic before validating a userOp. This allows you, as a developer, to build modules that allow for session keys, multi-chain validation, passkeys, and other modules.
+Smart Accounts are further enhanced by different modules that allow you to execute arbitrary logic before validating a userOp. This allows you, as a developer, to build modules for session keys, multi-chain validation, passkeys, and more.
+
+View the audit reports for smart accounts and Modules [here](audits).
 
 If you want to start diving into Smart Accounts you can do so [here](/account). If you already understand Smart Accounts and prefer to start working with modules, start learning about them [here](/modules) or follow this step-by-step [tutorial](/tutorials/sessionkeys) on how to build a dApp that utilizes session key modules.
 
@@ -45,4 +45,6 @@ Enabling the Sponsored mode facilitates gasless transactions, eliminating the ne
 Switching your Paymaster mode to ERC20 enables users to pay gas fees with ERC20 tokens across networks See the latest supported networks tokens [here](/Paymaster/supportedNetworks).
 
 Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/tutorials)
+
+**Next:** Checkout the [quickstart](quickstart) guide to start the integration.
 
