@@ -14,7 +14,7 @@ Accurately estimating them is very important because if not the following can ha
 - If verificationGasLimit is low the userOp will revert in simulation step
 
 All the above problems result in bad UX, failed and reverted transactions which are also hard to debug.
-We at biconomy have come up with ways estimate gas limits accurately so that such edge cases don't occur. All this is done in an npm package so that any other infra provider can resuse the same logic on their end.
+The Gas estimation SDK enables you to estimate gas limits accurately to avoid such edge cases. This functionality is packaged within an npm package, enabling other infrastructure providers to reuse the same logic.
 
 To dive deep into the workings of the contracts and logic of the package, please read this blog. ADD BLOG LINK
 
