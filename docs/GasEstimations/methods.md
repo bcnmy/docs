@@ -69,7 +69,7 @@ const verificationGasLimitResponse: EstimateVerificationGasLimit =
 
 **returns**
 
-- verificationGasLimitResponse(`Promise<EstimateVerificationGasLimit>`): It returns an object containing the verificationGasLimit, validUntil and validAfter values
+- verificationGasLimitResponse(`Promise<EstimateVerificationGasLimit>`): It returns an object containing the verificationGasLimit, validUntil, and validAfter values
 
   ```ts
   type EstimateVerificationGasLimit = {
