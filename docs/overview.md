@@ -30,7 +30,7 @@ This is the final piece of the flow where after constructing your userOp and the
 
 View the list of supported networks by Biconomy bundler [here](/Bundler/supportedNetworks).
 
-If you are looking to integrate account abstraction using APIs, checkout the [bundler APIs](/Bundler/apis) and [tutorials](/tutorials/apiIntegration/).
+If you are looking to integrate account abstraction using APIs, checkout the [bundler APIs](/Bundler/api) and [tutorials](/tutorials/apiIntegration/).
 
 ## [Paymaster](paymaster)
 
