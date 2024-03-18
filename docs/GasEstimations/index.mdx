@@ -7,7 +7,7 @@ title: Gas Estimations
 While sending a userOp, It is essential to accurately estimate callGasLimit, verificationGasLimit and preVerficationGas. This ensures the userOp be included on the chain.
 The exact definition of these values are mentioned in the ERC 4337 spec [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
 
-Accurately estimating them is very important because if not the following can happen:
+Accurately estimating gas limits is crucial, as failure to do so may result in the following scenarios:
 
 - If preVerfiicationGas is not enough the userOp can be rejected by bundlers
 - If callGasLimit is not enough the transaction will be inculded on chain but the the call data execution will not be completed and the paymater or account will still pay for the userOp
