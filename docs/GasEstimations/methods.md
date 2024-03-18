@@ -99,7 +99,7 @@ const callGasLimitResponse = await gasEstimator.estimateCallGasLimit({
 - userOperation(`UserOperation`, required): userOperation to calculate gas estimates for.
 - stateOverrideSet(`StateOverrideSet`): optional state override set for estimating gas for a userOperation under different blockchain states.
 - supportsEthCallStateOverride (`boolean`): optional param, default set to true, set to false if eth_call does not support state overrides
-- supportsEthCallByteCodeOverride (`boolean`): optional param, default set to true, set to false if eth_call does not give correct response to bytecode overrides
+- supportsEthCallByteCodeOverride (`boolean`): optional param, default set to true, set to false if eth_call does not give the correct response to bytecode overrides
 
 **returns**
 
