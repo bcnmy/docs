@@ -113,7 +113,7 @@ const callGasLimitResponse = await gasEstimator.estimateCallGasLimit({
 
 ## [calculatePreVerificationGas](https://github.com/bcnmy/entry-point-gas-estimations/blob/52dee03ee0ecdff78e4dae16152277de8505d4c8/src/gas-estimator/entry-point-v6/GasEstimator/GasEstimator.ts#L291C9-L291C36)
 
-This method is used to estimate the preVerificationGas for a given userOperation. The exact implementation of this method is network dependent hence make sure to use network specefic gas estimator clients
+This method is used to estimate the preVerificationGas for a given userOperation. The exact implementation of this method is network-dependent hence make sure to use network specific gas estimator clients
 
 **Usage**
 
