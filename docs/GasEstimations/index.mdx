@@ -10,8 +10,8 @@ The exact definition of these values are mentioned in the ERC 4337 spec [here](h
 Accurately estimating gas limits is crucial, as failure to do so may result in the following scenarios:
 
 - If preVerfiicationGas is not enough the userOp can be rejected by bundlers
-- If callGasLimit is not enough the transaction will be inculded on chain but the the call data execution will not be completed and the paymater or account will still pay for the userOp
-- If verificationGasLimit is low the userOp will revert in simulation step
+- If callGasLimit is not enough the transaction will be included on chain but the call data execution will not be completed and the paymaster or account will still pay for the userOp
+- If verificationGasLimit is low the userOp will revert to the simulation step
 
 All the above problems result in bad UX, failed and reverted transactions which are also hard to debug.
 The Gas estimation SDK enables you to estimate gas limits accurately to avoid such edge cases. This functionality is packaged within an npm package, enabling other infrastructure providers to reuse the same logic.
