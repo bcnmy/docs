@@ -8,6 +8,29 @@ slug: /
 The Biconomy SDK is an Account Abstraction toolkit that enables the simplest UX on your dApp, wallet, or appchain.
 Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a full-stack solution for tapping into the power of our Smart Accounts Platform, Paymasters, and Bundlers.
 
+<details>
+  <summary>Introduction to Account Abstraction</summary>
+
+Account Abstraction aims to make user accounts more flexible and functional. Instead of using an Externally Owned Account, you use a Smart Contract that can act as your account, and being powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA). 
+
+### UserOp
+A userOperation or a userOp is a data structure that describes a transaction to be sent on behalf of a user. It is not an actual Blockchain Transaction but has all the necessary fields to become one. These are fields like “sender,” “to,” “calldata,” “nonce,” and more. You can find the userOp structure [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
+
+### Entry Point Contract
+The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/core/EntryPoint.sol) is the singleton smart contract, the core of the Account Abstraction Flow. This singleton contract is used as an entry point to execute bundles of userOps. You can refer to this [blog series](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part1) series that will help you fully understand the Entry Point.
+
+### Smart Account
+This smart contract acts as a user wallet where all user assets are stored. You can program it to validate transactions before executing them. Unlike a traditional wallet, the Smart Account cannot initiate a transaction independently and will need a signer to help it do so.
+
+## Bundler
+The Bundler collects, bundles, and submits userOps to an EVM network. One can make a JSON RPC call to a bundler client to have a userOp added to an ERC 4337 mempool.
+
+## Paymaster
+The Paymaster is a smart contract that acts as a gas tank and is used to sponsor transactions where the dApp or another third party pays the transaction fee on behalf of the user. The userOp contains a field for adding data about a Paymaster and if it should sponsor the userOp when pushed onchain to become a transaction.
+
+Smart account sends a userOp to execute a transaction. Bundlers then watch the mempool for userOps and send them onchain by calling the Entry Point contract.
+
+</details>
 ## [Smart Accounts Platform](/account)
 
 The Biconomy Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Biconomy Smart Accounts are signer agnostic, which means you can use any authorization package as long as a signer is passed to our SDK during Smart Account creation. Explore different methods for creating Smart Accounts [here](/Account/signers).
