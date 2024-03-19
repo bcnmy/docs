@@ -11,13 +11,13 @@ Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a 
 <details>
   <summary>Introduction to Account Abstraction</summary>
 
-Account Abstraction aims to make user accounts more flexible and functional. Instead of using an Externally Owned Account, you use a Smart Contract that can act as your account, and being powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA). 
+Account Abstraction aims to make user accounts more flexible and functional. Instead of using an Externally Owned Account, you use a Smart Contract that can act as your account, powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA). 
 
 ### UserOp
 A userOperation or a userOp is a data structure that describes a transaction to be sent on behalf of a user. It is not an actual Blockchain Transaction but has all the necessary fields to become one. These are fields like “sender,” “to,” “calldata,” “nonce,” and more. You can find the userOp structure [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
 
 ### Entry Point Contract
-The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/core/EntryPoint.sol) is the singleton smart contract, the core of the Account Abstraction Flow. This singleton contract is used as an entry point to execute bundles of userOps. You can refer to this [blog series](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part1) series that will help you fully understand the Entry Point.
+The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/core/EntryPoint.sol) is the singleton smart contract, the core of the Account Abstraction Flow. This singleton contract is used as an entry point to execute bundles of userOps. Refer to this [blog series](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part1) series  for a comprehensive understanding of the Entry Point.
 
 ### Smart Account
 This smart contract acts as a user wallet where all user assets are stored. You can program it to validate transactions before executing them. Unlike a traditional wallet, the Smart Account cannot initiate a transaction independently and will need a signer to help it do so.
@@ -29,6 +29,8 @@ The Bundler collects, bundles, and submits userOps to an EVM network. One can ma
 The Paymaster is a smart contract that acts as a gas tank and is used to sponsor transactions where the dApp or another third party pays the transaction fee on behalf of the user. The userOp contains a field for adding data about a Paymaster and if it should sponsor the userOp when pushed onchain to become a transaction.
 
 Smart account sends a userOp to execute a transaction. Bundlers then watch the mempool for userOps and send them onchain by calling the Entry Point contract.
+
+Now, you have a basic understanding of the ERC 4337 flow for account abstraction.
 
 </details>
 ## [Smart Accounts Platform](/account)
