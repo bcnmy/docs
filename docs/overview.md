@@ -22,10 +22,10 @@ The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction
 ### Smart Account
 This smart contract acts as a user wallet where all user assets are stored. You can program it to validate transactions before executing them. Unlike a traditional wallet, the Smart Account cannot initiate a transaction independently and will need a signer to help it do so.
 
-## Bundler
+### Bundler
 The Bundler collects, bundles, and submits userOps to an EVM network. One can make a JSON RPC call to a bundler client to have a userOp added to an ERC 4337 mempool.
 
-## Paymaster
+### Paymaster
 The Paymaster is a smart contract that acts as a gas tank and is used to sponsor transactions where the dApp or another third party pays the transaction fee on behalf of the user. The userOp contains a field for adding data about a Paymaster and if it should sponsor the userOp when pushed onchain to become a transaction.
 
 Smart account sends a userOp to execute a transaction. Bundlers then watch the mempool for userOps and send them onchain by calling the Entry Point contract.
