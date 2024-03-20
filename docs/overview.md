@@ -17,7 +17,7 @@ Account Abstraction aims to enhance user experience by making user accounts more
 A userOperation or a userOp is a data structure that describes a transaction to be sent on behalf of a user. It is not an actual Blockchain Transaction but has all the necessary fields to become one. These are fields like “sender,” “to,” “calldata,” “nonce,” and more. You can find the userOp structure [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
 
 ### Entry Point Contract
-The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/core/EntryPoint.sol) is the singleton smart contract, the core of the Account Abstraction Flow. This singleton contract is used as an entry point to execute bundles of userOps. Refer to this [blog series](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part1) series  for a comprehensive understanding of the Entry Point.
+The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/core/EntryPoint.sol) is the singleton smart contract, the core of the Account Abstraction Flow. This singleton contract is used as an entry point to execute bundles of userOps. Refer to this [blog series](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part1) for a comprehensive understanding of the Entry Point.
 
 ### Smart Account
 This smart contract acts as a user wallet where all user assets are stored. You can program it to validate transactions before executing them. Unlike a traditional wallet, the Smart Account cannot initiate a transaction independently and will need a signer to help it do so.
