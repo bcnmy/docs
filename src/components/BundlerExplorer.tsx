@@ -35,7 +35,9 @@ export default function Explorer() {
 
       // Define the allowed chain IDs
       const allowedChainIds = [
-        5, 80001, 97, 1442, 421613, 420, 43113, 84531, 59140, 5001, 5611,
+        1, 80001, 137, 97, 56, 1442, 1101, 42161, 42170, 420, 10, 43113, 43114,
+        84531, 8453, 59140, 59144, 5000, 5001, 204, 5611, 88888, 592, 88882, 81,
+        1115, 1116, 169, 3441005, 91715, 7116, 9980, 421614, 11155111
       ];
 
       // Check if the extracted chain ID is within the allowed values
