@@ -139,3 +139,21 @@ const preVerficationGasResponse =
     preVerificationGas: bigint;
   };
   ```
+
+## [setEntryPointAddress](https://github.com/bcnmy/entry-point-gas-estimations/blob/413261a88e0842d9d6a93815106372d87452d02a/src/gas-estimator/entry-point-v6/GasEstimator/GasEstimator.ts#L320)
+
+This method is used to set the entryPointAddress that is being used in the Gas Estimator instance
+
+**Usage**
+
+```ts
+await gasEstimator.setEntryPointAddress("<ENTRY_POINT_ADDRESS>");
+```
+
+**Parameters**
+
+- entryPointAddress(`string`, required): entry point address that one might need to change to.
+
+**returns**
+
+- void
