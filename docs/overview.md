@@ -59,7 +59,7 @@ If you are looking to integrate account abstraction using APIs, checkout the [bu
 
 ## [Paymaster](paymaster)
 
-Biconomy's paymaster service enables Dapps to either sponsor transactions or accept ERC-20 tokens as payment for gas. Login to the [Biconomy dashboard](/dashboard) to get the paymaster URL and switch modes between our sponsorship and token Paymaster. Make use of different [Spending limits](/dashboard/spendingLimits) to customize the paymaster usage.
+Biconomy's paymaster service enables Dapps to either sponsor transactions or accept ERC-20 tokens as payment for gas. Log in to the [Biconomy dashboard](/dashboard) to get the paymaster URL and switch modes between our sponsorship and token Paymaster. Make use of different [Spending limits](/dashboard/spendingLimits) to customize the paymaster usage.
 
 ### Sponsorship Paymaster
 
