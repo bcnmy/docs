@@ -11,7 +11,7 @@ Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a 
 <details>
   <summary>Introduction to Account Abstraction</summary>
 
-Account Abstraction aims to enhance user experience by making user accounts more flexible and functional. Instead of using an Externally Owned Account, a Smart Contract that can act as your account, powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA). 
+Account Abstraction aims to enhance user experience by making user accounts more flexible and functional. Instead of using an Externally Owned Account, a Smart Contract can act as your account, powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA). 
 
 ### UserOp
 A userOperation or a userOp is a data structure that describes a transaction to be sent on behalf of a user. It is not an actual Blockchain Transaction but has all the necessary fields to become one. These are fields like “sender,” “to,” “calldata,” “nonce,” and more. You can find the userOp structure [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
