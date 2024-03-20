@@ -28,7 +28,7 @@ The Bundler collects, bundles, and submits userOps to an EVM network. One can ma
 ### Paymaster
 The Paymaster is a smart contract that acts as a gas tank and is used to sponsor transactions where the dApp or another third party pays the transaction fee on behalf of the user. The userOp contains a field for adding data about a Paymaster and if it should sponsor the userOp when pushed on-chain to become a transaction.
 
-Smart account sends a userOp to execute a transaction. Bundlers then watch the mempool for userOps and send them onchain by calling the Entry Point contract.
+A smart account sends a userOp to execute a transaction. Bundlers then watch the mempool for userOps and send them on-chain by calling the Entry Point contract.
 
 Now, you have a basic understanding of the ERC 4337 flow for account abstraction.
 
