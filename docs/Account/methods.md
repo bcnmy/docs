@@ -38,6 +38,7 @@ _required params are explicitly mentioned_
   - activeValidationModule (`BaseValidationModule`): The run-time validation module (must be one of enabled validation modules) to sign and validate next userOp.
   - rpcUrl (`string`): Recommended for signers that are not a viem wallet or an ethers signer. It's advised to pass RPC url in case of custom signers such as privy, dynamic etc. If rpcUrl is not provided then a default public rpc will be used - which will likely be heavily throttled and can often silently fail.
   - index (`number`): index to create multiple smart accounts for an EOA. First account gets created with 0 index. 
+  - accountAddress(`string`): smart account address. If you already have the smart account address, you can pass using this to get the instance.
 
 **Returns**
 
@@ -46,6 +47,42 @@ _required params are explicitly mentioned_
 :::info
 Building on Chiliz Mainnet or the Spicy Testnet? Note that the entry point address on this is different as it was deployed by us on the Biconomy team. The address of the entry point is : [0x00000061FEfce24A79343c27127435286BB7A4E1](https://scan.chiliz.com/address/0x00000061FEfce24A79343c27127435286BB7A4E1/contracts#address-tabs)
 :::
+
+
+### [createBundler](https://bcnmy.github.io/biconomy-client-sdk/functions/createBundler.html)
+This method creates a custom bundler instance.
+
+**Usage**
+```jsx
+const address = await createBundler({
+  bundlerUrl: "BUNDLER_URL"
+});
+```
+
+**Params**
+- config(`BundlerConfig`): configs to be passed to bundler
+
+```jsx
+export type Bundlerconfig = {
+    bundlerUrl: string;
+    entryPointAddress?: string;
+    chainId?: number;
+    userOpReceiptIntervals?: {
+        [key in number]?: number; // The polling interval per chain for the tx receipt in milliseconds. Default value is 5 seconds.
+    };
+    userOpWaitForTxHashIntervals?: {
+        [key in number]?: number; //  The polling interval per chain for the tx result in milliseconds. Default value is 0.5 seconds.
+    };
+    userOpReceiptMaxDurationIntervals?: {
+        [key in number]?: number; // The maximum duration in milliseconds per chain to wait for the tx receipt. Default value is 30 seconds.
+    };
+    userOpWaitForTxHashMaxDurationIntervals?: {
+        [key in number]?: number; // The maximum duration in milliseconds per chain to wait for the tx hash. Default value is 20 seconds.
+    };
+};
+```
+**Returns**
+- bundler(`Promise<Bundler>`): bundler instance
 
 ## Smart Account Get Methods
 
