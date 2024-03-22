@@ -1,0 +1,79 @@
+---
+sidebar_position: 2
+custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/GasEstimations/integration.mdx
+---
+
+# Integration
+
+This guide focuses on the code to integrate the entry point gas estimations package.
+
+## Installation
+
+First, install the required packages for initializing the gas estimator client
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+<TabItem value="js" label="npm">
+
+```bash
+
+npm i entry-point-gas-estimations
+
+```
+
+</TabItem>
+<TabItem value="py" label="yarn">
+
+```bash
+
+yarn add entry-point-gas-estimations
+
+```
+
+</TabItem>
+</Tabs>
+
+## Integration
+
+```typescript
+import { createGasEstimator } from "entry-point-gas-estimations";
+
+// Creating a general gas estimator client
+const gasEstimator = createGasEstimator({
+  rpcUrl,
+});
+
+// L2s have a different way of calculating the preVerificationGas
+// which requires creating network-specific gas estimator clients
+
+// Optimism Stack Networks
+const optimismGasEstimator = createOptimismGasEstimator({
+  rpcUrl,
+});
+
+// Arbitrum Networks
+const arbitrumGasEstimator = createArbitrumGasEstimator({
+  rpcUrl,
+});
+
+// Mantle Networks
+const mantleGasEstimator = createMantleGasEstimator({
+  rpcUrl,
+});
+
+// Scroll Networks
+const scrollGasEstimator = createScrollGasEstimator({
+  rpcUrl,
+});
+```
+
+**Parameters**
+
+- rpcUrl(`string`, required): RPC Url of the network
+- entryPointAddress(`string`): optional entry point if it is different than 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789
+
+**returns**
+
+- [gasEstimator](https://github.com/bcnmy/entry-point-gas-estimations/blob/develop/src/gas-estimator/entry-point-v6/GasEstimator/index.ts)(`Promise<GasEstimator>`): gas estimator instance

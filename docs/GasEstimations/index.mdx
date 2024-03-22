@@ -1,0 +1,23 @@
+---
+slug: /gas-estimations
+sidebar_position: 6
+title: Gas Estimations
+---
+
+While sending a userOp, It is essential to accurately estimate callGasLimit, verificationGasLimit and preVerficationGas. This ensures the userOp is included on the chain.
+The exact definition of these values is mentioned in the ERC 4337 spec [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
+
+Accurately estimating gas limits is crucial, as failure to do so may result in the following scenarios:
+
+- If preVerfiicationGas is not enough the userOp can be rejected by bundlers
+- If callGasLimit is not enough the transaction will be included on-chain but the call data execution will not be completed and the paymaster or account will still pay for the userOp
+- If verificationGasLimit is low the userOp will revert to the simulation step
+
+All the above problems result in bad UX, failed and reverted transactions which are also hard to debug.
+The Gas estimation SDK enables you to estimate gas limits accurately to avoid such edge cases. This functionality is packaged within an npm package, enabling other infrastructure providers to reuse the same logic.
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```

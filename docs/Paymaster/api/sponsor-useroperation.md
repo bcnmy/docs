@@ -74,6 +74,7 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
             preVerificationGas, // string
             maxFeePerGas, // string
             maxPriorityFeePerGas, // string
+            signature // dummy signature string
         },
         {
             "mode": "SPONSORED",
