@@ -176,7 +176,7 @@ const transaction = {
 };
 
 const { waitForTxHash } = await smartWallet.sendTransaction(transaction);
-const { transactionHash, userOperationReceipt } = await wait();
+const { transactionHash, userOperationReceipt } = await waitForTxHash();
 ```
 
 **Parameters**
