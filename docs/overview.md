@@ -67,7 +67,7 @@ Enabling the Sponsored mode facilitates gasless transactions, eliminating the ne
 
 ### Token Paymaster
 
-Switching your Paymaster mode to ERC20 enables users to pay gas fees with ERC20 tokens across networks See the latest supported networks tokens [here](/Paymaster/supportedNetworks).
+Switching your Paymaster mode to ERC20 enables users to pay gas fees with ERC20 tokens across networks See the latest supported networks tokens [here](/supportedNetworks).
 
 Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/tutorials)
 
