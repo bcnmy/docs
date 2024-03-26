@@ -53,7 +53,7 @@ The Bundler is a service that tracks userOps that exist in an alternative mem po
 
 This is the final piece of the flow where after constructing your userOp and then potentially signing it with data from a paymaster, you send the userOp on-chain to be handled and executed as a transaction on the EVM. You can start using our Bundlers right now in your dApps. Each of our [tutorials](/tutorials) will walk you through how to use them in different scenarios.
 
-View the list of supported networks by Biconomy bundler [here](/Bundler/supportedNetworks).
+View the list of supported networks by Biconomy bundler [here](/supportedNetworks).
 
 If you are looking to integrate account abstraction using APIs, checkout the [bundler APIs](/Bundler/api) and [tutorials](/tutorials/apiIntegration/).
 
@@ -67,7 +67,7 @@ Enabling the Sponsored mode facilitates gasless transactions, eliminating the ne
 
 ### Token Paymaster
 
-Switching your Paymaster mode to ERC20 enables users to pay gas fees with ERC20 tokens across networks See the latest supported networks tokens [here](/Paymaster/supportedNetworks).
+Switching your Paymaster mode to ERC20 enables users to pay gas fees with ERC20 tokens across networks See the latest supported networks tokens [here](/supportedNetworks).
 
 Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/tutorials)
 

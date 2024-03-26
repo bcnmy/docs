@@ -57,7 +57,7 @@ Yes, Biconomy's bundler seamlessly integrates with other smart account providers
 
 **Which ERC20 tokens are supported by the biconomy paymaster? How can I add support for a custom ERC20 token?**
     
-You can check out the list of supported networks under the [paymaster](/Paymaster/supportedNetworks) and [bundler](/Bundler/supportedNetworks) sections. You can reach out to us here for custom token requirements.
+You can check out the list of supported networks [here](/supportedNetworks). You can reach out to us here for custom token requirements.
     
 **Can I use other paymaster with Biconomy SDK?**
     
