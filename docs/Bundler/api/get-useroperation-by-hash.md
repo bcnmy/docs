@@ -4,6 +4,7 @@ sidebar_position: 4
 ---
 
 # Get UserOperation by Hash
+
 `eth_getUserOperationByHash`
 
 This endpoint returns a UserOperation based on a hash (userOpHash) returned by `eth_sendUserOperation`.
@@ -33,6 +34,13 @@ Body
 ```
 
 ## Response
+
+- If the UserOperation is included in a block:
+  Return a full UserOperation, with the addition of entryPoint, blockNumber, blockHash and transactionHash.
+- Else if the UserOperation is pending in the bundler’s mempool:
+  MAY return null, or: a full UserOperation, with the addition of the entryPoint field and a null value for blockNumber, blockHash and transactionHash.
+- Else:
+  Return null
 
 ```json
 {
