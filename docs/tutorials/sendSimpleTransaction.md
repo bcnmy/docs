@@ -68,7 +68,7 @@ const config = {
 };
 
 // Generate EOA from private key using ethers.js
-let provider = new ethers.JsonRpcProvider(config.rpcUrl)();
+let provider = new ethers.JsonRpcProvider(config.rpcUrl);
 let signer = new ethers.Wallet(config.privateKey, provider);
 
 // Create Biconomy Smart Account instance
