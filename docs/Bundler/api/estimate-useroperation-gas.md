@@ -4,8 +4,8 @@ sidebar_position: 1
 ---
 
 # Estimate UserOperation Gas
-`eth_estimateUserOperationGas`
 
+`eth_estimateUserOperationGas`
 
 This endpoint is used to estimate the gas values for a UserOperation. Request constitutes given UserOperation optionally without gas limits and gas prices & returns the needed gas limits. The signature field is ignored by the wallet, so that the operation will not require user’s approval. It still requires putting a “semi-valid” signature (e.g. a signature in the right length).
 
@@ -13,12 +13,17 @@ This endpoint is used to estimate the gas values for a UserOperation. Request co
 
 Body
 
-| Param   | Type   | Description                                                         | Required |
-| ------- | ------ | ------------------------------------------------------------------- | -------- |
-| method  | string | Name of method in this case: eth_estimateUserOperationGas           | Required |
-| params  | array  | An array consisting of the Useroperation object and Bundler address | Required |
-| id      | string | id for request determined by client for JSON RPC requests           | Required |
-| jsonrpc | string | JSON RPC version in this case 2.0.0                                 | Required |
+| Param   | Type   | Description                                                                                         | Required |
+| ------- | ------ | --------------------------------------------------------------------------------------------------- | -------- |
+| method  | string | Name of method in this case: eth_estimateUserOperationGas                                           | Required |
+| params  | array  | An array consisting of the Useroperation object, Bundler address and an optional State Override Set | Required |
+| id      | string | id for request determined by client for JSON RPC requests                                           | Required |
+| jsonrpc | string | JSON RPC version in this case 2.0.0                                                                 | Required |
+
+- Same as eth_sendUserOperation gas limits (and prices) parameters are optional, but are used if specified.
+- Optionally accepts the State Override Set to allow users to modify the state during the gas estimation.
+  This field as well as its behavior is equivalent to the ones defined for eth_call RPC method.
+  The interface for State Override Set is the same for a regular [eth_call](https://docs.alchemy.com/reference/eth-call)
 
 ## Request
 
@@ -43,6 +48,12 @@ Body
 
 ## Response
 
+:::info
+
+Please note that the callGasLimit, verificationGasLimit and preVerificationGas returned here are numbers but `eth_sendUserOperation`
+expects them as a string. This is a known bug which will be fixed in a future version release.
+:::
+
 ```json
 {
   "jsonrpc": "2.0",
@@ -53,7 +64,7 @@ Body
     "preVerificationGas": 772931,
     "validUntil": "0xffffffffffff",
     "validAfter": "0x00",
-    "maxPriorityFeePerGas": "0",
+    "maxPriorityFeePerGas": "100000000",
     "maxFeePerGas": "100000000"
   }
 }
