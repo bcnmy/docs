@@ -38,7 +38,7 @@ Body
 - If the UserOperation is included in a block:
   Return a full UserOperation, with the addition of entryPoint, blockNumber, blockHash and transactionHash.
 - Else if the UserOperation is pending in the bundler’s mempool:
-  MAY return null, or: a full UserOperation, with the addition of the entryPoint field and a null value for blockNumber, blockHash and transactionHash.
+  may return null, or: a full UserOperation, with the addition of the entryPoint field and a null value for blockNumber, blockHash and transactionHash.
 - Else:
   Return null
 
