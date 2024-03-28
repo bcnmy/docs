@@ -40,7 +40,11 @@ Explore services such as Web3Auth, Particle Network, Magic.link, or Lit Protocol
 **How do I enable session keys for users?**
     
 Utilize the session key validation [module](https://docs.biconomy.io/Modules/sessionvalidationmodule).
-    
+
+**How to enable debug mode in SDK to log more?**
+
+Set following env flag to true before running the app. `export BICONOMY_SDK_DEBUG=true`
+
 ## Bundler & Paymaster
 
 **Is the bundler URL the same for all chains?**
