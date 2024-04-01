@@ -248,9 +248,9 @@ const { transactionHash, userOperationReceipt } = await waitForTxHash();
      };
      ```
 
-  5. simulationType(`SimulationType`, enum): The simulationType flag can be of 2 ways:
+  5. simulationType(`SimulationType`, enum): When you send a transaction, bundler performs simulations to check for any reverts. simulationType determines how and when the UserOperation is simulated. This parameter can be set in two ways:
       - `validation` which will only simulate the validation phase, checks if user op is valid but does not check if execution will succeed. By default this flag is set to validation.
-      - `validation_and_execution` checks if user op is valid and if user op execution will succeed. It can be useful during development for error logging purposes in case of any issues, but it may lead to increased latency.
+      - `validation_and_execution` checks if user op is valid and if user op execution will succeed based on the callData. It can be useful during development for error logging purposes in case of any issues, but it may lead to increased latency.
     
 
   6. stateOverrideSet(`StateOverrideSet`): for overriding the blockchain state during simulations or gas estimation.
