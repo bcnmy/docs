@@ -35,15 +35,16 @@ Now, you have a basic understanding of the ERC 4337 flow for account abstraction
 </details>
 ## [Smart Accounts Platform](/account)
 
-The Biconomy Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Biconomy Smart Accounts are signer agnostic, which means you can use any authorization package as long as a signer is passed to our SDK during Smart Account creation. Explore different methods for creating Smart Accounts [here](/Account/signers).
+The Biconomy's Modular Smart Account is an ERC 4337-compliant solution that works with any Paymaster and Bundler service. Biconomy Smart Accounts are signer agnostic, which means you can use any authorization package as long as a signer is passed to our SDK during Smart Account creation. Explore different methods for creating Smart Accounts [here](/Account/signers).
 
 ### [Modules](/modules)
 
-Smart Accounts are further enhanced by different modules that allow you to execute arbitrary logic before validating a userOp. This allows you, as a developer, to build modules for session keys, multi-chain validation, passkeys, and more.
+Modular architecture enables developers to easily & securely plug-in programmable modules to extend smart account capabilities. These modules leverage the power of Account Abstraction to allow for custom validation schemes and execution environments. As a developer, this allows you to build additional modules while leveraging existing ones like session keys, multi-chain validation, passkeys, and beyond.
+
+If you want to start diving into Smart Accounts you can begin [here](/account). For those, who are already familiar with Smart Accounts and prefer to start with modules, you can check out [here](/modules) or follow this step-by-step [tutorial](/tutorials/sessionkeys) on how to build a dApp that utilizes session key modules.
 
 View the audit reports for smart accounts and Modules [here](audits).
 
-If you want to start diving into Smart Accounts you can do so [here](/account). If you already understand Smart Accounts and prefer to start working with modules, start learning about them [here](/modules) or follow this step-by-step [tutorial](/tutorials/sessionkeys) on how to build a dApp that utilizes session key modules.
 
 ![FullStakAA](./images/overview/fullstackaa.png)
 
@@ -59,7 +60,7 @@ If you are looking to integrate account abstraction using APIs, checkout the [bu
 
 ## [Paymaster](paymaster)
 
-Biconomy's paymaster service enables Dapps to either sponsor transactions or accept ERC-20 tokens as payment for gas. Log in to the [Biconomy dashboard](/dashboard) to get the paymaster URL and switch modes between our sponsorship and token Paymaster. Make use of different [Spending limits](/dashboard/spendingLimits) to customize the paymaster usage.
+Biconomy's paymaster service enables Dapps to sponsor transactions and, also allows users to use ERC-20 tokens as payment for gas. Log in to the [Biconomy dashboard](/dashboard) to get the paymaster URL and switch modes between our sponsorship and token Paymaster. Make use of different [Spending limits](/dashboard/spendingLimits) to customize the paymaster usage.
 
 ### Sponsorship Paymaster
 
