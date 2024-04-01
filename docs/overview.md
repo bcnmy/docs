@@ -39,7 +39,7 @@ The Biconomy's Modular Smart Account is an ERC 4337-compliant solution that work
 
 ### [Modules](/modules)
 
-Modular architecture enables developers to easily & securely plug-in programmable modules to extend smart account capabilities. These modules leverage the power of Account Abstraction to allow for custom validation schemes and execution environments. As a developer, this allows you to build additional modules while leveraging existing ones like session keys, multi-chain validation, passkeys, and beyond.
+Modular architecture enables developers to easily & securely plug-in programmable modules to extend smart account capabilities. These modules leverage the power of Account Abstraction to allow for custom validation schemes and execution environments. As a developer, this allows you to build additional modules while leveraging existing ones like [session keys](/modules/sessionvalidationmodule), (multi-chain validation)[/modules/multichain], passkeys, and beyond.
 
 If you want to start diving into Smart Accounts you can begin [here](/account). For those, who are already familiar with Smart Accounts and prefer to start with modules, you can check out [here](/modules) or follow this step-by-step [tutorial](/tutorials/sessionkeys) on how to build a dApp that utilizes session key modules.
 
