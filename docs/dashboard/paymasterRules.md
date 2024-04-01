@@ -5,9 +5,9 @@ sidebar_position: 3
 
 # Paymaster Rules
 
-Before using a Paymaster to sponsor a transaction you will need to register your smart contracts and white list the methods that will be called in your dApp.
+For a paymaster, you can restrict the sponsorship to only specified contracts and methods if needed. If no contract is whitelisted, then paymaster will facilitate all the contract interactions. 
 
-## Register a Smart Contract
+## Whitelist a Smart Contract
 
 Navigate to the Paymaster you have created, then click rules and contract. If this is the first time you are adding a smart contract the page will look like this:
 

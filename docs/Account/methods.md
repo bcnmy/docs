@@ -250,7 +250,7 @@ const { transactionHash, userOperationReceipt } = await waitForTxHash();
 
   5. simulationType(`SimulationType`, enum): The simulationType flag can be of 2 ways:
       - `validation` which will only simulate the validation phase, checks if user op is valid but does not check if execution will succeed. By default this flag is set to validation.
-      - `validation_and_execution` checks if user op is valid and if user op execution will succeed.
+      - `validation_and_execution` checks if user op is valid and if user op execution will succeed. It can be useful during development for error logging purposes in case of any issues, but it may lead to increased latency.
     
 
   6. stateOverrideSet(`StateOverrideSet`): for overriding the blockchain state during simulations or gas estimation.
