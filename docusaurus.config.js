@@ -164,8 +164,8 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Forums",
-                href: "https://forum.biconomy.io/",
+                label: "Github Discussion",
+                href: "https://github.com/orgs/bcnmy/discussions/categories/q-a",
               },
               {
                 label: "Discord",

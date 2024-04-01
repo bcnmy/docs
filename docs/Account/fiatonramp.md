@@ -48,7 +48,3 @@ transak.init();
 
 - https://github.com/bcnmy/sdk-demo
 - https://github.com/bcnmy/hyphen-ui/tree/demo-sdk
-
-:::info
-If you have any questions please post them on the [Biconomy SDK Forum](https://forum.biconomy.io/)
-:::
