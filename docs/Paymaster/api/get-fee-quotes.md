@@ -35,112 +35,134 @@ Params Array for ERC20 paymaster requests
 | 0     | object | A partial userOperation object for the userOp that needs to be sponsored                                | Required |
 | 1     | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
 
+Partial UserOperation Object is basically a userOp object which has `paymasterAndData` and `signature` fields as optional.
+These fields will be populated by the Biconomy SDK by calling the `SPONSOR_USER_OPERATION`.
+
+
 #### 1. Mode is **SPONSORED**:
 
 > **_POST Request_**
 
-```javascript
-
+```json
 {
-    "jsonrpc": "2.0",
-    "method": "pm_getFeeQuoteOrData",
-    "id": 1,
-    "params": [
-        {
-            ...partialUserOp
-        },
-        {
-            "mode": "SPONSORED",
-			      "calculateGasLimits" : true,
-      // Mandatory Fields
-            "sponsorshipInfo": {
-                "webhookData": {},
-                "smartAccountInfo": {
-                    "name": "BICONOMY" | "INFINITSM",
-                    "version": "2.0.0" // pass version as 1.0.0 in case of INFINITSM
-                }
-            }
+  "jsonrpc": "2.0",
+  "method": "pm_getFeeQuoteOrData",
+  "id": 1,
+  "params": [
+    {
+      "sender": "sender SA address",
+      "nonce": "0x2f",
+      "initCode": "0x",
+      "callData": "0x0...",
+      "signature": "0x0...",
+      "maxFeePerGas": "0xc02244",
+      "maxPriorityFeePerGas": "0xf4240",
+      "verificationGasLimit": "77101",
+      "callGasLimit": "2290252",
+      "preVerificationGas": "480527",
+      "paymasterAndData": "0x"
+    },
+    {
+      "mode": "SPONSORED",
+      "calculateGasLimits": true,
+      "sponsorshipInfo": {
+        "webhookData": {},
+        "smartAccountInfo": {
+          "name": "BICONOMY",
+          "version": "2.0.0"
         }
-    ]
+      }
+    }
+  ]
 }
 ```
 
 > **_Response_**
 
-```javascript
+```json
 {
     "jsonrpc": "2.0",
-    "id": 1,
-    "result": {
+        "id": 1,
+        "result": {
         "MODE": "SPONSORED",
-        "paymasterAndData": "0xdc91ffb7c4b800d70410a79a5b503ae4391f67e40000000000000000000000007306ac7a32eb690232de81a9ffb44bb346026fab00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000041e1f74852c31150f18ef4e472b748148f8ae031849032218b26170414a18c9f99516eb13a4a9bd35d1334194348cccee3d270b6e7bb400b39f0c8d645266ead601c00000000000000000000000000000000000000000000000000000000000000",
-				"preVerificationGas": "75388",
-				"verificationGasLimit": 57121,
-				"callGasLimit": 108848
+            "paymasterAndData": "0x......",
+            "preVerificationGas": "75388",
+            "verificationGasLimit": 57121,
+            "callGasLimit": 108848
     }
 }
 ```
+If Mode is set as `SPONSORED`, this request will behave as a sponsored request and `paymasterAndData` and `signature` fields will be populated by the paymaster service.
 
 #### 2. Mode is **ERC20**:
 
 > **_POST Request_**
 
-```javascript
+```json
 {
-    "jsonrpc": "2.0",
-    "method": "pm_getFeeQuoteOrData",
-    "id": 1,
-    "params": [
-        {
-            ..userOpParams
-        },
-        {
-            "mode": "ERC20",
-      // Mandatory Fields
-            "tokenInfo": {
-                "preferredToken": "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d4",
-                "tokenList": [
-                    "0xdA5289FCAAF71d52A80A254dA614A192B693e975",
-                    "0xda5289fcaaf71d52a80a254da614a192b693e977",
-                    "0xeabc4b91d9375796aa4f69cc764a4ab509080a58"
-                ]
-            }
-        }
-    ]
+  "jsonrpc": "2.0",
+  "method": "pm_getFeeQuoteOrData",
+  "id": 1,
+  "params": [
+    {
+      "sender": "sender SA address",
+      "nonce": "0x2f",
+      "initCode": "0x",
+      "callData": "0x0...",
+      "signature": "0x0...",
+      "maxFeePerGas": "0xc02244",
+      "maxPriorityFeePerGas": "0xf4240",
+      "verificationGasLimit": "77101",
+      "callGasLimit": "2290252",
+      "preVerificationGas": "480527",
+      "paymasterAndData": "0x"
+    },
+    {
+      "mode": "ERC20",
+      "tokenInfo": {
+        "preferredToken": "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d4",
+        "tokenList": [
+          "0xdA5289FCAAF71d52A80A254dA614A192B693e975",
+          "0xda5289fcaaf71d52a80a254da614a192b693e977",
+          "0xeabc4b91d9375796aa4f69cc764a4ab509080a58"
+        ]
+      }
+    }
+  ]
 }
 ```
 
 > **_Response_**
 
-```javascript
+```json
 {
-    "jsonrpc": "2.0",
-    "id": 1,
-    "result": {
-        "MODE": "ERC20",
-        "paymasterAddress": "0x716bc27e1b904331c58891cc3ab13889127189a7",
-        "feeQuotes": [
-            {
-                "symbol": "USDT",
-                "decimal": 18,
-                "tokenAddress": "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d4",
-                "maxGasFee": 0.25267043311569887,
-                "maxGasFeeUSD": 0.0010842277144671015,
-                "exchangeRate": 232808808808808800000,
-                "premiumPercentage": "13",
-                "validUntil": 1686847490,
-                "logoUrl": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/usdt.png"
-            }
-        ],
-        "unsupportedTokens": [
-            "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d3",
-            "0xda5289fcaaf71d52a80a254da614a192b693e977",
-            "0xeabc4b91d9375796aa4f69cc764a4ab509080a58"
-        ]
-    }
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "MODE": "ERC20",
+    "paymasterAddress": "0x716bc27e1b904331c58891cc3ab13889127189a7",
+    "feeQuotes": [
+      {
+        "symbol": "USDT",
+        "decimal": 18,
+        "tokenAddress": "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d4",
+        "maxGasFee": 0.25267043311569887,
+        "maxGasFeeUSD": 0.0010842277144671015,
+        "exchangeRate": 232808808808808800000,
+        "premiumPercentage": "13",
+        "validUntil": 1686847490,
+        "logoUrl": "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/128/color/usdt.png"
+      }
+    ],
+    "unsupportedTokens": [
+      "0xbf22b04e250a5921ab4dc0d4ced6e391459e92d3",
+      "0xda5289fcaaf71d52a80a254da614a192b693e977",
+      "0xeabc4b91d9375796aa4f69cc764a4ab509080a58"
+    ]
+  }
 }
 ```
 
 :::note
-If both `preferredToken` & `tokenList` are present in the request body, but some tokens are not supported by Biconomy, those will be returned also in the response body under `unsupportedTokens`.
+If both `preferredToken` & `tokenList` are present in the request body, and some of these tokens are not supported by our paymaster, those will also be returned in the response body under `unsupportedTokens`.
 :::

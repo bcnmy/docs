@@ -79,7 +79,7 @@ Consider both the partial `UserOp` and `tokenAddress` parameters in this case. I
         {
             "mode": "SPONSORED",
             "calculateGasLimits": true,
-            "expiryDuration": 300 //5mins
+            "expiryDuration": 300 // duration (secs) for which the generate paymasterAndData will be valid. Default duration is 300 secs. 
             "sponsorshipInfo": {
                 "webhookData": {},
                 "smartAccountInfo": {
