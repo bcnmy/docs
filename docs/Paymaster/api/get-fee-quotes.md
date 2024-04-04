@@ -83,7 +83,7 @@ Partial UserOperation Object is basically a userOp object which has `paymasterAn
     "jsonrpc": "2.0",
         "id": 1,
         "result": {
-        "MODE": "SPONSORED",
+            "MODE": "SPONSORED",
             "paymasterAndData": "0x......",
             "preVerificationGas": "75388",
             "verificationGasLimit": 57121,
