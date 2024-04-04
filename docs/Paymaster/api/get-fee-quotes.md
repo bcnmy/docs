@@ -36,7 +36,6 @@ Params Array for ERC20 paymaster requests
 | 1     | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
 
 Partial UserOperation Object is basically a userOp object which has `paymasterAndData` and `signature` fields as optional.
-These fields will be populated by the Biconomy SDK by calling the `SPONSOR_USER_OPERATION`.
 
 
 #### 1. Mode is **SPONSORED**:
