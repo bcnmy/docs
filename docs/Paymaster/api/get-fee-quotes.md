@@ -35,7 +35,7 @@ Params Array for ERC20 paymaster requests
 | 0     | object | A partial userOperation object for the userOp that needs to be sponsored                                | Required |
 | 1     | object | Mode specified as "ERC20" as well as tokenInfo: a preferred token address and list of tokens to include | Required |
 
-Partial UserOperation Object is basically a userOp object which has `paymasterAndData` and `signature` fields as optional.
+Partial UserOperation Object is basically a userOp object which has `paymasterAndData` and `signature` fields as optional, and the gas price values are not final.
 
 
 #### 1. Mode is **SPONSORED**:
@@ -91,7 +91,7 @@ Partial UserOperation Object is basically a userOp object which has `paymasterAn
     }
 }
 ```
-If Mode is set as `SPONSORED`, this request will behave as a sponsored request and `paymasterAndData` and `signature` fields will be populated by the paymaster service.
+If Mode is set as `SPONSORED`, this request will behave as a sponsored request and `paymasterAndData` field will be populated by the paymaster service.
 
 #### 2. Mode is **ERC20**:
 
