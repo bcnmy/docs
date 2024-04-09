@@ -44,9 +44,9 @@ Initialize the social login SDK
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
   chainId: "0x13881",
-  rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
-  displayName: "Polygon Mumbai",
-  blockExplorer: "https://mumbai.polygonscan.com/",
+  rpcTarget: "https://rpc-amoy.polygon.technology/",
+  displayName: "Polygon Amoy",
+  blockExplorer: "https://www.oklink.com/amoy/",
   ticker: "MATIC",
   tickerName: "Polygon Matic",
 };
@@ -90,9 +90,9 @@ const connect = async () => {
     const chainConfig = {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
       chainId: "0x13881",
-      rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
-      displayName: "Polygon Mumbai",
-      blockExplorer: "https://mumbai.polygonscan.com/",
+      rpcTarget: "https://rpc-amoy.polygon.technology/",
+      displayName: "Polygon Amoy",
+      blockExplorer: "https://www.oklink.com/amoy/",
       ticker: "MATIC",
       tickerName: "Polygon Matic",
     };
@@ -131,7 +131,7 @@ const connect = async () => {
       signer: web3AuthSigner,
       biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
       bundlerUrl: config.bundlerUrl,
-      rpcUrl: "" // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
+      rpcUrl: "", // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
     });
 
     const address = await smartWallet.getAccountAddress();
