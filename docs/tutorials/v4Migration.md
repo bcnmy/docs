@@ -15,24 +15,7 @@ Make sure you have minimum es2020 set as target in the compilerOptions
 
 2. `BiconomyPaymaster` is now named `Paymaster` and could be imported from `@biconomy/account` instead of `@biconomy/paymaster`.
 
-3. The `value` type in transaction can **only** be following: bigInt, number, 0xstring or string. So, if you are using ethers.parseEther or any ethers parse function, will need to change to the following.
-
-   ```typescript
-   // V3
-   const transaction = {
-     to: to || "0x0000000000000000000000000000000000000000",
-     data: "0x",
-     value: ethers.utils.parseEther(amount.toString()),
-   };
-   // V4, users need to use the .toBigInt() method to make the value param compatible
-   const transaction = {
-     to: to || "0x0000000000000000000000000000000000000000",
-     data: "0x",
-     value: ethers.utils.parseEther(amount.toString()).toBigInt(),
-   };
-   ```
-
-4. When using `buildTokenPaymasterUserOp` method, the spender cannot be undefined. The BiconomyTokenPaymasterRequest `spender` type has changed from string to `0x${string}`, users need to convert spender to `0x${string}` like following.
+3. When using `buildTokenPaymasterUserOp` method, the spender cannot be undefined. The BiconomyTokenPaymasterRequest `spender` type has changed from string to `0x${string}`, users need to convert spender to `0x${string}` like following.
 
    ```typescript
    // V3
@@ -57,7 +40,7 @@ Make sure you have minimum es2020 set as target in the compilerOptions
    );
    ```
 
-5. When using viem's wallet as the signer explicitly set the signer to the walletClient. It is no longer necessary or encouraged that the walletClient be wrapped using alchemy's wrapper as per v3
+4. When using viem's wallet as the signer explicitly set the signer to the walletClient. It is no longer necessary or encouraged that the walletClient be wrapped using alchemy's wrapper as per v3
 
    ```typescript
    // V3
@@ -75,7 +58,7 @@ Make sure you have minimum es2020 set as target in the compilerOptions
    });
    ```
 
-6. Pass rpcUrl while creating the smart account for signers that are not a viem wallet or ethers.
+5. Pass rpcUrl while creating the smart account for signers that are not a viem wallet or ethers.
 
    ```ts
     const smartAccount = await createSmartAccountClient({
