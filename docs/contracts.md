@@ -25,6 +25,7 @@ These contracts are deployed across all supported chains.
 | ECDSA Ownership Module          | 0x0000001c5b32F37F5beA87BDD5374eB2aC54eA8e |
 | Multichain Validation Module    | 0x000000824dc138db84FD9109fc154bdad332Aa8E |
 | Batched Session Router Module   | 0x000008dA71757C0E1D83CE56c823e25Aa49bC058 |
+| ABI Session Validation Module   | 0x000006bC2eCdAe38113929293d241Cf252D91861 |
 | Session Key Manager V1          | 0x000002FbFfedd9B33F4E7156F2DE8D48945E7489 |
 | Verifying Paymaster V1          | 0x000031DD6D9D3A133E663660b959162870D755D4 |
 | Verifying Paymaster V1.1.0      | 0x00000f79b7faf42eebadba19acc07cd08af44789 |
