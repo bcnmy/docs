@@ -12,7 +12,7 @@ As described in the last section, an off-chain storage solution is essential for
 [Initializing Account](initializeaccount)
 :::
 
-This tutorial will be done on the Polygon Mumbai Network. We will be using session Module for this.
+This tutorial will be done on the Polygon Amoy Network. We will be using session Module for this.
 
 We will import sessionKeyManagerModule and DEFAULT_SESSION_KEY_MANAGER_MODULE from Biconomy Modules package.
 
@@ -138,7 +138,7 @@ let address: string;
 config();
 
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 

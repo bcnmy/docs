@@ -16,9 +16,9 @@ This tutorial demonstrates how to use the Biconomy Smart Account to perform a tr
 - Node.js installed on your machine
 - A Biconomy API key and Bundler url, get from [dashboard](https://dashboard.biconomy.io/)
 
-For this tutorial we are going to mint and NFT on Mumbai, this means we can use the following:
+For this tutorial we are going to mint and NFT on Amoy, this means we can use the following:
 
-- bundlerUrl --> https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
+- bundlerUrl --> https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 - preferred ERC20 token for gas payment --> 0xda5289fcaaf71d52a80a254da614a192b693e977 (USDC)
 - nft address --> 0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e
 

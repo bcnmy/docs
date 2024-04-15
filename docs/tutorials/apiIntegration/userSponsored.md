@@ -47,7 +47,7 @@ Based on the response, update the userOp gas limits and values.
 
 ```ts
 async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promise<UserOperation> {
-    const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
+    const url="https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
     
     const data =
     {
@@ -89,7 +89,7 @@ eth_sendUserOperation sends a user operation to the given network.
 
 ```ts
 async function sendUserOp(userOp: UserOperation) {
-    const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
+    const url="https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
     
     const requestData = {
         jsonrpc: '2.0',
@@ -109,7 +109,7 @@ This API returns null until the transaction is mined, you will either need to po
 
 ```ts
 async function getUserOpReceipt(userOpHash: string) {
-  const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
+  const url="https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_getUserOperationReceipt',
@@ -131,7 +131,7 @@ import { ethers } from "ethers";
 import axios from 'axios';
 import { string, string } from "ethers";
 
-let provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai" );
+let provider = new ethers.providers.JsonRpcProvider("https://rpc-amoy.polygon.technology/");
 let signer = new ethers.Wallet("private key", provider);
 
 type UserOperation = {
@@ -149,7 +149,7 @@ type UserOperation = {
 }
 
 async function getGasEstimations (partialUserOp: Partial<UserOperation>) : Promise<UserOperation> {
-    const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
+    const url="https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
     
     const data =
     {
@@ -188,7 +188,7 @@ function getUserOpHash(useOpMinusSignature: UserOperation): string {
       
       const enc = ethers.utils.defaultAbiCoder.encode(
         ["bytes32", "address", "uint256"],
-        [ethers.utils.keccak256(packedData), "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789", 80001]
+        [ethers.utils.keccak256(packedData), "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789", 80002]
       );
       
       const userOpHash = ethers.utils.keccak256(enc);
@@ -207,7 +207,7 @@ async function signUserOp (userOp: UserOperation): Promise<UserOperation> {
 }
 
 async function sendUserOp(userOp: UserOperation) {
-  const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
+  const url="https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_sendUserOperation',
@@ -222,7 +222,7 @@ return response.data.result;
 }
 
 async function getUserOpReceipt(userOpHash: string) {
-  const url="https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
+  const url="https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"
   const requestData = {
     jsonrpc: '2.0',
     method: 'eth_getUserOperationReceipt',
