@@ -24,8 +24,9 @@ Inviting colleagues to join your organization is straightforward. Follow these s
 
 6. Send the invitation by clicking the 'Invite' button.
    You can invite more team members at once by clicking '+ Add More' and following steps 4 to 6.
-   Once invited, team members will receive an email with a link to join the organization.
-   They will need to follow the link to set up their account and gain access to the resources permitted by their assigned role.
+
+Once invited, team members will receive an email with a link to join the organization.
+They will need to follow the link to set up their account and gain access to the resources permitted by their assigned role.
 
 ## Role Permissions
 
