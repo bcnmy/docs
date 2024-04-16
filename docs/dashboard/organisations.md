@@ -3,9 +3,10 @@ sidebar_label: "Organisations"
 sidebar_position: 5
 ---
 
-# Organisation Overview
+# Organization Overview
 
-Organisation feature is designed to enhance collaboration and streamline team management within your workspace. This feature allows you to invite new team members to your organisation and manage their access permissions efficiently. Whether you're looking to onboard new hires, collaborate with external partners, or reorganize teams, our tools are crafted to provide you with a seamless management experience.
+The organization feature is designed to enhance collaboration and streamline team management within your workspace. 
+This feature allows you to invite new team members to your organization and manage their access permissions. Whether you're looking to onboard new hires, collaborate with external partners, or reorganize teams, this feature was designed to provide you with a seamless management experience.
 
 ## Inviting Team Members
 
