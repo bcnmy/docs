@@ -32,4 +32,4 @@ Roles are defined as follows:
 
 - `Editor`: Editors can access and modify all projects and settings except for team member management. This role is suited for team members who need to make substantial contributions to projects but do not need control over user roles and permissions.
 
-- `Viewer`: Viewers have read-only access to all projects, meaning they cannot alter any project content. However, Viewers have the ability to deposit funds into the paymaster account, supporting financial operations without modifying project data.
+- `Viewer`: Viewers have read-only access to all projects, meaning they cannot alter any project content. However, Viewers can deposit funds into the paymaster account, supporting financial operations without modifying project data.
