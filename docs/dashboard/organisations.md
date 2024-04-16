@@ -10,16 +10,19 @@ This feature allows you to invite new team members to your organization and mana
 
 ## Inviting Team Members
 
-Inviting colleagues to join your organisation is straightforward. Follow these simple steps to send an invitation:
+Inviting colleagues to join your organization is straightforward. Follow these simple steps to send an invitation:
 
-1. Click on user settings dropdown and select 'Account Settings'.
+1. Click on the user settings dropdown and select 'Account Settings'.
 2. Navigate to 'Team' page.
-3. Click on 'Invite user' button.
+3. Click on '+ Invite User' button.
 4. Enter the email address of the individuals you wish to invite.
-5. Select the appropriate role or permissions from the predefined list to ensure each team member receives the access they require.
+5. Select the appropriate role from the predefined list to ensure each team member receives the access they require.
 6. Send the invitation by clicking the 'Invite' button.
 
-Once invited, team members will receive an email with a link to join the organization. They will need to follow the link to set up their account and gain access to the resources permitted by their assigned role.
+You can invite more team members at once by clicking '+ Add More' and following steps 4 to 6.
+
+Once invited, team members will receive an email with a link to join the organization. 
+They will need to follow the link to set up their account and gain access to the resources permitted by their assigned role.
 
 ## Role Permissions
 
