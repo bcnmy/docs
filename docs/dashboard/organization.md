@@ -1,19 +1,19 @@
 ---
-sidebar_label: "Organisations"
+sidebar_label: "Organizations"
 sidebar_position: 5
 ---
 
-# Organisation Overview
+# Organization Overview
 
-Organisation feature is designed to enhance collaboration and streamline team management within your workspace. This feature allows you to invite new team members to your organisation and manage their access permissions efficiently. Whether you're looking to onboard new hires, collaborate with external partners, or reorganize teams, our tools are crafted to provide you with a seamless management experience.
+Organization feature is designed to enhance collaboration and streamline team management within your workspace. This feature allows you to invite new team members to your organization and manage their access permissions efficiently. Whether you're looking to onboard new hires, collaborate with external partners, or reorganize teams, our tools are crafted to provide you with a seamless management experience.
 
 ## Inviting Team Members
 
-Inviting colleagues to join your organisation is straightforward. Follow these simple steps to send an invitation:
+Inviting colleagues to join your organization is straightforward. Follow these simple steps to send an invitation:
 
 1. Click on user settings dropdown and select 'Account Settings'.
 2. Navigate to 'Team' page.
-3. Click on 'Invite user' button.
+3. Click on 'Invite User' button.
 4. Enter the email address of the individuals you wish to invite.
 5. Select the appropriate role or permissions from the predefined list to ensure each team member receives the access they require.
 6. Send the invitation by clicking the 'Invite' button.
