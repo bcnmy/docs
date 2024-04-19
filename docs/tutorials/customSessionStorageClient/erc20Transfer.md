@@ -38,8 +38,8 @@ We now create an instance of the contract. Note that USDC does not have 18 decim
 
 ```typescript
 const tokenContract = new ethers.Contract(
-  // polygon mumbai usdc address
-  "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+  // polygon amoy usdc address
+  "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
   usdcAbi,
   provider
 );
@@ -61,7 +61,7 @@ const { data } = await tokenContract.populateTransaction.transfer(
 );
 
 const tx1 = {
-  to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+  to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
   data: data,
   value: "0",
 };
@@ -105,7 +105,7 @@ let smartAccount: BiconomySmartAccountV2;
 let address: string;
 
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai"
+  "https://rpc-amoy.polygon.technology/"
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
@@ -152,8 +152,8 @@ const erc20Transfer = async (
     smartAccount = smartAccount.setActiveValidationModule(sessionModule);
 
     const tokenContract = new ethers.Contract(
-      // polygon mumbai usdc address
-      "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+      // polygon amoy usdc address
+      "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
       usdcAbi,
       provider
     );
@@ -171,7 +171,7 @@ const erc20Transfer = async (
 
     // generate tx data to erc20 transfer
     const tx1 = {
-      to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+      to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
       data: data,
       value: "0",
     };
@@ -187,7 +187,7 @@ const erc20Transfer = async (
     console.log("userOpHash", userOpResponse);
     const { receipt } = await userOpResponse.wait(1);
     console.log("txHash", receipt.transactionHash);
-    const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`;
+    const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`;
   } catch (err: any) {
     console.error(err);
   }

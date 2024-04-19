@@ -59,7 +59,7 @@ import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 const biconomySmartAccountConfig = {
   signer: signer,
-  chainId: 80001,
+  chainId: 80002,
   bundlerUrl: "",
 };
 
@@ -86,7 +86,7 @@ const userOpReceiptMaxDurationIntervals: { [key in ChainId]?: number } = {
 
 const bundler = new Bundler({
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  chainId: 80001,
+  chainId: 80002,
   userOpReceiptMaxDurationIntervals,
 });
 

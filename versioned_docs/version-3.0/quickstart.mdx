@@ -104,7 +104,6 @@ Start by importing necessary packages for the bundler:
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
 import { ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
 ```
 
 IBundler is the typing for the Bundler class that we will create a new instance of.
@@ -114,15 +113,15 @@ IBundler is the typing for the Bundler class that we will create a new instance 
 ```typescript
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 ```
 
 - Now we have created an instance of our **Bundler** with the following:
   - A bundler URL which you can retrieve from the Biconomy Dashboard
-  - Chain ID, in this case, we’re using Polygon Mumbai
+  - Chain ID, in this case, we’re using Polygon Amoy
   - Default entry point address imported from the Account package
 
 ```typescript
@@ -136,7 +135,7 @@ Update your import from the Account package to also include `BiconomySmartAccoun
 
 ```typescript
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai"
+  "https://rpc-amoy.polygon.technology/"
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
@@ -164,7 +163,7 @@ async function initializeSmartAccount() {
   });
 
   let biconomyAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
+    chainId: 80002,
     bundler: bundler,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: module,
@@ -195,7 +194,7 @@ Smart accounts are designed with a pre-determined address known prior to deploym
 :::
 
 :::caution
-Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
+Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Amoy network head over to the [Polygon Faucet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
 :::
 
 Once you have tokens available, it is time to start constructing our first userOps for a native transfer.
@@ -253,7 +252,7 @@ async function submitUserOp() {
 
     console.log("See your transaction details here:");
     console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
+      `https://www.oklink.com/amoy/tx/${transactionDetails.receipt.transactionHash}`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -285,7 +284,6 @@ import {
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
 import { ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
 import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
@@ -294,13 +292,13 @@ config();
 
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai"
+  "https://rpc-amoy.polygon.technology/"
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
@@ -311,7 +309,7 @@ async function initializeSmartAccount() {
   });
 
   let biconomyAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
+    chainId: 80002,
     bundler: bundler,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
     defaultValidationModule: module,
@@ -364,7 +362,7 @@ async function submitUserOp() {
 
     console.log("See your transaction details here:");
     console.log(
-      `https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`
+      `https://www.oklink.com/amoy/tx/${transactionDetails.receipt.transactionHash}`
     );
   } catch (error: unknown) {
     if (error instanceof Error) {

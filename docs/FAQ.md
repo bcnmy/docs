@@ -28,7 +28,7 @@ const biconomySmartAccount = await createSmartAccountClient({
     signer,
     bundler: await createBundler({
     bundlerUrl: "bundler url",
-    userOpReceiptMaxDurationIntervals: { 80001: 60000 },
+    userOpReceiptMaxDurationIntervals: { 80002: 60000 },
     }),
 });
 ```

@@ -27,7 +27,6 @@ import {
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
 import { Bundler } from "@biconomy/bundler";
-import { ChainId } from "@biconomy/core-types";
 import {
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
   ECDSAOwnershipValidationModule,
@@ -69,7 +68,7 @@ const initDfnsWallet = (walletId: string, provider: JsonRpcProvider) => {
   }).connect(provider);
 };
 
-const mumbaiWallet = initDfnsWallet(process.env.POLYGON_WALLET_ID!, provider);
+const amoyWallet = initDfnsWallet(process.env.POLYGON_WALLET_ID!, provider);
 ```
 
 Remember to get your API keys from the DFNS dashboard and follow their [getting started](https://docs.dfns.co/dfns-docs/getting-started/gettingstarted) guides for this part of the process.
@@ -79,7 +78,7 @@ Remember to get your API keys from the DFNS dashboard and follow their [getting 
 ```typescript
 const bundler = new Bundler({
   bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI,
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -89,12 +88,12 @@ const paymaster = new BiconomyPaymaster({
 
 const createAccount = async (): Promise<BiconomySmartAccountV2> => {
   const module = await ECDSAOwnershipValidationModule.create({
-    signer: mumbaiWallet,
+    signer: amoyWallet,
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
   });
 
   return BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
+    chainId: 80002,
     bundler: bundler,
     paymaster: paymaster,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

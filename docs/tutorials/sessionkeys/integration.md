@@ -65,7 +65,7 @@ We're going to track the address, smartAccount, and provider as well as a loadin
 Lets also get the bundlerUrl and paymasterApiKey from the dashboard.
 
 ```javascript
-  const bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  const bundlerUrl: "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   const paymasterApiKey = "paymasterApiKey";
 ```
 
@@ -145,7 +145,7 @@ export default function Home() {
   const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2 | null>(null);
   const [provider, setProvider] = useState<ethers.providers.Provider | null>(null)
 
-  const bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  const bundlerUrl: "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   const paymasterApiKey = "paymasterApiKey";
 
   const connect = async () => {

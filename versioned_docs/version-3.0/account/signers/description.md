@@ -13,7 +13,7 @@ const ownerShipModule = await ECDSAOwnershipValidationModule.create({
 });
 
 const biconomyAccount = await BiconomySmartAccountV2.create({
-  chainId: ChainId.POLYGON_MUMBAI, //or any chain of your choice
+  chainId: 80002, //or any chain of your choice
   bundler: bundler, // instance of bundler
   paymaster: paymaster, // instance of paymaster
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, //entry point address for chain

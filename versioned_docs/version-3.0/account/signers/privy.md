@@ -17,11 +17,11 @@ Read below to learn how to configure your app to create smart accounts for all y
 
 ## 1. Install Privy and Biconomy
 
-In your app's repository, install the `@privy-io/react-auth` SDK from Privy and the `@biconomy/{account, bundler, common, core-types, paymaster}` SDKs from Biconomy:
+In your app's repository, install the `@privy-io/react-auth` SDK from Privy and the `@biconomy/{account, bundler, common, paymaster}` SDKs from Biconomy:
 
 ```bash
 
-yarn add @privy-io/react-auth @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster
+yarn add @privy-io/react-auth @biconomy/account @biconomy/bundler @biconomy/common @biconomy/paymaster
 
 ```
 
@@ -81,8 +81,8 @@ import {useWallets} from '@privy-io/react-auth';
 const {wallets} = useWallets();
 const embeddedWallet = wallets.find((wallet) => (wallet.walletClientType === 'privy'));
 // Switch the embedded wallet to your target network
-// Replace '80001' with your desired chain ID.
-await embeddedWallet.switchChain(80001);
+// Replace '80002' with your desired chain ID.
+await embeddedWallet.switchChain(80002);
 
 ```
 
@@ -92,14 +92,13 @@ Next, initialize instances of a Biconomy `bundler` and `paymaster` for the user,
 
 import { IBundler, Bundler } from '@biconomy/bundler';
 import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster';
-import { ChainId } from "@biconomy/core-types";
 
 ...
 
 // Initialize your bundler
 const bundler: IBundler = new Bundler({
     bundlerUrl: 'your-bundler-url-from-the-biconomy-dashboard',
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your desired network
+    chainId: 80002, // Replace this with your desired network
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
 });
 
@@ -138,7 +137,7 @@ import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/a
 
 const smartAccount = await BiconomySmartAccountV2.create({
     provider: provider, // This can be any ethers JsonRpcProvider connected to your app's network
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your target network
+    chainId: 80002, // Replace this with your target network
     bundler: bundler, // Use the `bundler` we initialized above
     paymaster: paymaster, // Use the `paymaster` we initialized above
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
@@ -155,7 +154,6 @@ const smartAccount = await BiconomySmartAccountV2.create({
 import { useWallets } from '@privy-io/react-auth';
 import { IBundler, Bundler } from '@biconomy/bundler';
 import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster';
-import { ChainId } from "@biconomy/core-types";
 import { ECDSAOwnershipValidationModule, DEFAULT_ECDSA_OWNERSHIP_MODULE } from "@biconomy/modules";
 import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/account";
 
@@ -164,12 +162,12 @@ import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/a
 // Find the embedded wallet and switch it to your target network
 const {wallets} = useWallets();
 const embeddedWallet = wallets.find((wallet) => (wallet.walletClientType === 'privy'));
-await embeddedWallet.switchChain(80001);
+await embeddedWallet.switchChain(80002);
 
 // Initialize your bundler and paymaster
 const bundler: IBundler = new Bundler({
     bundlerUrl: 'your-bundler-url-from-the-biconomy-dashboard',
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your desired network
+    chainId: 80002, // Replace this with your desired network
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
 });
 const paymaster: IPaymaster = new BiconomyPaymaster({
@@ -187,7 +185,7 @@ const validationModule = await ECDSAOwnershipValidationModule.create({
 // Initialize your smart account
 const smartAccount = await BiconomySmartAccountV2.create({
     provider: provider,
-    chainId: ChainId.POLYGON_MUMBAI,
+    chainId: 80002,
     bundler: bundler,
     paymaster: paymaster,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

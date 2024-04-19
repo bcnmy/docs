@@ -72,7 +72,7 @@ Here is a breakdown of what this contract is doing:
   sends the new value of the count variable to the listener.
 - `return count`: This line returns the new value of `count`.
 
-Now that we have our basic contract let's deploy this to the Polygon Mumbai Test
+Now that we have our basic contract let's deploy this to the Polygon Amoy Test
 Network. You can follow the official
 [Remix Documentation](https://remix-ide.readthedocs.io/en/latest/run.html) for
 Deployment to get this deployed and verified.

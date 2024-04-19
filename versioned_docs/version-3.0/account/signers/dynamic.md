@@ -7,11 +7,11 @@ Dynamic.xyz is a web3 login solution for everyone, offering straightforward onbo
 
 ## 1. Install Dynamic and Biconomy
 
-In your app's repository, install `@dynamic-labs/sdk-react-core`, `@dynamic-labs/ethereum` and `@biconomy/{account, bundler, common, core-types, paymaster}`:
+In your app's repository, install `@dynamic-labs/sdk-react-core`, `@dynamic-labs/ethereum` and `@biconomy/{account, bundler, common, paymaster}`:
 
 ```bash
 
-yarn add @dynamic-labs/sdk-react-core @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster
+yarn add @dynamic-labs/sdk-react-core @biconomy/account @biconomy/bundler @biconomy/common @biconomy/paymaster
 
 ```
 
@@ -84,7 +84,6 @@ You will need to initialize instances of a Biconomy `bundler` and `paymaster` fo
 
 import { IBundler, Bundler } from '@biconomy/bundler';
 import { IPaymaster, BiconomyPaymaster } from '@biconomy/paymaster';
-import { ChainId } from "@biconomy/core-types";
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
 
 ...
@@ -92,7 +91,7 @@ import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
 // Initialize your bundler
 const bundler: IBundler = new Bundler({
     bundlerUrl: 'your-bundler-url-from-the-biconomy-dashboard',
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your desired network
+    chainId: 80002, // Replace this with your desired network
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant
 });
 
@@ -137,7 +136,7 @@ import { BiconomySmartAccountV2, DEFAULT_ENTRYPOINT_ADDRESS  } from "@biconomy/a
 
 const smartAccount = await BiconomySmartAccountV2.create({
     provider: provider, // This can be any ethers JsonRpcProvider connected to your app's network
-    chainId: ChainId.POLYGON_MUMBAI, // Replace this with your target network
+    chainId: 80002, // Replace this with your target network
     bundler: bundler, // Use the `bundler` we initialized above
     paymaster: paymaster, // Use the `paymaster` we initialized above
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // This is a Biconomy constant

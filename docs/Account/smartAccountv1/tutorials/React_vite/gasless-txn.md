@@ -46,7 +46,6 @@ import './App.css'
 import "@Biconomy/web3-auth/dist/src/style.css"
 import { useState, useEffect, useRef } from 'react'
 import SocialLogin from "@biconomy/web3-auth"
-import { ChainId } from "@biconomy/core-types";
 import { ethers } from 'ethers'
 import { IBundler, Bundler } from '@biconomy/bundler'
 import { BiconomySmartAccount,BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
@@ -56,13 +55,13 @@ import styles from '@/styles/Home.module.css'
 
 
 const bundler: IBundler = new Bundler({
-  bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44', // you can get this value from biconomy dashboard.
-  chainId: ChainId.POLYGON_MUMBAI,
+  bundlerUrl: 'https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44', // you can get this value from biconomy dashboard.
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 })
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
-  paymasterUrl: 'https://paymaster.biconomy.io/api/v1/80001/cIhIeS-I0.7e1f17b1-6ebb-454c-8499-c5f66dd098c6'
+  paymasterUrl: 'https://paymaster.biconomy.io/api/v1/80002/cIhIeS-I0.7e1f17b1-6ebb-454c-8499-c5f66dd098c6'
 })
 
 export default function Home() {
@@ -89,7 +88,7 @@ export default function Home() {
       const socialLoginSDK = new SocialLogin()
       const signature1 = await socialLoginSDK.whitelistUrl("http://127.0.0.1:5173/")
       await socialLoginSDK.init({
-        chainId: ethers.utils.hexValue(ChainId.POLYGON_MUMBAI).toString(),
+        chainId: ethers.utils.hexValue("0x13882").toString(),
         network: "testnet",
         whitelistUrls: {
           "http://127.0.0.1:5173/": signature1,
@@ -117,7 +116,7 @@ export default function Home() {
     try {
       const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
         signer: web3Provider.getSigner(),
-        chainId: ChainId.POLYGON_MUMBAI,
+        chainId: 80002,
         bundler: bundler,
         paymaster: paymaster
       }
