@@ -40,7 +40,7 @@ Roles are defined as follows:
 
 ## Changing User Roles
 
-Adjusting the roles a of existing team members is a critical part of managing your organization's operations efficiently. Whether you need to upgrade a team member's access due to a change in responsibilities or downgrade access as part of a security protocol, our system provides a straightforward process for modifying user roles.
+Adjusting the roles of existing team members is a critical part of managing your organization's operations efficiently. Whether you need to upgrade a team member's access due to a change in responsibilities or downgrade access as part of a security protocol, our system provides a straightforward process for modifying user roles.
 
 Steps to Change User Role:
 
