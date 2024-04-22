@@ -37,3 +37,17 @@ Roles are defined as follows:
 - `Editor`: Editors can access and modify all projects and settings except for team member management. This role is suited for team members who need to make substantial contributions to projects but do not need control over user roles and permissions.
 
 - `Viewer`: Viewers have read-only access to all projects, meaning they cannot alter any project content. However, Viewers can deposit funds into the paymaster account, supporting financial operations without modifying project data.
+
+## Changing User Roles
+
+Adjusting the roles of existing team members is a critical part of managing your organization's operations efficiently. Whether you need to upgrade a team member's access due to a change in responsibilities or downgrade access as part of a security protocol, our system provides a straightforward process for modifying user roles.
+
+Steps to Change User Role:
+
+1. Click on the user settings dropdown and select 'Account Settings'.
+
+2. Navigate to 'Team' page.
+
+3. Find the team member whose role you want to change.
+
+4. Click on the user's current role displayed next to their status and select the new role you wish to assign to the user.
