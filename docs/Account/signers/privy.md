@@ -21,7 +21,7 @@ In your app's repository, install the `@privy-io/react-auth` SDK from Privy and 
 
 ```bash
 
-yarn add @privy-io/react-auth @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/paymaster
+yarn add @privy-io/react-auth @biconomy/account
 
 ```
 
@@ -99,7 +99,7 @@ const smartAccount = await createSmartAccountClient({
   signer: signer as LightSigner,
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
-  rpcUrl: "" // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
+  rpcUrl: "", // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
 });
 
 const address = await smartAccount.getAccountAddress();

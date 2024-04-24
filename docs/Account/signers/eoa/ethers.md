@@ -14,7 +14,7 @@ This section showcases two ways you can create Smart Accounts using Ethers JS. U
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster ethers@5.7.2
+yarn add @biconomy/account ethers@5.7.2
 ```
 
 ### Imports
