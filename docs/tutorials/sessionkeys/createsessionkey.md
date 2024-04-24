@@ -24,10 +24,15 @@ Let's add our imports to this file and create an interface for our props.
 ```typescript
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { BiconomySmartAccountV2, DEFAULT_SESSION_KEY_MANAGER_MODULE, createSessionKeyManagerModule } from "@biconomy/account"
+import {
+  BiconomySmartAccountV2,
+  DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  createSessionKeyManagerModule,
+  getABISVMSessionKeyData,
+} from "@biconomy/account";
 import { hexDataSlice, id, parseEther } from "ethers/lib/utils";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface props {
   smartAccount: BiconomySmartAccountV2;
@@ -41,18 +46,15 @@ Our component props will take the smart account instancs, the address, and provi
 The initial component should look like this:
 
 ```typescript
-
-  const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => {
-
-  return (
-    <div>
-    </div>
-
-  )
-}
+const CreateSession: React.FC<props> = ({
+  smartAccount,
+  address,
+  provider,
+}) => {
+  return <div></div>;
+};
 
 export default CreateSession;
-
 ```
 
 You can go ahead an import it into your index.tsx at this point as well and add it before the closing main tag like this:
@@ -86,76 +88,30 @@ We're going to be tracking if the session key module is enabled and if there is 
 In a `useEffect` hook let's write the following code:
 
 ```typescript
-
- useEffect(() => {
-    let checkSessionModuleEnabled = async () => {
-      if(!address || !smartAccount || !provider) {
-        setIsSessionKeyModuleEnabled(false);
-        return
-      }
-      try {
-        const isEnabled = await smartAccount.isModuleEnabled(DEFAULT_SESSION_KEY_MANAGER_MODULE)
-        console.log("isSessionKeyModuleEnabled", isEnabled);
-        setIsSessionKeyModuleEnabled(isEnabled);
-        return;
-      } catch(err: any) {
-        console.error(err)
-        setIsSessionKeyModuleEnabled(false);
-        return;
-      }
+useEffect(() => {
+  let checkSessionModuleEnabled = async () => {
+    if (!address || !smartAccount || !provider) {
+      setIsSessionKeyModuleEnabled(false);
+      return;
     }
-    checkSessionModuleEnabled()
-  },[isSessionKeyModuleEnabled, address, smartAccount, provider])
-
+    try {
+      const isEnabled = await smartAccount.isModuleEnabled(
+        DEFAULT_SESSION_KEY_MANAGER_MODULE
+      );
+      console.log("isSessionKeyModuleEnabled", isEnabled);
+      setIsSessionKeyModuleEnabled(isEnabled);
+      return;
+    } catch (err: any) {
+      console.error(err);
+      setIsSessionKeyModuleEnabled(false);
+      return;
+    }
+  };
+  checkSessionModuleEnabled();
+}, [isSessionKeyModuleEnabled, address, smartAccount, provider]);
 ```
 
 This will check if a session module is enabled - it will return if we do not have an address, smart Account, or provider and will then enable the module for our smartAccount if needed.
-
-## Add Utility Method
-
-Add getABISVMSessionKeyData utility method in your project and declare interfaces
-
-```typescript
-// Make sure you have these imports 
-import { BigNumber} from "ethers";
-import { BytesLike, hexConcat, hexZeroPad, hexlify } from "ethers/lib/utils";
-
-export interface Rule {
-  offset: number;
-  condition: number;
-  referenceValue: string | BytesLike;
-}
-
-export interface Permission {
-  destContract: string;
-  functionSelector: string;
-  valueLimit: BigNumber;
-  rules: Rule[];
-}
-
-async function getABISVMSessionKeyData(
-  sessionKey: string,
-  permission: Permission,
-): Promise<string> {
-  let sessionKeyData = hexConcat([
-    sessionKey,
-    permission.destContract,
-    permission.functionSelector,
-    hexZeroPad(permission.valueLimit.toHexString(), 16),
-    hexZeroPad(hexlify(permission.rules.length), 2), // this can't be more 2**11 (see below), so uint16 (2 bytes) is enough
-  ]);
-
-  for (let i = 0; i < permission.rules.length; i++) {
-    sessionKeyData = hexConcat([
-      sessionKeyData,
-      hexZeroPad(hexlify(permission.rules[i].offset), 2), // offset is uint16, so there can't be more than 2**16/32 args = 2**11
-      hexZeroPad(hexlify(permission.rules[i].condition), 1), // uint8
-      permission.rules[i].referenceValue,
-    ]);
-  }
-  return sessionKeyData;
-}
-```
 
 ## Creating Session
 
@@ -166,108 +122,106 @@ async function getABISVMSessionKeyData(
 Now let's set up the function for creating the session:
 
 ```typescript
+const createSession = async (enableSessionKeyModule: boolean) => {
+  toast.info("Creating Session...", {
+    position: "top-right",
+    autoClose: 15000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  });
+  if (!address || !smartAccount || !provider) {
+    alert("Please connect wallet first");
+  }
+  try {
+    // Address of ABI Session Validation Module
+    const abiSVMAddress = "0x000006bC2eCdAe38113929293d241Cf252D91861";
+    // -----> setMerkle tree tx flow
+    // create dapp side session key
+    const sessionSigner = ethers.Wallet.createRandom();
+    const sessionKeyEOA = await sessionSigner.getAddress();
+    console.log("sessionKeyEOA", sessionKeyEOA);
+    // BREWARE JUST FOR DEMO: update local storage with session key
+    window.localStorage.setItem("sessionPKey", sessionSigner.privateKey);
 
-  const createSession = async (enableSessionKeyModule: boolean) => {
-    toast.info('Creating Session...', {
+    // generate sessionModule
+    const sessionModule = await createSessionKeyManagerModule({
+      moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
+      smartAccountAddress: address,
+    });
+
+    const nftAddress = "0xdd526eba63ef200ed95f0f0fb8993fe3e20a23d0";
+    const recipient = "0xAddress";
+    // get only first 4 bytes for function selector
+    const functionSelector = hexDataSlice(id("safeMint(address)"), 0, 4);
+
+    // create session key data
+    const sessionKeyData = await getABISVMSessionKeyData(sessionKeyEOA, {
+      destContract: nftAddress, // destination contract to call
+      functionSelector: functionSelector, // function selector allowed
+      valueLimit: parseEther("0"), // no native value is sent
+      // In rules, we make sure that referenceValue is equal to recipient
+      rules: [
+        {
+          offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
+          condition: 0, // 0 = Condition.EQUAL
+          referenceValue: ethers.utils.hexZeroPad(recipient, 32), // recipient address
+        },
+      ],
+    });
+
+    const sessionTxData = await sessionModule.createSessionData([
+      {
+        validUntil: 0,
+        validAfter: 0,
+        sessionValidationModule: abiSVMAddress,
+        sessionPublicKey: sessionKeyEOA as `0x${string}`,
+        sessionKeyData: sessionKeyData as `0x${string}`,
+      },
+    ]);
+    console.log("sessionTxData", sessionTxData);
+
+    // tx to set session key
+    const setSessiontrx = {
+      to: DEFAULT_SESSION_KEY_MANAGER_MODULE, // session manager module address
+      data: sessionTxData.data,
+    };
+
+    const transactionArray = [];
+
+    if (enableSessionKeyModule) {
+      // -----> enableModule session manager module
+      const enableModuleTrx = await smartAccount.getEnableModuleData(
+        DEFAULT_SESSION_KEY_MANAGER_MODULE
+      );
+      transactionArray.push(enableModuleTrx);
+    }
+
+    transactionArray.push(setSessiontrx);
+
+    let userOpResponse = await smartAccount.sendTransaction(transactionArray);
+
+    console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
+    const transactionDetails = await userOpResponse.wait();
+    console.log("txHash", transactionDetails.receipt.transactionHash);
+    setIsSessionActive(true);
+    toast.success(`Success! Session created succesfully`, {
       position: "top-right",
-      autoClose: 15000,
+      autoClose: 18000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "dark",
-      });
-    if (!address || !smartAccount || !provider) {
-      alert("Please connect wallet first")
-    }
-    try {
-      // Address of ABI Session Validation Module
-      const abiSVMAddress = "0x000006bC2eCdAe38113929293d241Cf252D91861"
-      // -----> setMerkle tree tx flow
-      // create dapp side session key
-      const sessionSigner = ethers.Wallet.createRandom();
-      const sessionKeyEOA = await sessionSigner.getAddress();
-      console.log("sessionKeyEOA", sessionKeyEOA);
-      // BREWARE JUST FOR DEMO: update local storage with session key
-      window.localStorage.setItem("sessionPKey", sessionSigner.privateKey);
-
-      // generate sessionModule
-      const sessionModule = await createSessionKeyManagerModule({
-        moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
-        smartAccountAddress: address,
-      });
-
-      const nftAddress = "0xdd526eba63ef200ed95f0f0fb8993fe3e20a23d0";
-      const recipient = "0xAddress";
-      // get only first 4 bytes for function selector
-      const functionSelector = hexDataSlice(id("safeMint(address)"), 0, 4);
-
-      // create session key data
-      const sessionKeyData = await getABISVMSessionKeyData(sessionKeyEOA, {
-          destContract: nftAddress, // destination contract to call
-          functionSelector: functionSelector, // function selector allowed
-          valueLimit: parseEther("0"), // no native value is sent 
-          // In rules, we make sure that referenceValue is equal to recipient
-          rules: [
-            {
-              offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
-              condition: 0, // 0 = Condition.EQUAL
-              referenceValue: ethers.utils.hexZeroPad(recipient, 32) // recipient address
-            },
-          ],
-      });
-
-      const sessionTxData = await sessionModule.createSessionData([
-        {
-          validUntil: 0,
-          validAfter: 0,
-          sessionValidationModule: abiSVMAddress,
-          sessionPublicKey: sessionKeyEOA as `0x${string}`,
-          sessionKeyData: sessionKeyData as `0x${string}`,
-        },
-      ]);
-      console.log("sessionTxData", sessionTxData);
-
-      // tx to set session key
-      const setSessiontrx = {
-        to: DEFAULT_SESSION_KEY_MANAGER_MODULE, // session manager module address
-        data: sessionTxData.data,
-      };
-
-      const transactionArray = [];
-
-      if (enableSessionKeyModule) {
-        // -----> enableModule session manager module
-        const enableModuleTrx = await smartAccount.getEnableModuleData(
-          DEFAULT_SESSION_KEY_MANAGER_MODULE
-        );
-        transactionArray.push(enableModuleTrx);
-      }
-
-      transactionArray.push(setSessiontrx)
-
-      let userOpResponse = await smartAccount.sendTransaction(transactionArray);
-
-      console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
-      const transactionDetails = await userOpResponse.wait();
-      console.log("txHash", transactionDetails.receipt.transactionHash);
-      setIsSessionActive(true)
-      toast.success(`Success! Session created succesfully`, {
-        position: "top-right",
-        autoClose: 18000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        });
-    } catch(err: any) {
-      console.error(err)
-    }
+    });
+  } catch (err: any) {
+    console.error(err);
   }
-
+};
 ```
 
 Let's break down this function:
@@ -296,17 +250,17 @@ We will now use the Session Key Manager Module to create a session module using 
 ```typescript
 // create session key data
 const sessionKeyData = await getABISVMSessionKeyData(sessionKeyEOA, {
-    destContract: nftAddress, // destination contract to call
-    functionSelector: functionSelector, // function selector allowed
-    valueLimit: parseEther("0"), // no native value is sent 
-    // This rule ensures that the address we are going to mint NFT to should be equal the reference address (receiver var).
-    rules: [
-      {
-        offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
-        condition: 0, // 0 = Condition.EQUAL
-        referenceValue: ethers.utils.hexZeroPad(recipient, 32) // recipient address
-      },
-    ],
+  destContract: nftAddress, // destination contract to call
+  functionSelector: functionSelector, // function selector allowed
+  valueLimit: parseEther("0"), // no native value is sent
+  // This rule ensures that the address we are going to mint NFT to should be equal the reference address (receiver var).
+  rules: [
+    {
+      offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
+      condition: 0, // 0 = Condition.EQUAL
+      referenceValue: ethers.utils.hexZeroPad(recipient, 32), // recipient address
+    },
+  ],
 });
 ```
 
@@ -314,7 +268,7 @@ Next we create the session key data - if you recall from the smart contract it n
 
 **Session Key** - address, returned to the `validateSessionUserOp` or to the Session Key Manager to validate that the signer of the userOp is one of the enabled Session Keys.
 
-**Permitted destination contract** - address of the contract that Smart Account is allowed to call within the `execute` or `executeBatch` execution. 
+**Permitted destination contract** - address of the contract that Smart Account is allowed to call within the `execute` or `executeBatch` execution.
 
 **Permitted selector** - the selector of the method that is allowed to be called on the Permitted destination contract
 
@@ -332,9 +286,10 @@ const sessionTxData = await sessionModule.createSessionData([
 ]);
 ```
 
-Next, we create the data for the transaction that enables the sesson. For every session we need to specify how long it should be valid until and/or how long it is valid after. This should be a unix timestamp to represent the time. Passing 0 on both makes this session never expire, do not do this in production. Next we pass: 
+Next, we create the data for the transaction that enables the sesson. For every session we need to specify how long it should be valid until and/or how long it is valid after. This should be a unix timestamp to represent the time. Passing 0 on both makes this session never expire, do not do this in production. Next we pass:
+
 - The Session Validation Module address that is going to validate userOps that leverage this session
-- Session key address, that should sign the userOp 
+- Session key address, that should sign the userOp
 - And the session key data we just created.
 
 ```typescript
@@ -353,7 +308,7 @@ Now we construct the transaction to actually set the session key and create an a
 if (enableSessionKeyModule) {
   // -----> enableModule session manager module
   const enableModuleTrx = await smartAccount.getEnableModuleData(
-    DEFAULT_SESSION_KEY_MANAGER_MODULE,
+    DEFAULT_SESSION_KEY_MANAGER_MODULE
   );
   transactionArray.push(enableModuleTrx);
 }
@@ -416,10 +371,22 @@ Update your jsx to now look like this:
 ```typescript
 import React, { useEffect, useState } from "react";
 import { ethers, BigNumber } from "ethers";
-import { BiconomySmartAccountV2, DEFAULT_SESSION_KEY_MANAGER_MODULE, createSessionKeyManagerModule } from "@biconomy/account"
-import { hexDataSlice, id, BytesLike, hexConcat, hexZeroPad, hexlify, parseEther } from "ethers/lib/utils";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {
+  BiconomySmartAccountV2,
+  DEFAULT_SESSION_KEY_MANAGER_MODULE,
+  createSessionKeyManagerModule,
+} from "@biconomy/account";
+import {
+  hexDataSlice,
+  id,
+  BytesLike,
+  hexConcat,
+  hexZeroPad,
+  hexlify,
+  parseEther,
+} from "ethers/lib/utils";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface props {
   smartAccount: BiconomySmartAccountV2;
@@ -440,56 +407,62 @@ export interface Permission {
   rules: Rule[];
 }
 
-const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => {
-
+const CreateSession: React.FC<props> = ({
+  smartAccount,
+  address,
+  provider,
+}) => {
   const [isSessionActive, setIsSessionActive] = useState(false);
-  const [isSessionKeyModuleEnabled, setIsSessionKeyModuleEnabled] = useState(false);
+  const [isSessionKeyModuleEnabled, setIsSessionKeyModuleEnabled] =
+    useState(false);
 
   useEffect(() => {
     let checkSessionModuleEnabled = async () => {
-      if(!address || !smartAccount || !provider) {
+      if (!address || !smartAccount || !provider) {
         setIsSessionKeyModuleEnabled(false);
-        return
+        return;
       }
       try {
-        const isEnabled = await smartAccount.isModuleEnabled(DEFAULT_SESSION_KEY_MANAGER_MODULE)
+        const isEnabled = await smartAccount.isModuleEnabled(
+          DEFAULT_SESSION_KEY_MANAGER_MODULE
+        );
         console.log("isSessionKeyModuleEnabled", isEnabled);
         setIsSessionKeyModuleEnabled(isEnabled);
         return;
-      } catch(err: any) {
-        console.error(err)
+      } catch (err: any) {
+        console.error(err);
         setIsSessionKeyModuleEnabled(false);
         return;
       }
-    }
-    checkSessionModuleEnabled()
-  },[isSessionKeyModuleEnabled, address, smartAccount, provider])
+    };
+    checkSessionModuleEnabled();
+  }, [isSessionKeyModuleEnabled, address, smartAccount, provider]);
 
   async function getABISVMSessionKeyData(
     sessionKey: string,
-    permission: Permission,
+    permission: Permission
   ): Promise<string> {
-      let sessionKeyData = hexConcat([
-        sessionKey,
-        permission.destContract,
-        permission.functionSelector,
-        hexZeroPad(permission.valueLimit.toHexString(), 16),
-        hexZeroPad(hexlify(permission.rules.length), 2), // this can't be more 2**11 (see below), so uint16 (2 bytes) is enough
+    let sessionKeyData = hexConcat([
+      sessionKey,
+      permission.destContract,
+      permission.functionSelector,
+      hexZeroPad(permission.valueLimit.toHexString(), 16),
+      hexZeroPad(hexlify(permission.rules.length), 2), // this can't be more 2**11 (see below), so uint16 (2 bytes) is enough
+    ]);
+
+    for (let i = 0; i < permission.rules.length; i++) {
+      sessionKeyData = hexConcat([
+        sessionKeyData,
+        hexZeroPad(hexlify(permission.rules[i].offset), 2), // offset is uint16, so there can't be more than 2**16/32 args = 2**11
+        hexZeroPad(hexlify(permission.rules[i].condition), 1), // uint8
+        permission.rules[i].referenceValue,
       ]);
-
-      for (let i = 0; i < permission.rules.length; i++) {
-        sessionKeyData = hexConcat([
-          sessionKeyData,
-          hexZeroPad(hexlify(permission.rules[i].offset), 2), // offset is uint16, so there can't be more than 2**16/32 args = 2**11
-          hexZeroPad(hexlify(permission.rules[i].condition), 1), // uint8
-          permission.rules[i].referenceValue,
-        ]);
-      }
-      return sessionKeyData;
     }
+    return sessionKeyData;
+  }
 
-    const createSession = async (enableSessionKeyModule: boolean) => {
-    toast.info('Creating Session...', {
+  const createSession = async (enableSessionKeyModule: boolean) => {
+    toast.info("Creating Session...", {
       position: "top-right",
       autoClose: 15000,
       hideProgressBar: false,
@@ -498,13 +471,13 @@ const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => 
       draggable: true,
       progress: undefined,
       theme: "dark",
-      });
+    });
     if (!address || !smartAccount || !provider) {
-      alert("Please connect wallet first")
+      alert("Please connect wallet first");
     }
     try {
       // Address of ABI Session Validation Module
-      const abiSVMAddress = "0x000006bC2eCdAe38113929293d241Cf252D91861"
+      const abiSVMAddress = "0x000006bC2eCdAe38113929293d241Cf252D91861";
       // -----> setMerkle tree tx flow
       // create dapp side session key
       const sessionSigner = ethers.Wallet.createRandom();
@@ -526,17 +499,17 @@ const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => 
 
       // create session key data
       const sessionKeyData = await getABISVMSessionKeyData(sessionKeyEOA, {
-          destContract: nftAddress, // destination contract to call
-          functionSelector: functionSelector, // function selector allowed
-          valueLimit: parseEther("0"), // no native value is sent 
-          // In rules, we make sure that referenceValue is equal to recipient
-          rules: [
-            {
-              offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
-              condition: 0, // 0 = Condition.EQUAL
-              referenceValue: ethers.utils.hexZeroPad(recipient, 32) // recipient address
-            },
-          ],
+        destContract: nftAddress, // destination contract to call
+        functionSelector: functionSelector, // function selector allowed
+        valueLimit: parseEther("0"), // no native value is sent
+        // In rules, we make sure that referenceValue is equal to recipient
+        rules: [
+          {
+            offset: 0, // defines the position of a 32bytes word in the calldata (our recipient address)
+            condition: 0, // 0 = Condition.EQUAL
+            referenceValue: ethers.utils.hexZeroPad(recipient, 32), // recipient address
+          },
+        ],
       });
 
       const sessionTxData = await sessionModule.createSessionData([
@@ -566,14 +539,14 @@ const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => 
         transactionArray.push(enableModuleTrx);
       }
 
-      transactionArray.push(setSessiontrx)
+      transactionArray.push(setSessiontrx);
 
       let userOpResponse = await smartAccount.sendTransaction(transactionArray);
 
       console.log(`userOp Hash: ${userOpResponse.userOpHash}`);
       const transactionDetails = await userOpResponse.wait();
       console.log("txHash", transactionDetails.receipt.transactionHash);
-      setIsSessionActive(true)
+      setIsSessionActive(true);
       toast.success(`Success! Session created succesfully`, {
         position: "top-right",
         autoClose: 18000,
@@ -583,26 +556,26 @@ const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => 
         draggable: true,
         progress: undefined,
         theme: "dark",
-        });
-    } catch(err: any) {
-      console.error(err)
+      });
+    } catch (err: any) {
+      console.error(err);
     }
-  }
+  };
 
   return (
     <div>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       {isSessionKeyModuleEnabled ? (
         <button onClick={() => createSession(false)}>Create Session</button>
       ) : (
@@ -611,8 +584,8 @@ const CreateSession: React.FC<props> = ({ smartAccount, address, provider }) => 
         </button>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default CreateSession;
 ```
