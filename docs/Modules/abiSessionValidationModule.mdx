@@ -13,7 +13,7 @@ Understanding the **ABI Session Validation Module** is crucial for leveraging **
 
 ## The Purpose of Session Validation Modules
 
-At the core, a ABI Session Validation Module is a smart contract designed to authenticate whether a user's operation complies with the permissions set within a session key. It functions to validate user operations based on pre-defined session key permissions.
+At the core, an ABI Session Validation Module is a smart contract designed to authenticate whether a user's operation complies with the permissions set within a session key. It functions to validate user operations based on pre-defined session key permissions.
 
 :::info
 **Key Functionality**: We'll dissect a deployed contract that validates permissions any type of smart contract logic, enabling dApps to execute transactions without user signatures every time.
