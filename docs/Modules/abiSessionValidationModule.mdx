@@ -35,7 +35,7 @@ import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "./ISessionValidationModule.sol";
 
 /**
- * @title ABI ABI Session Validation Module for Biconomy Smart Accounts.
+ * @title ABI Session Validation Module for Biconomy Smart Accounts.
  * @dev Validates userOps for any contract / method / params.
  * The _sessionKeyData layout:
  * Offset (in bytes)    | Length (in bytes) | Contents
