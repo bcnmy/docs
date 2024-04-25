@@ -51,3 +51,34 @@ Steps to Change User Role:
 3. Find the team member whose role you want to change.
 
 4. Click on the user's current role displayed next to their status and select the new role you wish to assign to the user.
+
+### Removing Team Members
+
+Removing a team member from your organization may be necessary due to changes in staffing, roles, or security policies. Our platform allows admins to delete members easily and securely to ensure that only authorized users have access to sensitive organizational data.
+
+1. Click on the user settings dropdown and select 'Account Settings'.
+
+2. Navigate to 'Team' page.
+
+3. Find the team member you wish to remove.
+
+4. Click on the Delete icon, located in the table row corresponding to the member you want to remove.
+
+## Removing Yourself from the Organization
+
+There may come a time when you need to remove yourself from an organization, whether due to a change in job roles or leaving the company. Our system ensures that the organization continues to be managed effectively by requiring a smooth transition of administrative responsibilities before you can exit.
+
+### Prerequisites for Self-Removal:
+
+1. Assign Another Admin:
+   Before you can remove yourself from the organization, ensure that at least one other team member is assigned and has accepted the role of Admin. This is crucial to maintain uninterrupted access to all settings and features within the organization.
+2. Admin Acceptance:
+   The newly assigned Admin must accept their invitation and fully activate their account. This ensures that there is always at least one active Admin to manage the organization.
+
+### Steps to Remove Yourself:
+
+1. Click on the user settings dropdown and select 'Account Settings'.
+
+2. Navigate to 'Team' page.
+
+3. Click on the Delete icon, located in the table row corresponding to your email.
