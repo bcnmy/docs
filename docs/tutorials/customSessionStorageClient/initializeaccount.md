@@ -22,7 +22,7 @@ import { Wallet, providers, ethers } from "ethers";
 
 ```typescript
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 ```

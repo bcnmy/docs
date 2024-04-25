@@ -18,7 +18,7 @@ Check out an end-to-end integration of Turnkey with Biconomy in this [repo](http
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster @turnkey/ethers @turnkey/http @turnkey/api-key-stamper ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/modules @biconomy/paymaster @turnkey/ethers @turnkey/http @turnkey/api-key-stamper ethers@5.7.2
 ```
 
 ## Imports
@@ -30,8 +30,7 @@ import {
   BiconomySmartAccountV2,
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
-import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
+import { Wallet, providers, ethers } from "ethers"
 import { TurnkeySigner } from "@turnkey/ethers";
 import { TurnkeyClient } from "@turnkey/http";
 import { ApiKeyStamper } from "@turnkey/api-key-stamper";
@@ -72,7 +71,7 @@ Set up instances of Bundler and Paymaster.
 ```typescript
 const bundler: IBundler = new Bundler({
   bundlerUrl: "", // get from biconomy dashboard https://dashboard.biconomy.io/
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
+  chainId: 80002, // or any supported chain of your choice
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -92,7 +91,7 @@ const connect = async () => {
     });
 
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
+      chainId: 80002,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

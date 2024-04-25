@@ -65,18 +65,18 @@ import {
   zeroAddress,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { polygonMumbai } from "viem/chains";
+import { polygonAmoy } from "viem/chains";
 import { createSmartAccountClient } from "@biconomy/account";
 
 const bundlerUrl =
-  "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"; // Found at https://dashboard.biconomy.io
+  "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44"; // Found at https://dashboard.biconomy.io
 
 export const createAccountAndMintNft = async () => {
   // ----- 1. Generate EOA from private key
   const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
   const client = createWalletClient({
     account,
-    chain: polygonMumbai,
+    chain: polygonAmoy,
     transport: http(),
   });
   const eoa = client.account.address;
@@ -109,7 +109,7 @@ SA Address 0x4dF23B78543F5c2F9CBCDF09956288B3e97bb9a4
 Smart accounts are designed with a pre-determined address known prior to deployment. Users transfer funds to this address and then the actual deployment transaction is internally batched with the first transaction that is done by that smart Account. Alternatively the paymaster could be used to sponsor this transaction.
 
 :::caution
-Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network, head over to the [Polygon Faucet](https://faucet.polygon.technology/), paste in your smart account address, and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
+Before continuing, now that we have our Smart Account address, we need to fund it with some test network tokens! Since we are using the Polygon Amoy network, head over to the [Polygon Faucet](https://faucet.polygon.technology/), paste in your smart account address, and get some test tokens! If you skip this step, you might run into the [AA21 didn't pay prefund error](/troubleshooting/commonerrors.md)! 💸
 :::
 
 Once you have tokens available, follow the next steps.
@@ -163,7 +163,7 @@ For instance, `transactionResponse.wait(5)` waits for 5 confirmations before ret
 
 Check out the long transaction details available now in your console! You just created and executed your first userOps using the Biconomy SDK. The entire Biconomy crew is sending you a big round of applause! 👏👏🏻👏🏼👏🏽👏🏾👏🏿
 
-You can also view the latest transaction events on the [Polygon Mumbai Testnet Explorer](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e#events).
+You can also view the latest transaction events on the [Polygon Amoy Testnet Explorer](https://www.oklink.com/amoy/address/0x7f1E823B31Eb982a8a3f3fC28acC932FFd57A6aa).
 
 <details>
   <summary>View Complete Code</summary>
@@ -178,7 +178,7 @@ import {
   zeroAddress,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { polygonMumbai } from "viem/chains";
+import { polygonAmoy } from "viem/chains";
 import { createSmartAccountClient } from "@biconomy/account";
 
 export const createAccountAndMintNft = async () => {
@@ -186,7 +186,7 @@ export const createAccountAndMintNft = async () => {
   const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
   const client = createWalletClient({
     account,
-    chain: polygonMumbai,
+    chain: polygonAmoy,
     transport: http(),
   });
   const eoa = client.account.address;
@@ -196,7 +196,7 @@ export const createAccountAndMintNft = async () => {
   const smartAccount = await createSmartAccountClient({
     signer: client,
     bundlerUrl:
-      "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+      "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
   });
   const saAddress = await smartAccount.getAccountAddress();
   console.log("SA Address", saAddress);

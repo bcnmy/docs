@@ -6,7 +6,7 @@ sidebar_position: 5
 # Create Session
 
 :::info
-In this instance we are not sponsoring the transaction please ensure that you send mumbai matic to your smart account to pay for gas. You can get matic at any polygon faucet. You will not be able to execute this code unless your smart account has some mumbai matic.
+In this instance we are not sponsoring the transaction please ensure that you send Amoy matic to your smart account to pay for gas. You can get matic at any polygon faucet. You will not be able to execute this code unless your smart account has some Amoy matic.
 :::
 
 Let's set up the component we need to create our session!

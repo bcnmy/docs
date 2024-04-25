@@ -12,7 +12,6 @@ following:
 ```js
 import "./App.css";
 import { useState, useEffect, useRef } from "react";
-import { ChainId } from "@biconomy/core-types";
 import { ethers } from "ethers";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import {
@@ -56,14 +55,14 @@ Now, let's setup our paymaster and bundler :
 ```js
 const bundler: IBundler = new Bundler({
     bundlerUrl:
-        "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-    chainId: ChainId.POLYGON_MUMBAI,
+        "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+    chainId: 80002,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
     paymasterUrl:
-        "https://paymaster.biconomy.io/api/v1/80001/[YOUR_API_KEY_HERE]",
+        "https://paymaster.biconomy.io/api/v1/80002/[YOUR_API_KEY_HERE]",
 });
 ```
 
@@ -100,7 +99,7 @@ const connect = async () => {
     });
     setLoading(true);
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
+      chainId: 80002,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

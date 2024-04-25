@@ -38,8 +38,8 @@ We now create an instance of the contract. Note that USDC does not have 18 decim
 
 ```typescript
 const tokenContract = new ethers.Contract(
-  // polygon mumbai usdc address
-  "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+  // polygon amoy usdc address
+  "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
   usdcAbi,
   provider,
 );
@@ -61,7 +61,7 @@ const { data } = await tokenContract.populateTransaction.transfer(
 );
 
 const tx1 = {
-  to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+  to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
   data: data,
   value: "0",
 };
@@ -120,8 +120,8 @@ let smartAccount: BiconomySmartAccountV2;
 let address: string;
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -129,11 +129,11 @@ console.log({ ep: DEFAULT_ENTRYPOINT_ADDRESS });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/HvwSf9p7Q.a898f606-37ed-48d7-b79a-cbe9b228ce43",
+    "https://paymaster.biconomy.io/api/v1/80002/HvwSf9p7Q.a898f606-37ed-48d7-b79a-cbe9b228ce43",
 });
 
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
@@ -143,7 +143,7 @@ async function createAccount() {
     moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
   });
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI,
+    chainId: 80002,
     bundler: bundler,
     paymaster: paymaster,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
@@ -187,8 +187,8 @@ const erc20Transfer = async (
     smartAccount = smartAccount.setActiveValidationModule(sessionModule);
 
     const tokenContract = new ethers.Contract(
-      // polygon mumbai usdc address
-      "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+      // polygon amoy usdc address
+      "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
       usdcAbi,
       provider,
     );
@@ -206,7 +206,7 @@ const erc20Transfer = async (
 
     // generate tx data to erc20 transfer
     const tx1 = {
-      to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+      to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
       data: data,
       value: "0",
     };
@@ -233,7 +233,7 @@ const erc20Transfer = async (
     console.log("userOpHash", userOpResponse);
     const { receipt } = await userOpResponse.wait(1);
     console.log("txHash", receipt.transactionHash);
-    const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`;
+    const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`;
   } catch (err: any) {
     console.error(err);
   }

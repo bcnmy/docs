@@ -56,14 +56,14 @@ Specify `PRIVATE_KEY`, `BUNDLER_URL`, and `RPC_URL` (for ethers) to create a sma
 ```typescript
 import { Hex, createWalletClient, http } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { polygonMumbai } from "viem/chains";
+import { polygonAmoy } from "viem/chains";
 import { createSmartAccountClient } from "@biconomy/account";
 
 // ----- 1. Generate EOA from private key
 const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
 const client = createWalletClient({
   account,
-  chain: polygonMumbai,
+  chain: polygonAmoy,
   transport: http(),
 });
 const eoa = client.account.address;
@@ -107,14 +107,14 @@ console.log("Smart Account Address", smartAccountAddress);
 
 ```typescript
 import { ethers } from "ethers";
-import { polygonMumbai } from "viem/chains";
+import { polygonAmoy } from "viem/chains";
 import { createSmartAccountClient } from "@biconomy/account";
 import { WalletClientSigner } from "@alchemy/aa-core";
 
 const account = privateKeyToAccount("0x" + "PRIVATE_KEY");
 const client = createWalletClient({
   account,
-  chain: polygonMumbai,
+  chain: polygonAmoy,
   transport: http(),
 });
 const alchemySigner = new WalletClientSigner(client, "json-rpc");

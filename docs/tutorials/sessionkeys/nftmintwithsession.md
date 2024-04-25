@@ -6,7 +6,7 @@ sidebar_position: 6
 # NFT Mint with ABI SVM
 
 :::info
-In this instance we are not sponsoring the transaction please ensure that you send mumbai matic to your smart account to pay for gas. You will not be able to execute this code unless your smart account has some mumbai matic and mumbai usdc.
+In this instance we are not sponsoring the transaction please ensure that you send Amoy matic to your smart account to pay for gas. You will not be able to execute this code unless your smart account has some Amoy matic and Amoy usdc.
 :::
 
 Now the final part of this tutorial. Executing a NFT mint using a session!
@@ -137,7 +137,7 @@ Let's create the function now to handle the transfer:
       console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
       console.log("txHash", receipt.transactionHash);
-      const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+      const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`
       toast.success(<a target="_blank" href={polygonScanlink}>Success Click to view transaction</a>, {
         position: "top-right",
         autoClose: 18000,
@@ -250,7 +250,7 @@ Now we build the user op and send it for execution. The sendTransaction method w
 console.log("userOpHash", userOpResponse);
 const { receipt } = await userOpResponse.wait(1);
 console.log("txHash", receipt.transactionHash);
-const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`;
+const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`;
 toast.success(
   <a target="_blank" href={polygonScanlink}>
     Success Click to view transaction
@@ -354,7 +354,7 @@ const NFTMint: React.FC<props> = ({ smartAccount, provider, address}) => {
       console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
       console.log("txHash", receipt.transactionHash);
-      const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+      const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`
       toast.success(<a target="_blank" href={polygonScanlink}>Success Click to view transaction</a>, {
         position: "top-right",
         autoClose: 18000,

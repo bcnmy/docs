@@ -81,8 +81,8 @@ import {useWallets} from '@privy-io/react-auth';
 const {wallets} = useWallets();
 const embeddedWallet = wallets.find((wallet) => (wallet.walletClientType === 'privy'));
 // Switch the embedded wallet to your target network
-// Replace '80001' with your desired chain ID.
-await embeddedWallet.switchChain(80001);
+// Replace '80002' with your desired chain ID.
+await embeddedWallet.switchChain(80002);
 
 ```
 

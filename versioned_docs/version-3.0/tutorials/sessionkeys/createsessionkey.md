@@ -6,7 +6,7 @@ sidebar_position: 5
 # Create Session
 
 :::info
-In this instance we are not sponsoring the transaction please ensure that you send mumbai matic to your smart account to pay for gas. You can get matic at any polygon faucet. Additionally you will need to send your smart account mumbai usdc from this contract address: 0xdA5289fCAAF71d52a80A254da614a192b693e977. You can swap mumbai matic for this token on Uniswap. You will not be able to execute this code unless your smart account has some mumbai matic and mumbai usdc.
+In this instance we are not sponsoring the transaction please ensure that you send amoy matic to your smart account to pay for gas. You can get matic at any polygon faucet. Additionally you will need to send your smart account amoy usdc from this contract address: 0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31. You can swap amoy matic for this token on Uniswap. You will not be able to execute this code unless your smart account has some amoy matic and amoy usdc.
 :::
 
 Let's set up the component we need to create our session!
@@ -153,7 +153,7 @@ Now let's set up the function for creating the session:
         ["address", "address", "address", "uint256"],
         [
           sessionKeyEOA,
-          "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
+          "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", // erc20 token address
           "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
           ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
         ]
@@ -243,14 +243,14 @@ const sessionKeyData = defaultAbiCoder.encode(
   ["address", "address", "address", "uint256"],
   [
     sessionKeyEOA,
-    "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
+    "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", // erc20 token address
     "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
     ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
   ],
 );
 ```
 
-Next we create the session key data - if you recall from the smart contract it needs four pieces of data - the session key address, the token address (in this case we are using USDC on Polygon Mumbai), specifying a reciever address that needs to be the one we send funds to, and specifying a maximum amount of funds we can send. In this case that is no more than 50 usdc.
+Next we create the session key data - if you recall from the smart contract it needs four pieces of data - the session key address, the token address (in this case we are using USDC on Polygon Amoy), specifying a reciever address that needs to be the one we send funds to, and specifying a maximum amount of funds we can send. In this case that is no more than 50 usdc.
 
 ```javascript
 const sessionTxData = await sessionModule.createSessionData([

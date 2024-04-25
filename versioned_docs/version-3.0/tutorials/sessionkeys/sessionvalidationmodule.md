@@ -17,7 +17,7 @@ At the core, a Session Validation Module is a smart contract designed to authent
 
 :::info
 **Key Functionality**: We'll dissect a deployed contract that validates permissions for ERC20 token transfers, enabling dApps to execute transactions without user signatures every time.
-Check the contract [here](https://mumbai.polygonscan.com/address/0x000000D50C68705bd6897B2d17c7de32FB519fDA#code).
+Check the contract [here](https://www.oklink.com/amoy/address/0x000000D50C68705bd6897B2d17c7de32FB519fDA#code).
 :::
 
 ## Breaking Down the Contract

@@ -7,7 +7,7 @@ sidebar_position: 5
 
 Transitioning to multichain opens up exciting possibilities.
 
-In this guide, we'll start from scratch to enable minting an NFT on multiple chains, specifically **Polygon Mumbai** and **Base test networks**, using just **one signature**.
+In this guide, we'll start from scratch to enable minting an NFT on multiple chains, specifically **Polygon Amoy** and **Base test networks**, using just **one signature**.
 
 :::info Supported Chains
 Find all supported chains [here](https://docs.biconomy.io/supportedchains/). Our NFT contract has the same address on both Polygon and Base (0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
@@ -22,7 +22,6 @@ Begin by importing the necessary modules for blockchain interaction and configur
 ```typescript
 import { config } from "dotenv";
 import { IBundler, Bundler } from "@biconomy/bundler";
-import { ChainId } from "@biconomy/core-types";
 import {
   BiconomySmartAccountV2,
   DEFAULT_ENTRYPOINT_ADDRESS,
@@ -47,34 +46,34 @@ Establish your Ethereum provider and wallet for interacting with the blockchain.
 ```typescript
 config();
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
 
 ### Configuring Bundler and Paymaster for Networks
 
-Configure the Bundler and Paymaster for both Polygon Mumbai and Base Goerli Testnet.
+Configure the Bundler and Paymaster for both Polygon Amoy and Base Goerli Testnet.
 
 ```typescript
-// Configure the Bundler and Paymaster for Polygon Mumbai network
-const mumbaiBundler: IBundler = new Bundler({
+// Configure the Bundler and Paymaster for Polygon Amoy network
+const amoyBundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
-const mumbaiPaymaster: IPaymaster = new BiconomyPaymaster({
+const amoyPaymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+    "https://paymaster.biconomy.io/api/v1/80002/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 // Configure the Bundler and Paymaster for Base Goerli Testnet
 const baseBundler = new Bundler({
   bundlerUrl:
     "https://bundler.biconomy.io/api/v2/84531/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.BASE_GOERLI_TESTNET,
+  chainId: 84531,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -101,7 +100,7 @@ async function createModule() {
 
 ### Smart Account Creation for Both Networks
 
-Generate Smart Accounts for Polygon Mumbai and Base Goerli Testnet using the Multichain Module.
+Generate Smart Accounts for Polygon Amoy and Base Goerli Testnet using the Multichain Module.
 
 ```typescript
 // Function to create a smart account using the specified chain ID, bundler, and paymaster
@@ -140,13 +139,13 @@ The `mintNFT` function is the core of our multi-chain NFT minting process. Let's
 First, we create smart accounts for both networks. Each account is configured with its respective chain ID, bundler, and paymaster.
 
 ```typescript
-const mumbaiSmartAccount = await createSmartAccount(
-  ChainId.POLYGON_MUMBAI,
-  mumbaiBundler,
-  mumbaiPaymaster,
+const amoySmartAccount = await createSmartAccount(
+  80002,
+  amoyBundler,
+  amoyPaymaster,
 );
 const baseSmartAccount = await createSmartAccount(
-  ChainId.BASE_GOERLI_TESTNET,
+  84531,
   baseBundler,
   basePaymaster,
 );
@@ -170,7 +169,7 @@ const data = nftInterface.encodeFunctionData("safeMint", [
 For each network, we build a user operation (UserOp) for the minting transaction. These operations will later be signed and executed.
 
 ```typescript
-let partialUserOp = await mumbaiSmartAccount.buildUserOp(
+let partialUserOp = await amoySmartAccount.buildUserOp(
   [{ to: nftAddress, data }],
   { paymasterServiceData: { mode: PaymasterMode.SPONSORED } },
 );
@@ -186,8 +185,8 @@ Using the Multichain Module, we sign the operations for both networks. This step
 
 ```typescript
 const resolvedOps = await(await createModule()).signUserOps([
-  { userOp: partialUserOp, chainId: ChainId.POLYGON_MUMBAI },
-  { userOp: partialUserOp2, chainId: ChainId.BASE_GOERLI_TESTNET },
+  { userOp: partialUserOp, chainId: 80002 },
+  { userOp: partialUserOp2, chainId: 84531 },
 ]);
 ```
 
@@ -197,7 +196,7 @@ Finally, we execute the signed operations on each network. The function waits fo
 
 ```typescript
 try {
-  const userOpResponse1 = await mumbaiSmartAccount.sendSignedUserOp(
+  const userOpResponse1 = await amoySmartAccount.sendSignedUserOp(
     resolvedOps[0],
   );
   const userOpResponse2 = await baseSmartAccount.sendSignedUserOp(
@@ -207,7 +206,7 @@ try {
   const transactionDetails1 = await userOpResponse1.wait();
   const transactionDetails2 = await userOpResponse2.wait();
   console.log(
-    "Polygon Mumbai Transaction: https://mumbai.polygonscan.com/tx/" +
+    "Polygon Amoy Transaction: https://www.oklink.com/amoy/tx" +
       transactionDetails1.receipt.transactionHash,
   );
   console.log(
@@ -232,14 +231,14 @@ mintNFT();
 
 ```typescript
 async function mintNFT() {
-  // Create smart accounts for both Polygon Mumbai and Base Goerli networks
-  const mumbaiSmartAccount = await createSmartAccount(
-    ChainId.POLYGON_MUMBAI,
-    mumbaiBundler,
-    mumbaiPaymaster,
+  // Create smart accounts for both Polygon Amoy and Base Goerli networks
+  const amoySmartAccount = await createSmartAccount(
+    80002,
+    amoyBundler,
+    amoyPaymaster,
   );
   const baseSmartAccount = await createSmartAccount(
-    ChainId.BASE_GOERLI_TESTNET,
+    84531,
     baseBundler,
     basePaymaster,
   );
@@ -253,8 +252,8 @@ async function mintNFT() {
   ]);
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 
-  // Build user operations for the Polygon Mumbai network
-  let partialUserOp = await mumbaiSmartAccount.buildUserOp(
+  // Build user operations for the Polygon Amoy network
+  let partialUserOp = await amoySmartAccount.buildUserOp(
     [{ to: nftAddress, data }],
     {
       paymasterServiceData: { mode: PaymasterMode.SPONSORED },
@@ -273,13 +272,13 @@ async function mintNFT() {
   const resolvedOps = await (
     await createModule()
   ).signUserOps([
-    { userOp: partialUserOp, chainId: ChainId.POLYGON_MUMBAI },
-    { userOp: partialUserOp2, chainId: ChainId.BASE_GOERLI_TESTNET },
+    { userOp: partialUserOp, chainId: 80002 },
+    { userOp: partialUserOp2, chainId: 84531 },
   ]);
 
   // Execute the operations on both networks and log the transaction details
   try {
-    const userOpResponse1 = await mumbaiSmartAccount.sendSignedUserOp(
+    const userOpResponse1 = await amoySmartAccount.sendSignedUserOp(
       resolvedOps[0],
     );
     const userOpResponse2 = await baseSmartAccount.sendSignedUserOp(
@@ -289,7 +288,7 @@ async function mintNFT() {
     const transactionDetails1 = await userOpResponse1.wait();
     const transactionDetails2 = await userOpResponse2.wait();
     console.log(
-      "Polygon Mumbai Transaction: https://mumbai.polygonscan.com/tx/" +
+      "Polygon Amoy Transaction: https://www.oklink.com/amoy/tx/" +
         transactionDetails1.receipt.transactionHash,
     );
     console.log(
@@ -316,7 +315,6 @@ Through this setup, you've unlocked the potential to mint NFTs across multiple b
 ```typescript
 import { config } from "dotenv";
 import { IBundler, Bundler } from "@biconomy/bundler";
-import { ChainId } from "@biconomy/core-types";
 import {
   BiconomySmartAccountV2,
   DEFAULT_ENTRYPOINT_ADDRESS,
@@ -335,28 +333,28 @@ import {
 
 config();
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY || "", provider);
 
-// Configure the Bundler and Paymaster for Polygon Mumbai network
-const mumbaiBundler: IBundler = new Bundler({
+// Configure the Bundler and Paymaster for Polygon Amoy network
+const amoyBundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
-const mumbaiPaymaster: IPaymaster = new BiconomyPaymaster({
+const amoyPaymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+    "https://paymaster.biconomy.io/api/v1/80002/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 // Configure the Bundler and Paymaster for Base Goerli Testnet
 const baseBundler = new Bundler({
   bundlerUrl:
     "https://bundler.biconomy.io/api/v2/84531/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.BASE_GOERLI_TESTNET,
+  chainId: 84531,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -395,14 +393,14 @@ async function createSmartAccount(
 }
 
 async function mintNFT() {
-  // Create smart accounts for both Polygon Mumbai and Base Goerli networks
-  const mumbaiSmartAccount = await createSmartAccount(
-    ChainId.POLYGON_MUMBAI,
-    mumbaiBundler,
-    mumbaiPaymaster,
+  // Create smart accounts for both Polygon Amoy and Base Goerli networks
+  const amoySmartAccount = await createSmartAccount(
+    80002,
+    amoyBundler,
+    amoyPaymaster,
   );
   const baseSmartAccount = await createSmartAccount(
-    ChainId.BASE_GOERLI_TESTNET,
+    84531,
     baseBundler,
     basePaymaster,
   );
@@ -416,8 +414,8 @@ async function mintNFT() {
   ]);
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 
-  // Build user operations for the Polygon Mumbai network
-  let partialUserOp = await mumbaiSmartAccount.buildUserOp(
+  // Build user operations for the Polygon Amoy network
+  let partialUserOp = await amoySmartAccount.buildUserOp(
     [{ to: nftAddress, data }],
     {
       paymasterServiceData: { mode: PaymasterMode.SPONSORED },
@@ -436,13 +434,13 @@ async function mintNFT() {
   const resolvedOps = await (
     await createModule()
   ).signUserOps([
-    { userOp: partialUserOp, chainId: ChainId.POLYGON_MUMBAI },
-    { userOp: partialUserOp2, chainId: ChainId.BASE_GOERLI_TESTNET },
+    { userOp: partialUserOp, chainId: 80002 },
+    { userOp: partialUserOp2, chainId: 84531 },
   ]);
 
   // Execute the operations on both networks and log the transaction details
   try {
-    const userOpResponse1 = await mumbaiSmartAccount.sendSignedUserOp(
+    const userOpResponse1 = await amoySmartAccount.sendSignedUserOp(
       resolvedOps[0],
     );
     const userOpResponse2 = await baseSmartAccount.sendSignedUserOp(
@@ -452,7 +450,7 @@ async function mintNFT() {
     const transactionDetails1 = await userOpResponse1.wait();
     const transactionDetails2 = await userOpResponse2.wait();
     console.log(
-      "Polygon Mumbai Transaction: https://mumbai.polygonscan.com/tx/" +
+      "Polygon Amoy Transaction: https://www.oklink.com/amoy/tx/" +
         transactionDetails1.receipt.transactionHash,
     );
     console.log(

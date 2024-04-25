@@ -75,8 +75,8 @@ Lets also set up an instance of the Bundler and Paymaster:
 
   const bundler: IBundler = new Bundler({
     //https://dashboard.biconomy.io/ get future bundler urls from your dashboard
-    bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-    chainId: ChainId.POLYGON_MUMBAI,
+    bundlerUrl: "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+    chainId: 80002,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
 
@@ -84,7 +84,7 @@ Lets also set up an instance of the Bundler and Paymaster:
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
     //https://dashboard.biconomy.io/ get future paymaster urls from your dashboard
-    paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/bN77UefF7.145fff89-e5e1-40ec-be11-7549878eb08f"
+    paymasterUrl: "https://paymaster.biconomy.io/api/v1/80002/bN77UefF7.145fff89-e5e1-40ec-be11-7549878eb08f"
   })
 
 ```
@@ -112,7 +112,7 @@ const connect = async () => {
     });
     setProvider(provider);
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
+      chainId: 80002,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
@@ -182,8 +182,8 @@ export default function Home() {
 
   const bundler: IBundler = new Bundler({
     //https://dashboard.biconomy.io/
-    bundlerUrl: "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-    chainId: ChainId.POLYGON_MUMBAI,
+    bundlerUrl: "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+    chainId: 80002,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
 
@@ -191,7 +191,7 @@ export default function Home() {
 
   const paymaster: IPaymaster = new BiconomyPaymaster({
     //https://dashboard.biconomy.io/
-    paymasterUrl: "https://paymaster.biconomy.io/api/v1/80001/bN77UefF7.145fff89-e5e1-40ec-be11-7549878eb08f"
+    paymasterUrl: "https://paymaster.biconomy.io/api/v1/80002/bN77UefF7.145fff89-e5e1-40ec-be11-7549878eb08f"
   })
 
   const connect = async () => {
@@ -208,7 +208,7 @@ export default function Home() {
       })
       setProvider(provider)
       let biconomySmartAccount = await BiconomySmartAccountV2.create({
-        chainId: ChainId.POLYGON_MUMBAI,
+        chainId: 80002,
         bundler: bundler,
         paymaster: paymaster,
         entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

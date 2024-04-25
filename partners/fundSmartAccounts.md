@@ -45,7 +45,7 @@ let eoaAddress = signer.address;
 
 let aarcSDK = new Migrator({
   rpcUrl: "YOUR_RPC_URL",
-  chainId: 80001,
+  chainId: 80002,
   apiKey: "YOUR_AARC_API_KEY",
 });
 ```

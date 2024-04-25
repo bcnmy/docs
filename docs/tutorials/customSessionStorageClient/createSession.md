@@ -12,7 +12,7 @@ As described in the last section, an off-chain storage solution is essential for
 [Initializing Account](initializeaccount)
 :::
 
-This tutorial will be done on the Polygon Mumbai Network. We will be using session Module for this.
+This tutorial will be done on the Polygon Amoy Network. We will be using session Module for this.
 
 We will import sessionKeyManagerModule and DEFAULT_SESSION_KEY_MANAGER_MODULE from Biconomy Modules package.
 
@@ -52,7 +52,7 @@ const sessionKeyData = defaultAbiCoder.encode(
   ["address", "address", "address", "uint256"],
   [
     sessionKeyEOA,
-    "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
+    "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", // erc20 token address
     "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
     ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
   ],
@@ -138,7 +138,7 @@ let address: string;
 config();
 
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
@@ -187,7 +187,7 @@ const createSession = async () => {
       ["address", "address", "address", "uint256"],
       [
         sessionKeyEOA,
-        "0xdA5289fCAAF71d52a80A254da614a192b693e977", // erc20 token address
+        "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", // erc20 token address
         "0x322Af0da66D00be980C7aa006377FCaaEee3BDFD", // receiver address
         ethers.utils.parseUnits("50".toString(), 6).toHexString(), // 50 usdc amount
       ],

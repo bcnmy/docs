@@ -77,7 +77,6 @@ Let’s import our bundler package, and providers from the ethers package:
 import { IBundler, Bundler } from "@biconomy/bundler";
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account";
 import { providers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
 ```
 
 IBundler is the typing for the Bundler class that we will create a new instance of.
@@ -87,15 +86,15 @@ IBundler is the typing for the Bundler class that we will create a new instance 
 ```typescript
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 ```
 
 - Now we create an instance of our bundler with the following:
   - a bundler url which you can retrieve from the Biconomy Dashboard
-  - chain ID, in this case we’re using Polygon Mumbai
+  - chain ID, in this case we’re using Polygon Amoy
   - and default entry point address imported from the account package
 
 ```typescript
@@ -111,7 +110,7 @@ Update your import from the account package to also include BiconomySmartAccount
 
 ```typescript
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 ```
@@ -124,7 +123,7 @@ We now need an object that will hold the configuration values for our Smart Acco
 ```typescript
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
+  chainId: 80002,
   bundler: bundler,
 };
 ```
@@ -132,7 +131,7 @@ const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
 Here we’re using the `BiconomySmartAccountConfig` typing to help us structure the needed values in our configuration.
 
 - `signer`: we pass the instance of our wallet
-- `chainId`: we pass Polygon Mumbai or any supported chain you want to test with
+- `chainId`: we pass Polygon Amoy or any supported chain you want to test with
 - `bundler`: the instance of our bundler
 
 ```typescript
@@ -156,7 +155,7 @@ We then await the initialization of the account and log out two values to out te
 Smart accounts are counterfactual in nature. We know their address before they are even deployed. In this instance we won’t immediately deploy it, it will automatically be deployed on the first transaction it initiates and the gas needed for deployment will be added to that first transaction.
 :::
 
-Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Mumbai network head over to the [Polygon Fuacet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens!
+Before continuing, now that we have our smart account address we need to fund it with some test network tokens! Since we are using the Polygon Amoy network head over to the [Polygon Fuacet](https://faucet.polygon.technology/) and paste in your smart account address and get some test tokens!
 
 Once you have tokens available it is time to start constructing our first userOps for a native transfer.
 
@@ -206,21 +205,20 @@ Check out the long transaction details available now in your console! You just c
 ```typescript
 import { config } from "dotenv"
 import { IBundler, Bundler } from '@biconomy/bundler'
-import { ChainId } from "@biconomy/core-types";
 import { BiconomySmartAccount, BiconomySmartAccountConfig, DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/account"
 import { Wallet, providers, ethers } from 'ethers'
 
 config()
-const provider = new providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai")
+const provider = new providers.JsonRpcProvider("https://rpc-amoy.polygon.technology/")
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 const bundler: IBundler = new Bundler({
-    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44,
-    chainId: ChainId.POLYGON_MUMBAI,
+    bundlerUrl: 'https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44,
+    chainId: 80002,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
   })
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
+  chainId: 80002,
   bundler: bundler
 }
 async function createAccount() {

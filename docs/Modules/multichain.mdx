@@ -220,8 +220,8 @@ let partialUserOp2 = await polygonAccount.buildUserOp([transaction], {
 
 // Use multichain module to sign once for all ops
 const returnedOps = await multiChainModule.signUserOps([
-  { userOp: partialUserOp1, chainId: ChainId.BASE_GOERLI_TESTNET },
-  { userOp: partialUserOp2, chainId: ChainId.POLYGON_MUMBAI },
+  { userOp: partialUserOp1, chainId: 84531 },
+  { userOp: partialUserOp2, chainId: 80002 },
 ]);
 
 const userOpResponse1 = await baseAccount.sendSignedUserOp(

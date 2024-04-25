@@ -16,10 +16,10 @@ This tutorial demonstrates how to use the Biconomy Smart Account to perform a tr
 - Node.js installed on your machine
 - A Biconomy API key and Bundler url, get from [dashboard](https://dashboard.biconomy.io/)
 
-For this tutorial we are going to mint and NFT on Mumbai, this means we can use the following:
+For this tutorial we are going to mint and NFT on Amoy, this means we can use the following:
 
-- bundlerUrl --> https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
-- preferred ERC20 token for gas payment --> 0xda5289fcaaf71d52a80a254da614a192b693e977 (USDC)
+- bundlerUrl --> https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
+- preferred ERC20 token for gas payment --> 0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31 (USDC)
 - nft address --> 0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e
 
 ### Step 1: Create Biconomy Smart Account and Encode Function Call
@@ -62,7 +62,7 @@ Pay the gas in your preferred token.
 const { wait } = await smartWallet.sendTransaction(transaction, {
   paymasterServiceData: {
     mode: PaymasterMode.ERC20,
-    preferredToken: "0xda5289fcaaf71d52a80a254da614a192b693e977",
+    preferredToken: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
   },
 });
 
