@@ -12,7 +12,7 @@ To sign the userOp, first calculate the userOpHash and then sign it using the sa
 Below code uses ECDSA validation module to sign the userOp.
 
 ```ts
-let provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/polygon_mumbai" );
+let provider = new ethers.providers.JsonRpcProvider("https://rpc-amoy.polygon.technology/");
 
 let signer = new ethers.Wallet("private key", provider);
 
@@ -38,7 +38,7 @@ function getUserOpHash(useOpMinusSignature: any) {
       
       const enc = ethers.utils.defaultAbiCoder.encode(
         ["bytes32", "address", "uint256"],
-        [ethers.utils.keccak256(packedData), "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789", 80001]
+        [ethers.utils.keccak256(packedData), "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789", 80002]
       );
       
       const userOpHash = ethers.utils.keccak256(enc);

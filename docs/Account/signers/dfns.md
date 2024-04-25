@@ -59,7 +59,7 @@ const initDfnsWallet = (walletId: string, provider: JsonRpcProvider) => {
   }).connect(provider);
 };
 
-const mumbaiWallet = initDfnsWallet(process.env.POLYGON_WALLET_ID!, provider);
+const amoyWallet = initDfnsWallet(process.env.POLYGON_WALLET_ID!, provider);
 ```
 
 Remember to get your API keys from the DFNS dashboard and follow their [getting started](https://docs.dfns.co/dfns-docs/getting-started/gettingstarted) guides for this part of the process.
@@ -69,7 +69,7 @@ Remember to get your API keys from the DFNS dashboard and follow their [getting 
 ```typescript
 const createAccount = async (): Promise<BiconomySmartAccountV2> =>
   createSmartAccountClient({
-    signer: mumbaiWallet as LightSigner,
+    signer: amoyWallet as LightSigner,
     bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
     biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
     rpcUrl: "" // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient

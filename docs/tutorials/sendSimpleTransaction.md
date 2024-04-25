@@ -14,8 +14,8 @@ This tutorial demonstrates how to send a simple transaction using ethers.js/viem
 ### Prerequisites
 
 - Node.js installed on your machine
-- A Bundler url if you don't want to use the testnet one (for mumbai you can use https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44)
-- An rpc url (for mumbai can use https://rpc.ankr.com/polygon_mumbai)
+- A Bundler url if you don't want to use the testnet one (for Amoy you can use https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44)
+- An rpc url (for Amoy can use https://rpc-amoy.polygon.technology/)
 - An address to send the transaction to (replace `0xaddress`)
 
 ### Step 1: Generate the config and Create Biconomy Smart Account
@@ -26,7 +26,7 @@ This tutorial demonstrates how to send a simple transaction using ethers.js/viem
 ```typescript
 import { createWalletClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { polygonMumbai } from "viem/chains";
+import { polygonAmoy } from "viem/chains";
 import { createSmartAccountClient } from "@biconomy/account";
 
 // Your configuration with private key and Biconomy API key
@@ -39,7 +39,7 @@ const config = {
 const account = privateKeyToAccount("0x" + config.privateKey);
 const signer = createWalletClient({
   account,
-  chain: polygonMumbai,
+  chain: polygonAmoy,
   transport: http(),
 });
 

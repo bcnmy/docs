@@ -17,7 +17,7 @@ At the core, an ABI Session Validation Module is a smart contract designed to au
 
 :::info
 **Key Functionality**: We'll dissect a deployed contract that validates permissions any type of smart contract logic, enabling dApps to execute transactions without user signatures every time.
-Check the contract [here](https://mumbai.polygonscan.com/address/0x000006bC2eCdAe38113929293d241Cf252D91861#code).
+Check the contract [here](https://www.oklink.com/amoy/address/0x000006bC2eCdAe38113929293d241Cf252D91861#code).
 :::
 
 ## Breaking Down the Contract
