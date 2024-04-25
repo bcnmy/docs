@@ -109,8 +109,8 @@ Let's create the function now to handle the transfer:
       smartAccount = smartAccount.setActiveValidationModule(sessionRouterModule);
 
       const tokenContract = new ethers.Contract(
-        // polygon mumbai usdc address
-        "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+        // polygon amoy usdc address
+        "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
         usdcAbi,
         provider
       );
@@ -134,14 +134,14 @@ Let's create the function now to handle the transfer:
 
       // generate tx data to first erc20 transfer
       const tx1 = {
-        to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+        to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
         data: data1,
         value: "0",
       };
 
       // generate tx data to second erc20 transfer
       const tx2 = {
-        to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+        to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
         data: data2,
         value: "0",
       };
@@ -165,7 +165,7 @@ Let's create the function now to handle the transfer:
       console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
       console.log("txHash", receipt.transactionHash);
-      const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+      const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`
       toast.success(<a target="_blank" href={polygonScanlink}>Success Click to view transaction</a>, {
         position: "top-right",
         autoClose: 18000,
@@ -256,8 +256,8 @@ const BatchERC20Transfer: React.FC<props> = ({ smartAccount, provider, address})
     smartAccount = smartAccount.setActiveValidationModule(sessionRouterModule);
 
     const tokenContract = new ethers.Contract(
-      // polygon mumbai usdc address
-      "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+      // polygon amoy usdc address
+      "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
       usdcAbi,
       provider
     );
@@ -281,14 +281,14 @@ const BatchERC20Transfer: React.FC<props> = ({ smartAccount, provider, address})
 
     // generate tx data to first erc20 transfer
     const tx1 = {
-      to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+      to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
       data: data1,
       value: "0",
     };
 
     // generate tx data to second erc20 transfer
     const tx2 = {
-      to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+      to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
       data: data2,
       value: "0",
     };
@@ -312,7 +312,7 @@ const BatchERC20Transfer: React.FC<props> = ({ smartAccount, provider, address})
     console.log("userOpHash", userOpResponse);
     const { receipt } = await userOpResponse.wait(1);
     console.log("txHash", receipt.transactionHash);
-    const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+    const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`
     toast.success(<a target="_blank" href={polygonScanlink}>Success Click to view transaction</a>, {
       position: "top-right",
       autoClose: 18000,

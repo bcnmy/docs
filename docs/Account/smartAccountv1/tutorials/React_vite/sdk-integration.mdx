@@ -14,7 +14,6 @@ import "./App.css";
 import "@Biconomy/web3-auth/dist/src/style.css";
 import { useState, useEffect, useRef } from "react";
 import SocialLogin from "@biconomy/web3-auth";
-import { ChainId } from "@biconomy/core-types";
 import { ethers } from "ethers";
 import { IBundler, Bundler } from "@biconomy/bundler";
 import {
@@ -35,8 +34,6 @@ Here is information about the rest of the imports:
   and lifecycle.
 - `SocialLogin` from `@biconomy/web3-auth`: A class from Biconomy SDK that
   allows you to leverage Web3Auth for social logins.
-- ChainId from `@biconomy/core-types`: An enumeration of supported blockchain
-  networks.
 - `ethers`: A library for interacting with Ethereum.
 - `Ibundler`and `bundler` will take UserOperations included in a mempool and
   and handle sending them to an entry point contract to be executed as a
@@ -52,14 +49,14 @@ Now, let's setup our paymaster and bundler :
 ```js
 const bundler: IBundler = new Bundler({
     bundlerUrl:
-        "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-    chainId: ChainId.POLYGON_MUMBAI,
+        "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+    chainId: 80002,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
     paymasterUrl:
-        "https://paymaster.biconomy.io/api/v1/80001/[YOUR_API_KEY_HERE]",
+        "https://paymaster.biconomy.io/api/v1/80002/[YOUR_API_KEY_HERE]",
 });
 ```
 
@@ -113,7 +110,7 @@ async function login() {
       "http://127.0.0.1:5173/",
     );
     await socialLoginSDK.init({
-      chainId: ethers.utils.hexValue(ChainId.POLYGON_MUMBAI).toString(),
+      chainId: ethers.utils.hexValue(0x13882).toString(),
       network: "testnet",
       whitelistUrls: {
         "http://127.0.0.1:5173/": signature1,
@@ -137,7 +134,7 @@ the application. Here's a step-by-step explanation:
    (which is a reference to the Biconomy SDK instance) is null. If it is, it
    means that the SDK is not yet initialized. In this case, it creates a new
    instance of `SocialLogin` (a Biconomy SDK component), whitelists a local URL
-   (`http://127.0.0.1:5173/`), and initializes the SDK with the Polygon Mumbai
+   (`http://127.0.0.1:5173/`), and initializes the SDK with the Polygon Amoy
    testnet configuration and the whitelisted URL. After initialization, it
    assigns the SDK instance to sdkRef.current.
 2. **Provider Check**: After ensuring the SDK is initialized, the function
@@ -180,7 +177,7 @@ async function setupSmartAccount() {
     try {
         const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
             signer: web3Provider.getSigner(),
-            chainId: ChainId.POLYGON_MUMBAI,
+            chainId: 80002,
             bundler: bundler,
             paymaster: paymaster,
         };
@@ -243,9 +240,9 @@ step-by-step explanation of what it does:
    configuration includes the following properties:
 
 - `signer:` The signer (wallet) associated with the web3Provider.
-- `chainId:` The chain ID, which is set to ChainId.POLYGON_MUMBAI. This
+- `chainId:` The chain ID, which is set to 80002. This
   specifies the blockchain network where the BiconomySmartAccount is being
-  used (Polygon Mumbai, in this case).
+  used (Polygon Amoy, in this case).
 - `bundler:` The bundler used for optimizing and bundling smart contracts. It
   is expected that the bundler variable is defined elsewhere in the code.
 - `paymaster:` The paymaster used for handling payment processing. It is

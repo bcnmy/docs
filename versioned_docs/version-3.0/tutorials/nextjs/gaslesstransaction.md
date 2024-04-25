@@ -356,7 +356,7 @@ const connect = async () => {
     })
 
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
+      chainId: 80002,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

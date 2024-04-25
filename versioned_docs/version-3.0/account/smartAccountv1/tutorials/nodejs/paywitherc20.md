@@ -10,13 +10,13 @@ to switch from minting an NFT with no gas costs for the user, to instead minting
 the NFT and using USDC to pay for the gas costs.
 
 For this tutorial you will need some test USDC tokens. You can use
-[Uniswap](https://app.uniswap.org/#/swap) while connected to the Polygon Mumbai
+[Uniswap](https://app.uniswap.org/#/swap) while connected to the Polygon Amoy
 network in your EOA to swap test Matic for USDC POS tokens which are one of the
 supported tokens on test nets for our SDK. You can get additional test matic at
 the [polygon faucet](https://faucet.polygon.technology/).
 
-:::info Make sure to swap for Polygon Mumbai USDC test tokens at this address:
-0xda5289fcaaf71d52a80a254da614a192b693e977 on
+:::info Make sure to swap for Polygon Amoy USDC test tokens at this address:
+0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31 on
 [Uniswap](https://app.uniswap.org/#/swap).
 
 <details>
@@ -44,8 +44,8 @@ config();
 
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -53,17 +53,17 @@ console.log({ ep: DEFAULT_ENTRYPOINT_ADDRESS });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+    "https://paymaster.biconomy.io/api/v1/80002/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
+  chainId: 80002,
   bundler: bundler,
   paymaster: paymaster,
 };
@@ -126,7 +126,7 @@ async function mintNFT() {
     const userOpResponse = await smartAccount.sendUserOp(partialUserOp);
     const transactionDetails = await userOpResponse.wait();
     console.log(
-      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+      `transactionDetails: https://www.oklink.com/amoy/tx/${transactionDetails.receipt.transactionHash}`,
     );
     console.log(
       `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
@@ -157,7 +157,7 @@ async function mintNFT() {
   const data = nftInterface.encodeFunctionData("safeMint", [address]);
 
   const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-  0xda5289fcaaf71d52a80a254da614a192b693e977;
+  0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31;
 
   const transaction = {
     to: nftAddress,
@@ -194,13 +194,13 @@ const feeQuotesResponse = await biconomyPaymaster.getPaymasterFeeQuotesOrData(
   partialUserOp,
   {
     mode: PaymasterMode.ERC20,
-    tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+    tokenList: ["0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31"],
   },
 );
 ```
 
 For the Paymaster Mode we are using `ERC20` instead of `SPONSORED` and passing a
-token list with the USDC token address on mumbai. Note that if you pass an empty
+token list with the USDC token address on amoy. Note that if you pass an empty
 array you will recieve an array of all supported ERC20 tokens.
 
 ```typescript
@@ -256,7 +256,7 @@ try {
   const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
   const transactionDetails = await userOpResponse.wait();
   console.log(
-    `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.logs[0].transactionHash}`,
+    `transactionDetails: https://www.oklink.com/amoy/tx/${transactionDetails.logs[0].transactionHash}`,
   );
   console.log(
     `view minted nfts for smart account: https://testnets.opensea.io/${address}`,
@@ -292,8 +292,8 @@ config();
 
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
+  chainId: 80002,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -301,17 +301,17 @@ console.log({ ep: DEFAULT_ENTRYPOINT_ADDRESS });
 
 const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
+    "https://paymaster.biconomy.io/api/v1/80002/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a",
 });
 
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 );
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider);
 
 const biconomySmartAccountConfig: BiconomySmartAccountConfig = {
   signer: wallet,
-  chainId: ChainId.POLYGON_MUMBAI,
+  chainId: 80002,
   bundler: bundler,
   paymaster: paymaster,
 };
@@ -357,7 +357,7 @@ async function mintNFT() {
     partialUserOp,
     {
       mode: PaymasterMode.ERC20,
-      tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+      tokenList: ["0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31"],
     },
   );
 
@@ -391,7 +391,7 @@ async function mintNFT() {
     const userOpResponse = await smartAccount.sendUserOp(finalUserOp);
     const transactionDetails = await userOpResponse.wait();
     console.log(
-      `transactionDetails: https://mumbai.polygonscan.com/tx/${transactionDetails.logs[0].transactionHash}`,
+      `transactionDetails: https://www.oklink.com/amoy/tx/${transactionDetails.logs[0].transactionHash}`,
     );
     console.log(
       `view minted nfts for smart account: https://testnets.opensea.io/${address}`,

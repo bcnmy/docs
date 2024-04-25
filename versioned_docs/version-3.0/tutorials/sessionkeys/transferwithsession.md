@@ -6,7 +6,7 @@ sidebar_position: 6
 # Transfer ERC20 With Session
 
 :::info
-In this instance we are not sponsoring the transaction please ensure that you send mumbai matic to your smart account to pay for gas. You can get matic at any polygon faucet. Additionally you will need to send your smart account mumbai usdc from this contract address: 0xdA5289fCAAF71d52a80A254da614a192b693e977. You can swap mumbai matic for this token on Uniswap. You will not be able to execute this code unless your smart account has some mumbai matic and mumbai usdc.
+In this instance we are not sponsoring the transaction please ensure that you send amoy matic to your smart account to pay for gas. You can get matic at any polygon faucet. Additionally you will need to send your smart account amoy usdc from this contract address: 0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31. You can swap amoy matic for this token on Uniswap. You will not be able to execute this code unless your smart account has some amoy matic and amoy usdc.
 :::
 
 Now the final part of this tutorial. Executing a transfer using a session!
@@ -107,8 +107,8 @@ Let's create the function now to handle the transfer:
       smartAccount = smartAccount.setActiveValidationModule(sessionModule);
 
       const tokenContract = new ethers.Contract(
-        // polygon mumbai usdc address
-        "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+        // polygon amoy usdc address
+        "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
         usdcAbi,
         provider
       );
@@ -127,7 +127,7 @@ Let's create the function now to handle the transfer:
 
       // generate tx data to erc20 transfer
       const tx1 = {
-        to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+        to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
         data: data,
         value: "0",
       };
@@ -155,7 +155,7 @@ Let's create the function now to handle the transfer:
       console.log("userOpHash", userOpResponse);
       const { receipt } = await userOpResponse.wait(1);
       console.log("txHash", receipt.transactionHash);
-      const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`
+      const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`
       toast.success(<a target="_blank" href={polygonScanlink}>Success Click to view transaction</a>, {
         position: "top-right",
         autoClose: 18000,
@@ -229,8 +229,8 @@ Now we'll generate a session module using the Session Key Manager Module and the
 
 ```javascript
 const tokenContract = new ethers.Contract(
-  // polygon mumbai usdc address
-  "0xdA5289fCAAF71d52a80A254da614a192b693e977",
+  // polygon amoy usdc address
+  "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31",
   usdcAbi,
   provider
 );
@@ -257,7 +257,7 @@ Now we will get raw transaction data for a transfer of 1 usdc to the receiver ad
 ```javascript
 // generate tx data to erc20 transfer
 const tx1 = {
-  to: "0xdA5289fCAAF71d52a80A254da614a192b693e977", //erc20 token address
+  to: "0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31", //erc20 token address
   data: data,
   value: "0",
 };
@@ -289,7 +289,7 @@ Now we build the user op and send it for execution. Note the additional argument
 console.log("userOpHash", userOpResponse);
 const { receipt } = await userOpResponse.wait(1);
 console.log("txHash", receipt.transactionHash);
-const polygonScanlink = `https://mumbai.polygonscan.com/tx/${receipt.transactionHash}`;
+const polygonScanlink = `https://www.oklink.com/amoy/tx/${receipt.transactionHash}`;
 toast.success(
   <a target="_blank" href={polygonScanlink}>
     Success Click to view transaction

@@ -14,7 +14,7 @@ This section showcases two ways you can create Smart Accounts using Ethers JS. U
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/modules @biconomy/paymaster ethers@5.7.2
 ```
 
 ### Imports
@@ -27,7 +27,6 @@ import {
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
 import {
   ECDSAOwnershipValidationModule,
   DEFAULT_ECDSA_OWNERSHIP_MODULE,
@@ -38,7 +37,7 @@ import {
 
 ```typescript
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai",
+  "https://rpc-amoy.polygon.technology/",
 ); // or any other rpc provider link
 const signer = new Wallet("<your_private_key>" || "", provider);
 // we recommend using environment variables for your private keys!
@@ -52,7 +51,7 @@ Set up instances of Bundler and Paymaster.
 const bundler: IBundler = new Bundler({
   // get from biconomy dashboard https://dashboard.biconomy.io/
   bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
+  chainId: 80002, // or any supported chain of your choice
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -72,7 +71,7 @@ async function createAccount() {
   });
 
   let biconomySmartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
+    chainId: 80002, // or any supported chain of your choice
     bundler: bundler,
     paymaster: paymaster,
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
@@ -93,7 +92,7 @@ createAccount();
 You will need the following dependencies to create a Smart Account this way:
 
 ```bash
-yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/core-types @biconomy/modules @biconomy/paymaster ethers@5.7.2
+yarn add @biconomy/account @biconomy/bundler @biconomy/common @biconomy/modules @biconomy/paymaster ethers@5.7.2
 ```
 
 ### Imports
@@ -106,7 +105,6 @@ import {
   DEFAULT_ENTRYPOINT_ADDRESS,
 } from "@biconomy/account";
 import { Wallet, providers, ethers } from "ethers";
-import { ChainId } from "@biconomy/core-types";
 ```
 
 ### Configuration Values
@@ -117,7 +115,7 @@ Set up instances of Bundler and Paymaster.
 const bundler: IBundler = new Bundler({
   // get from biconomy dashboard https://dashboard.biconomy.io/
   bundlerUrl: "",
-  chainId: ChainId.POLYGON_MUMBAI, // or any supported chain of your choice
+  chainId: 80002, // or any supported chain of your choice
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 
@@ -141,7 +139,7 @@ const connect = async () => {
       moduleAddress: DEFAULT_ECDSA_OWNERSHIP_MODULE,
     });
     let biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
+      chainId: 80002,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,

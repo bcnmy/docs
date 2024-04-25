@@ -66,7 +66,7 @@ The example below gets the fee quotes for just USDC. If you pass an empty array 
     const feeQuotesResponse =
         await biconomyPaymaster.getPaymasterFeeQuotesOrData(partialUserOp, {
             mode: PaymasterMode.ERC20,
-            tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+            tokenList: ["0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31"],
         });
 
     const feeQuotes = feeQuotesResponse.feeQuotes as PaymasterFeeQuote[];
@@ -155,7 +155,7 @@ console.log("txHash", receipt.transactionHash);
     const feeQuotesResponse =
         await biconomyPaymaster.getPaymasterFeeQuotesOrData(partialUserOp, {
             mode: PaymasterMode.ERC20,
-            tokenList: ["0xda5289fcaaf71d52a80a254da614a192b693e977"],
+            tokenList: ["0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31"],
         });
 
     const feeQuotes = feeQuotesResponse.feeQuotes as PaymasterFeeQuote[];

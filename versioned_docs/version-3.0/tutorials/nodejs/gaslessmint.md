@@ -5,10 +5,10 @@ sidebar_position: 2
 
 # Creating Gasless Transactions ⛽️
 
-Here, we'll guide you through a Node.js script in TypeScript to mint NFTs **without any gas fees** on the Polygon Mumbai.
+Here, we'll guide you through a Node.js script in TypeScript to mint NFTs **without any gas fees** on the Polygon Amoy.
 
 :::info Prerequisites
-Before you dive in, please make sure you've covered [Environment Setup and Account Initialization](setupaccountinitiation). We'll be using the NFT contract [here](https://mumbai.polygonscan.com/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
+Before you dive in, please make sure you've covered [Environment Setup and Account Initialization](setupaccountinitiation). We'll be using the NFT contract [here](https://www.oklink.com/amoy/address/0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
 Contract Address: `0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e`.
 :::
 
@@ -28,7 +28,6 @@ import {
   BiconomySmartAccountV2,
 } from "@biconomy/account"; // Default entry point and smart account module from Biconomy
 import { Wallet, ethers, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
-import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
 import {
   IPaymaster,
   BiconomyPaymaster,
@@ -129,7 +128,7 @@ try {
   // Log the transaction details URL and the URL to view minted NFTs
   console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
   console.log(
-    `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+    `Transaction Details: https://www.oklink.com/amoy/tx/${transactionDetails.receipt.transactionHash}`,
   );
 } catch (e) {
   // Log any errors encountered during the transaction
@@ -186,7 +185,7 @@ async function mintNFT() {
     const transactionDetails = await userOpResponse.wait();
     // Log the transaction details URL and the URL to view minted NFTs
     console.log(
-      `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+      `Transaction Details: https://www.oklink.com/amoy/tx/${transactionDetails.receipt.transactionHash}`,
     );
     console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
   } catch (e) {
@@ -212,7 +211,6 @@ import {
   BiconomySmartAccountV2,
 } from "@biconomy/account"; // Default entry point and smart account module from Biconomy
 import { Wallet, ethers, providers } from "ethers"; // ethers for interacting with the Ethereum blockchain
-import { ChainId } from "@biconomy/core-types"; // Chain IDs for different blockchains supported by Biconomy
 import {
   IPaymaster,
   BiconomyPaymaster,
@@ -227,7 +225,7 @@ config(); // Load environment variables from .env file
 
 // Set up the Ethereum provider and wallet
 const provider = new providers.JsonRpcProvider(
-  "https://rpc.ankr.com/polygon_mumbai", // JSON-RPC provider URL for the Polygon Mumbai test network
+  "https://rpc-amoy.polygon.technology/", // JSON-RPC provider URL for the Polygon Amoy test network
 );
 
 const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider); // Creating a wallet instance with a private key from environment variables
@@ -235,9 +233,9 @@ const wallet = new Wallet(process.env.PRIVATE_KEY || "", provider); // Creating 
 // Configure the Biconomy Bundler
 const bundler: IBundler = new Bundler({
   bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44", // URL to the Biconomy bundler service
+    "https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44", // URL to the Biconomy bundler service
 
-  chainId: ChainId.POLYGON_MUMBAI, // Chain ID for Polygon Mumbai test network
+  chainId: 80002, // Chain ID for Polygon Amoy test network
 
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address for the bundler
 });
@@ -245,7 +243,7 @@ const bundler: IBundler = new Bundler({
 // Configure the Paymaster
 const paymaster: IPaymaster = new BiconomyPaymaster({
   paymasterUrl:
-    "https://paymaster.biconomy.io/api/v1/80001/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a", // URL to the Biconomy paymaster service
+    "https://paymaster.biconomy.io/api/v1/2/Tpk8nuCUd.70bd3a7f-a368-4e5a-af14-80c7f1fcda1a", // URL to the Biconomy paymaster service
 });
 
 // Function to create a module for ownership validation
@@ -261,7 +259,7 @@ async function createSmartAccount() {
   const module = await createModule(); // Create the validation module
 
   let smartAccount = await BiconomySmartAccountV2.create({
-    chainId: ChainId.POLYGON_MUMBAI, // Chain ID for the Polygon Mumbai network
+    chainId: 80002, // Chain ID for the Polygon Amoy network
     bundler: bundler, // The configured bundler instance
     paymaster: paymaster, // The configured paymaster instance
     entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS, // Default entry point address
@@ -316,7 +314,7 @@ async function mintNFT() {
     const transactionDetails = await userOpResponse.wait();
     // Log the transaction details URL and the URL to view minted NFTs
     console.log(
-      `Transaction Details: https://mumbai.polygonscan.com/tx/${transactionDetails.receipt.transactionHash}`,
+      `Transaction Details: https://www.oklink.com/amoy/tx/${transactionDetails.receipt.transactionHash}`,
     );
     console.log(`View Minted NFTs: https://testnets.opensea.io/${address}`);
   } catch (e) {
