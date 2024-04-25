@@ -52,7 +52,7 @@ Steps to Change User Role:
 
 4. Click on the user's current role displayed next to their status and select the new role you wish to assign to the user.
 
-### Removing Team Members
+## Removing Team Members
 
 Removing a team member from your organization may be necessary due to changes in staffing, roles, or security policies. Our platform allows admins to delete members easily and securely to ensure that only authorized users have access to sensitive organizational data.
 
