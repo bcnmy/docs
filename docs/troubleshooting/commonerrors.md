@@ -43,25 +43,12 @@ Ensure that you are using the bundler, paymaster, and RPC URL of the same blockc
 | Exceeded maximum duration (30 sec) waiting to get receipt for userOpHash                           | This is a timeout error on bundler, If the error persists on a particular network, create a bundler instance by increasing the userOpReceiptMaxDurationIntervals as mentioned [here](/Account/methods#createbundler). And pass this bundler to the `createSmartAccountClient` function                                                                                                                                                                                                                                                                                                                                |
 | UserOperation reverted during execution phase                                                      | This error comes when the call data execution is failing, which is the call that the Entry Point makes to the Smart Account. A quick way to debug is to go on Tenderly and simulate the exact call data execution. To do that you can add the Smart Account address in the `Paste any address` box of Tenderly, then select the network which you are on. After that paste the `callData` from the userOp in the raw data input box and also edit the From address to be the Entry Point address. If the network you are on is not supported by Tenderly, one can use `eth_estimateGas` to capture the revert reason. |
 
-                                        |
+|| maxPriorityFeePerGas in userOp is lower than expected maxPriorityFeePerGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in the bundler mempool. The way to fix this is to retry by building the userOp again. The value of maxPriorityFeePerGas should always be fetched from `biconomy_getGasFeeValues`. ||
 
-| maxPriorityFeePerGas in userOp is lower than expected maxPriorityFeePerGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in
-the bundler mempool. The way to fix this is to retry by building the userOp again. The value of maxPriorityFeePerGas should always be fetched from `biconomy_getGasFeeValues`. |
+|| maxFeePerGas in userOp is lower than expected maxFeePerGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in the bundler mempool. The way to fix this is to retry by building the userOp again. The value of maxFeePerGas should always be fetched from `biconomy_getGasFeeValues` or `eth_estimateUserOperationGas`. ||
 
-                                        |
-
-| maxPriorityFeePerGas in userOp is lower than expected maxPriorityFeePerGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in
-the bundler mempool. The way to fix this is to retry by building the userOp again. The value of maxPriorityFeePerGas should always be fetched from `biconomy_getGasFeeValues` or `eth_estimateUserOperationGas`. |
-
-                                        |
-
-| maxFeePerGas in userOp is lower than expected maxFeePerGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in
-the bundler mempool. The way to fix this is to retry by building the userOp again. The value of maxFeePerGas should always be fetched from `biconomy_getGasFeeValues` or `eth_estimateUserOperationGas`. |
-
-                                        |
-
-| preVerificationGas in userOp is lower than expected preVerificationGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in
-the bundler mempool. The way to fix this is to retry by building the userOp again. The value of preVerificationGas should always be fetched from `eth_estimateUserOperationGas`. |
+|| preVerificationGas in userOp is lower than expected preVerificationGas | This error indicates that the userOp sent to the bundler is a low paying userOp and won't be accepted in
+the bundler mempool. The way to fix this is to retry by building the userOp again. The value of preVerificationGas should always be fetched from `eth_estimateUserOperationGas`. ||
 
 ---
 
