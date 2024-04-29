@@ -19,7 +19,7 @@ import TabItem from "@theme/TabItem";
 
 ```bash
 
-npm install @biconomy/bundler
+npm install @biconomy/account/bundler
 
 ```
 
@@ -28,7 +28,7 @@ npm install @biconomy/bundler
 
 ```bash
 
-yarn add @biconomy/bundler
+yarn add @biconomy/account/bundler
 
 ```
 
@@ -37,7 +37,7 @@ yarn add @biconomy/bundler
 
 ```bash
 
-pnpm add @biconomy/bundler
+pnpm add @biconomy/account/bundler
 
 ```
 
@@ -53,9 +53,8 @@ pnpm add @biconomy/bundler
 
 To create a bundler instance pass the bundler url, with other optional params.
 
-
 ```typescript
-import { create } from "@biconomy/bundler";
+import { create } from "@biconomy/account/bundler";
 
 const userOpReceiptMaxDurationIntervals: { [key in number]?: number } = {
   [80002]: 60000,
@@ -65,10 +64,10 @@ const bundler = await create({
   bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
   userOpReceiptMaxDurationIntervals,
 });
-
 ```
 
 **Parameters**
+
 - bundlerUrl(`string`, required): bundler url from the dashboard
 - [userOpReceiptIntervals](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#UserOpReceiptIntervals)(`object`, optional): The polling interval per chain for the tx receipt in milliseconds. Default value is 5 seconds.
 - [userOpWaitForTxHashIntervals](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#UserOpWaitForTxHashIntervals)(`object`, optional): The polling interval per chain for the tx result in milliseconds. Default value is 0.5 seconds.
@@ -76,6 +75,7 @@ const bundler = await create({
 - [userOpWaitForTxHashMaxDurationIntervals](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html#UserOpWaitForTxHashMaxDurationIntervals)(`object`, optional): The maximum duration in milliseconds per chain to wait for the tx hash. Default value is 20 seconds.
 
 **returns**
+
 - [bundler](https://bcnmy.github.io/biconomy-client-sdk/classes/Bundler.html)(`Promise<Bundler>`): bundler instance
 
 Once initialized you will be able to pass this Bundler instance to the Smart Account configuration to use in conjunction with Smart Accounts. See our [tutorials](/tutorials) for in depth integrations of the Smart Account and Bundler.

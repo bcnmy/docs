@@ -7,10 +7,11 @@ sidebar_position: 5
 This module works hand in hand with the Session Key Manager Module. It allows for multiple session validation modules to be activated for a user.
 
 ## What it enables
+
 Those who are familiar with the Biconomy Modular Session Keys framework know that it provides great flexibility and allows for quick building of the Session Validation Modules for every new use case without touching the core Session Keys logic. Batched Session Router adds composability, allowing batching of several session key signed operations which should be validated by different Session Validation modules into one User Operation and execute them atomically.
 
-
 ## UX Impact
+
 This module allows batching several operations (actions) into one atomically executed User Operation, thus ensuring better UX for many DeFi use cases.
 
 Let’s take a very simple example. Some dApp wants to allow users to perform a simple flow of actions:
@@ -33,9 +34,10 @@ Session Router addresses those issues by parsing executeBatch() calldata and rou
 Now, dApps can construct flows based on the actions validated by basic SVMs and share common permissions across flows.
 
 ## How it works
-Batched Session Router leverages ***SmartAccount.executeBatch()*** method to execute atomic operations.
 
-It is a Validation module, that validates the ***userOps*** with the ***callData*** field containing a call to ***SmartAccount.executeBatch()***.
+Batched Session Router leverages **_SmartAccount.executeBatch()_** method to execute atomic operations.
+
+It is a Validation module, that validates the **_userOps_** with the **_callData_** field containing a call to **_SmartAccount.executeBatch()_**.
 
 Every operation in the batch is expected to be an action managed by a specific Session Validation Module.
 
@@ -65,7 +67,7 @@ import TabItem from "@theme/TabItem";
 
 ```bash
 
-npm install @biconomy/modules
+npm install @biconomy/account/modules
 
 ```
 
@@ -74,7 +76,7 @@ npm install @biconomy/modules
 
 ```bash
 
-yarn add @biconomy/modules
+yarn add @biconomy/account/modules
 
 ```
 
@@ -83,7 +85,7 @@ yarn add @biconomy/modules
 
 ```bash
 
-pnpm add @biconomy/modules
+pnpm add @biconomy/account/modules
 
 ```
 
@@ -95,7 +97,11 @@ pnpm add @biconomy/modules
 Integration is the same as using the Session Key Manager Module with the additional step of starting a session router module.
 
 ```typescript
-import {createSessionKeyManagerModule, createBatchedSessionRouterModule, DEFAULT_BATCHED_SESSION_ROUTER_MODULE} from "@biconomy/account";
+import {
+  createSessionKeyManagerModule,
+  createBatchedSessionRouterModule,
+  DEFAULT_BATCHED_SESSION_ROUTER_MODULE,
+} from "@biconomy/account";
 
 const sessionModule = await createSessionKeyManagerModule({
   moduleAddress: DEFAULT_SESSION_KEY_MANAGER_MODULE,
