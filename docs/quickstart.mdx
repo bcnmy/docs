@@ -32,7 +32,7 @@ Create the following tsconfig.json (TypeScript config):
 ```bash
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2020",
     "module": "commonjs",
     "declaration": true,
     "outDir": "./lib",
@@ -141,10 +141,10 @@ try {
   });
   const { transactionHash } = await userOpResponse.waitForTxHash();
   console.log("transactionHash", transactionHash);
-  const userOpReceipt  = await userOpResponse.wait();
-  if(userOpReceipt.success == 'true') { 
-    console.log("UserOp receipt", userOpReceipt)
-    console.log("Transaction receipt", userOpReceipt.receipt)
+  const userOpReceipt = await userOpResponse.wait();
+  if (userOpReceipt.success == "true") {
+    console.log("UserOp receipt", userOpReceipt);
+    console.log("Transaction receipt", userOpReceipt.receipt);
   }
 } catch (error: unknown) {
   if (error instanceof Error) {
@@ -219,10 +219,10 @@ export const createAccountAndMintNft = async () => {
   const { transactionHash } = await waitForTxHash();
   console.log("transactionHash", transactionHash);
 
-  const userOpReceipt  = await userOpResponse.wait();
-  if(userOpReceipt.success == 'true') { 
-    console.log("UserOp receipt", userOpReceipt)
-    console.log("Transaction receipt", userOpReceipt.receipt)
+  const userOpReceipt = await userOpResponse.wait();
+  if (userOpReceipt.success == "true") {
+    console.log("UserOp receipt", userOpReceipt);
+    console.log("Transaction receipt", userOpReceipt.receipt);
   }
 };
 createAccountAndMintNft();
@@ -237,15 +237,16 @@ If you run into any errors, check out [troubleshooting](/troubleshooting/commone
 
 Explore the tutorials for various use cases.
 
-
 ### [Send a batch of transactions](/tutorials/sendTransactionsBatch)
+
 In this you will do batching of transactions which is sending more than one transaction in an array and execute them with a single signature.
 
 ### [Send a gasless transaction](/tutorials/sendGasless)
+
 In this you will do a gasless transaction for which you will not have to pay any gas fees and with empty funds in your smart account you can execute transactions.
 
 ### [Pay gas in ERC20](/tutorials/payERC20Token)
-In this you will execute a transaction by paying gas fees in ERC20 tokens, for this your smart account should have the specific ERC20 token for paying gas fees.
 
+In this you will execute a transaction by paying gas fees in ERC20 tokens, for this your smart account should have the specific ERC20 token for paying gas fees.
 
 To dive deeper, check out more [use cases](/tutorials).
