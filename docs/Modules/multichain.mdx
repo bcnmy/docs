@@ -102,7 +102,7 @@ Integrate the Multichain Validation Module into Biconomy Smart Accounts using th
 
 ```bash
 
-npm install @biconomy/account/modules ethers
+npm install @biconomy/account ethers
 
 ```
 
@@ -111,7 +111,7 @@ npm install @biconomy/account/modules ethers
 
 ```bash
 
-yarn add @biconomy/account/modules ethers
+yarn add @biconomy/account ethers
 
 ```
 
@@ -120,7 +120,7 @@ yarn add @biconomy/account/modules ethers
 
 ```bash
 
-pnpm add @biconomy/account/modules ethers
+pnpm add @biconomy/account ethers
 
 ```
 
@@ -142,7 +142,7 @@ const signer = new ethers.Wallet("[Private_Key]", provider);
 import {
   createMultiChainValidationModule,
   DEFAULT_MULTICHAIN_MODULE,
-} from "@biconomy/account/modules";
+} from "@biconomy/account";
 
 // Notice this is chain agnostic so same instance can be used on instances of Smart account API on different chains
 const multiChainModule = await createMultiChainValidationModule({

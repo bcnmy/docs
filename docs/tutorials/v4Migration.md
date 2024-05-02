@@ -14,7 +14,7 @@ Make sure you have minimum es2020 set as target in the compilerOptions
 
 1. Update dependencies: Install the latest V4 version of `@biconomy/account` package. All transaction functionalities are now accessible by simply importing the account package without the need for any other Biconomy package.
 
-2. `BiconomyPaymaster` is now named `Paymaster` and could be imported from `@biconomy/account/paymaster` instead of `@biconomy/paymaster`.
+2. `BiconomyPaymaster` is now named `Paymaster` and could be imported from `@biconomy/account` instead of `@biconomy/paymaster`.
 
 3. When using `buildTokenPaymasterUserOp` method, the spender cannot be undefined. The BiconomyTokenPaymasterRequest `spender` type has changed from string to `0x${string}`, users need to convert spender to `0x${string}` like following.
 
@@ -76,14 +76,6 @@ Since v4.2:
 
 ```
   npm i @biconomy/account viem
-```
-
-7. modules, paymaster and bundler can now tree-shaked from the "@biconomy/account" package:
-
-```
-  import { Paymaster } from "@biconomy/account/paymaster";
-  import { Bundler } from "@biconomy/account/bundler";
-  import { createSessionKeyManagerModule } from "@biconomy/account/modules";
 ```
 
 Thoroughly test your application with the new SDK version to ensure that all functionalities work as expected. Pay close attention to any areas of your application that interact with the SDK.
