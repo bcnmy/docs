@@ -129,6 +129,7 @@ const config = {
           {
             type: "docsVersionDropdown",
           },
+          { to: "https://github.com/orgs/bcnmy/discussions/categories/q-a", label: "Discussions", position: "left" },
         ],
       },
       footer: {
