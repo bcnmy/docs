@@ -39,6 +39,9 @@ To use Passport, you'll first need to make sure you have configured a scope for 
 Passport offers a Passkey signer, which follows the webauthn standard, which is a user owned authentication method that allows users to sign messages and transactions with their Passkey.
 
 ```typescript
+// The rpId and rpName are the same as the ones you set up in your passport application scope. They follow the webauthn standard, of the following values"
+// id: the domain of where the passkey is generated
+// name: human readable name for the domain
 const webauthnSigner = new WebAuthnSigner({
   rpId: "rpId",
   rpName: "rpName",
