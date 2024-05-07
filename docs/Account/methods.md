@@ -259,7 +259,7 @@ type SupportedToken = {
 
 ### [getGasEstimates()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#getGasEstimates)
 
-This function will return an array of supported tokens from the erc20 paymaster associated with the Smart Account
+Get a gas estimate in wei for given tx(s)
 
 **Usage**
 
