@@ -211,12 +211,12 @@ export const createAccountAndMintNft = async () => {
   });
 
   // ------ 4. Send transaction
-  const { waitForTxHash } = await smartAccount.sendTransaction({
+  const userOpResponse = await smartAccount.sendTransaction({
     to: nftAddress,
     data: nftData,
   });
 
-  const { transactionHash } = await waitForTxHash();
+  const { transactionHash } = await userOpResponse.waitForTxHash();
   console.log("transactionHash", transactionHash);
 
   const userOpReceipt = await userOpResponse.wait();
