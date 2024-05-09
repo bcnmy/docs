@@ -11,21 +11,26 @@ Built on top of [ERC 4337](https://eips.ethereum.org/EIPS/eip-4337), we offer a 
 <details>
   <summary>Introduction to Account Abstraction</summary>
 
-Account Abstraction aims to enhance user experience by making user accounts more flexible and functional. Instead of using an Externally Owned Account, a Smart Contract can act as your account, powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA). 
+Account Abstraction aims to enhance user experience by making user accounts more flexible and functional. Instead of using an Externally Owned Account, a Smart Contract can act as your account, powered by code instead of the Elliptic Curve Digital Signature Algorithm (ECDSA).
 
 ### UserOp
+
 A userOperation or a userOp is a data structure that describes a transaction to be sent on behalf of a user. It is not an actual Blockchain Transaction but has all the necessary fields to become one. These are fields like “sender,” “to,” “calldata,” “nonce,” and more. You can find the userOp structure [here](https://eips.ethereum.org/EIPS/eip-4337#useroperation).
 
 ### Entry Point Contract
+
 The [Entry Point contract](https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/core/EntryPoint.sol) is the singleton smart contract, the core of the Account Abstraction Flow. This singleton contract is used as an entry point to execute bundles of userOps. Refer to this [blog series](https://www.biconomy.io/post/decoding-entrypoint-and-useroperation-with-erc-4337-part1) for a comprehensive understanding of the Entry Point.
 
 ### Smart Account
+
 This smart contract acts as a user wallet where all user assets are stored. You can program it to validate transactions before executing them. Unlike a traditional wallet, the Smart Account cannot initiate a transaction independently and will need a signer to help it do so.
 
 ### Bundler
+
 The Bundler collects, bundles, and submits userOps to an EVM network. One can make a JSON RPC call to a bundler client to have a userOp added to an ERC 4337 mempool.
 
 ### Paymaster
+
 The Paymaster is a smart contract that acts as a gas tank and is used to sponsor transactions where the dApp or another third party pays the transaction fee on behalf of the user. The userOp contains a field for adding data about a Paymaster and if it should sponsor the userOp when pushed on-chain to become a transaction.
 
 A smart account sends a userOp to execute a transaction. Bundlers then watch the mempool for userOps and send them on-chain by calling the Entry Point contract.
@@ -41,10 +46,9 @@ The Biconomy's Modular Smart Account is an ERC 4337-compliant solution that work
 
 Modular architecture enables developers to easily & securely plug-in programmable modules to extend smart account capabilities. These modules leverage the power of Account Abstraction to allow for custom validation schemes and execution environments. As a developer, this allows you to build additional modules while leveraging existing ones like [session keys](/Modules/sessionvalidationmodule), [multi-chain validation](/Modules/multichain), passkeys, and beyond.
 
-If you want to start diving into Smart Accounts you can begin [here](/account). For those, who are already familiar with Smart Accounts and prefer to start with modules, you can check out [here](/modules) or follow this step-by-step [tutorial](/tutorials/sessionkeys) on how to build a dApp that utilizes session key modules.
+If you want to start diving into Smart Accounts you can begin [here](/account). For those, who are already familiar with Smart Accounts and prefer to start with modules, you can check out [here](/modules) or follow this step-by-step [tutorial](/tutorials/index) on how to build a dApp that utilizes session key modules.
 
 View the audit reports for smart accounts and Modules [here](audits).
-
 
 ![FullStakAA](./images/overview/fullstackaa.png)
 
@@ -73,4 +77,3 @@ Switching your Paymaster mode to ERC20 enables users to pay gas fees with ERC20 
 Learn how to utilize either of these Paymasters by checking out our How To Guide on [Executing transactions](/tutorials)
 
 **Next:** Checkout the [quickstart](quickstart) guide to start the integration.
-

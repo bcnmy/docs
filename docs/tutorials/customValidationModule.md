@@ -1,10 +1,14 @@
 ---
 sidebar_label: "Custom Validation Module"
-sidebar_position: 8
+sidebar_position: 9
 title: Custom Validation Module
 ---
 
-In this tutorial, we will look at how to create your own validation module.
+:::caution
+This section of the tutorial requires Solidity knowledge and smart contract development
+:::
+
+In this tutorial, we will look at how to create your own validation module using solidity
 
 As mentioned in the [overview](./../modules#how-to-create-a-custom-validation-module), any custom validation module needs to extend the abstract contract [BaseAuthorizationModule](https://github.com/bcnmy/scw-contracts/blob/main/contracts/smart-account/modules/BaseAuthorizationModule.sol). This contract is crucial as it connects your module to essential authorization functions.
 The following implementation enables a module to receive userOp data and provide validation results back to the SmartAccount.
@@ -22,7 +26,7 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
 
     // Function signature of this method will be used as moduleSetupData in Account Factory
     function initForSmartAccount() {
-      
+
     }
 }
 ```
@@ -98,7 +102,7 @@ function isValidSignatureForAddress(
 
 As per the code
 
-- `isValidSignature`: this method validates an EIP-1271 signature. It internally calls the isValidSignatureForAddress which again calls the _verifySignature method.
+- `isValidSignature`: this method validates an EIP-1271 signature. It internally calls the isValidSignatureForAddress which again calls the \_verifySignature method.
 
 **4. Implement isValidSignatureUnsafe method**
 
@@ -133,7 +137,7 @@ As per the code
 
 - `isValidSignatureUnsafe`: this method validates an EIP-1271 signature but expects the data Hash to already include smart account address information.
 
-**5. Implement _verifySignature method**
+**5. Implement \_verifySignature method**
 
 ```typescript
 /**
@@ -155,6 +159,7 @@ function _verifySignature(
 As per the code `_verifySignature` method contains the custom logic for this module, which developer can implement based on their requirements.
 
 Expand the code below to see the entire code:
+
 <details>
 
 ```javascript
@@ -171,7 +176,7 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
         The function signature of this method will be used as moduleSetupData in Account Factory
     */
     function initForSmartAccount() {
-      
+
     }
 
     /// @inheritdoc IAuthorizationModule
@@ -179,7 +184,7 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
         UserOperation calldata userOp,
         bytes32 userOpHash
     ) external view virtual override returns (uint256) {
-        // in the userOp.signature field we append the moduleSignature with 
+        // in the userOp.signature field we append the moduleSignature with
         // the Validation Module address
 
         // extract the moduleSignature
@@ -194,8 +199,8 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
         return SIG_VALIDATION_FAILED;
     }
 
-    // moduleSignature is a signature that should be processed by a module 
-    // and made according to the requirements specified by the module that 
+    // moduleSignature is a signature that should be processed by a module
+    // and made according to the requirements specified by the module that
     // is expected to be processing it.
 
     /**
@@ -281,7 +286,7 @@ contract MyCustomValidationModule is BaseAuthorizationModule {
         }
         return bytes4(0xffffffff);
     }
-    
+
 }
 ```
 
