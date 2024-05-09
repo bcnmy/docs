@@ -294,7 +294,7 @@ console.log(amountInWei.toString());
 
 ### [withdraw()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#withdraw)
 
-This function will transfers funds from Smart Account to recipient (usually EOA)
+This function will transfers funds from Smart Account to `recipient` (usually EOA)
 
 **Usage**
 
@@ -317,14 +317,14 @@ const { wait } = await smartAccount.withdraw(
     { address: token }, // omit the amount to withdraw the full balance
     { address: NATIVE_TOKEN_ALIAS, amount: BigInt(1) },
   ],
-  account.pubKey, // Default recipient used if no recipient is present in the withdrawal request
+  '0xrecipient', // Default recipient used if no recipient is present in the withdrawal request
   {
     paymasterServiceData: { mode: PaymasterMode.SPONSORED },
   }
 );
 
 // OR to withdraw all of the native token, leaving no dust in the smart account
-const { wait } = await smartAccount.withdraw([], account.pubKey, {
+const { wait } = await smartAccount.withdraw([], '0xrecipient', {
   paymasterServiceData: { mode: PaymasterMode.SPONSORED },
 });
 
