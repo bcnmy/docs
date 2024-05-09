@@ -19,7 +19,7 @@ Smart Accounts are further enhanced by validation modules that allow you to exec
 
 ![ModularSA](./images/overview/modularsa.png)
 
-If you want to start diving into Smart Accounts you can do so [here](/account). If you know all about Smart Accounts and prefer to start working with modules, start learning about them [here](/modules) or follow this step-by-step [tutorial](/tutorials/sessionkeys) on how to build a dApp that utilizes session key modules.
+If you want to start diving into Smart Accounts you can do so [here](/account). If you know all about Smart Accounts and prefer to start working with modules, start learning about them [here](/modules) or follow this step-by-step [tutorial](/tutorials/createSession) on how to build a dApp that utilizes session key modules.
 
 ## Paymaster
 
