@@ -41,10 +41,8 @@ export class SessionFileStorage implements ISessionStorage {
   }
 
   // This method reads data from the file and returns it in the JSON format
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   private async readDataFromFile(type: "sessions" | "signers"): Promise<any> {
     return new Promise((resolve) => {
-      // @ts-ignore
       fs.readFile(this.getStorageFilePath(type), "utf8", (err, data) => {
         if (err) {
           // Handle errors appropriately
@@ -66,14 +64,12 @@ export class SessionFileStorage implements ISessionStorage {
   }
 
   private async writeDataToFile(
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     data: any,
     type: "sessions" | "signers"
   ): Promise<void> {
     console.log("");
     return new Promise((resolve, reject) => {
       const filePath = this.getStorageFilePath(type);
-      // @ts-ignore
       fs.writeFile(filePath, JSON.stringify(data), "utf8", (err) => {
         if (err) {
           // Handle errors appropriately
