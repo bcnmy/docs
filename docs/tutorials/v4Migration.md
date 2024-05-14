@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Migrating to V4"
-sidebar_position: 9
+sidebar_position: 10
 title: Migrating to SDK V4
 ---
 
