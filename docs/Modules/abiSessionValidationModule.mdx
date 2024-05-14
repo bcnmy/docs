@@ -1,6 +1,6 @@
 ---
 sidebar_label: "ABI Session Validation Module"
-sidebar_position: 2
+sidebar_position: 5
 ---
 
 # ABI Session Validation Module
@@ -380,22 +380,22 @@ This function is essential for **validating user operations** against **session 
 
 **Execution Steps:**
 
-1. **Match Function Selectors:** 
-This step ensures that the calldata of a given user operation calls the function with the allowed selectors only.
-In this method, it checks whether the first four bytes of the call data match predefined selectors (EXECUTE_OPTIMIZED_SELECTOR or EXECUTE_SELECTOR).
+1. **Match Function Selectors:**
+   This step ensures that the calldata of a given user operation calls the function with the allowed selectors only.
+   In this method, it checks whether the first four bytes of the call data match predefined selectors (EXECUTE_OPTIMIZED_SELECTOR or EXECUTE_SELECTOR).
 
-2. **Decode Session Key Data:** 
-Here, the essential details from the session key data are extracted to understand the permissions and constraints associated with the user operation.
-This includes retrieving information such as the destination contract, call value, and additional data from the call data provided in the user operation.
+2. **Decode Session Key Data:**
+   Here, the essential details from the session key data are extracted to understand the permissions and constraints associated with the user operation.
+   This includes retrieving information such as the destination contract, call value, and additional data from the call data provided in the user operation.
 
-3. **Verify Operation Details:** 
-This step validates the details of the user operation against the permissions specified by the session key.
-It checks whether the call data aligns with the permissions specified in the session key data.
-Additionally, it ensures that any constraints or limits imposed by the session key, such as maximum transaction amounts or permitted recipients, are respected.
+3. **Verify Operation Details:**
+   This step validates the details of the user operation against the permissions specified by the session key.
+   It checks whether the call data aligns with the permissions specified in the session key data.
+   Additionally, it ensures that any constraints or limits imposed by the session key, such as maximum transaction amounts or permitted recipients, are respected.
 
 4. **Signature Validation:** In this final step, the method confirms the authenticity of the operation by verifying its signature against the session key.
-ECDSA (Elliptic Curve Digital Signature Algorithm) is used to validate that the provided signature matches the session key.
-If the signature verification is successful, it indicates that the operation has been correctly signed by the session key.
+   ECDSA (Elliptic Curve Digital Signature Algorithm) is used to validate that the provided signature matches the session key.
+   If the signature verification is successful, it indicates that the operation has been correctly signed by the session key.
 
 ## Function Analysis: `validateSessionParams`
 
@@ -492,18 +492,18 @@ If the signature verification is successful, it indicates that the operation has
 
 **Operational Flow:**
 
-The method internally calls **_validateSessionParams** to perform the validation against the session permissions.
-It passes the necessary parameters to **_validateSessionParams**  and returns the result.
+The method internally calls **\_validateSessionParams** to perform the validation against the session permissions.
+It passes the necessary parameters to **\_validateSessionParams** and returns the result.
 
-**_validateSessionParams** validates the parameters of the call against the permissions defined for the session key.
+**\_validateSessionParams** validates the parameters of the call against the permissions defined for the session key.
 
-**Execution flow in **_validateSessionParams****
+**Execution flow in **\_validateSessionParams\*\*\*\*
 
-- Extracts essential details from _sessionKeyData, such as session key address, permitted destination contract, permitted method selector, value limit, and rules list length.
-- Checks if the destinationContract matches the permitted destination contract, if the function selector in _funcCallData matches the permitted selector, and if the callValue does not exceed the permitted value limit.
-- Calls **_checkRulesForPermission** to verify if the call data complies with the permission rules.
+- Extracts essential details from \_sessionKeyData, such as session key address, permitted destination contract, permitted method selector, value limit, and rules list length.
+- Checks if the destinationContract matches the permitted destination contract, if the function selector in \_funcCallData matches the permitted selector, and if the callValue does not exceed the permitted value limit.
+- Calls **\_checkRulesForPermission** to verify if the call data complies with the permission rules.
 
-**Execution flow in **_checkRulesForPermission****
+**Execution flow in **\_checkRulesForPermission\*\*\*\*
 
 - Iterates through the list of rules.
 - Parses each rule to determine the offset, condition, and value.
@@ -521,11 +521,12 @@ So, when dApp is creating a `_sessionKeyData` to enable a session, it should con
 
 For the dynamic args, like `bytes`, every 32-bytes word of the `calldata` such as offset of the bytes arg, length of the bytes arg, and n-th 32-bytes word of the bytes arg can be controlled by a dedicated Rule.
 
-# Offset 
+# Offset
+
 The offset in the ABI SVM contract helps locate the relevant data within the function call data, it serves as a reference point from which to start reading or extracting specific information required for validation.
 When processing function call data, particularly in low-level languages like Solidity assembly, it's necessary to locate where specific parameters or arguments are stored.
 The offset is used to calculate the starting position within the `calldata` where the desired data resides.
-Suppose we have a function call with multiple arguments passed as `calldata`. Each argument occupies a certain number of bytes, and the offset helps determine where each argument begins within the `calldata`. 
+Suppose we have a function call with multiple arguments passed as `calldata`. Each argument occupies a certain number of bytes, and the offset helps determine where each argument begins within the `calldata`.
 
 **Using the offset to Extract Data:**
 In the contract, the offset is used to calculate the position within the `calldata` where specific parameters or arguments are located. Since every arg is a 32-bytes word, offsets are always multiplier of 32 (or of 0x20 in hex).
@@ -536,22 +537,25 @@ Extracting to Argument:
 The to argument is the first parameter of the transfer function, representing the recipient address. Every `calldata` starts with the 4-bytes method selector. However, the ABI SVM is adding the selector length itself, so for the first argument the offset will always be 0 (0x00);
 
 Extracting value Argument:
-The value argument is the second parameter of the transfer function, representing the amount of tokens to be transferred. To extract this argument, the offset for the value parameter would be calculated based on its position in the function `calldata`. Despite to is a 20-bytes address, in the solidity abi encoding it is always appended with zeroes to a 32-bytes word. So the offset for the second 32-bytes argument (which isthe  value in our case) will be 32 (or 0x20 in hex).
+The value argument is the second parameter of the transfer function, representing the amount of tokens to be transferred. To extract this argument, the offset for the value parameter would be calculated based on its position in the function `calldata`. Despite to is a 20-bytes address, in the solidity abi encoding it is always appended with zeroes to a 32-bytes word. So the offset for the second 32-bytes argument (which isthe value in our case) will be 32 (or 0x20 in hex).
 
 If you need to deal with dynamic-length arguments, such as bytes, please refer to this document https://docs.soliditylang.org/en/v0.8.24/abi-spec.html#function-selector-and-argument-encoding
 to learn more about how dynamic arguments are represented in the `calldata` and which offsets should be used to access them.
 
 # Condition
+
 The condition is used to determine how we are checking the actual reference value, the condition can be of many types:
- * 0: EQUAL
- * 1: LESS_THAN_OR_EQUAL
- * 2: LESS_THAN
- * 3: GREATER_THAN_OR_EQUAL
- * 4: GREATER_THAN
- * 5: NOT_EQUAL
-In our example the condition is 0, this means we check that the receiver of the NFT is EQUAL to what we set it to be.
+
+- 0: EQUAL
+- 1: LESS_THAN_OR_EQUAL
+- 2: LESS_THAN
+- 3: GREATER_THAN_OR_EQUAL
+- 4: GREATER_THAN
+- 5: NOT_EQUAL
+  In our example the condition is 0, this means we check that the receiver of the NFT is EQUAL to what we set it to be.
 
 # Value
+
 This is the reference value. The actual arg value is decoded from the userOp.callData using the Offset. Then it is compared to the reference value using the Condition.
 
 Both `validateSessionUserOp` and `validateSessionParams` are integral to our dApp's security framework, ensuring strict adherence to permissions and enhancing transaction integrity.

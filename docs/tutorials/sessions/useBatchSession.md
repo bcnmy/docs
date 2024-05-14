@@ -1,12 +1,12 @@
 ---
-sidebar_label: "Use MultiSession"
-sidebar_position: 8
-title: "Use MultiSession"
+sidebar_label: "Use a batch session"
+sidebar_position: 4
+title: "Use a batch session"
 ---
 
 ### Overview
 
-This tutorial demonstrates how to use a multi session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createMultiSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
+This tutorial demonstrates how to use a multi session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createBatchSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
 
 You can get your Biconomy Paymaster API key from the dashboard [here](https://dashboard.biconomy.io/).
 
@@ -14,7 +14,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 - Biconomy Paymaster API key
 - A Bundler url if you don't want to use the testnet one (for Amoy you can use https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44)
-- A session granted by a user [see the previous step](./createMultiSession), with the sessionKey for the session
+- A session granted by a user [see the previous step](./createBatchSession), with the sessionKey for the session
 
 ### Step 1
 
@@ -57,7 +57,7 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     chainId,
   },
   session,
-  true // if in multi session mode
+  true // if in batch session mode
 );
 ```
 
@@ -86,10 +86,10 @@ const nftMintTx: Transaction = {
 
 ### Step 4: Execute txs on the users behalf
 
-When using multiple session and sending a tx the batchSessionParams must be sent with each tx. BatchSessionParams [are described here](https://bcnmy.github.io/biconomy-client-sdk/types/ModuleInfo.html#__type.batchSessionParams). The order of the `sessionValidationTypes` array must correspond with the modules for the txs being sent. A utility function [getMultiSessionTxParams](https://bcnmy.github.io/biconomy-client-sdk/functions/getMultiSessionTxParams.html) is provided
+When using multiple session and sending a tx the batchSessionParams must be sent with each tx. BatchSessionParams [are described here](https://bcnmy.github.io/biconomy-client-sdk/types/ModuleInfo.html#__type.batchSessionParams). The order of the `sessionValidationTypes` array must correspond with the modules for the txs being sent. A utility function [getBatchSessionTxParams](https://bcnmy.github.io/biconomy-client-sdk/functions/getBatchSessionTxParams.html) is provided
 
 ```typescript
-const batchSessionParams = await getMultiSessionTxParams(
+const batchSessionParams = await getBatchSessionTxParams(
   ["ERC20", "ABI"],
   sessionStorageClient,
   sessionID,

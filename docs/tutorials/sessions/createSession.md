@@ -1,7 +1,7 @@
 ---
-sidebar_label: "Create Session"
-sidebar_position: 5
-title: "Create Session"
+sidebar_label: "Create a session"
+sidebar_position: 1
+title: "Create a session"
 ---
 
 ### Overview
@@ -44,12 +44,14 @@ const usersSmartAccount = await createSmartAccountClient({
 ### Step 2: Generate a store for your dapp's session keys
 
 This function is used to create a new session key and store it in the sessionStorageClient.
-You can feed the sessionStorageClient into the `createAndStoreNewSessionKey(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
+You can feed the sessionStorageClient into the `createSessionKeyEOA(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
 When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store.
 
 ```typescript
-const { sessionKeyAddress, sessionStorageClient } =
-  await createAndStoreNewSessionKey(usersSmartAccount, chain);
+const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(
+  usersSmartAccount,
+  chain
+);
 ```
 
 ### Step 3: Create the Policy
@@ -73,7 +75,7 @@ const rules: Rule[] = [
      */
     condition: 0,
     /** The value to compare against */
-    referenceValue: pad(smartAccountAddress, { size: 32 }),
+    referenceValue: smartAccountAddress,
   },
 ];
 
@@ -88,7 +90,7 @@ const policy: Policy[] = [
     functionSelector: "safeMint(address)",
     /** The list of rules which make up the policy */
     rules,
-    /** The time interval within which the session is valid */
+    /** The time interval within which the session is valid. Setting both to 0 will keep a session alive indefinitely */
     interval: {
       validUntil: 0,
       validAfter: 0,

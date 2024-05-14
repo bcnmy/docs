@@ -1,7 +1,7 @@
 ---
-sidebar_label: "Create MultiSessions"
-sidebar_position: 7
-title: "Create MultiSessions"
+sidebar_label: "Create a batch session"
+sidebar_position: 3
+title: "Create a batch session"
 ---
 
 ### Overview
@@ -46,12 +46,14 @@ const usersSmartAccount = await createSmartAccountClient({
 ### Step 2: Generate a store for your dapp's session keys
 
 This function is used to create a new session key and store it in the sessionStorageClient.
-You can feed the sessionStorageClient into the `createAndStoreNewSessionKey(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
-When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store.
+You can feed the sessionStorageClient into the `createSessionKeyEOA(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
+When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store. See [here](./customSessionStorage.md) for detail regarding creating your own session storage client.
 
 ```typescript
-const { sessionKeyAddress, sessionStorageClient } =
-  await createAndStoreNewSessionKey(usersSmartAccount, chain);
+const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(
+  usersSmartAccount,
+  chain
+);
 ```
 
 ### Step 3: Create the multiple policy leaves
@@ -109,7 +111,7 @@ const policyLeaves: CreateSessionDataParams[] = [
 The session keys are imbibed with the relevant permissions when the user signs over the policy. The session can then be accessed from the sessionStorageClient and later used, even after the usersSmartAccount signer has left the dapp.
 
 ```typescript
-const { wait, session } = await createMultiSession(
+const { wait, session } = await createBatchSession(
   smartAccountFour,
   sessionKeyAddress,
   sessionStorageClient,

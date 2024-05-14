@@ -1,12 +1,12 @@
 ---
 sidebar_label: "Create SessionStorageClient"
-sidebar_position: 9
+sidebar_position: 5
 title: "Create SessionStorageClient"
 ---
 
 # Create a custom SessionStorageClient
 
-Now users can make their own implementation of Session Storage by implementing ISessionStorage interface and pass it to the SessionKeyManager module instance. Let's create a new file called customSession and start writing our own session storage.
+Users can make their own implementation of Session Storage by implementing ISessionStorage interface and pass it to the SessionKeyManager module instance. Let's create a new file called customSession and start writing our own session storage.
 
 we will import following
 

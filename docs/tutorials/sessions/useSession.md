@@ -1,7 +1,7 @@
 ---
-sidebar_label: "Use Session"
-sidebar_position: 6
-title: "Use Session"
+sidebar_label: "Use a session"
+sidebar_position: 2
+title: "Use a session"
 ---
 
 ### Overview
