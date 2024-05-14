@@ -38,6 +38,12 @@ These contracts are deployed across all supported chains.
 | Smart Account Implementation V1 | 0x00006B7e42e01957dA540Dc6a8F7C30c4D816af5 |
 | Smart Account Factory V1        | 0x000000F9eE1842Bb72F6BBDD75E6D3d4e3e9594C |
 
+## Blast Gold Addresses
+
+| Contract Name                | Address                                    |
+| ---------------------------- | ------------------------------------------ |
+| Points Operator address | 0x2cf491602ad22944D9047282aBC00D3e52F56B37 |
+| Deployed Smart Contract | 0x7f4FB6A17A84aAc3e16BbC0C8d03Ca563aB0c483 |
 <!-- Chirag to confirm
 | Gas Estimator                | 0x984a2441A196bf03d85fce4fe8c7A211249eDaAf |
 | Decoder                      | 0x8acd02fe897e5a98f5287Be9ee95d5feE74311B0 |
