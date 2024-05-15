@@ -94,7 +94,7 @@ const abiSessionLeaf: CreateSessionDataParams = createABISessionDatum({
     {
       offset: 0,
       condition: 0,
-      referenceValue: pad(usersSmartAccount, { size: 32 }),
+      referenceValue: usersSmartAccount,
     },
   ],
   valueLimit: 0n,
