@@ -89,10 +89,11 @@ const nftMintTx: Transaction = {
 When using multiple session and sending a tx the batchSessionParams must be sent with each tx. BatchSessionParams [are described here](https://bcnmy.github.io/biconomy-client-sdk/types/ModuleInfo.html#__type.batchSessionParams). The order of the `sessionValidationTypes` array must correspond with the modules for the txs being sent. A utility function [getBatchSessionTxParams](https://bcnmy.github.io/biconomy-client-sdk/functions/getBatchSessionTxParams.html) is provided
 
 ```typescript
+const txs = [transferTx, nftMintTx];
 const batchSessionParams = await getBatchSessionTxParams(
   ["ERC20", "ABI"],
-  sessionStorageClient,
-  sessionID,
+  [transferTx, nftMintTx], // Order must match ^above fields
+  session,
   chain
 );
 
