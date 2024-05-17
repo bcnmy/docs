@@ -113,7 +113,6 @@ The session keys are imbibed with the relevant permissions when the user signs o
 ```typescript
 const { wait, session } = await createBatchSession(
   smartAccountFour,
-  sessionKeyAddress,
   sessionStorageClient,
   policyLeaves,
   withSponsorship
