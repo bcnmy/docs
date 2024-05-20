@@ -91,8 +91,9 @@ When using multiple session and sending a tx the batchSessionParams must be sent
 ```typescript
 const txs = [transferTx, nftMintTx];
 const batchSessionParams = await getBatchSessionTxParams(
-  ["ERC20", "ABI"],
-  [transferTx, nftMintTx], // Order must match ^above fields
+  [transferTx, nftMintTx],
+  [0, 1],
+  // Order must match the order in which corresponding policies were set
   session,
   chain
 );
