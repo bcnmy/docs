@@ -43,7 +43,7 @@ Initialize the social login SDK
 ```typescript
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0x13881",
+  chainId: "0x13882",
   rpcTarget: "https://rpc-amoy.polygon.technology/",
   displayName: "Polygon Amoy",
   blockExplorer: "https://www.oklink.com/amoy/",
@@ -89,7 +89,7 @@ const connect = async () => {
   try {
     const chainConfig = {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0x13881",
+      chainId: "0x13882",
       rpcTarget: "https://rpc-amoy.polygon.technology/",
       displayName: "Polygon Amoy",
       blockExplorer: "https://www.oklink.com/amoy/",
