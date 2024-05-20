@@ -27,6 +27,7 @@ import {
   Rule,
   Policy,
   DEFAULT_ERC20_MODULE,
+  Session,
   DEFAULT_ABI_SVM_MODULE,
 } from "@biconomy/account";
 
@@ -38,9 +39,9 @@ const withSponsorship = {
 };
 
 // session data retreived from the previous step.
-const session = {
+const session: Session = {
   sessionStorageClient,
-  sessionID,
+  sessionIDInfo,
 };
 ```
 
