@@ -109,7 +109,6 @@ The session keys are imbibed with the relevant permissions when the user signs o
 const { wait, session } = await createSession(
   usersSmartAccount,
   policy,
-  sessionKeyAddress,
   sessionStorageClient,
   withSponsorship
 );
