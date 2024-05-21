@@ -15,7 +15,9 @@ To obtain an authToken required in the header, you can generate one in your acco
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
 
 Parameters
 
@@ -61,7 +63,9 @@ Responses
 
 > **_POST Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
 
 Parameters
 
@@ -192,7 +196,9 @@ Smart Contract Already Exists
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
 
 Parameters
 
@@ -238,7 +244,9 @@ Header
 
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
 
 Parameters
 
@@ -356,7 +364,9 @@ Responses
 
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io//api/v2/public/sdk/paymaster
+```
+ https://paymaster-dashboard-backend.prod.biconomy.io//api/v2/public/sdk/paymaster
+```
 
 Parameters
 
@@ -428,7 +438,9 @@ Usually, this occurs when incorrect apiKey or authToken is used
 
 > **_DELETE Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
 
 Parameters
 
