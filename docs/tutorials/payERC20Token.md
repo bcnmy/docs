@@ -18,7 +18,10 @@ This tutorial demonstrates how to use the Biconomy Smart Account to perform a tr
 
 For this tutorial we are going to mint and NFT on Amoy, this means we can use the following:
 
-- bundlerUrl --> https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
+- bundlerUrl -->
+  ```
+  https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
+  ```
 - preferred ERC20 token for gas payment --> 0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31 (USDC)
 - nft address --> 0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e
 
