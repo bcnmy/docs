@@ -318,7 +318,9 @@ Usually, this occurs when incorrect apiKey is used or the address is not added
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/funding-message/{{paymasterId}}
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/funding-message/{{paymasterId}}
+```
 
 Headers
 
