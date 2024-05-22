@@ -17,6 +17,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 - Node.js installed on your machine
 - Biconomy Paymaster API key
+
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
 ```
 https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44)
