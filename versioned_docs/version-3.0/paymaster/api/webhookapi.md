@@ -15,7 +15,9 @@ To obtain an authToken required in the header, go to your account settings page 
 
 > **_POST Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
 
 Parameters
 
@@ -62,7 +64,9 @@ Responses
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
 
 Parameters
 
@@ -114,7 +118,9 @@ Query Params
 
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
 
 Parameters
 
@@ -176,7 +182,10 @@ Active must be a boolean value
 
 > **_DELETE Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/webhook
+```
+
 
 Parameters
 
