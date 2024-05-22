@@ -15,7 +15,9 @@ To obtain an authToken required in the header, you can generate one in your acco
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
 
 Parameters
 
@@ -61,7 +63,9 @@ Responses
 
 > **_POST Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster
+```
 
 Parameters
 
@@ -137,7 +141,9 @@ Alternatively, if you already have a DApp registered, you can find the "apiKey" 
 
 > **_POST Request_**
 
-URL: "https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract"
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+``` 
 
 Parameters
 
@@ -192,7 +198,9 @@ Smart Contract Already Exists
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
 
 Parameters
 
@@ -238,7 +246,9 @@ Header
 
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+``` 
 
 Parameters
 
@@ -318,7 +328,8 @@ Usually, this occurs when incorrect apiKey is used or the address is not added
 
 > **_GET Request_**
 
-```
+
+``` 
 https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/funding-message/{{paymasterId}}
 ```
 
@@ -358,7 +369,9 @@ Responses
 
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io//api/v2/public/sdk/paymaster
+```
+https://paymaster-dashboard-backend.prod.biconomy.io//api/v2/public/sdk/paymaster
+```
 
 Parameters
 
@@ -430,7 +443,9 @@ Usually, this occurs when incorrect apiKey or authToken is used
 
 > **_DELETE Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/smart-contract
+``` 
 
 Parameters
 
@@ -480,7 +495,9 @@ Responses
 
 > **_POST Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
 
 Parameters
 
@@ -552,7 +569,9 @@ Responses
 
 > **_POST Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
 
 Parameters
 
@@ -615,7 +634,9 @@ Responses
 
 > **_POST Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
 
 Parameters
 
@@ -673,8 +694,9 @@ Responses
 
 > **_GET Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
-
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy
+```
 Parameters
 
 Header
@@ -744,8 +766,9 @@ Responses
 
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/limit/:policyId
-
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/limit/:policyId
+```
 Parameters
 
 Header
@@ -796,7 +819,9 @@ On a successful update, the cycle of the spending limit will be reset and the ne
 #### 12. Pause a paymaster rule
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/deactivate/:policyId
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/deactivate/:policyId
+```
 
 Parameters
 
@@ -830,8 +855,9 @@ Responses
 #### 13. Unpause a paymaster rule
 > **_PATCH Request_**
 
-URL: https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/activate/:policyId
-
+```
+https://paymaster-dashboard-backend.prod.biconomy.io/api/v2/public/sdk/paymaster-policy/activate/:policyId
+```
 Parameters
 
 Header

@@ -13,7 +13,10 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 ### Prerequisites
 
 - Biconomy Paymaster API key
-- A Bundler url if you don't want to use the testnet one (for Amoy you can use https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44)
+- A Bundler url if you don't want to use the testnet one, for Amoy you can use
+```
+https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
+```
 - A user with a connected signer (viem WalletClient or ethers.Wallet for example)
 
 ### Step 1: Create the SmartAccountClient for the user
