@@ -216,13 +216,13 @@ const userOp = await smartAccount.buildUserOp([tx1]);
        nonceOverride?: number;
      };
      // nonceOptions usage
-     let i = 0;
+     let i = 1;
      const userOp = await smartAccount.buildUserOp([tx1], {
        nonceOptions: { nonceKey: i++ },
      });
      ```
 
-     nonceKey can be initialised at any arbitrary number and incremented as one builds user operations to be sent in parallel. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be used if you know the order in which you are sending the userOps.
+     nonceKey can be initialised at any arbitrary number which is not 0 and incremented as one builds user operations to be sent in parallel. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be used if you know the order in which you are sending the userOps.
 
   5. forceEncodeForBatch (`boolean`): When transactions array is passed, by default Biconomy sdk encodes it for executeBatch() executor function and execute() function for single transaction. However, in some cases, there may be a preference to encode a single transaction for a batch, especially if the custom module only decodes for executeBatch. In such cases, set this flag to true; otherwise, it remains false by default.
 

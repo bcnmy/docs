@@ -407,13 +407,13 @@ const { transactionHash, userOperationReceipt } = await waitForTxHash();
        nonceOverride?: number;
      };
      // nonceOptions usage
-     let i = 0;
+     let i = 1;
      const userOp = await smartAccount.buildUserOp([tx1], {
        nonceOptions: { nonceKey: i++ },
      });
      ```
 
-     nonceKey can be initialised at any arbitrary number and incremented as one builds user operations to be sent in parallel. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be used if you know the order in which you are sending the userOps.
+     nonceKey can be initialised at any arbitrary number which is not 0 and incremented as one builds user operations to be sent in parallel. The nonceKey will create a batch or space in which the nonce can safely increment without colliding with other transactions. The nonceOverride will directly override the nonce and should only be used if you know the order in which you are sending the userOps.
 
   3. params (`ModuleInfo`): This param can be used to pass session validation module parameters. Refer to the tutorial to learn more about the session keys.
 
