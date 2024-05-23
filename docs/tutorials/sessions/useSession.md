@@ -14,12 +14,14 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 - Biconomy Paymaster API key
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
+
 ```
 https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 ```
-- A session granted by a user [see the previous step](./createSession), with the sessionKey for the session
 
-### Step 1
+- A session granted by a user [see the previous step](./createSession)
+
+### Step 1: Setup
 
 ```typescript
 import { polygonAmoy as chain } from "viem/chains";
@@ -36,12 +38,6 @@ const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 const withSponsorship = {
   paymasterServiceData: { mode: PaymasterMode.SPONSORED },
 };
-
-// session data retreived from the previous step.
-const session: Session = {
-  sessionStorageClient,
-  sessionIDInfo,
-};
 ```
 
 ### Step 2: Create the sessionSmartAccountClient
@@ -56,7 +52,7 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     paymasterUrl,
     chainId,
   },
-  session
+  sessionStorageClient.smartAccountAddress // Storage client, full Session or simply the smartAccount address if using default storage for your environment
 );
 ```
 
