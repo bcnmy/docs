@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Custom Validation Module"
-sidebar_position: 9
+sidebar_position: 7
 title: Custom Validation Module
 ---
 
