@@ -45,6 +45,36 @@ Utilize the session key validation [module](https://docs.biconomy.io/Modules/ses
 
 Set following env flag to true before running the app. `export BICONOMY_SDK_DEBUG=true`
 
+**What are 2D Nonces?**
+
+In account abstraction, user operations use two-dimensional (2D) nonces. This is different from EOAs (Externally Owned Accounts), which currently use one-dimensional nonces. For EOAs, every transaction increases the nonce by 1, following a sequential order.
+
+A User Operation is similar in that it can generate sequential nonces (when nonceKey is 0), but it also has the ability to use 2D nonces (when nonceKey > 0), allowing for parallel user operations.
+
+Here's what happens under the hood of the getNonce() method:
+```jsx
+return nonceSequenceNumber[sender][key] | (uint256(key) << 64)
+```
+
+The current key sequence is combined with a left-shifted value of the same key. The end result is a single number representing all possible 2D nonces.
+
+**What are Parallel User Ops?**
+
+Parallel user ops are user operations that are not dependent on each other and can be executed simultaneously, without waiting for any previous user operation to be executed on-chain.
+
+Let's take an example of a user executing some actions on a Dapp. The Dapp wants to batch transactions together to provide a better user experience (UX).
+
+```jsx
+Bob swaps 1 ETH for 4000 USDC
+Bob swaps 4000 USDC for 7000 BICO
+Bob buys 1 NFT for 100 USDC
+```
+
+Transactions 1 and 2 will be batched into one user operation and will be executed in order, while transaction 3 will be added in another user operation.
+
+The second user operation can be sent after the first one is done, using a sequential nonce, this means it will wait for the first user operation to be settled on-chain. However, we can do better. By using 2D nonces, we can send both user ops at the same time. While Bob is swapping ETH for USDC and USDC for BICO, he can also buy that cool NFT simultaneously. 
+
+Here is a tutorial on how to send parallel user ops with the Biconomy SDK: https://docs.biconomy.io/tutorials/parallelUserOps
 ## Bundler & Paymaster
 
 **Is the bundler URL the same for all chains?**
