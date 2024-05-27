@@ -38,6 +38,7 @@ const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 const withSponsorship = {
   paymasterServiceData: { mode: PaymasterMode.SPONSORED },
 };
+const usersSmartAccountAddress = sessionStorageClient.smartAccountAddress;
 ```
 
 ### Step 2: Create the sessionSmartAccountClient
@@ -47,12 +48,12 @@ The [createSessionSmartAccountClient](https://bcnmy.github.io/biconomy-client-sd
 ```typescript
 const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
   {
-    accountAddress: sessionStorageClient.smartAccountAddress, // Dapp can set the account address on behalf of the user
+    accountAddress: usersSmartAccountAddress, // Dapp can set the account address on behalf of the user
     bundlerUrl,
     paymasterUrl,
     chainId,
   },
-  sessionStorageClient.smartAccountAddress // Storage client, full Session or simply the smartAccount address if using default storage for your environment
+  usersSmartAccountAddress // Storage client, full Session or simply the smartAccount address if using default storage for your environment
 );
 ```
 
@@ -66,13 +67,14 @@ const nftMintTx = {
   data: encodeFunctionData({
     abi: parseAbi(["function safeMint(address _to)"]),
     functionName: "safeMint",
-    args: [sessionStorageClient.smartAccountAddress],
+    args: [usersSmartAccountAddress],
   }),
 };
 
 const params = await getSingleSessionTxParams(
-  sessionStorageClient.smartAccountAddress,
-  chain
+  usersSmartAccountAddress,
+  chain,
+  0 // index of the relevant policy leaf to the tx
 );
 
 const { wait } = await emulatedUsersSmartAccount.sendTransaction(nftMintTx, {
