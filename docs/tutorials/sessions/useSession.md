@@ -70,10 +70,15 @@ const nftMintTx = {
   }),
 };
 
-const { wait } = await emulatedUsersSmartAccount.sendTransaction(
-  nftMintTx,
-  withSponsorship
+const params = await getSingleSessionTxParams(
+  sessionStorageClient.smartAccountAddress,
+  chain
 );
+
+const { wait } = await emulatedUsersSmartAccount.sendTransaction(nftMintTx, {
+  ...params,
+  ...withSponsorship,
+});
 
 const { success } = await wait();
 ```
