@@ -9,7 +9,7 @@ sidebar_position: 4
 
 :::tip
 
-Check out an end-to-end integration of Privy with Biconomy on this [example app](https://biconomy-example.privy.io/) and [repo](https://github.com/privy-io/biconomy-example)!
+Check out an end-to-end integration of Privy with Biconomy on this [example app](https://aaprivy.vercel.app/) and [repo](https://github.com/bcnmy/biconomy_privy_example)!
 
 :::
 

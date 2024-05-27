@@ -52,6 +52,12 @@ createAccount();
 
 ## Using Ethers Signer from Browser EOA
 
+:::tip
+
+Check out an end-to-end integration of Browser EOA with Biconomy on this [example app](https://aaeoa.vercel.app/) and [repo](https://github.com/bcnmy/biconomy_eoa_example)!
+
+:::
+
 ### Dependencies
 
 You will need the following dependencies to create a Smart Account this way:
