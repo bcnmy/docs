@@ -29,6 +29,7 @@ import {
   createSession,
   Rule,
   Policy,
+  createSessionKeyEOA
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
@@ -42,6 +43,7 @@ const usersSmartAccount = await createSmartAccountClient({
   biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
   bundlerUrl: config.bundlerUrl,
 });
+const smartAccountAddress = await usersSmartAccount.getAccountAddress();
 ```
 
 ### Step 2: Generate a store for your dapp's session keys
