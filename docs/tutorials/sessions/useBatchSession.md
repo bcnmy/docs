@@ -34,6 +34,7 @@ import {
   DEFAULT_ERC20_MODULE,
   Session,
   DEFAULT_ABI_SVM_MODULE,
+  getBatchSessionTxParams
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";

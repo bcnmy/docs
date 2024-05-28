@@ -29,6 +29,7 @@ import {
   createSession,
   Rule,
   Policy,
+  createSessionKeyEOA
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
@@ -49,6 +50,8 @@ const usersSmartAccount = await createSmartAccountClient({
 This function is used to create a new session key and store it in the sessionStorageClient.
 You can feed the sessionStorageClient into the `createSessionKeyEOA(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
 When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store.
+
+For SessionFile storage, you need to create two files in the root folder, with ${ smartAccountAddress }_sessions.json and ${ smartAccountAddress }_signers.json names. For instance, if the account address is 0x123 then create 0x123_sessions.json and 0x123_signers.json.
 
 ```typescript
 const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(

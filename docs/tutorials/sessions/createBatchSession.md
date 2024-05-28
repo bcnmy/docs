@@ -30,6 +30,10 @@ import {
   createSession,
   Rule,
   Policy,
+  createSessionKeyEOA,
+  createBatchSession,
+  createERC20SessionDatum,
+  createABISessionDatum
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
@@ -116,7 +120,7 @@ The session keys are imbibed with the relevant permissions when the user signs o
 
 ```typescript
 const { wait, session } = await createBatchSession(
-  smartAccountFour,
+  usersSmartAccount,
   sessionStorageClient,
   policyLeaves,
   withSponsorship
