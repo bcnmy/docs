@@ -5,7 +5,7 @@ title: Sessions
 
 The following tutorials provide a detailed, step-by-step guide on how to integrate Account Abstraction Sessions. If you're developing in TypeScript, it's recommended to utilize the SDK.
 
-Before proceeding it is worth understanding an important data model that integrators are expected to understand prior to working with sessions (both single and batch): The [Rule](#rules)
+Before proceeding it is worth understanding an important data model that integrators are expected to understand prior to working with sessions (both single and batch). It is a low-level building block upon which sessions are built: the [Rule](#rules)
 
 ```typescript
 /** Defines permissions for the args of an allowed method. */
