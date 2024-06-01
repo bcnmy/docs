@@ -49,7 +49,7 @@ Every Rule works with a single static argument or a 32-byte chunk of the dynamic
 
 Since the ABI encoding translates every static parameter into a 32-byte word, even the shorter ones (like `address` or `uint8`), every Rule defines a desired relation (`Condition`) between n-th 32-byte word of the `calldata` and a reference Value (also a 32-byte word).
 
-So, when dApp is creating a `_sessionKeyData` to enable a session, it should convert every shorter static arg to a 32bytes word to match how it will be actually ABI encoded in the `userOp.callData`.
+When creating `_sessionKeyData` to enable a session, shorter static arguments need to be converted to 32-byte words to match how they will be encoded in the `userOp.callData`.
 
 For the dynamic args, like `bytes`, every 32-bytes word of the `calldata` such as offset of the bytes arg, length of the bytes arg, and n-th 32-bytes word of the bytes arg can be controlled by a dedicated Rule.
 
