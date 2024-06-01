@@ -68,7 +68,7 @@ Let's see how the offset is applied to extract the to and value arguments of a t
 Extracting `to` Argument:
 The `to` argument is the first parameter of the transfer function, representing the recipient address. Every `calldata` starts with the 4-bytes method selector. However, the ABI SVM is adding the selector length itself, so for the first argument the offset will always be 0 (0x00);
 
-Extracting value Argument:
+Extracting `value` Argument:
 The value argument is the second parameter of the transfer function, representing the amount of tokens to be transferred. To extract this argument, the offset for the value parameter would be calculated based on its position in the function `calldata`. Despite to is a 20-bytes address, in the solidity abi encoding it is always appended with zeroes to a 32-bytes word. So the offset for the second 32-bytes argument (which isthe value in our case) will be 32 (or 0x20 in hex).
 
 If you need to deal with dynamic-length arguments, such as bytes, please refer to this document https://docs.soliditylang.org/en/v0.8.24/abi-spec.html#function-selector-and-argument-encoding
