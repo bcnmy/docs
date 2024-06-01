@@ -65,7 +65,7 @@ In the contract, the offset is used to calculate the position within the `callda
 
 Let's see how the offset is applied to extract the to and value arguments of a transfer(address to, uint256 value) method:
 
-Extracting to Argument:
+Extracting `to` Argument:
 The `to` argument is the first parameter of the transfer function, representing the recipient address. Every `calldata` starts with the 4-bytes method selector. However, the ABI SVM is adding the selector length itself, so for the first argument the offset will always be 0 (0x00);
 
 Extracting value Argument:
