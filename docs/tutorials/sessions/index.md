@@ -45,7 +45,7 @@ export type HardcodedReference = {
 
 Rules define permissions for the args of an allowed method.
 The purpose of these rules is to define what arguments are allowed in a transaction during a session. 
-Every Rule works with a single static arg or a 32-byte chunk of the dynamic arg.
+Every Rule works with a single static argument or a 32-byte chunk of the dynamic argument.
 
 Since the ABI Encoding translates every static param into a 32-bytes word, even the shorter ones (like `address` or `uint8`), every Rule defines a desired relation (`Condition`) between n-th 32bytes word of the `calldata` and a reference Value (that is obviously a 32-bytes word as well).
 
