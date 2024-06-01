@@ -76,7 +76,7 @@ to learn more about how dynamic arguments are represented in the `calldata` and 
 
 ### Condition
 
-The condition is used to determine how we are checking the actual reference value, the condition can be of many types:
+The condition specifies the type of comparison to be made with the reference value, the condition can be of following types:
 
 - 0: EQUAL
 - 1: LESS_THAN_OR_EQUAL
