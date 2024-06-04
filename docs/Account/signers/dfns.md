@@ -9,7 +9,7 @@ Dfns provides wallet-as-a-service infrastructure that enables crypto developers 
 
 :::tip
 
-Check out an end-to-end integration of DFNS with Biconomy on this [repo](https://github.com/dfnsext/typescript-sdk/tree/m/examples/ethersjs/v5/biconomy-aa-gasless)!
+Check out an end-to-end integration of DFNS with Biconomy on this [repo](https://github.com/dfns/dfns-sdk-ts/tree/m/examples/libs/viem/biconomy-aa-gasless)!
 
 :::
 
