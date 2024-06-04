@@ -41,7 +41,10 @@ const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 const token = "0x747A4168DB14F57871fa8cda8B5455D8C2a8e90a";
 const amount = parseUnits(".0001", 6);
 const withSponsorship = {
-  paymasterServiceData: { mode: PaymasterMode.SPONSORED },
+  paymasterServiceData: {
+    mode: PaymasterMode.SPONSORED,
+    skipPatchCallData: true, // Required when mode is set to ERC20
+  },
 };
 ```
 
