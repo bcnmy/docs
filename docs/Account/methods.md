@@ -257,7 +257,7 @@ type SupportedToken = {
 };
 ```
 
-### [getGasEstimates()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#getGasEstimates)
+### [getGasEstimate()](https://bcnmy.github.io/biconomy-client-sdk/classes/BiconomySmartAccountV2.html#getGasEstimate)
 
 Get a gas estimate in wei for given tx(s)
 
@@ -280,7 +280,7 @@ const tx = {
   to: nftAddress,
   data: encodedCall,
 };
-const amountInWei = await smartAccount.getGasEstimates([tx, tx], {
+const amountInWei = await smartAccount.getGasEstimate([tx, tx], {
   paymasterServiceData: {
     mode: PaymasterMode.SPONSORED,
   },
