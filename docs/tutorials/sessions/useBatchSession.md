@@ -34,7 +34,7 @@ import {
   DEFAULT_ERC20_MODULE,
   Session,
   DEFAULT_ABI_SVM_MODULE,
-  getBatchSessionTxParams
+  getBatchSessionTxParams,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
@@ -60,7 +60,7 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     paymasterUrl,
     chainId,
   },
-  sessionStorageClient.smartAccountAddress, // Storage client, full Session or simply the smartAccount address if using default storage for your environment
+  session, // a) Full Session, b) storage client or c) the smartAccount address (if using default storage for your environment)
   true // if in batch session mode
 );
 ```
