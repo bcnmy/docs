@@ -1,4 +1,4 @@
-[**@biconomy/use-aa**](../index.md) • **Hook**
+[**@biconomy/use-aa**](./index.md) • **Hook**
 
 ---
 

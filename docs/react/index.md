@@ -4,7 +4,7 @@ sidebar_position: 2
 title: "Quickstart: React"
 ---
 
-[**@biconomy/use-aa**](README.md) • **Docs**
+[**@biconomy/use-aa**](https://github.com/bcnmy/useAA) • **Docs**
 
 0. Clone the code
 1. Create a Next.js project
