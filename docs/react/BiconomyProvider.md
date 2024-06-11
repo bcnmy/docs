@@ -1,4 +1,4 @@
-[**@biconomy/use-aa**](./index.md) • **Docs**
+[**@biconomy/use-aa**](./index.md) • **Provider**
 
 ---
 
