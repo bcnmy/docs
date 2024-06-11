@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useBatchSession
+[@biconomy/use-aa](./index.md) / useBatchSession
 
 ## Description
 

@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useUserOpWait
+[@biconomy/use-aa](./index.md) / useUserOpWait
 
 ## Description
 

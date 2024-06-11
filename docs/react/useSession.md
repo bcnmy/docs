@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useSession
+[@biconomy/use-aa](./index.md) / useSession
 
 ## Description
 

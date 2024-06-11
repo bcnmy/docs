@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useSendWithdrawals
+[@biconomy/use-aa](./index.md) / useSendWithdrawals
 
 ## Description
 

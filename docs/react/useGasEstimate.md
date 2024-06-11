@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useSendTransaction
+[@biconomy/use-aa](./index.md) / useSendTransaction
 
 ## Description
 

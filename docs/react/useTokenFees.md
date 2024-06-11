@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useTokenFees
+[@biconomy/use-aa](./index.md) / useTokenFees
 
 ## Description
 

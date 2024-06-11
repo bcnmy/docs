@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useSendGasTokenTransaction
+[@biconomy/use-aa](./index.md) / useSendGasTokenTransaction
 
 ## Description
 

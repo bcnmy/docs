@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useSendSponsoredTransaction
+[@biconomy/use-aa](./index.md) / useSendSponsoredTransaction
 
 ## Description
 

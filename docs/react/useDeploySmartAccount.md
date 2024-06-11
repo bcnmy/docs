@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](../index.md) / useDeploySmartAccount
+[@biconomy/use-aa](./index.md) / useDeploySmartAccount
 
 ## Description
 
