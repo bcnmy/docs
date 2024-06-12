@@ -21,7 +21,7 @@ type BiconomyContextPayload = {
   /** The URL of the Biconomy bundler. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
   bundlerUrl: string;
   /** The paymaster API key. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
-  paymasterApiKey: string;
+  biconomyPaymasterApiKey: string;
 };
 ```
 

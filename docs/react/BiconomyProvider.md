@@ -17,7 +17,7 @@ type BiconomyProviderProps = {
   /** The children of the provider */
   children: ReactNode;
   /** The Biconomy configuration */
-  config: { bundlerUrl: string; paymasterApiKey: string };
+  config: { bundlerUrl: string; biconomyPaymasterApiKey: string };
   /** The Tanstack Query client instance */
   queryClient: QueryClient | undefined;
 };
@@ -36,7 +36,7 @@ type BiconomyContextPayload = {
   /** The URL of the Biconomy bundler. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
   bundlerUrl: string;
   /** The paymaster API key. This can be retrieved from the Biconomy dashboard: https://dashboard.biconomy.io */
-  paymasterApiKey: string;
+  biconomyPaymasterApiKey: string;
 };
 ```
 
@@ -49,7 +49,7 @@ import { polygonAmoy } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import { bundlerUrl, paymasterApiKey } from "./config";
+import { bundlerUrl, biconomyPaymasterApiKey } from "./config";
 
 const wagmiConfig = createConfig({
   chains: [polygonAmoy],
@@ -64,7 +64,7 @@ ReactDOM.createRoot(document?.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <BiconomyProvider
           config={{
-            paymasterApiKey,
+            biconomyPaymasterApiKey,
             bundlerUrl,
           }}
           queryClient={queryClient}
