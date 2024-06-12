@@ -27,7 +27,7 @@ type UseGasEstimateProps = {
 
 ## Returns
 
-bigint
+The amount of gas in wei as a `bigint`
 
 ## Example
 
