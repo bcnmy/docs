@@ -25,7 +25,7 @@ type UseTokenFeesProps = {
 };
 ```
 
-## Payload
+## Returns
 
 ```ts
 type PaymasterFeeQuote = {

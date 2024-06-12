@@ -41,7 +41,7 @@ type UseSendGasTokenTransactionProps = {
 };
 ```
 
-## Payload
+## Returns
 
 [userOpReceipt](../../Bundler/api/get-useroperation-receipt#response)
 

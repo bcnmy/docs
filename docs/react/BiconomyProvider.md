@@ -23,7 +23,7 @@ type BiconomyProviderProps = {
 };
 ```
 
-## Payload
+## Returns
 
 ```ts
 type BiconomyContextPayload = {

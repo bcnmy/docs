@@ -25,7 +25,7 @@ type UseGasEstimateProps = {
 };
 ```
 
-## Payload
+## Returns
 
 bigint
 

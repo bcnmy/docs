@@ -8,7 +8,7 @@
 
 This function will retreive a smart account and associated information from the BiconomyProvider for 'dropping down' to the core SDK
 
-## Payload
+## Returns
 
 ```ts
 type BiconomyContextPayload = {
