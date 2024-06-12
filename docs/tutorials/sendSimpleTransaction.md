@@ -7,6 +7,10 @@ title: "Send a simple transaction"
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+:::info
+Building in React? [check here](../react/useSendTransaction.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to send a simple transaction using ethers.js/viem and the Biconomy Smart Account with the `@biconomy/account` SDK.
@@ -109,10 +113,10 @@ const userOpResponse = await smartWallet.sendTransaction(tx);
 const { transactionHash } = await userOpResponse.waitForTxHash();
 console.log("Transaction Hash", transactionHash);
 
-const userOpReceipt  = await userOpResponse.wait();
-if(userOpReceipt.success == 'true') { 
-  console.log("UserOp receipt", userOpReceipt)
-  console.log("Transaction receipt", userOpReceipt.receipt)
+const userOpReceipt = await userOpResponse.wait();
+if (userOpReceipt.success == "true") {
+  console.log("UserOp receipt", userOpReceipt);
+  console.log("Transaction receipt", userOpReceipt.receipt);
 }
 ```
 

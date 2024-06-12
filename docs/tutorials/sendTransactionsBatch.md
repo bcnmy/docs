@@ -7,6 +7,10 @@ title: "Send a batch of transactions"
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+:::info
+Building in React? [check here](../react/useSendTransaction.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to send a batch of transactions using ethers.js/viem and the Biconomy Smart Account with the `@biconomy/account` SDK.
@@ -15,9 +19,11 @@ This tutorial demonstrates how to send a batch of transactions using ethers.js/v
 
 - Node.js installed on your machine
 - A Bundler url if you don't want to use the testnet one ,for Amoy you can use
+
 ```
 https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 ```
+
 - An rpc url (for Amoy can use https://rpc-amoy.polygon.technology/)
 - An address to send the transaction to (replace `0xaddress`)
 
@@ -112,10 +118,10 @@ Specify the recipient's address and transaction data to build the simple transac
 const userOpResponse = await smartWallet.sendTransaction(txs);
 const { transactionHash } = await userOpResponse.waitForTxHash();
 console.log("Transaction Hash", transactionHash);
-const userOpReceipt  = await userOpResponse.wait();
-if(userOpReceipt.success == 'true') { 
-  console.log("UserOp receipt", userOpReceipt)
-  console.log("Transaction receipt", userOpReceipt.receipt)
+const userOpReceipt = await userOpResponse.wait();
+if (userOpReceipt.success == "true") {
+  console.log("UserOp receipt", userOpReceipt);
+  console.log("Transaction receipt", userOpReceipt.receipt);
 }
 ```
 

@@ -4,6 +4,10 @@ sidebar_position: 3
 title: "Create a batch session"
 ---
 
+:::info
+Building in React? [check here](../../react/useCreateBatchSession.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how a dapp can create a number of simple sessions using viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key and a connected user. The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
@@ -14,6 +18,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 - Biconomy Paymaster API key
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
+
 ```
 https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 ```
@@ -33,7 +38,7 @@ import {
   createSessionKeyEOA,
   createBatchSession,
   createERC20SessionDatum,
-  createABISessionDatum
+  createABISessionDatum,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
