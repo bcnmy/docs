@@ -4,6 +4,10 @@ sidebar_position: 2
 title: "Use a session"
 ---
 
+:::info
+Building in React? [check here](../../react/useSession.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to use a simple session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
@@ -32,7 +36,7 @@ import {
   Rule,
   Policy,
   Session,
-  getSingleSessionTxParams
+  getSingleSessionTxParams,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";

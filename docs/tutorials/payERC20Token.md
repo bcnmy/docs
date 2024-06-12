@@ -7,6 +7,10 @@ title: "Pay gas in ERC20 tokens"
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+:::info
+Building in React? [check here](../react/useSendGasTokenTransaction.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to use the Biconomy Smart Account to perform a transaction with ERC-20 token payment. The provided code includes creating a Biconomy Smart Account, encoding a function call, building a transaction, and sending it with ERC-20 token payment.
@@ -75,9 +79,9 @@ const {
   success,
 } = await wait();
 
-if(success == 'true') { 
-  console.log("UserOp receipt", receipt)
-  console.log("Transaction receipt", receipt.receipt)
+if (success == "true") {
+  console.log("UserOp receipt", receipt);
+  console.log("Transaction receipt", receipt.receipt);
 }
 ```
 
@@ -108,9 +112,9 @@ const {
   success,
 } = await wait();
 
-if(success == 'true') { 
-  console.log("UserOp receipt", receipt)
-  console.log("Transaction receipt", receipt.receipt)
+if (success == "true") {
+  console.log("UserOp receipt", receipt);
+  console.log("Transaction receipt", receipt.receipt);
 }
 ```
 

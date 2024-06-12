@@ -4,6 +4,10 @@ sidebar_position: 4
 title: "Use a batch session"
 ---
 
+:::info
+Building in React? [check here](../../react/useBatchSession.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to use a multi session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createBatchSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
