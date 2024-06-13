@@ -8,6 +8,8 @@
 
 Creates a sessions to be used when submitting batches of txs simultaneously in the context of a users smart account.
 
+Please carefully read [this](../tutorials/sessions/index.md) information regarding `Rules` and how they should be constructed before building your Policy.
+
 ## Parameters
 
 ```ts
