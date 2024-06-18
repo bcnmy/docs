@@ -151,14 +151,10 @@ const {
 
 return (
   <div>
-    <button
-      className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded cursor-pointer"
-      type="button"
-      onClick={mintNftTx}
-    >
+    <button type="button" onClick={mintNftTx}>
       {waitIsLoading || isPending ? "Executing..." : "Mint an NFT"}
     </button>
-    {(error || waitError) && <div>ERROR</div>}
+    {(error || waitError) ?? ""}
   </div>
 );
 ```

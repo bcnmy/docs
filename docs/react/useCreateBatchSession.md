@@ -8,6 +8,8 @@
 
 Creates a sessions to be used when submitting batches of txs simultaneously in the context of a users smart account.
 
+Please carefully read [this](../tutorials/sessions/index.md) information regarding `Rules` and how they should be constructed before building your Policy.
+
 ## Parameters
 
 ```ts
@@ -101,13 +103,10 @@ const CreateBatchSession = ({ userSmartAccountAddress }) => {
     });
 
   useEffect(() => {
-    if (waitIsSuccess && waitData?.success === "true") {
-      console.log(
-        "Successful mint: " +
-          `${polygonAmoy.blockExplorers.default.url}/tx/${waitData?.receipt?.transactionHash}`
-      );
+    if (waitData?.success === "true") {
+      console.log(waitData?.receipt?.transactionHash);
     }
-  }, [waitIsSuccess]);
+  }, [waitData]);
 
   return (
     <ErrorGuard errors={[error, waitError]}>
