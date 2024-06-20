@@ -42,7 +42,7 @@ These contracts are deployed across all supported chains.
 
 | Contract Name                | Address                                    |
 | ---------------------------- | ------------------------------------------ |
-| Points Operator address | 0x2cf491602ad22944D9047282aBC00D3e52F56B37 |
+| Points Operator address | 0xfe867385e5C7CC9d0C00F2D80719f8Cb7836E3f2 |
 | Deployed Smart Contract | 0x7f4FB6A17A84aAc3e16BbC0C8d03Ca563aB0c483 |
 <!-- Chirag to confirm
 | Gas Estimator                | 0x984a2441A196bf03d85fce4fe8c7A211249eDaAf |
