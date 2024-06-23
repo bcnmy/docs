@@ -27,7 +27,7 @@ of the params object that is supported on [`pm_sponsorUserOperation`](https://do
 
 ## Request
 
-```json
+```javascript
 {
   "method": "pm_getPaymasterStubData",
   "params": [
@@ -64,7 +64,7 @@ of the params object that is supported on [`pm_sponsorUserOperation`](https://do
 
 ## Response
 
-```json
+```javascript
 {
   "jsonrpc": "2.0",
   "id": 1693369916,
