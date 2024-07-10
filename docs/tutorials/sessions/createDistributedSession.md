@@ -17,7 +17,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 ### What are Distributed Sessions?
 
-Biconomy's [DAN]((https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents)) (Delegated Authorisation Network) is an off-chain authorization network designed to enhance the security, customizability & speed of managing authorization keys for our smart accounts. Our distributed sessions feature leverages DAN (with the economic security of [Eigenlayer AVS](https://docs.eigenlayer.xyz/eigenlayer/overview)) to offer developers a comprehensive, zero-development, zero-custody sessions solution, which can be leveraged directly from your frontend. [Read more about Distributed Sessions here](/Modules/DistributedSessions)
+Biconomy's [DAN (Delegated Authorisation Network)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents)  is an off-chain authorization network designed to enhance the security, customizability & speed of managing authorization keys for our smart accounts. Our distributed sessions feature leverages DAN (with the economic security of [Eigenlayer AVS](https://docs.eigenlayer.xyz/eigenlayer/overview)) to offer developers a comprehensive, zero-development, zero-custody sessions solution, which can be leveraged directly from your frontend. [Read more about Distributed Sessions here](/Modules/DistributedSessions)
 
 ### Prerequisites
 
