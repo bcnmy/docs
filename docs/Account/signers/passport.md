@@ -93,12 +93,12 @@ const fallbackProvider = http("https://rpc.ankr.com/eth_sepolia");
 
 await passport.setupEncryption();
 // Only need to call this once to register the user identifier you authenticate with to your passport application scope
-await passport.delegatedRegisterAccount({ username: "test" });
+await passport.distributedRegisterAccount({ username: "test" });
 
 passport.setUserData({ username: "test" });
 
 const signer = await createPassportClient(
-  await passport.getDelegatedAuthenticatedHeaders(),
+  await passport.getDistributedAuthenticatedHeaders(),
   fallbackProvider,
   sepolia,
   "https://tiramisu.0xpass.io"

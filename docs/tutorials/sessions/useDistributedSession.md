@@ -1,16 +1,16 @@
 ---
-sidebar_label: "Use a session"
-sidebar_position: 5
-title: "Use a session"
+sidebar_label: "Use a distributed session"
+sidebar_position: 3
+title: "Use a distributed session"
 ---
 
 :::info
-Building in React? [check here](../../react/useSession.md)
+Building in React? [check here](../../react/useDistributedSession.md)
 :::
 
 ### Overview
 
-This tutorial demonstrates how to use a simple session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
+This tutorial demonstrates how to use a distributed session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createDistributedSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
 
 You can get your Biconomy Paymaster API key from the dashboard [here](https://dashboard.biconomy.io/).
 
@@ -23,7 +23,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 ```
 
-- A session granted by a user [see the previous step](./createSession)
+- A session granted by a user [see the previous step](./createDistributedSession.md)
 
 ### Step 1: Setup
 
@@ -39,9 +39,6 @@ import {
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-const withSponsorship = {
-  },
-};
 const usersSmartAccountAddress = sessionStorageClient.smartAccountAddress;
 ```
 
@@ -57,7 +54,8 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     paymasterUrl,
     chainId,
   },
-  "DEFAULT_STORE"
+  "DEFAULT_STORE",
+  "DISTRIBUTED"
 );
 ```
 

@@ -2,11 +2,11 @@
 
 ---
 
-[@biconomy/use-aa](./index.md) / useBatchSession
+[@biconomy/use-aa](./index.md) / useDistributedSession
 
 ## Description
 
-Uses a previously created batch session ([see here](./useCreateBatchSession.md)) which batches transactions in the context of a users smart account.
+Uses a previously created session ([see here](./useCreateDistributedSession.md)) which sends transactions in the context of a users smart account.
 
 ## Parameters
 
@@ -16,14 +16,13 @@ type Transaction = {
   value: BigNumberish | string;
   data: string;
 };
-
-type UseBatchSessionProps = {
+type UseDistributedSessionProps = {
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions;
-  /** The transactions to be batched. */
+  /** The whitelisted transaction */
   transactions: Transaction | Transaction[];
-  /** An array of indexes for the transactions corresponding to the relevant session IDs. */
-  correspondingIndexes: number[];
+  /** The index of the relevant session leaf. Defaults to zero */
+  correspondingIndex?: number;
   /** The smart account address to be used for the session. Defaults to the connected smartAccount. */
   smartAccountAddress?: Hex
 };
@@ -44,12 +43,12 @@ type UserOpResponse = {
 ## Example
 
 ```tsx
-import { useBatchSession, useUserOpWait, Options } from "@biconomy/useAA";
+import { useDistributedSession, useUserOpWait, Options } from "@biconomy/useAA";
 import { polygonAmoy } from "viem/chains";
 import { encodeFunctionData, parseAbi } from "wagmi";
 
-const UseBatchSession = ({ smartAccountAddress }) => {
-  const { mutate, data: userOpResponse, error, isPending } = useBatchSession();
+export const UseDistributedSession = ({ smartAccountAddress }) => {
+  const { mutate, data: userOpResponse, error, isPending } = useDistributedSession();
 
   const {
     isLoading: waitIsLoading,
@@ -58,19 +57,16 @@ const UseBatchSession = ({ smartAccountAddress }) => {
     data: waitData,
   } = useUserOpWait(userOpResponse);
 
-  const nftMintTx: Transaction = {
-    to: "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e",
-    data: encodeFunctionData({
-      abi: parseAbi(["function safeMint(address _to)"]),
-      functionName: "safeMint",
-      args: [smartAccountAddress],
-    }),
-  };
-
-  const txTwice = () =>
+  const mintTx = () =>
     mutate({
-      transactions: [nftMintTx, nftMintTx],
-      correspondingIndexes: [0, 1],
+      transactions: {
+        to: "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e",
+        data: encodeFunctionData({
+          abi: parseAbi(["function safeMint(address _to)"]),
+          functionName: "safeMint",
+          args: [smartAccountAddress],
+        }),
+      },
       options: Options.Sponsored,
     });
 
@@ -83,8 +79,8 @@ const UseBatchSession = ({ smartAccountAddress }) => {
   return (
     <ErrorGuard errors={[error, waitError]}>
       <Button
-        title="Use Session to Mint Twice"
-        onClickFunc={txTwice}
+        title="Use Distributed Session to Mint"
+        onClickFunc={mintTx}
         isLoading={isPending || waitIsLoading}
       />
     </ErrorGuard>
@@ -94,4 +90,4 @@ const UseBatchSession = ({ smartAccountAddress }) => {
 
 ## Source
 
-[hooks/useBatchSession.ts:91](https://github.com/bcnmy/useAA/blob/main/src/hooks/useBatchSession.ts#L91)
+[hooks/useDistributedSession.ts:87](https://github.com/bcnmy/useAA/blob/main/src/hooks/useDistributedSession.ts#L87)

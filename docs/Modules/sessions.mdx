@@ -1,0 +1,55 @@
+---
+sidebar_label: "Sessions"
+sidebar_position: 1
+description: "Overview of Sessions"
+---
+
+# Utilizing Session Keys with Biconomy
+
+## Introduction
+
+Session keys are a fundamental feature of Biconomy’s Smart Accounts, providing versatile applications that enhance both security and user experience. Understanding the potential of session keys can significantly benefit your dApp development.
+
+If you are already familiar with session keys, you can skip to the [tutorial](/tutorials/sessions).
+
+## What Are Session Keys?
+
+In traditional Externally Owned Account (EOA) wallets, a single private key is used to sign all transactions. This means whoever holds the key controls the wallet, making the protection of the seed phrase (a representation of the private key) crucial.
+
+However, with Biconomy’s account abstraction wallets, the wallet can be decoupled from the key. This allows the wallet owner to assign different keys with specific permissions to execute transactions on their behalf. These permissions can be revoked at any time.
+
+These scoped keys, known as "session keys," can be configured to send a limited set of transactions under specific conditions and within a defined time window.
+
+## Why Use Session Keys?
+
+![SessionKeysDiagram](../images/modules/sessionKeys.png)
+
+### Streamlined User Interactions
+
+Session keys simplify the authentication process, enabling users to interact with dApps without needing to confirm every action using their primary key. Users can create a session key with permissions specific to the app, allowing for smoother and faster user interactions.
+
+### Automation
+
+With session keys, users can delegate specific permissions, automating actions within predefined limits. This is particularly useful for recurring payments, contract interactions, or any activity that benefits from automation.
+
+### Enhanced Security
+
+By minimizing the exposure of the main private key, session keys add a layer of security. Even if a session key is compromised, the attacker does not gain access to the user's main account and funds. This layered security approach helps mitigate risks associated with key management.
+
+
+## Applications of Session Keys
+
+### Skipping Confirmations
+
+For highly interactive applications, requiring users to manually confirm each transaction can be cumbersome. By creating a session key for the user's current session, you can scope the key to send only the necessary transactions for your application. The key expires after the session, allowing the user to interact with your app seamlessly without needing to use their primary key for every transaction.
+
+### Delegating Transactions
+
+Traditionally, transactions need to be initiated by the wallet owner. However, in some cases, automated transactions offer the best user experience. For instance, in a lending protocol, you might want to automatically close a user's position if it is in danger of liquidation. A session key can be created to allow this action only under specific conditions, and this key can be managed by a "watcher" (potentially your own server) that executes the transaction when necessary.
+
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```

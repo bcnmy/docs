@@ -23,6 +23,8 @@ type UseSessionProps = {
   transactions: Transaction | Transaction[];
   /** The index of the relevant session leaf. Defaults to zero */
   correspondingIndex?: number;
+  /** The smart account address to be used for the session. Defaults to the connected smartAccount. */
+  smartAccountAddress?: Hex
 };
 ```
 
