@@ -74,6 +74,7 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
 Next we can use the users smartAccount in execute txs. Txs generated for the emulatedSmartAccount must be relevant to the policies over which the user has previously signed.
 
 ```typescript
+
 const transferTx: Transaction = {
   to: token,
   data: encodeFunctionData({
