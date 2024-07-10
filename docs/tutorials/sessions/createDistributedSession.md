@@ -1,18 +1,23 @@
 ---
-sidebar_label: "Create a session"
-sidebar_position: 4
-title: "Create a session"
+sidebar_label: "Create a distributed session"
+sidebar_position: 2
+title: "Create a distributed session"
 ---
 
 :::info
-Building in React? [check here](../../react/useCreateSession.md)
+Building in React? [check here](../../react/useCreateDistributedSession.md)
 :::
 
 ### Overview
 
-This tutorial demonstrates how a dapp can create a simple session using viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key and a connected user. The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
+This tutorial demonstrates how a dapp can create a distributed session using viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key and a connected user. The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
 
 You can get your Biconomy Paymaster API key from the dashboard [here](https://dashboard.biconomy.io/).
+
+
+### What are Distributed Sessions?
+
+Biconomy's [DAN (Delegated Authorisation Network)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents)  is an off-chain authorization network designed to enhance the security, customizability & speed of managing authorization keys for our smart accounts. Our distributed sessions feature leverages DAN (with the economic security of [Eigenlayer AVS](https://docs.eigenlayer.xyz/eigenlayer/overview)) to offer developers a comprehensive, zero-development, zero-custody sessions solution, which can be leveraged directly from your frontend. [Read more about Distributed Sessions here](/Modules/DistributedSessions)
 
 ### Prerequisites
 
@@ -32,16 +37,13 @@ import { polygonAmoy as chain } from "viem/chains";
 import {
   PaymasterMode,
   createSmartAccountClient,
-  createSession,
+  createDistributedSession,
   Rule,
   Policy,
-  createSessionKeyEOA,
+  createDistributedSessionKeyEOA,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
-const withSponsorship = {
-  paymasterServiceData: { mode: PaymasterMode.SPONSORED },
-};
 
 // Create Biconomy Smart Account instance
 const usersSmartAccount = await createSmartAccountClient({
@@ -78,10 +80,8 @@ const rules: Rule[] = [
 ];
 
 /** The policy is made up of a list of rules applied to the contract method with and interval */
-const policy: Policy[] = [
+const policy: PolicyLeaf[] = [
   {
-    /** The address of the sessionKey upon which the policy is to be imparted. Can be omitted */
-    sessionKeyAddress,
     /** The address of the contract to be included in the policy */
     contractAddress: nftAddress,
     /** The specific function selector from the contract to be included in the policy */
@@ -104,12 +104,13 @@ const policy: Policy[] = [
 The session keys are imbibed with the relevant permissions when the user signs over the policy. The session can then be accessed from the sessionStorageClient and later used, even after the usersSmartAccount signer has left the dapp.
 
 ```typescript
-const { wait, session } = await createSession(
-  usersSmartAccount,
+const { wait, session } = await createDistributedSession({
+  smartAccountClient: usersSmartAccount,
   policy,
-  undefined,
-  withSponsorship
-);
+  {
+    paymasterServiceData: { mode: PaymasterMode.SPONSORED },
+  }
+});
 
 const {
   receipt: { transactionHash },
