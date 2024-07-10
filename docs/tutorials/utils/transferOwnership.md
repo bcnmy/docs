@@ -12,7 +12,7 @@ import TabItem from "@theme/TabItem";
 This tutorial provides insights into how to transfer the ownership of a smart account.
 
 :::caution
-Transfer Ownership is performed within the framework of either the [ECDSA Ownership Module](https://docs.biconomy.io/Modules/ecdsa) or the [Multichain Validation Module](https://docs.biconomy.io/Modules/multichain). If you are utilizing the [Session Key Manager](https://docs.biconomy.io/Modules/sessionvalidationmodule), you will need to **recreate the smart account client with the new owner** (new signer). This involves specifying the smart account address and recreating the session. 
+Transfer Ownership is performed within the framework of either the [ECDSA Ownership Module](https://docs.biconomy.io/Modules/ecdsa) or the [Multichain Validation Module](https://docs.biconomy.io/Modules/multichain). If you are utilizing the [Session Key Manager](https://docs.biconomy.io/Modules/sessions/sessionvalidationmodule), you will need to **recreate the smart account client with the new owner** (new signer). This involves specifying the smart account address and recreating the session. 
 :::
 
 
