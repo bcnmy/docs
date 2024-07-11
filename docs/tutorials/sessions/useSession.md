@@ -57,7 +57,8 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     paymasterUrl,
     chainId,
   },
-  "DEFAULT_STORE"
+  "DEFAULT_STORE",
+  "SIMPLE" // OR "DISTRIBUTED_KEY" if storing private keys on DAN
 );
 ```
 

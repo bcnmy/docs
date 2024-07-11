@@ -2,11 +2,11 @@
 
 ---
 
-[@biconomy/use-aa](./index.md) / useDistributedSession
+[@biconomy/use-aa](./index.md) / useSessionWithDistributedKey
 
 ## Description
 
-Uses a previously created session ([see here](./useCreateDistributedSession.md)) which sends transactions in the context of a users smart account.
+Uses a previously created session ([see here](./useCreateSessionWithDistributedKey.md)) which sends transactions in the context of a users smart account.
 
 ## Parameters
 
@@ -16,7 +16,7 @@ type Transaction = {
   value: BigNumberish | string;
   data: string;
 };
-type UseDistributedSessionProps = {
+type UseSessionWithDistributedKeyProps = {
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions;
   /** The whitelisted transaction */
@@ -43,12 +43,12 @@ type UserOpResponse = {
 ## Example
 
 ```tsx
-import { useDistributedSession, useUserOpWait, Options } from "@biconomy/useAA";
+import { useSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy/useAA";
 import { polygonAmoy } from "viem/chains";
 import { encodeFunctionData, parseAbi } from "wagmi";
 
-export const UseDistributedSession = ({ smartAccountAddress }) => {
-  const { mutate, data: userOpResponse, error, isPending } = useDistributedSession();
+export const UseSessionWithDistributedKey = ({ smartAccountAddress }) => {
+  const { mutate, data: userOpResponse, error, isPending } = useSessionWithDistributedKey();
 
   const {
     isLoading: waitIsLoading,
@@ -68,6 +68,7 @@ export const UseDistributedSession = ({ smartAccountAddress }) => {
         }),
       },
       options: Options.Sponsored,
+      smartAccountAddress
     });
 
   useEffect(() => {
@@ -90,4 +91,4 @@ export const UseDistributedSession = ({ smartAccountAddress }) => {
 
 ## Source
 
-[hooks/useDistributedSession.ts:87](https://github.com/bcnmy/useAA/blob/main/src/hooks/useDistributedSession.ts#L87)
+[hooks/useSessionWithDistributedKey.ts:87](https://github.com/bcnmy/useAA/blob/main/src/hooks/useSessionWithDistributedKey.ts#L87)

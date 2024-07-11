@@ -68,6 +68,7 @@ export const UseSession = ({ smartAccountAddress }) => {
         }),
       },
       options: Options.Sponsored,
+      smartAccountAddress
     });
 
   useEffect(() => {

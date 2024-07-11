@@ -9,19 +9,21 @@ sidebar_position: 2
 
 Biconomy’s Distributed Sessions are a powerful feature designed to enhance the efficiency, security, and user experience of decentralized applications. Leveraging Biconomy’s Delegated Authorisation Network (DAN), our distributed sessions solution provide a seamless way to manage authorization keys on MPC network and automate transactions securely, within given permissions context and efficiently. This product offers developers a zero-development, zero-custody sessions solution that can be easily integrated directly from the frontend.
 
-[skip to the tutorial](../../tutorials/sessions/createDistributedSession)
+[skip to the tutorial](../../tutorials/sessions/createSessionWithDistributedKey)
 
 
 ## What is DAN?
 
-The Delegated Authorisation Network (DAN) is Biconomy’s off-chain authorization network, which leverages the economic security of Eigenlayer AVS. It is designed to enhance the security, interoperability, and speed of managing authorization keys for smart accounts and it's sessions. Read more about DAN [here](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents)
+![FullStakAA](../../images/modules/dan.png)
+
+The Delegated Authorisation Network (DAN) is Biconomy’s blockchain-agnostic programmable signing infrastructure, which leverages the economic security of Eigenlayer AVS. It is designed to enhance the security, customizability, and speed of managing authorization keys for smart accounts. Read more about DAN [here](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents)
 
 ## Benefits of Distributed Sessions with DAN
 
 **Enhanced Security:** Distributed sessions minimise the exposure of the private key by storing shards in the nodes and generating signature if certain conditions are met. In context of a session, they are ephemeral and even if a session key is compromised, the attacker gains limited access, protecting the user's main account and funds.
 
-**Improved User Experience:** Users no longer need to confirm every single transaction. Instead, they can authorize a session key with predefined permissions for a specific period, allowing for smoother and more seamless interactions with dApps.
+**Interoperable:** By storing private keys on the DAN network, even if the browser crashes or browser storage is compromised, users can still access their sessions.
 
-**Automation and Efficiency:** Distributed sessions enable the automation of repetitive or time-sensitive tasks. Users can set up session keys to handle recurring payments or interact with smart contracts automatically when certain conditions are met, reducing the need for manual intervention and enhancing operational efficiency.
+**Automation and Efficiency:** Users can leave an intent, go to sleep and automated transactions will be processed in a secure way.
 
-[Get started](../../tutorials/sessions/createDistributedSession)
+[Get started](../../tutorials/sessions/createSessionWithDistributedKey)

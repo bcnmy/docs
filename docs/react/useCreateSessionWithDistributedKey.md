@@ -2,7 +2,7 @@
 
 ---
 
-[@biconomy/use-aa](./index.md) / useCreateDistributedSession
+[@biconomy/use-aa](./index.md) / useCreateSessionWithDistributedKey
 
 ## Description
 
@@ -35,7 +35,7 @@ type Policy = {
   valueLimit: bigint;
 };
 
-type UseCreateDistributedSessionProps = {
+type UseCreateSessionWithDistributedKeyProps = {
   /** The array of policy elements to be applied to the session. */
   policy: Policy[];
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
@@ -58,11 +58,11 @@ type UserOpResponse = {
 ## Example
 
 ```tsx
-import { useCreateDistributedSession, useUserOpWait, Options } from "@biconomy/useAA";
+import { useCreateSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy/useAA";
 import { polygonAmoy } from "viem/chains";
 import { encodeFunctionData, parseAbi } from "wagmi";
 
-const CreateDistributedSession = ({ userSmartAccountAddress }) => {
+const CreateSessionWithDistributedKey = ({ userSmartAccountAddress }) => {
   const policy = [
     {
       contractAddress: "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e",
@@ -82,7 +82,7 @@ const CreateDistributedSession = ({ userSmartAccountAddress }) => {
     },
   ];
 
-  const { mutate, data: userOpResponse, error, isPending } = useCreateDistributedSession();
+  const { mutate, data: userOpResponse, error, isPending } = useCreateSessionWithDistributedKey();
 
   const {
     isLoading: waitIsLoading,
@@ -97,7 +97,7 @@ const CreateDistributedSession = ({ userSmartAccountAddress }) => {
     }
   }, [waitData]);
 
-  const createDistributedSessionHandler = () =>
+  const createSessionWithDistributedKeyHandler = () =>
     mutate({
       policy,
       options: Options.Sponsored,
@@ -107,7 +107,7 @@ const CreateDistributedSession = ({ userSmartAccountAddress }) => {
     <ErrorGuard errors={[error, waitError]}>
       <Button
         title="Create a Distributed session"
-        onClickFunc={createDistributedSessionHandler}
+        onClickFunc={createSessionWithDistributedKeyHandler}
         isLoading={isPending || waitIsLoading}
       />
     </ErrorGuard>
@@ -117,4 +117,4 @@ const CreateDistributedSession = ({ userSmartAccountAddress }) => {
 
 ## Source
 
-[hooks/useCreateDistributedSession.ts:97](https://github.com/bcnmy/useAA/blob/main/src/hooks/useCreateDistributedSession.ts#L97)
+[hooks/useCreateSessionWithDistributedKey.ts:97](https://github.com/bcnmy/useAA/blob/main/src/hooks/useCreateSessionWithDistributedKey.ts#L97)
