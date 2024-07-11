@@ -117,7 +117,7 @@ const { wait, session } = await createSession(
   policy,
   undefined,
   withSponsorship,
-  true // if using a distributed key
+  true // if using a distributed key with DAN
 );
 
 const {

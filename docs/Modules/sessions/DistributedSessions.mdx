@@ -11,7 +11,6 @@ Biconomy’s Distributed Sessions are a powerful feature designed to enhance the
 
 [skip to the tutorial](../../tutorials/sessions/createSession)
 
-
 ## What is DAN?
 
 ![FullStakAA](../../images/modules/dan.png)
@@ -24,6 +23,18 @@ The Delegated Authorisation Network (DAN) is Biconomy’s blockchain-agnostic pr
 
 **Interoperable:** By storing private keys on the DAN network, even if the browser crashes or browser storage is compromised, users can still access their sessions.
 
-**Automation and Efficiency:** Users can leave an intent, go to sleep and automated transactions will be processed in a secure way.
+**Automation and Efficiency:** Users can leave an intent, go to sleep and automated transactions will still be processed in a secure way.
+
+## How Can I use it?
+
+Currently when you create a session our [ABI session validation module](./abiSessionValidationModule) is used, and permissions are stored on-chain. However, the private key associated with these permissions can be stored in DAN by setting the `storeSessionKeyInDAN` to `true` while calling the [`createSession()`](../../tutorials/sessions/createSession) helper.
+If you want to generate a session key with dan, or sign a message using the session key then the following utility helpers can be used:
+
+- [getSessionKeyWithDan()](../../tutorials/utils/getSessionKeyWithDan)
+- [signWithDan()](../../tutorials/utils/signWithDan)
+
+### Coming Soon...
+
+We will soon also facilitate the permissions object being passed to DAN (off chain) which will omit the need to use our ABI SVM and associated gas costs. 
 
 [Get started](../../tutorials/sessions/createSession)
