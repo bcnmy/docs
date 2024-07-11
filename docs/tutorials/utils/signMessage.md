@@ -1,12 +1,12 @@
-# signWithDan
+# danSDK.signMessage()
 
 ## Description
 
-The `signWithDan` function is used to sign a message using our The Delegated Authorisation Network [(DAN)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents).
+The `signMessage` function is used to sign a message using our The Delegated Authorisation Network [(DAN)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents).
 
 ## Parameters
 
-The payload from the [getSessionKeyWithDan](./getSessionKeyWithDan.md) helper:
+The payload from the [generateSessionKey](./generateSessionKey.md) helper:
 
 ```ts
 export type DanModuleInfo = {
@@ -35,13 +35,14 @@ a signature of type `Hex`
 
 ```ts
 
-import { signWithDan } from "@biconomy/account";
+import { danSDK } from "@biconomy/account";
+
 const objectToSign: DanSignatureObject = {
   userOperation: UserOperationStruct,
   entryPointVersion: "v0.6.0",
   entryPointAddress: "0x5ff137d4b0fdcd49dca30c7cf57e578a026d2789",
-  chainId
+  chainId: 80002
 }
 const messageToSign = JSON.stringify(objectToSign)
-const signature: Hex = await signWithDan(messageToSign, sessionSignerData.danModuleInfo); // From the getSessionKeyWithDan helper
+const signature: Hex = await danSDK.signMessage(messageToSign, sessionSignerData.danModuleInfo); // From the generateSessionKey helper
 ```

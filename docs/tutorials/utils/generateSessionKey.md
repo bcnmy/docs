@@ -1,8 +1,8 @@
-# getSessionKeyWithDan
+# generateSessionKey
 
 ## Description
 
-The `getSessionKeyWithDan` function is used to generate a new session key from our The Delegated Authorisation Network [(DAN)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents). This key is used under the hood of our sessions offering and us used to validate user operations without the user's direct involvement. Can be used later with the [`signWithDan()` helper](./signWithDan) to send userOps.
+The `generateSessionKey` function is used to generate a new session key from our The Delegated Authorisation Network [(DAN)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents). This key is used under the hood of our sessions offering and is used to validate user operations without the user's direct involvement. Can be used later with the [`signMessage()` helper](./signMessage) to send userOps.
 
 ## Parameters
 
@@ -45,7 +45,7 @@ export type DanSessionKeyPayload = {
 ## Example
 
 ```ts
-import { getSessionKeyWithDan } from "@biconomy/account";
+import { danSDK } from "@biconomy/account";
 
 const smartAccount = await createSmartAccountClient({
   signer: walletClient,
@@ -53,11 +53,7 @@ const smartAccount = await createSmartAccountClient({
   biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 });
 
-const sessionKeyPayload = await getSessionKeyWithDan({
-    smartAccountClient: smartAccount,
-    browserWallet: new NodeWallet(walletClient),
-    duration
-});
+const sessionKeyPayload = await danSDK.generateSessionKey({ smartAccountClient: smartAccount });
 
-console.log(sessionKey.sessionKeyEOA) // "0x..."
+console.log(sessionKeyPayload.sessionKeyEOA) // "0x..."
 ```
