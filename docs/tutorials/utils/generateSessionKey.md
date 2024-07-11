@@ -1,4 +1,4 @@
-# generateSessionKey
+# danSDK.generateSessionKey()
 
 ## Description
 
