@@ -1,0 +1,22 @@
+---
+sidebar_label: "DAN"
+sidebar_position: 13
+description: "DAN"
+---
+
+# DAN
+
+[Read more about Distributed Keys here](../../../Modules/sessions/DistributedSessions)
+
+```ts
+import { danSDK } from "@biconomy/account"
+
+const danSessionKeyPayload = await danSDK.generateSessionKey(...options);
+const signature = await danSDK.signMessage("My message", ...moreOptions);
+```
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```

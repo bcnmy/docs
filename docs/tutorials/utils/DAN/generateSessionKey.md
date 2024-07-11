@@ -1,4 +1,4 @@
-# danSDK.generateSessionKey()
+# generateSessionKey
 
 ## Description
 
@@ -29,7 +29,7 @@ export type DanSessionKeyPayload = {
   sessionKeyEOA: Hex;
   /** Dan Session MPC key ID*/
   mpcKeyId: string;
-  /** Dan Session ephemeral private key without 0x prefi x*/
+  /** Dan Session ephemeral private key without 0x prefix */
   hexEphSKWithout0x: string;
   /** Number of nodes that participate in keygen operation. Also known as n. */
   partiesNumber: number;
@@ -45,7 +45,7 @@ export type DanSessionKeyPayload = {
 ## Example
 
 ```ts
-import { danSDK } from "@biconomy/account";
+import { generateSessionKey } from "@biconomy/account";
 
 const smartAccount = await createSmartAccountClient({
   signer: walletClient,
@@ -53,7 +53,7 @@ const smartAccount = await createSmartAccountClient({
   biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
 });
 
-const sessionKeyPayload = await danSDK.generateSessionKey({ smartAccountClient: smartAccount });
+const sessionKeyPayload = await generateSessionKey({ smartAccountClient: smartAccount });
 
 console.log(sessionKeyPayload.sessionKeyEOA) // "0x..."
 ```

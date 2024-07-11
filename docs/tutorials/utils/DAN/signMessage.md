@@ -1,4 +1,4 @@
-# danSDK.signMessage()
+# signMessage
 
 ## Description
 
@@ -6,7 +6,7 @@ The `signMessage` function is used to sign a message using our The Delegated Aut
 
 ## Parameters
 
-The payload from the [generateSessionKey](./generateSessionKey.md) helper:
+The payload from the [generateSessionKey](./generateSessionKey) helper:
 
 ```ts
 export type DanModuleInfo = {
@@ -35,7 +35,7 @@ a signature of type `Hex`
 
 ```ts
 
-import { danSDK } from "@biconomy/account";
+import { signMessage } from "@biconomy/account";
 
 const objectToSign: DanSignatureObject = {
   userOperation: UserOperationStruct,
@@ -44,5 +44,5 @@ const objectToSign: DanSignatureObject = {
   chainId: 80002
 }
 const messageToSign = JSON.stringify(objectToSign)
-const signature: Hex = await danSDK.signMessage(messageToSign, sessionSignerData.danModuleInfo); // From the generateSessionKey helper
+const signature: Hex = await signMessage(messageToSign, options); // Options found from the generateSessionKey payload
 ```
