@@ -27,7 +27,7 @@ https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f
 
 ### Distributed Session Keys
 
-The Delegated Authorisation Network [(DAN)]((https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents)) is Biconomy’s blockchain-agnostic programmable signing infrastructure, which leverages the economic security of the [Eigenlayer AVS](https://docs.eigenlayer.xyz/eigenlayer/overview). It is designed to enhance the security, customizability, and speed of managing authorization keys for smart accounts, Offering developers a comprehensive, zero-development, zero-custody sessions solution, which can be leveraged directly from your frontend [Read more about Distributed Keys here](../../Modules/sessions/DistributedSessions)
+The Delegated Authorisation Network [(DAN)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents) is Biconomy’s blockchain-agnostic programmable signing infrastructure, which leverages the economic security of the [Eigenlayer AVS](https://docs.eigenlayer.xyz/eigenlayer/overview). It is designed to enhance the security, customizability, and speed of managing authorization keys for smart accounts, Offering developers a comprehensive, zero-development, zero-custody sessions solution, which can be leveraged directly from your frontend [Read more about Distributed Keys here](../../Modules/sessions/DistributedSessions)
 
 :::info
 You can save your private keys on DAN by setting the `storeSessionKeyInDAN` to `true` while calling `createSession()`
