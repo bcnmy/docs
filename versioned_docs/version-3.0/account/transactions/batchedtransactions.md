@@ -1,7 +1,6 @@
 ---
 sidebar_label: "Batching Transactions"
 sidebar_position: 5
-custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/tutorials/batchedtransactions.md
 ---
 
 # Batching Transactions
