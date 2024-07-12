@@ -23,5 +23,5 @@ sidebar_position: 12
 
 | Audit Title            | Link                                                                                                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Zellic Paymaster       | [Link to report](https://github.com/bcnmy/biconomy-paymasters/blob/features/SMA-329-improve-repo/audits/Final%20Biconomy%20Security%20Assessment%20Report.pdf) |
-| Zellic Token Paymaster | [Link to report](https://github.com/bcnmy/biconomy-paymasters/blob/features/SMA-329-improve-repo/audits/Token%20Paymaster%20-%20Zellic%20Audit%20Report.pdf)   |
+
+
