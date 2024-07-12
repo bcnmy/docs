@@ -26,7 +26,7 @@ const biconomyPaymaster = await createPaymaster({ paymasterUrl }); // Found at h
 
 After setting up your smart account as mentioned above you can start using the Paymaster.
 
-## [getPaymasterFeeQuotesOrData](https://bcnmy.github.io/biconomy-client-sdk/classes/Paymaster.html#getPaymasterFeeQuotesOrData)()
+## [getPaymasterFeeQuotesOrData]()
 
 This method is particularly useful for `ERC20` mode and is used to get the fee quotes information for the ERC20 tokens.
 
