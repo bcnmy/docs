@@ -4,6 +4,15 @@
 
 [@biconomy/use-aa](./index.md) / useCreateSessionWithDistributedKey
 
+:::info 
+These hooks are a beta feature and are subject to change. To use this feature use our beta package `@biconomy-devx/use-aa` instead of `@biconomy/use-aa`, add the following bunfig.toml configuration:
+```toml
+[install.scopes]
+silencelaboratories = { token = "$VITE_SILENCE_LABS_NPM_TOKEN", url = "https://registry.npmjs.org" }
+```
+And obtain the `VITE_SILENCE_LABS_NPM_TOKEN` from our support team, and add it to your .env file.
+:::
+
 ## Description
 
 Creates a session to be used when submitting tx in the context of a users smart account.

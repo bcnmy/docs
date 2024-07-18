@@ -8,6 +8,15 @@ description: "DAN"
 
 [Read more about Distributed Keys here](../../../Modules/sessions/DistributedSessions)
 
+:::info 
+These helpers are a beta feature and are subject to change. To use this feature use our beta package `@biconomy-devx/account` instead of `@biconomy/account`, add the following bunfig.toml configuration:
+```toml
+[install.scopes]
+silencelaboratories = { token = "$VITE_SILENCE_LABS_NPM_TOKEN", url = "https://registry.npmjs.org" }
+```
+And obtain the `VITE_SILENCE_LABS_NPM_TOKEN` from our support team, and add it to your .env file
+:::
+
 ```ts
 import { danSDK } from "@biconomy/account"
 
