@@ -67,7 +67,7 @@ type UserOpResponse = {
 ## Example
 
 ```tsx
-import { useCreateSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy/useAA";
+import { useCreateSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy-devx/useAA";
 import { polygonAmoy } from "viem/chains";
 import { encodeFunctionData, parseAbi } from "wagmi";
 
