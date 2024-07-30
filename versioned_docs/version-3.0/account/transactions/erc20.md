@@ -1,7 +1,6 @@
 ---
 sidebar_label: "Pay Gas with ERC20 Tokens"
 sidebar_position: 3
-custom_edit_url: https://github.com/bcnmy/docs/blob/master/docs/tutorials/erc20.md
 ---
 
 # Pay gas with ERC20 Tokens
