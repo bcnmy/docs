@@ -7,6 +7,10 @@ title: "Send a gasless transaction"
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+:::info
+Building in React? [check here](../react/useSendSponsoredTransaction.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to send a simple transaction using ethers.js/viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key.
@@ -19,9 +23,11 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 - Biconomy Paymaster API key
 
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
+
 ```
-https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44)
+https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 ```
+
 - An rpc url (for Amoy can use https://rpc-amoy.polygon.technology/)
 - An address to send the transaction to (replace `0xaddress`)
 
@@ -117,14 +123,14 @@ Specify the recipient's address and transaction data to build the simple transac
 ```typescript
 // Send the transaction and get the transaction hash
 const userOpResponse = await smartWallet.sendTransaction(tx, {
-  paymasterServiceData: {mode: PaymasterMode.SPONSORED},
+  paymasterServiceData: { mode: PaymasterMode.SPONSORED },
 });
 const { transactionHash } = await userOpResponse.waitForTxHash();
 console.log("Transaction Hash", transactionHash);
-const userOpReceipt  = await userOpResponse.wait();
-if(userOpReceipt.success == 'true') { 
-  console.log("UserOp receipt", userOpReceipt)
-  console.log("Transaction receipt", userOpReceipt.receipt)
+const userOpReceipt = await userOpResponse.wait();
+if (userOpReceipt.success == "true") {
+  console.log("UserOp receipt", userOpReceipt);
+  console.log("Transaction receipt", userOpReceipt.receipt);
 }
 ```
 

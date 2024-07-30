@@ -4,6 +4,10 @@ sidebar_position: 2
 title: "Use a session"
 ---
 
+:::info
+Building in React? [check here](../../react/useSession.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how to use a simple session with viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key, and a valid session setup during the [previous step](./createSession). The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
@@ -32,12 +36,14 @@ import {
   Rule,
   Policy,
   Session,
+  getSingleSessionTxParams,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 const withSponsorship = {
   paymasterServiceData: { mode: PaymasterMode.SPONSORED },
 };
+const usersSmartAccountAddress = sessionStorageClient.smartAccountAddress;
 ```
 
 ### Step 2: Create the sessionSmartAccountClient
@@ -47,12 +53,12 @@ The [createSessionSmartAccountClient](https://bcnmy.github.io/biconomy-client-sd
 ```typescript
 const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
   {
-    accountAddress: sessionStorageClient.smartAccountAddress, // Dapp can set the account address on behalf of the user
+    accountAddress: usersSmartAccountAddress, // Dapp can set the account address on behalf of the user
     bundlerUrl,
     paymasterUrl,
     chainId,
   },
-  sessionStorageClient.smartAccountAddress // Storage client, full Session or simply the smartAccount address if using default storage for your environment
+  usersSmartAccountAddress // Storage client, full Session or simply the smartAccount address if using default storage for your environment
 );
 ```
 
@@ -66,14 +72,20 @@ const nftMintTx = {
   data: encodeFunctionData({
     abi: parseAbi(["function safeMint(address _to)"]),
     functionName: "safeMint",
-    args: [sessionStorageClient.smartAccountAddress],
+    args: [usersSmartAccountAddress],
   }),
 };
 
-const { wait } = await emulatedUsersSmartAccount.sendTransaction(
-  nftMintTx,
-  withSponsorship
+const params = await getSingleSessionTxParams(
+  usersSmartAccountAddress,
+  chain,
+  0 // index of the relevant policy leaf to the tx
 );
+
+const { wait } = await emulatedUsersSmartAccount.sendTransaction(nftMintTx, {
+  ...params,
+  ...withSponsorship,
+});
 
 const { success } = await wait();
 ```

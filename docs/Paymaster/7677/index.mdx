@@ -1,0 +1,26 @@
+---
+sidebar_position: 4
+title: ERC-7677 Paymaster Web Service Capability
+---
+
+The Biconomy Paymaster supports ERC-7677 standard, which is an [EIP-5792](https://eips.ethereum.org/EIPS/eip-5792) compliant capability for paymasters
+to standardize the interaction between wallets and ERC-4337 paymaster web services.
+
+You can read more about ERC-7677 [here](https://eips.ethereum.org/EIPS/eip-7677).
+
+:::info
+The current support of ERC-7677 is only for Entry Point v6, deployed at: 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789
+:::
+
+:::info
+Currently, the Biconomy SDK does not support 7677 capabilities. You can either directly interact with
+Biconomy Paymaster Service using JSON RPC calls as described in the upcoming sections
+or refer to [this playground](https://github.com/arcticfloyd1984/7677-playground) that uses
+Safe Smart Account with Pimlico's permissionless.js SDK's 7677 paymaster client to send user operation
+:::
+
+```mdx-code-block
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />
+```

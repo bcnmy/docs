@@ -24,7 +24,7 @@ These contracts are deployed across all supported chains.
 | Smart Account Factory V2        | 0x000000a56Aaca3e9a4C479ea6b6CD0DbcB6634F5 |
 | ECDSA Ownership Module          | 0x0000001c5b32F37F5beA87BDD5374eB2aC54eA8e |
 | Multichain Validation Module    | 0x000000824dc138db84FD9109fc154bdad332Aa8E |
-| Batched Session Router Module   | 0x000008dA71757C0E1D83CE56c823e25Aa49bC058 |
+| Batched Session Router Module   | 0x00000D09967410f8C76752A104c9848b57ebba55 |
 | ABI Session Validation Module   | 0x000006bC2eCdAe38113929293d241Cf252D91861 |
 | Session Key Manager V1          | 0x000002FbFfedd9B33F4E7156F2DE8D48945E7489 |
 | Verifying Paymaster V1          | 0x000031DD6D9D3A133E663660b959162870D755D4 |
@@ -42,7 +42,7 @@ These contracts are deployed across all supported chains.
 
 | Contract Name                | Address                                    |
 | ---------------------------- | ------------------------------------------ |
-| Points Operator address | 0x2cf491602ad22944D9047282aBC00D3e52F56B37 |
+| Points Operator address | 0xfe867385e5C7CC9d0C00F2D80719f8Cb7836E3f2 |
 | Deployed Smart Contract | 0x7f4FB6A17A84aAc3e16BbC0C8d03Ca563aB0c483 |
 <!-- Chirag to confirm
 | Gas Estimator                | 0x984a2441A196bf03d85fce4fe8c7A211249eDaAf |

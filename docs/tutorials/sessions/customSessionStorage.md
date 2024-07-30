@@ -6,7 +6,7 @@ title: "Create SessionStorageClient"
 
 # Create a custom SessionStorageClient
 
-Users can make their own implementation of Session Storage by implementing ISessionStorage interface and pass it to the SessionKeyManager module instance. Let's create a new file called customSession and start writing our own session storage.
+Users can make their own implementation of Session Storage by implementing [ISessionStorage](https://github.com/bcnmy/biconomy-client-sdk/blob/main/src/modules/interfaces/ISessionStorage.ts) interface and pass it to the SessionKeyManager module instance. Let's create a new file called customSession and start writing our own session storage.
 
 we will import following
 
@@ -21,7 +21,7 @@ import {
 
 We will need to implement all the interface methods.
 
-Here is an example of File storage implementation. It saves the session leafs data and signers in files. For testing purpose developer will need to create two files in the root folder for each user with $smartAccountAddress_sessions.json and $smartAccountAddress_signers.json names. These files can be created automatically, based on where and how it gets stored. For instance, if the account address is 0x123 then create 0x123_sessions.json and 0x123_signers.json to run this tutorial.
+Here is an example of [File storage implementation](https://github.com/bcnmy/biconomy-client-sdk/blob/main/src/modules/session-storage/SessionFileStorage.ts). It saves the session leafs data and signers in files. For testing purpose developer will need to create two files in the root folder for each user with $smartAccountAddress_sessions.json and $smartAccountAddress_signers.json names. These files can be created automatically, based on where and how it gets stored. For instance, if the account address is 0x123 then create 0x123_sessions.json and 0x123_signers.json to run this tutorial.
 
 ```typescript
 import * as fs from "fs";

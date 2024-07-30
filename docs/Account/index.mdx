@@ -1,23 +1,23 @@
 ---
 slug: /account
-sidebar_position: 3
+sidebar_position: 5
 title: Smart Accounts
-
 ---
+
 # Smart Accounts
 
-In the context ERC 4337, a smart account is a smart contract account used to manage assets and create `userOperations` or `userOps`. 
-These are pseudo-transaction objects that eventually execute as a transaction on the EVM. 
+In the context of ERC 4337, a smart account is a smart contract account used to manage assets and create `userOperations` or `userOps`.
+These are pseudo-transaction objects that eventually execute as a transaction on the EVM.
 They replace traditional Externally Owned Accounts (Wallets).
 
 ## The Biconomy Smart Account
 
 Biconomy Smart Accounts are an ERC 4337-compliant solution that works with any Paymaster and Bundler service.
 
-These Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account. 
+These Smart Accounts are signer agnostic, which allows you to use any authorization package of your choice as long as you can pass a signer to our SDK upon the creation of a Smart Account.
 Check out the different ways you can create a Biconomy Smart Account [here](/Account/signers).
 
-Smart Accounts are further enhanced by validation modules that allow you to execute arbitrary logic before validating a `userOp`. 
+Smart Accounts are further enhanced by validation modules that allow you to execute arbitrary logic before validating a `userOp`.
 This allows you, as a developer, to build modules that allow for session keys, multi-chain validation modules, pass keys, and more. Learn more about Modules [here](/modules).
 
 In the following sections, we provide a detailed overview of key concepts including

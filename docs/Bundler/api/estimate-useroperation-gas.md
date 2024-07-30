@@ -16,7 +16,7 @@ Body
 | Param   | Type   | Description                                                                                         | Required |
 | ------- | ------ | --------------------------------------------------------------------------------------------------- | -------- |
 | method  | string | Name of method in this case: eth_estimateUserOperationGas                                           | Required |
-| params  | array  | An array consisting of the Useroperation object, Bundler address and an optional State Override Set | Required |
+| params  | array  | An array consisting of the UserOperation object, EntryPoint contract address and an optional State Override Set | Required |
 | id      | string | id for request determined by client for JSON RPC requests                                           | Required |
 | jsonrpc | string | JSON RPC version in this case 2.0.0                                                                 | Required |
 

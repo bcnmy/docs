@@ -7,8 +7,8 @@ type FormValues = {
   paymasterUrl: string;
   userOp: string;
   mode: "SPONSORED" | "ERC20";
-  smartAccountName: "BICONOMY" | "INFINITISM";
-  smartAccountVersion: "1.0.0" | "2.0.0";
+  smartAccountName: "BICONOMY" | "INFINITISM" | "SAFE";
+  smartAccountVersion: "1.0.0" | "2.0.0" | "1.4.1";
   method: "pm_getFeeQuoteOrData" | "pm_sponsorUserOperation";
   preferredToken: string;
   tokenList: string;
@@ -30,9 +30,19 @@ export default function Explorer() {
 
   const validateVersion = (value) => {
     if (smartAccountName === "BICONOMY") {
-      return true;
-    } else if (smartAccountName === "INFINITISM") {
       if (value === "1.0.0") return true;
+      if (value === "2.0.0") return true;
+      return "Version 1.4.1 only supported on SAFE";
+    }
+    if (smartAccountName === "INFINITISM") {
+      if (value === "1.0.0") return true;
+      if (value === "2.0.0") return "Version 2.0.0 only supported on BICONOMY";
+      return "Version 1.4.1 only supported on SAFE";
+    }
+    if (smartAccountName === "SAFE") {
+      if (value === "1.4.1") return true;
+      if (value === "1.0.0")
+        return "Version 1.0.0 only supported on BICONOMY or INFINITISM";
       if (value === "2.0.0") return "Version 2.0.0 only supported on BICONOMY";
     }
     return true;
@@ -58,9 +68,9 @@ export default function Explorer() {
       // Define the allowed chain IDs
       const allowedChainIds = [
         1, 80002, 137, 97, 56, 1442, 1101, 42161, 42170, 420, 10, 43113, 43114,
-    84531, 8453, 59140, 59144, 5000, 5001, 204, 5611, 88888, 592, 88882, 81,
-    1115, 1116, 169, 3441005, 91715, 9980, 421614, 11155111, 84532, 168587773,
-    80085, 81457, 534351, 534352, 56400, 7000, 11155420
+        84531, 8453, 59140, 59144, 5000, 5001, 204, 5611, 88888, 592, 88882, 81,
+        1115, 1116, 169, 3441005, 91715, 9980, 421614, 11155111, 84532,
+        168587773, 80085, 81457, 534351, 534352, 56400, 7000, 11155420,
       ];
 
       // Check if the extracted chain ID is within the allowed values
@@ -199,7 +209,7 @@ export default function Explorer() {
         ],
       },
       null,
-      2,
+      2
     );
     setSample(raw);
   }, []);
@@ -263,6 +273,7 @@ export default function Explorer() {
             >
               <option value="BICONOMY">BICONOMY</option>
               <option value="INFINITISM">INFINITISM</option>
+              <option value="SAFE">SAFE</option>
             </select>
 
             <label className="inputLabel">Smart Account Version</label>
@@ -273,6 +284,7 @@ export default function Explorer() {
               className="inputField"
             >
               <option value="1.0.0">1.0.0</option>
+              <option value="1.4.1">1.4.1</option>
               <option value="2.0.0">2.0.0</option>
             </select>
             {errors.smartAccountVersion && (

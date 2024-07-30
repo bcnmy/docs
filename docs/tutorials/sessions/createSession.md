@@ -4,6 +4,10 @@ sidebar_position: 1
 title: "Create a session"
 ---
 
+:::info
+Building in React? [check here](../../react/useCreateSession.md)
+:::
+
 ### Overview
 
 This tutorial demonstrates how a dapp can create a simple session using viem and the Biconomy Smart Account with the `@biconomy/account` SDK. The provided code assumes you have a Biconomy Paymaster API key and a connected user. The following is appropriately viewed from the perspective of a dapp, looking to make txs on a users behalf.
@@ -12,11 +16,13 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 ### Prerequisites
 
-- Biconomy Paymaster API key
+- Biconomy Paymaster API key [If you are using paymaster rules in the dashbaord, make sure you have whitelisted session Module contract 0x000002fbffedd9b33f4e7156f2de8d48945e7489]
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
+
 ```
 https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44
 ```
+
 - A user with a connected signer (viem WalletClient or ethers.Wallet for example)
 
 ### Step 1: Create the SmartAccountClient for the user
@@ -29,6 +35,7 @@ import {
   createSession,
   Rule,
   Policy,
+  createSessionKeyEOA,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
@@ -42,6 +49,7 @@ const usersSmartAccount = await createSmartAccountClient({
   biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
   bundlerUrl: config.bundlerUrl,
 });
+const smartAccountAddress = await usersSmartAccount.getAccountAddress();
 ```
 
 ### Step 2: Generate a store for your dapp's session keys
