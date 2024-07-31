@@ -497,7 +497,7 @@ const { transactionHash, userOperationReceipt } = await waitForTxHash();
 
 ### buildUserOp( )
 
-This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as this step also involves estimating gas for the userOp internally)
+This method is used for configuring and setting up properties of the partial `userOp` object. It converts an individual transaction or batch of transactions into a partial user operation populating fields such as initCode, sender, nonce, maxFeePerGas, maxPriorityFeePerGas, callGasLimit, verificationGasLimit and preVerificationGas (as this step also involves estimating gas for the userOp internally and simulating both validation and execution of the user op)
 
 **Usage**
 
@@ -524,6 +524,10 @@ const tx1 = {
 
 const userOp = await smartAccount.buildUserOp([tx1]);
 ```
+
+:::note
+buildUserOp() also simulates the validation and the execution of the user operation, this method can be used to check if a user operation will be successfull or not
+:::
 
 **Parameters**
 
