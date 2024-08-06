@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Create a batch session"
-sidebar_position: 3
+sidebar_position: 5
 title: "Create a batch session"
 ---
 
@@ -60,7 +60,7 @@ const usersSmartAccount = await createSmartAccountClient({
 
 This function is used to create a new session key and store it in the sessionStorageClient.
 You can feed the sessionStorageClient into the `createSessionKeyEOA(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
-When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store. See [here](./customSessionStorage.md) for detail regarding creating your own session storage client.
+When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store. 
 
 ```typescript
 const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(

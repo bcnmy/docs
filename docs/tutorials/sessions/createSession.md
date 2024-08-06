@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Create a session"
-sidebar_position: 1
+sidebar_position: 4
 title: "Create a session"
 ---
 
@@ -16,7 +16,7 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 
 ### Prerequisites
 
-- Biconomy Paymaster API key [If you are using paymaster rules in the dashbaord, make sure you have whitelisted session Module contract 0x000002fbffedd9b33f4e7156f2de8d48945e7489]
+- Biconomy Paymaster API key [If you are using paymaster rules in the dashboard, make sure you have whitelisted session Module contract 0x000002fbffedd9b33f4e7156f2de8d48945e7489]
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
 
 ```
@@ -24,6 +24,14 @@ https://bundler.biconomy.io/api/v2/80002/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f
 ```
 
 - A user with a connected signer (viem WalletClient or ethers.Wallet for example)
+
+### Distributed Session Keys
+
+The Delegated Authorisation Network [(DAN)](https://www.biconomy.io/post/introducing-dan-the-programmable-authorisation-network-for-ai-agents) is Biconomy’s blockchain-agnostic programmable signing infrastructure, which leverages the economic security of the [Eigenlayer AVS](https://docs.eigenlayer.xyz/eigenlayer/overview). It is designed to enhance the security, customizability, and speed of managing authorization keys for smart accounts, Offering developers a comprehensive, zero-development, zero-custody sessions solution, which can be leveraged directly from your frontend [Read more about Distributed Keys here](../../Modules/sessions/DistributedSessions)
+
+:::info
+You can save your private keys on DAN by setting the `storeSessionKeyInDAN` to `true` while calling `createSession()`
+:::
 
 ### Step 1: Create the SmartAccountClient for the user
 
@@ -34,7 +42,7 @@ import {
   createSmartAccountClient,
   createSession,
   Rule,
-  Policy,
+  PolicyLeaf,
   createSessionKeyEOA,
 } from "@biconomy/account";
 
@@ -52,20 +60,7 @@ const usersSmartAccount = await createSmartAccountClient({
 const smartAccountAddress = await usersSmartAccount.getAccountAddress();
 ```
 
-### Step 2: Generate a store for your dapp's session keys
-
-This function is used to create a new session key and store it in the sessionStorageClient.
-You can feed the sessionStorageClient into the `createSessionKeyEOA(...args)` as the third argument. If you do not provide a sessionStorageClient then one will get generated for you based on the environment.
-When localStorage is supported, it will return a `SessionLocalStorage` store, otherwise it will assume you are in a backend and use `SessionFileStorage` store.
-
-```typescript
-const { sessionKeyAddress, sessionStorageClient } = await createSessionKeyEOA(
-  usersSmartAccount,
-  chain
-);
-```
-
-### Step 3: Create the Policy
+### Step 2: Create the Policy
 
 Next we need to generate a policy that we can use to request permission (granted via a users signature). The policy is comprised of a list of rules applied to a single contract method, along with an interval over which the session remains valid.
 
@@ -91,9 +86,9 @@ const rules: Rule[] = [
 ];
 
 /** The policy is made up of a list of rules applied to the contract method with and interval */
-const policy: Policy[] = [
+const policy: PolicyLeaf[] = [
   {
-    /** The address of the sessionKey upon which the policy is to be imparted */
+    /** The address of the sessionKey upon which the policy is to be imparted. Can be omitted */
     sessionKeyAddress,
     /** The address of the contract to be included in the policy */
     contractAddress: nftAddress,
@@ -112,7 +107,7 @@ const policy: Policy[] = [
 ];
 ```
 
-### Step 4: Request Permission from the user with the policy
+### Step 3: Request Permission from the user with the policy
 
 The session keys are imbibed with the relevant permissions when the user signs over the policy. The session can then be accessed from the sessionStorageClient and later used, even after the usersSmartAccount signer has left the dapp.
 
@@ -120,8 +115,9 @@ The session keys are imbibed with the relevant permissions when the user signs o
 const { wait, session } = await createSession(
   usersSmartAccount,
   policy,
-  sessionStorageClient,
-  withSponsorship
+  undefined,
+  withSponsorship,
+  true // if using a distributed key with DAN
 );
 
 const {

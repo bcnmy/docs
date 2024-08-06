@@ -2,11 +2,21 @@
 
 ---
 
-[@biconomy/use-aa](./index.md) / useSession
+[@biconomy/use-aa](./index.md) / useSessionWithDistributedKey
+
+:::info 
+These hooks are a beta feature and are subject to change. To use this feature use our beta package `@biconomy-devx/use-aa` instead of `@biconomy/use-aa`, add the following bunfig.toml configuration:
+```toml
+[install.scopes]
+silencelaboratories = { token = "$VITE_SILENCE_LABS_NPM_TOKEN", url = "https://registry.npmjs.org" }
+```
+And obtain the `VITE_SILENCE_LABS_NPM_TOKEN` from our support team, and add it to your .env file.
+:::
+
 
 ## Description
 
-Uses a previously created session ([see here](./useCreateSession.md)) which sends transactions in the context of a users smart account.
+Uses a previously created session ([see here](./useCreateSessionWithDistributedKey.md)) which sends transactions in the context of a users smart account.
 
 ## Parameters
 
@@ -16,7 +26,7 @@ type Transaction = {
   value: BigNumberish | string;
   data: string;
 };
-type UseSessionProps = {
+type UseSessionWithDistributedKeyProps = {
   /** The BuildUserOpOptions options. See https://bcnmy.github.io/biconomy-client-sdk/types/BuildUserOpOptions.html for further detail */
   options?: BuildUserOpOptions;
   /** The whitelisted transaction */
@@ -43,12 +53,12 @@ type UserOpResponse = {
 ## Example
 
 ```tsx
-import { useSession, useUserOpWait, Options } from "@biconomy/useAA";
+import { useSessionWithDistributedKey, useUserOpWait, Options } from "@biconomy-devx/useAA";
 import { polygonAmoy } from "viem/chains";
 import { encodeFunctionData, parseAbi } from "wagmi";
 
-export const UseSession = ({ smartAccountAddress }) => {
-  const { mutate, data: userOpResponse, error, isPending } = useSession();
+export const UseSessionWithDistributedKey = ({ smartAccountAddress }) => {
+  const { mutate, data: userOpResponse, error, isPending } = useSessionWithDistributedKey();
 
   const {
     isLoading: waitIsLoading,
@@ -80,7 +90,7 @@ export const UseSession = ({ smartAccountAddress }) => {
   return (
     <ErrorGuard errors={[error, waitError]}>
       <Button
-        title="Use Session to Mint"
+        title="Use Distributed Session to Mint"
         onClickFunc={mintTx}
         isLoading={isPending || waitIsLoading}
       />
@@ -91,4 +101,4 @@ export const UseSession = ({ smartAccountAddress }) => {
 
 ## Source
 
-[hooks/useSession.ts:87](https://github.com/bcnmy/useAA/blob/main/src/hooks/useSession.ts#L87)
+[hooks/useSessionWithDistributedKey.ts:87](https://github.com/bcnmy/useAA/blob/main/src/hooks/useSessionWithDistributedKey.ts#L87)

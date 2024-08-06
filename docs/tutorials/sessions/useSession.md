@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Use a session"
-sidebar_position: 2
+sidebar_position: 5
 title: "Use a session"
 ---
 
@@ -36,12 +36,11 @@ import {
   Rule,
   Policy,
   Session,
-  getSingleSessionTxParams,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 const withSponsorship = {
-  paymasterServiceData: { mode: PaymasterMode.SPONSORED },
+  },
 };
 const usersSmartAccountAddress = sessionStorageClient.smartAccountAddress;
 ```
@@ -58,7 +57,8 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     paymasterUrl,
     chainId,
   },
-  usersSmartAccountAddress // Storage client, full Session or simply the smartAccount address if using default storage for your environment
+  "DEFAULT_STORE",
+  "SIMPLE" // OR "DISTRIBUTED_KEY" if storing private keys on DAN
 );
 ```
 
@@ -76,15 +76,10 @@ const nftMintTx = {
   }),
 };
 
-const params = await getSingleSessionTxParams(
-  usersSmartAccountAddress,
-  chain,
-  0 // index of the relevant policy leaf to the tx
-);
-
 const { wait } = await emulatedUsersSmartAccount.sendTransaction(nftMintTx, {
-  ...params,
-  ...withSponsorship,
+  paymasterServiceData: { mode: PaymasterMode.SPONSORED }
+}, {
+  leafIndex: "LAST_LEAF"
 });
 
 const { success } = await wait();

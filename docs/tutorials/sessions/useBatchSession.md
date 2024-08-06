@@ -1,6 +1,6 @@
 ---
 sidebar_label: "Use a batch session"
-sidebar_position: 4
+sidebar_position: 6
 title: "Use a batch session"
 ---
 
@@ -38,18 +38,11 @@ import {
   DEFAULT_ERC20_MODULE,
   Session,
   DEFAULT_ABI_SVM_MODULE,
-  getBatchSessionTxParams,
 } from "@biconomy/account";
 
 const nftAddress = "0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e";
 const token = "0x747A4168DB14F57871fa8cda8B5455D8C2a8e90a";
 const amount = parseUnits(".0001", 6);
-const withSponsorship = {
-  paymasterServiceData: {
-    mode: PaymasterMode.SPONSORED,
-    skipPatchCallData: true, // Required when mode is set to ERC20
-  },
-};
 ```
 
 ### Step 2: Create the sessionSmartAccountClient
@@ -64,8 +57,8 @@ const emulatedUsersSmartAccount = await createSessionSmartAccountClient(
     paymasterUrl,
     chainId,
   },
-  session, // a) Full Session, b) storage client or c) the smartAccount address (if using default storage for your environment)
-  true // if in batch session mode
+  "DEFAULT_STORE", // a) Full Session, b) storage client or c) the smartAccount address (if using default storage for your environment)
+  "BATCHED"
 );
 ```
 
@@ -94,23 +87,20 @@ const nftMintTx: Transaction = {
 
 ### Step 4: Execute txs on the users behalf
 
-When using multiple session and sending a tx the batchSessionParams must be sent with each tx. BatchSessionParams [are described here](https://bcnmy.github.io/biconomy-client-sdk/types/ModuleInfo.html#__type.batchSessionParams). The order of the `sessionValidationTypes` array must correspond with the modules for the txs being sent. A utility function [getBatchSessionTxParams](https://bcnmy.github.io/biconomy-client-sdk/functions/getBatchSessionTxParams.html) is provided
+When using multiple session and sending a tx the batchSessionParams must be sent with each tx. BatchSessionParams [are described here](https://bcnmy.github.io/biconomy-client-sdk/types/ModuleInfo.html#__type.batchSessionParams). The order of the `sessionValidationTypes` array must correspond with the modules for the txs being sent. A utility function [getBatchSessionTxParams](https://bcnmy.github.io/biconomy-client-sdk/functions/getBatchSessionTxParams.html) is available if required. 
 
 ```typescript
 const txs = [transferTx, nftMintTx];
-const batchSessionParams = await getBatchSessionTxParams(
-  [transferTx, nftMintTx],
-  [0, 1],
-  // Order must match the order in which corresponding policies were set
-  sessionStorageClient.smartAccountAddress, // Storage client, full Session or simply the smartAccount address if using default storage for your environment
-  chain
-);
 
 const { wait } = await emulatedUsersSmartAccount.sendTransaction(
-  [transferTx, nftMintTx],
+  txs,
   {
-    ...batchSessionParams,
-    ...withSponsorship,
+    paymasterServiceData: {
+      mode: PaymasterMode.SPONSORED,
+    }
+  }, 
+  {
+    leafIndex: "LAST_LEAVES"
   }
 );
 

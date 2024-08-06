@@ -24,6 +24,8 @@ type UseBatchSessionProps = {
   transactions: Transaction | Transaction[];
   /** An array of indexes for the transactions corresponding to the relevant session IDs. */
   correspondingIndexes: number[];
+  /** The smart account address to be used for the session. Defaults to the connected smartAccount. */
+  smartAccountAddress?: Hex
 };
 ```
 
@@ -70,6 +72,7 @@ const UseBatchSession = ({ smartAccountAddress }) => {
       transactions: [nftMintTx, nftMintTx],
       correspondingIndexes: [0, 1],
       options: Options.Sponsored,
+      smartAccountAddress
     });
 
   useEffect(() => {
