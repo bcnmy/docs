@@ -17,6 +17,9 @@ You can get your Biconomy Paymaster API key from the dashboard [here](https://da
 ### Prerequisites
 
 - Biconomy Paymaster API key [If you are using paymaster rules in the dashbaord, make sure you have whitelisted session Module contract 0x000002fbffedd9b33f4e7156f2de8d48945e7489]
+
+    ![Example](../../images/sessionModuleWhitelisting.gif)
+
 - A Bundler url if you don't want to use the testnet one, for Amoy you can use
 
 ```

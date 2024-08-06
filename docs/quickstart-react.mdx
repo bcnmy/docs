@@ -68,6 +68,10 @@ pnpm add viem wagmi @tanstack/react-query @biconomy/account @biconomy/use-aa
 
 Create your relevant providers for each of your dependencies. You will need to retrieve paymaster and bundler details from the [biconomy dashboard](https://dashboard.biconomy.io).
 
+:::info
+By default the smart account will be created by using the signer of your metamask account, but you can also add your own custom signer using any social login provider in the ***config*** field of the ***Biconomy Provider*** which will be further used to create the smart account.
+:::
+
 ```ts
 "use client";
 import { http } from "viem";
@@ -97,6 +101,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           config={{
             biconomyPaymasterApiKey,
             bundlerUrl,
+            // Add your signer here if you don't want to use the metamask signer
           }}
           queryClient={queryClient}
         >

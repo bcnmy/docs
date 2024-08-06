@@ -55,7 +55,7 @@ This method creates a custom bundler instance.
 **Usage**
 
 ```jsx
-const address = await createBundler({
+const bundler = await createBundler({
   bundlerUrl: "BUNDLER_URL",
 });
 ```
