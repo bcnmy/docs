@@ -30,7 +30,7 @@ In the return for this component lets add the following JSX:
     Edit <code>src/App.tsx</code> and save to test
   </p>
   <a
-    href="https://docs.biconomy.io/docs/overview"
+    href="https://legacy-docs.biconomy.io/docs/overview"
     target="_blank"
     className="read-the-docs"
   >
@@ -167,7 +167,7 @@ export default function Home() {
       <p>
       Edit <code>src/App.tsx</code> and save to test
       </p>
-      <a href="https://docs.biconomy.io/docs/overview" target="_blank" className="read-the-docs">
+      <a href="https://legacy-docs.biconomy.io/docs/overview" target="_blank" className="read-the-docs">
   Click here to check out the docs
     </a>
     </div>

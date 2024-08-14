@@ -10,7 +10,7 @@ Transitioning to multichain opens up exciting possibilities.
 In this guide, we'll start from scratch to enable minting an NFT on multiple chains, specifically **Polygon Amoy** and **Base test networks**, using just **one signature**.
 
 :::info Supported Chains
-Find all supported chains [here](https://docs.biconomy.io/supportedchains/). Our NFT contract has the same address on both Polygon and Base (0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
+Find all supported chains [here](https://legacy-docs.biconomy.io/supportedchains/). Our NFT contract has the same address on both Polygon and Base (0x1758f42Af7026fBbB559Dc60EcE0De3ef81f665e).
 :::
 
 ## 🛠️ Initial Setup

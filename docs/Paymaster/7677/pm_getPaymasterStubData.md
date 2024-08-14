@@ -22,7 +22,7 @@ Body
 
 :::info
 The context object for Biconomy Paymaster service should be exactly the second element
-of the params object that is supported on [`pm_sponsorUserOperation`](https://docs.biconomy.io/Paymaster/api/sponsor-useroperation#1-mode-is-sponsored-)
+of the params object that is supported on [`pm_sponsorUserOperation`](https://legacy-docs.biconomy.io/Paymaster/api/sponsor-useroperation#1-mode-is-sponsored-)
 :::
 
 ## Request

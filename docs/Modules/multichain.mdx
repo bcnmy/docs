@@ -160,15 +160,15 @@ Here is how you can set up Smart Account instances accross multiple chains:
 import { createSmartAccountClient, PaymasterMode } from "@biconomy/account";
 
 let baseAccount = await createSmartAccountClient({
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "https://legacy-docs.biconomy.io/dashboard/paymaster"
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
   defaultValidationModule: multiChainModule,
   activeValidationModule: multiChainModule,
 });
 
 let polygonAccount = await createSmartAccountClient({
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "https://legacy-docs.biconomy.io/dashboard/paymaster"
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
   defaultValidationModule: multiChainModule,
   activeValidationModule: multiChainModule,
 });

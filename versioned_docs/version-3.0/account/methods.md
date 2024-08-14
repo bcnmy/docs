@@ -22,8 +22,8 @@ let signer = new ethers.Wallet("private key", provider);
 const smartAccount = await BiconomySmartAccountV2.create({
   signer: signer,
   chainId: 80002, // Specify the desired chain (e.g., Polygon Amoy)
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-  biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "", // <-- Read about at https://legacy-docs.biconomy.io/dashboard/paymaster
 });
 ```
 

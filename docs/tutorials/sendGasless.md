@@ -46,7 +46,7 @@ import { createSmartAccountClient, PaymasterMode } from "@biconomy/account";
 const config = {
   privateKey: "your-private-key",
   biconomyPaymasterApiKey: "your-biconomy-api-key",
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
 };
 
 // Generate EOA from private key using ethers.js
@@ -79,7 +79,7 @@ import { createSmartAccountClient } from "@biconomy/account";
 const config = {
   privateKey: "your-private-key",
   biconomyPaymasterApiKey: "your-biconomy-api-key",
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
   rpcUrl: "rpc-url",
 };
 

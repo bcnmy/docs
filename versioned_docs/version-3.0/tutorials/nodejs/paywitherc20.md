@@ -13,7 +13,7 @@ Before starting, acquire test USDC tokens. Swap test Matic for USDC on [Uniswap]
 0xf555F8d9Cf90f9d95D34488e6C852796D9acBd31
 :::
 
-User can pay in any ERC20 token of their choice. Please find the supported list of ERC20 tokens [here](https://docs.biconomy.io/supportedchains/supportedTokens).
+User can pay in any ERC20 token of their choice. Please find the supported list of ERC20 tokens [here](https://legacy-docs.biconomy.io/supportedchains/supportedTokens).
 
 ## 🔄 Updated Imports for paying Gas with ERC20
 
