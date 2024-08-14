@@ -161,16 +161,16 @@ import { BiconomySmartAccountV2 } from "@biconomy/account";
 
 let baseAccount = await BiconomySmartAccountV2.create({
   chainId: ChainId.BASE_GOERLI_TESTNET,
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "https://legacy-docs.biconomy.io/dashboard/paymaster"
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
   defaultValidationModule: multiChainModule,
   activeValidationModule: multiChainModule,
 });
 
 let polygonAccount = await BiconomySmartAccountV2.create({
   chainId: 80002,
-  biconomyPaymasterApiKey: "https://docs.biconomy.io/dashboard/paymaster"
-  bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+  biconomyPaymasterApiKey: "https://legacy-docs.biconomy.io/dashboard/paymaster"
+  bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
   defaultValidationModule: multiChainModule,
   activeValidationModule: multiChainModule,
 });

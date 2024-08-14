@@ -11,7 +11,7 @@ Yes, you will get the same address on all chains as long as the owner's address 
     
 **How can I create another smart account using the same EOA on the same chain?**
     
-you can pass the `index` in the config while creating the account as mentioned in the createSmartAccountClient [method](https://docs.biconomy.io/Account/methods#createsmartaccountclient). First smart account gets created with index 0 by default. 
+you can pass the `index` in the config while creating the account as mentioned in the createSmartAccountClient [method](https://legacy-docs.biconomy.io/Account/methods#createsmartaccountclient). First smart account gets created with index 0 by default. 
     
 **Where can I find more examples of SDK integrations?**
     
@@ -35,11 +35,11 @@ const biconomySmartAccount = await createSmartAccountClient({
     
 **Which social login methods are supported?**
     
-Explore services such as Web3Auth, Particle Network, Magic.link, or Lit Protocol to link a user's social identity with a cryptographic key. This key can then serve as the owner of the Smart Account. Be sure to check out various [signers](https://docs.biconomy.io/Account/signers/) integrations for this purpose.
+Explore services such as Web3Auth, Particle Network, Magic.link, or Lit Protocol to link a user's social identity with a cryptographic key. This key can then serve as the owner of the Smart Account. Be sure to check out various [signers](https://legacy-docs.biconomy.io/Account/signers/) integrations for this purpose.
     
 **How do I enable session keys for users?**
     
-Utilize the session key validation [module](https://docs.biconomy.io/Modules/sessionvalidationmodule).
+Utilize the session key validation [module](https://legacy-docs.biconomy.io/Modules/sessionvalidationmodule).
 
 **How to enable debug mode in SDK to log more?**
 
@@ -74,7 +74,7 @@ Transactions 1 and 2 will be batched into one user operation and will be execute
 
 The second user operation can be sent after the first one is done, using a sequential nonce, this means it will wait for the first user operation to be settled on-chain. However, we can do better. By using 2D nonces, we can send both user ops at the same time. While Bob is swapping ETH for USDC and USDC for BICO, he can also buy that cool NFT simultaneously. 
 
-Here is a tutorial on how to send parallel user ops with the Biconomy SDK: https://docs.biconomy.io/tutorials/parallelUserOps
+Here is a tutorial on how to send parallel user ops with the Biconomy SDK: https://legacy-docs.biconomy.io/tutorials/parallelUserOps
 ## Bundler & Paymaster
 
 **Is the bundler URL the same for all chains?**

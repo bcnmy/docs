@@ -124,14 +124,14 @@ const connect = async () => {
 
     const config = {
       biconomyPaymasterApiKey: "", // <-- Get your paymaster API key from https://dashboard.biconomy.io/paymaster
-      bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
+      bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
     };
 
     const smartWallet = await createSmartAccountClient({
       signer: web3AuthSigner,
       biconomyPaymasterApiKey: config.biconomyPaymasterApiKey,
       bundlerUrl: config.bundlerUrl,
-      rpcUrl: "", // <-- read about this at https://docs.biconomy.io/Account/methods#createsmartaccountclient
+      rpcUrl: "", // <-- read about this at https://legacy-docs.biconomy.io/Account/methods#createsmartaccountclient
     });
 
     const address = await smartWallet.getAccountAddress();

@@ -64,8 +64,8 @@ Make sure you have minimum es2020 set as target in the compilerOptions
    ```ts
    const smartAccount = await createSmartAccountClient({
      signer,
-     bundlerUrl: "", // <-- Read about this at https://docs.biconomy.io/dashboard#bundler-url
-     biconomyPaymasterApiKey: "", // <-- Read about at https://docs.biconomy.io/dashboard/paymaster
+     bundlerUrl: "", // <-- Read about this at https://legacy-docs.biconomy.io/dashboard#bundler-url
+     biconomyPaymasterApiKey: "", // <-- Read about at https://legacy-docs.biconomy.io/dashboard/paymaster
      rpcUrl: "", // Recommended for signers that are not a viem wallet or an ethers signer. It's advised to pass RPC url in case of custom signers such as privy, dynamic etc. If rpcUrl is not provided then a default public rpc will be used - which will likely be heavily throttled and can often silently fail
    });
    ```
