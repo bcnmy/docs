@@ -69,7 +69,7 @@ const paymaster: IPaymaster = new BiconomyPaymaster({
 :::info
 You can get your Paymaster URL and bundler URL from Biconomy Dashboard.
 Follow the steps mentioned
-[here](https://legacy-docs.biconomy.io/docs/dashboard).
+[here](https://legacy-docs.biconomy.io/3.0/dashboard).
 :::
 
 Let's take a look at some state variables that will help us with our
