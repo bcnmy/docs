@@ -5,19 +5,19 @@ sidebar_position: 3
 # Paymaster, Bundler, And The Biconomy Dashboard
 
 Now, let's setup our biconomy dashboard. Follow the instructions
-[on this page](https://legacy-docs.biconomy.io/docs/dashboard).
+[on this page](https://legacy-docs.biconomy.io/3.0/dashboard).
 
 Before continuing onto the the next step be sure that you have completed the
 following:
 
 - Created an account on the Biconomy Dashboard.
 - Register a new paymaster on the Dashboard.
-- Get the [Paymaster URL](https://legacy-docs.biconomy.io/docs/dashboard) and
+- Get the [Paymaster URL](https://legacy-docs.biconomy.io/3.0/dashboard) and
   bundler URL from dashboard.
 - Set up a Gas tank with some Base Goerli Eth. We recommend around .02 Eth to
   start.
 - Whitelist the `safeMint` method of the NFT smart contract under
-  [Paymaster Rules](https://legacy-docs.biconomy.io/docs/dashboard/paymasterRules)
+  [Paymaster Rules](https://legacy-docs.biconomy.io/3.0/dashboard/paymasterRules)
   on the dashboard.
 
 :::info Missing any of the above steps causes a lot of
